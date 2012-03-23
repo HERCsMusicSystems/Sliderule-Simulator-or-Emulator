@@ -1,0 +1,31 @@
+sliderule [
+	length [800]
+
+	background_colour [0 0 0]
+	rule_colour [0 0 255]
+	multi_hairline_colour [0 0 255]
+	marker_colour [255 255 255]
+	multi_hairline_colour [255 255 0]
+
+	no_borderline []
+
+	stator []
+	hairline_360 []
+	spacer [8]
+	scale_CF [22]
+	left_description ["DF" 40]
+
+	slide []
+	scale_DF [22]
+	left_description ["CF" 40]
+	spacer [8]
+	hairline_360 []
+	scale_C [22]
+	left_description ["C" 40]
+
+	stator []
+	scale_D [22]
+	left_description ["D" 40]
+	right_description ["Regle des Ecoles" 10]
+	spacer [8]
+]

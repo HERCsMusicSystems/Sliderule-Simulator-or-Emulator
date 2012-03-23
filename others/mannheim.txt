@@ -1,0 +1,29 @@
+sliderule [
+	length [800]
+
+	background_colour [0 0 0]
+	rule_colour [255 255 255]
+	multi_hairline_colour [0 0 255]
+
+	stator []
+	spacer [8]
+	hairline_s []
+	scale_A [22]
+	left_description ["A" 40]
+	right_description ["MANNHEIM" 10]
+
+	slide []
+	scale_B [22]
+	left_description ["B" 40]
+	spacer [8]
+	hairline_d []
+	scale_C [22]
+	left_description ["C" 40]
+
+	stator []
+	scale_D [22]
+	left_description ["D" 40]
+	hairline_s []
+	hairline_d []
+	spacer [8]
+]

@@ -1,0 +1,202 @@
+sliderule [
+
+	name ["HEMMI 259 (front)"]
+
+	location [10 10]
+
+	length [1100]
+	margin [0.1]
+	cursor_width [0.11]
+	no_borderline []
+
+	rule_colour [255 254 221]
+
+	no_e [] no_pi [] no_c1 []
+
+	scale_extensions [0.001 0.0]
+
+	stator []
+	spacer [3]
+	spacer [12] right_description [0.02 "@ SUN @   HEMMI     JAPAN   NO.259"]
+	spacer [3]
+	scale_L [14] left_description [0.02 "L"]
+	spacer [2]
+	scale_K [14] left_description [0.02 "K"]
+	spacer [2]
+	scale_A [14] left_description [0.02 "A"]
+
+	slide []
+	scale_B [14] left_description [0.02 "B"]
+	scale_Tdec [14] left_description [0.02 "T"]
+	spacer [1]
+	scale_Sdec_down [14] left_description [0.02 "S"]
+	scale_STdec [14] left_description [0.02 "ST"]
+	scale_C [14] left_description [0.02 "C"]
+
+	stator []
+	rule_visible_margins [0.07 0.07]
+	scale_D [14] left_description [0.02 "D"]
+	spacer [2]
+	scale_LL0_down [14] left_description [0.02 "LL0"]
+	spacer [2]
+	scale_extensions [0.001 0.0022]
+	scale_LL00_down [14] left_description [0.02 "LL/0"]
+	scale_marker_colour [255 0 0]
+	spacer [2]
+	spacer [14]
+	spacer [2]
+
+]
+
+sliderule [
+
+	name ["HEMMI 259 (back)"]
+
+	location [10 10]
+
+	length [1100]
+	margin [0.1]
+	cursor_width [0.11]
+	no_borderline []
+
+	rule_colour [255 254 221]
+
+	no_e [] no_pi [] no_c [] no_c1 []
+
+	stator []
+	rule_visible_margins [0.07 0.07]
+	spacer [2]
+	scale_extensions [0.001 0.003]
+	scale_LL01 [14] left_description [0.02 "LL/1"]
+	scale_marker_colour [255 0 0]
+	spacer [2]
+	scale_LL02 [14] left_description [0.02 "LL/2"]
+	scale_marker_colour [255 0 0]
+	spacer [2]
+	scale_extensions [0.001 0.006]
+	scale_LL03 [14] left_description [0.02 "LL/3"]
+	scale_marker_colour [255 0 0]
+	spacer [2]
+	draw_pi []
+	scale_extensions [0.001 0.0]
+	scale_CF [14] left_description [0.02 "DF"]
+
+	slide []
+	scale_DF [14] left_description [0.02 "CF"]
+	no_pi []
+	spacer [4]
+	scale_DIF [14] left_description [0.02 "CIF"]
+	spacer [7]
+	scale_CI [14] left_description [0.02 "CI"]
+	spacer [4]
+	scale_C [14] left_description [0.02 "C"]
+
+	stator []
+	scale_D [14] left_description [0.02 "D"]
+	spacer [2]
+	scale_extensions [0.01 0.0]
+	scale_LL3_down [14] left_description [0.02 "LL3"]
+	spacer [2]
+	scale_LL2_down [14] left_description [0.02 "LL2"]
+	spacer [2]
+	scale_extensions [0.003 0.0022]
+	scale_LL1_down [14] left_description [0.02 "LL1"]
+	spacer [2]
+
+]
+
+sliderule [
+
+	name ["HEMMI 259 (both sides)"]
+
+	location [10 10]
+
+	length [1100]
+	margin [0.1]
+	cursor_width [0.11]
+	no_borderline []
+
+	rule_colour [255 254 221]
+
+	no_e [] no_pi [] no_c1 []
+
+	scale_extensions [0.001 0.0]
+
+	stator []
+	spacer [3]
+	spacer [12] right_description [0.02 "@ SUN @   HEMMI     JAPAN   NO.259"]
+	spacer [3]
+	scale_L [14] left_description [0.02 "L"]
+	spacer [2]
+	scale_K [14] left_description [0.02 "K"]
+	spacer [2]
+	scale_A [14] left_description [0.02 "A"]
+
+	slide []
+	scale_B [14] left_description [0.02 "B"]
+	scale_Tdec [14] left_description [0.02 "T"]
+	spacer [1]
+	scale_Sdec_down [14] left_description [0.02 "S"]
+	scale_STdec [14] left_description [0.02 "ST"]
+	scale_C [14] left_description [0.02 "C"]
+
+	stator []
+	rule_visible_margins [0.07 0.07]
+	scale_D [14] left_description [0.02 "D"]
+	spacer [2]
+	scale_LL0_down [14] left_description [0.02 "LL0"]
+	spacer [2]
+	scale_extensions [0.001 0.0022]
+	scale_LL00_down [14] left_description [0.02 "LL/0"]
+	scale_marker_colour [255 0 0]
+	spacer [2]
+	spacer [14]
+	spacer [2]
+
+	empty_space []
+	spacer [24]
+
+	no_e [] no_pi [] no_c [] no_c1 []
+
+	stator []
+	rule_visible_margins [0.07 0.07]
+	spacer [2]
+	scale_extensions [0.001 0.003]
+	scale_LL01 [14] left_description [0.02 "LL/1"]
+	scale_marker_colour [255 0 0]
+	spacer [2]
+	scale_LL02 [14] left_description [0.02 "LL/2"]
+	scale_marker_colour [255 0 0]
+	spacer [2]
+	scale_extensions [0.001 0.006]
+	scale_LL03 [14] left_description [0.02 "LL/3"]
+	scale_marker_colour [255 0 0]
+	spacer [2]
+	draw_pi []
+	scale_extensions [0.001 0.0]
+	scale_CF [14] left_description [0.02 "DF"]
+
+	slide []
+	scale_DF [14] left_description [0.02 "CF"]
+	no_pi []
+	spacer [4]
+	scale_DIF [14] left_description [0.02 "CIF"]
+	spacer [7]
+	scale_CI [14] left_description [0.02 "CI"]
+	spacer [4]
+	scale_C [14] left_description [0.02 "C"]
+
+	stator []
+	scale_D [14] left_description [0.02 "D"]
+	spacer [2]
+	scale_extensions [0.01 0.0]
+	scale_LL3_down [14] left_description [0.02 "LL3"]
+	spacer [2]
+	scale_LL2_down [14] left_description [0.02 "LL2"]
+	spacer [2]
+	scale_extensions [0.003 0.0022]
+	scale_LL1_down [14] left_description [0.02 "LL1"]
+	spacer [2]
+
+]
+

@@ -1,0 +1,45 @@
+sliderule [
+	length [1200]
+	margin [0.1]
+
+	stator []
+	scale_K [18]
+	scale_A [18]
+
+	slide []
+	scale_B [18]
+	scale_T [18]
+	horizontal_line [0]
+	spacer [1]
+	no_horizontal_line [0]
+	scale_S_down [18]
+	scale_CI [18]
+	scale_C [18]
+
+	stator []
+	scale_D [18]
+	scale_L [18]
+
+	empty_space []
+	spacer [24]
+
+	stator []
+	scale_CK [30 18]
+	scale_CK [20 18]
+
+	slide []
+	scale_DK [20 18]
+	spacer [4]
+	scale_TCKdec [10 18]
+	scale_SDKdec [10 18]
+	spacer [4]
+	scale_Adk [18]
+
+	stator []
+	scale_Bdk [18]
+	spacer [2]
+	metric [200.0]
+	scale_metric [18 -100.0]
+	spacer [4]
+	scale_SA_down [18]
+]

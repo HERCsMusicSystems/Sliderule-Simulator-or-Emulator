@@ -1,0 +1,50 @@
+sliderule [
+	length [900]
+	background_colour [0 0 0]
+	background_marker_colour [0 0 0]
+	marker_colour [255 215 0]
+
+	rule_colour [12 11 29]
+	rule_colour [38 40 59]
+	rule_colour [60 32 5]
+
+	multi_hairline_colour [255 255 255]
+
+	cursor_colour [255 255 0]
+	cursor_transparency [8]
+
+	no_borderline []
+	corner [12]
+
+	location [50 50]
+
+	stator []
+	scale_L [18]
+	spacer [4]
+	scale_P [18]
+	spacer [4]
+	scale_K [18]
+	hairline_s []
+	spacer [4]
+	scale_A [18]
+
+	slide []
+	scale_B [18]
+	hairline_s []
+	spacer [4]
+	scale_CI [18]
+	spacer [4]
+	hairline_d []
+	scale_C [18]
+
+	stator []
+	scale_D [18]
+	hairline_d []
+	spacer [4]
+	scale_S_down [18]
+	spacer [4]
+	scale_T_down [18]
+	spacer [4]
+	scale_ST_down [18]
+	spacer [4]
+]

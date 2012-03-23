@@ -1,0 +1,132 @@
+sliderule [
+	name ["KEUFFEL & ESSER CO. 68-1555 DORIC (front)"]
+	length [800]
+	margin [0.2]
+	cursor_width [0.14]
+	rule_colour [255 255 255]
+
+	no_borderline []
+
+	stator []
+	spacer [4]
+	scale_K [20] left_description [0.014 "K"]
+	spacer [4]
+	scale_A [20] left_description [0.014 "A"]
+
+	borderline []
+
+	slide []
+	scale_B [20] left_description [0.014 "B"]
+	spacer [4]
+	scale_ST [20] left_description [0.014 "ST"]
+	spacer [4]
+	scale_S [20] left_description [0.014 "S"]
+
+	no_borderline []
+
+	stator []
+	rule_visible_margins [0.15 0.15]
+	scale_D [20] left_description [0.014 "D"]
+	spacer [4]
+	scale_T_down [20] left_description [0.014 "T"]
+	spacer [4]
+]
+
+sliderule [
+	name ["KEUFFEL & ESSER CO. 68-1555 DORIC (back)"]
+	length [800]
+	margin [0.2]
+	cursor_width [0.14]
+	rule_colour [255 255 255]
+
+	no_borderline []
+
+	stator []
+	rule_visible_margins [0.15 0.15]
+	spacer [9]
+	spacer [10] right_description [0.0 "MADE IN U.S.A."]
+	spacer [9]
+	scale_CF [20] left_description [0.014 "DF"]
+
+	borderline []
+
+	slide []
+	scale_DF [20] left_description [0.014 "CF"]
+	spacer [4]
+	scale_CI [20] left_description [0.014 "CI"] right_description ["DORIC" 0.01]
+	scale_reverse_marker_colour [0 0 0]
+	spacer [4]
+	scale_C [20] left_description [0.014 "C"] right_description ["K & E co." 0.01]
+
+	no_borderline []
+
+	stator []
+	scale_D [20] left_description [0.014 "D"]
+	spacer [4]
+	scale_L_down [20] left_description [0.014 "L"]
+	spacer [4]
+]
+
+sliderule [
+	name ["KEUFFEL & ESSER CO. 68-1555 DORIC (both sides)"]
+	length [800]
+	margin [0.2]
+	cursor_width [0.14]
+	rule_colour [255 255 255]
+
+	no_borderline []
+
+	stator []
+	spacer [4]
+	scale_K [20] left_description [0.014 "K"]
+	spacer [4]
+	scale_A [20] left_description [0.014 "A"]
+
+	borderline []
+
+	slide []
+	scale_B [20] left_description [0.014 "B"]
+	spacer [4]
+	scale_ST [20] left_description [0.014 "ST"]
+	spacer [4]
+	scale_S [20] left_description [0.014 "S"]
+
+	no_borderline []
+
+	stator []
+	rule_visible_margins [0.15 0.15]
+	scale_D [20] left_description [0.014 "D"]
+	spacer [4]
+	scale_T_down [20] left_description [0.014 "T"]
+	spacer [4]
+
+	empty_space []
+	spacer [24]
+
+	no_borderline []
+
+	stator []
+	rule_visible_margins [0.15 0.15]
+	spacer [9]
+	spacer [10] right_description [0.0 "MADE IN U.S.A."]
+	spacer [9]
+	scale_CF [20] left_description [0.014 "DF"]
+
+	borderline []
+
+	slide []
+	scale_DF [20] left_description [0.014 "CF"]
+	spacer [4]
+	scale_CI [20] left_description [0.014 "CI"] right_description ["DORIC" 0.01]
+	scale_reverse_marker_colour [0 0 0]
+	spacer [4]
+	scale_C [20] left_description [0.014 "C"] right_description ["K & E co." 0.01]
+
+	no_borderline []
+
+	stator []
+	scale_D [20] left_description [0.014 "D"]
+	spacer [4]
+	scale_L_down [20] left_description [0.014 "L"]
+	spacer [4]
+]

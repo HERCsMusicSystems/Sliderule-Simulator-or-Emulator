@@ -1,0 +1,116 @@
+<ul>
+ <li> <object type="text/sitemap">
+           <param name="Name" value="Table of Content">
+           <param name="ID" value="1">
+           <param name="Local" value="sliderule_manual.html#TOC">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Features">
+           <param name="ID" value="2">
+           <param name="Local" value="sliderule_manual.html#Features">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Source">
+           <param name="ID" value="3">
+           <param name="Local" value="sliderule_manual.html#Source">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Downloads">
+           <param name="ID" value="4">
+           <param name="Local" value="sliderule_manual.html#Downloads">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Installation">
+           <param name="ID" value="5">
+           <param name="Local" value="sliderule_manual.html#Installation">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Quick start manual">
+           <param name="ID" value="6">
+           <param name="Local" value="sliderule_manual.html#QuickStart">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Both sides of the slide rule">
+           <param name="ID" value="7">
+           <param name="Local" value="sliderule_manual.html#Sides">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Readouts menu">
+           <param name="ID" value="8">
+           <param name="Local" value="sliderule_manual.html#Readouts">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Length menu">
+           <param name="ID" value="9">
+           <param name="Local" value="sliderule_manual.html#Length">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Motion menu">
+           <param name="ID" value="10">
+           <param name="Local" value="sliderule_manual.html#Motion">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Animation menu">
+           <param name="ID" value="11">
+           <param name="Local" value="sliderule_manual.html#Animation">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Advanced configuration">
+           <param name="ID" value="12">
+           <param name="Local" value="sliderule_manual.html#Config">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Making your own slide rule">
+           <param name="ID" value="13">
+           <param name="Local" value="sliderule_manual.html#MakingYourOwn">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="List of commands">
+           <param name="ID" value="14">
+           <param name="Local" value="sliderule_manual.html#ListOfCommands">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="List of scales">
+           <param name="ID" value="15">
+           <param name="Local" value="sliderule_manual.html#ListOfScales">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Buy Me a Beer">
+           <param name="ID" value="16">
+           <param name="Local" value="sliderule_manual.html#Donation">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Wish List">
+           <param name="ID" value="17">
+           <param name="Local" value="sliderule_manual.html#Wishlist">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="How to remove the donation reminder?">
+           <param name="ID" value="18">
+           <param name="Local" value="sliderule_manual.html#RemoveRequest">
+       </object>
+  </li>
+  <li> <object type="text/sitemap">
+           <param name="Name" value="Contact">
+           <param name="ID" value="19">
+           <param name="Local" value="sliderule_manual.html#Contract">
+       </object>
+  </li>
+</ul>

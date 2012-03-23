@@ -1,0 +1,136 @@
+sliderule [
+	name ["Nestler 23 R (front)"]
+	location [20 20]
+	length [1200]
+	margin [0.08]
+	rule_colour [241 241 167]
+	cursor_width [0.16]
+
+	metric [250.0]
+
+	stator []
+	scale_extensions [0.04 0.04]
+	scale_metric_down [20]
+	scale_extensions [0.0 0.0]
+	spacer [4]
+
+	horizontal_line [4]
+
+	hairline_s [] hairline_d []
+
+	stator []
+	scale_J [20]
+	scale_extensions [0.055 0.055]
+	scale_A [20]
+
+	slide []
+	scale_B [20]
+	horizontal_line [0]
+	scale_DI [20]
+	no_horizontal_line [0]
+	scale_C [20]
+
+	channel []
+	rule_visible_margins [0.06 0.06]
+	spacer [8]
+	spacer [12]
+	middle_description ["SYSTEM RIETZ NO 23 R        ALBERT NESTLER     Ar6.    LAHR    I/B      D.R.PATENT"]
+	spacer [8]
+	spacer [4]
+	highlight [46 0 0]
+	highlight_extensions [0.06 0.06]
+	no_horizontal_line [4]
+	scale_extensions [0.04 0.04]
+	scale_metric_down [300.0 20]
+	horizontal_line [4]
+	spacer [8]
+
+	stator []
+	scale_D [20]
+	scale_extensions [0.0 0.0]
+	scale_L [20]
+
+	hairline_s [] hairline_d []
+
+	no_horizontal_line [4]
+	stator []
+	scale_extensions [0.04 0.04]
+	scale_metric_1_25 [20]
+	left_description ["1:25" 0.07 0]
+	scale_extensions [0.0 0.0]
+
+	hairline_colour [0 0 255]
+	multi_hairline_colour [0 0 255]
+
+]
+
+sliderule [
+	name ["Nestler 23 R (back)"]
+	location [20 20]
+	length [1200]
+	margin [0.08]
+	rule_colour [241 241 167]
+	cursor_width [0.16]
+
+	metric [250.0]
+
+	stator []
+	scale_extensions [0.04 0.04]
+	scale_metric_down [20]
+	scale_extensions [0.0 0.0]
+	spacer [4]
+
+	horizontal_line [4]
+
+	hairline_s [] hairline_d []
+
+	stator []
+	scale_J [20]
+	scale_extensions [0.055 0.055]
+	scale_A [20]
+
+	slide []
+	scale_extensions [0.0 0.0]
+	scale_S_down [20]
+	right_description ["S" 14]
+	horizontal_line [0]
+	scale_ST [20]
+	right_description ["S&T" 14]
+	no_horizontal_line [0]
+	scale_T [20]
+	right_description ["T" 14]
+
+	channel []
+	rule_visible_margins [0.06 0.06]
+	spacer [8]
+	spacer [12]
+	middle_description ["SYSTEM RIETZ NO 23 R        ALBERT NESTLER     Ar6.    LAHR    I/B      D.R.PATENT"]
+	spacer [8]
+	spacer [4]
+	highlight [46 0 0]
+	highlight_extensions [0.06 0.06]
+	no_horizontal_line [4]
+	scale_extensions [0.04 0.04]
+	scale_metric_down [300.0 20]
+	horizontal_line [4]
+	spacer [8]
+
+	stator []
+	scale_extension [0.055 0.055]
+	scale_D [20]
+	scale_extensions [0.0 0.0]
+	scale_L [20]
+
+	hairline_s [] hairline_d []
+
+	no_horizontal_line [4]
+	stator []
+	scale_extensions [0.04 0.04]
+	scale_metric_1_25 [20]
+	left_description ["1:25" 0.07 0]
+	scale_extensions [0.0 0.0]
+
+	hairline_colour [0 0 255]
+	multi_hairline_colour [0 0 255]
+
+]
