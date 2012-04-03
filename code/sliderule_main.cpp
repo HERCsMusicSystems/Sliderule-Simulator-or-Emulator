@@ -1186,6 +1186,608 @@ public:
 	ScaleLLRDown (int height) : ScaleLLRUp (height) {}
 };
 
+/* GJM -- LLD scales (log10 log10) */
+class ScaleLLD0Up : public Scale {
+public:
+	double locations1 [900];
+	double locations2 [300];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return 4.0 + log10 (log10 (x));}
+	virtual double getValue (double x) {return pow (10.0, pow (10.0, x - 4.0));}
+	void init_locations (void) {
+		for (int ind = 1; ind <= 800; ind++) {
+			locations1 [ind] = (double) scale_length * (4.0 + log10 (log10 (1.0002 + (double) ind / 1000000.0)));
+		}
+		for (int ind = 0; ind <= 200; ind++) {
+			locations2 [ind] = (double) scale_length * (4.0 + log10 (log10 (1.001 + (double) ind / 100000.0)));
+		}
+		locations1 [0] = locations1 [1] - 100.0;
+		left_index = find_left_index (locations1, 10, 800, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations2, 10, 200, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations1 [0];
+		location = draw_markings_for_100 (dc, locations1, _T ("1.0003"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations1 [100], _T ("1.0004"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [200], _T ("1.0005"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [300], _T ("1.0006"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [400], _T ("1.0007"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [500], _T ("1.0008"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [600], _T ("1.0009"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [700], _T ("1.001"), x, location);
+		location = draw_markings_for_100 (dc, locations2, _T ("1.002"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [100], _T ("1.003"), x, location, 0, right_index - 100);
+	}
+	ScaleLLD0Up (int height) : Scale (height) {left_index = 10; right_index = 1000;}
+};
+
+class ScaleLLD0Down : public ScaleLLD0Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	ScaleLLD0Down (int height) : ScaleLLD0Up (height) {}
+};
+
+class ScaleLLD1Up : public Scale {
+public:
+	double locations1 [900];
+	double locations2 [300];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return 3.0 + log10 (log10 (x));}
+	virtual double getValue (double x) {return pow (10.0, pow (10.0, x - 3.0));}
+	void init_locations (void) {
+		for (int ind = 1; ind <= 800; ind++) {
+			locations1 [ind] = (double) scale_length * (3.0 + log10 (log10 (1.002 + (double) ind / 100000.0)));
+		}
+		for (int ind = 0; ind <= 200; ind++) {
+			locations2 [ind] = (double) scale_length * (3.0 + log10 (log10 (1.01 + (double) ind / 10000.0)));
+		}
+		locations1 [0] = locations1 [1] - 100.0;
+		left_index = find_left_index (locations1, 10, 800, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations2, 10, 200, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations1 [0];
+		location = draw_markings_for_100 (dc, locations1, _T ("1.003"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations1 [100], _T ("1.004"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [200], _T ("1.005"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [300], _T ("1.006"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [400], _T ("1.007"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [500], _T ("1.008"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [600], _T ("1.009"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [700], _T ("1.01"), x, location);
+		location = draw_markings_for_100 (dc, locations2, _T ("1.02"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [100], _T ("1.03"), x, location, 0, right_index - 100);
+	}
+	ScaleLLD1Up (int height) : Scale (height) {left_index = 10; right_index = 1000;}
+};
+
+class ScaleLLD1Down : public ScaleLLD1Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	ScaleLLD1Down (int height) : ScaleLLD1Up (height) {}
+};
+
+class ScaleLLD2Up : public Scale {
+public:
+	double locations1 [1900];
+	double locations2 [200];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return 2.0 + log10 (log10 (x));}
+	virtual double getValue (double x) {return pow (10.0, pow (10.0, x - 2.0));}
+	void init_locations (void) {
+		for (int ind = 1; ind <= 1800; ind++) {
+			locations1 [ind] = (double) scale_length * (2.0 + log10 (log10 (1.02 + (double) ind / 10000.0)));
+		}
+		for (int ind = 0; ind <= 100; ind++) {
+			locations2 [ind] = (double) scale_length * (2.0 + log10 (log10 (1.2 + (double) ind / 1000.0)));
+		}
+		locations1 [0] = locations1 [1] - 100.0;
+		left_index = find_left_index (locations1, 10, 1800, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations2, 10, 100, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations1 [0];
+		location = draw_markings_for_100 (dc, locations1, _T ("1.03"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations1 [100], _T ("1.04"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [200], _T ("1.05"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [300], _T ("1.06"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [400], _T ("1.07"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [500], _T ("1.08"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [600], _T ("1.09"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [700], _T ("1.1"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [800], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [900], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1000], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1100], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1200], _T ("1.15"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1300], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1400], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1500], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1600], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1700], _T ("1.2"), x, location);
+		location = draw_markings_for_100 (dc, locations2, _T ("1.3"), x, location, 0, right_index);
+	}
+	ScaleLLD2Up (int height) : Scale (height) {left_index = 10; right_index = 1900;}
+};
+
+class ScaleLLD2Down : public ScaleLLD2Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	ScaleLLD2Down (int height) : ScaleLLD2Up (height) {}
+};
+
+class ScaleLLD3Up : public Scale {
+public:
+	double locations1 [900];
+	double locations2 [1000];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return 1.0 + log10 (log10 (x));}
+	virtual double getValue (double x) {return pow (10.0, pow (10.0, x - 1.0));}
+	void init_locations (void) {
+		for (int ind = 1; ind <= 800; ind++) {
+			locations1 [ind] = (double) scale_length * (1.0 + log10 (log10 (1.2 + (double) ind / 1000.0)));
+		}
+		for (int ind = 0; ind <= 900; ind++) {
+			locations2 [ind] = (double) scale_length * (1.0 + log10 (log10 (2.0 + (double) ind / 100.0)));
+		}
+		locations1 [0] = locations1 [1] - 100.0;
+		left_index = find_left_index (locations1, 10, 800, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations2, 10, 900, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations1 [0];
+		location = draw_markings_for_100 (dc, locations1, _T ("1.3"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations1 [100], _T ("1.4"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [200], _T ("1.5"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [300], _T ("1.6"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [400], _T ("1.7"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [500], _T ("1.8"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [600], _T ("1.9"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [700], _T ("2"), x, location);
+		location = draw_markings_for_100 (dc, locations2, _T ("3"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [100], _T ("4"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [200], _T ("5"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [300], _T ("6"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [400], _T ("7"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [500], _T ("8"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [600], _T ("9"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [700], _T ("10"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [800], _T ("11"), x, location, 0, right_index-800);
+	}
+	ScaleLLD3Up (int height) : Scale (height) {left_index = 10; right_index = 1600;}
+};
+
+class ScaleLLD3Down : public ScaleLLD3Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	ScaleLLD3Down (int height) : ScaleLLD3Up (height) {}
+};
+
+class ScaleLLD4Up : public Scale {
+public:
+	double locations1 [200];
+	double locations2 [1000];
+	double locations3 [1000];
+	double locations4 [1000];
+	double locations5 [5500];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return log10 (log10 (x));}
+	virtual double getValue (double x) {return pow (10.0, pow (10.0, x));}
+	void init_locations (void) {
+		for (int ind = 1; ind <= 100; ind++) {
+			locations1 [ind] = (double) scale_length * (log10 (log10 (9.0 + (double) ind / 100.0)));
+		}
+		for (int ind = 0; ind <= 900; ind++) {locations2 [ind] = (double) scale_length * log10 (log10 (10.0 + (double) ind / 10.0));}
+		for (int ind = 0; ind <= 900; ind++) {locations3 [ind] = (double) scale_length * log10 (log10 (100.0 + (double) ind));}
+		for (int ind = 0; ind <= 900; ind++) {locations4 [ind] = (double) scale_length * log10 (log10 (1000.0 + (double) ind * 10.0));}
+		for (int ind = 0; ind <= 900; ind++) {locations5 [ind] = (double) scale_length * log10 (log10 (10000.0 + (double) ind * 100.0));}
+		for (int ind = 0; ind <= 900; ind++) {locations5 [900 + ind] = (double) scale_length * log10 (log10 (100000.0 + (double) ind * 1000.0));}
+		for (int ind = 0; ind <= 900; ind++) {locations5 [1800 + ind] = (double) scale_length * log10 (log10 (1000000.0 + (double) ind * 10000.0));}
+		for (int ind = 0; ind <= 900; ind++) {locations5 [2700 + ind] = (double) scale_length * log10 (log10 (10000000.0 + (double) ind * 100000.0));}
+		for (int ind = 0; ind <= 900; ind++) {locations5 [3600 + ind] = (double) scale_length * log10 (log10 (100000000.0 + (double) ind * 1000000.0));}
+		for (int ind = 0; ind <= 900; ind++) {locations5 [4500 + ind] = (double) scale_length * log10 (log10 (1000000000.0 + (double) ind * 10000000.0));}
+		locations1 [0] = locations1 [1] - 100.0;
+		left_index = find_left_index (locations1, 10, 900, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations4, 10, 5400, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations1 [0];
+		location = draw_markings_for_100 (dc, locations1, _T ("10"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, locations2, _T ("20"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [100], _T ("30"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [200], _T ("40"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [300], _T ("50"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [400], _T ("60"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [500], _T ("70"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [600], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [700], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [800], _T (""), x, location);
+		draw_text_marker (dc, _T ("100"), x + locations2 [900]);
+		location = draw_markings_for_100 (dc, locations3, _T ("2"), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [100], _T ("3"), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [200], _T ("4"), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [300], _T ("5"), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [400], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [500], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [600], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [700], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [800], _T (""), x, location);
+		draw_text_marker (dc, _T ("1k"), x + locations3 [900]);
+		location = draw_markings_for_100 (dc, locations4, _T ("2"), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [100], _T ("3"), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [200], _T ("4"), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [300], _T ("5"), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [400], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [500], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [600], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [700], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [800], _T (""), x, location);
+		draw_text_marker (dc, _T ("10k"), x + locations4 [900]);
+		location = draw_markings_for_100 (dc, locations5, _T ("20"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [100], _T ("30"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [200], _T ("40"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [300], _T ("50"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [400], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [500], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [600], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [700], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [800], _T (""), x, location);
+		draw_text_marker (dc, _T ("100k"), x + locations5 [900]);
+		location = draw_markings_for_100 (dc, & locations5 [900], _T ("2"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1000], _T ("3"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1100], _T ("4"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1200], _T ("5"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1300], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1400], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1500], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [1600], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1700], _T (""), x, location);
+		draw_text_marker (dc, _T ("1M"), x + locations5 [1800]);
+		location = draw_markings_for_100 (dc, & locations5 [1800], _T ("2"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1900], _T ("3"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2000], _T ("4"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2100], _T ("5"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2200], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2300], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2400], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [2500], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2600], _T (""), x, location);
+		draw_text_marker (dc, _T ("10M"), x + locations5 [2700]);
+		location = draw_markings_for_100 (dc, & locations5 [2700], _T ("2"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2800], _T ("3"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2900], _T ("4"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [3000], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [3100], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [3200], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [3300], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [3400], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [3500], _T (""), x, location);
+		draw_text_marker (dc, _T ("100M"), x + locations5 [3600]);
+		location = draw_markings_for_100 (dc, & locations5 [3600], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [3700], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [3800], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [3800], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [4000], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [4100], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [4200], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [4300], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [4400], _T (""), x, location);
+		draw_text_marker (dc, _T ("1G"), x + locations5 [4500]);
+		location = draw_markings_for_100 (dc, & locations5 [4500], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [4600], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [4700], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [4800], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [4900], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [5000], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [5100], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [5200], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [5300], _T (""), x, location);
+		draw_text_marker (dc, _T ("10G"), x + locations5 [5400]);
+	}
+	ScaleLLD4Up (int height) : Scale (height) {left_index = 10; right_index = 1000;}
+};
+
+class ScaleLLD4Down : public ScaleLLD4Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	ScaleLLD4Down (int height) : ScaleLLD4Up (height) {}
+};
+
+class ScaleLLD00Up : public Scale {
+public:
+	double locations1 [900];
+	double locations2 [300];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return 4.0 + log10 (log10 (1.0 / x));}
+	virtual double getValue (double x) {return 1.0 / pow (10.0, pow (10.0, x - 4.0));}
+	void init_locations (void) {
+		for (int ind = 1; ind <= 800; ind++) {locations1 [ind] = (double) scale_length * (4.0 + log10 (log10 (1.0 / (0.9998 - (double) ind / 1000000.0))));}
+		for (int ind = 0; ind <= 200; ind++) {locations2 [ind] = (double) scale_length * (4.0 + log10 (log10 (1.0 / (0.999 - (double) ind / 100000.0))));}
+		locations1 [0] = locations1 [1] - 100.0;
+		left_index = find_left_index (locations1, 1, 800, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations2, 1, 200, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations1 [0];
+		location = draw_markings_for_100 (dc, locations1, _T (".9997"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations1 [100], _T (".9996"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [200], _T (".9995"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [300], _T (".9994"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [400], _T (".9993"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [500], _T (".9992"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [600], _T (".9991"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [700], _T (".999"), x, location);
+		location = draw_markings_for_100 (dc, locations2, _T (".998"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [100], _T (".997"), x, location, 0, right_index - 100);
+	}
+	ScaleLLD00Up (int height) : Scale (height) {left_index = 1; right_index = 1000;}
+};
+
+class ScaleLLD00Down : public ScaleLLD00Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	ScaleLLD00Down (int height) : ScaleLLD00Up (height) {}
+};
+
+class ScaleLLD01Up : public Scale {
+public:
+	double locations1 [900];
+	double locations2 [300];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return 3.0 + log10 (log10 (1.0 / x));}
+	virtual double getValue (double x) {return 1.0 / pow (10.0, pow (10.0, x - 3.0));}
+	void init_locations (void) {
+		for (int ind = 1; ind <= 800; ind++) {locations1 [ind] = (double) scale_length * (3.0 + log10 (log10 (1.0 / (0.998 - (double) ind / 100000.0))));}
+		for (int ind = 0; ind <= 200; ind++) {locations2 [ind] = (double) scale_length * (3.0 + log10 (log10 (1.0 / (0.99 - (double) ind / 10000.0))));}
+		locations1 [0] = locations1 [1] - 100.0;
+		left_index = find_left_index (locations1, 1, 800, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations2, 1, 200, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations1 [0];
+		location = draw_markings_for_100 (dc, locations1, _T (".997"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations1 [100], _T (".996"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [200], _T (".995"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [300], _T (".994"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [400], _T (".993"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [500], _T (".992"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [600], _T (".991"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [700], _T (".99"), x, location);
+		location = draw_markings_for_100 (dc, locations2, _T (".98"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [100], _T (".97"), x, location, 0, right_index - 100);
+	}
+	ScaleLLD01Up (int height) : Scale (height) {left_index = 1; right_index = 1000;}
+};
+
+class ScaleLLD01Down : public ScaleLLD01Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	ScaleLLD01Down (int height) : ScaleLLD01Up (height) {}
+};
+
+class ScaleLLD02Up : public Scale {
+public:
+	double locations1 [1900];
+	double locations2 [200];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return 2.0 + log10 (log10 (1.0 / x));}
+	virtual double getValue (double x) {return 1.0 / pow (10.0, pow (10.0, x - 2.0));}
+	void init_locations (void) {
+		for (int ind = 1; ind <= 1800; ind++) {locations1 [ind] = (double) scale_length * (2.0 + log10 (log10 (1.0 / (0.98 - (double) ind / 10000.0))));}
+		for (int ind = 0; ind <= 100; ind++) {locations2 [ind] = (double) scale_length * (2.0 + log10 (log10 (1.0 / (0.8 - (double) ind / 1000.0))));}
+		locations1 [0] = locations1 [1] - 100.0;
+		left_index = find_left_index (locations1, 1, 1800, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations2, 1, 100, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations1 [0];
+		location = draw_markings_for_100 (dc, locations1, _T (".97"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations1 [100], _T (".96"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [200], _T (".95"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [300], _T (".94"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [400], _T (".93"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [500], _T (".92"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [600], _T (".91"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [700], _T (".9"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [800], _T (".89"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [900], _T (".88"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1000], _T (".87"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1100], _T (".86"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1200], _T (".85"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1300], _T (".84"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1400], _T (".83"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1500], _T (".82"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1600], _T (".81"), x, location);
+		location = draw_markings_for_100 (dc, & locations1 [1700], _T (".8"), x, location);
+		location = draw_markings_for_100 (dc, locations2, _T (".7"), x, location, 0, right_index);
+	}
+	ScaleLLD02Up (int height) : Scale (height) {left_index = 1; right_index = 1900;}
+};
+
+class ScaleLLD02Down : public ScaleLLD02Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	ScaleLLD02Down (int height) : ScaleLLD02Up (height) {}
+};
+
+class ScaleLLD03Up : public Scale {
+public:
+	double locations [900];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return 1.0 + log10 (log10 (1.0 / x));}
+	virtual double getValue (double x) {return 1.0 / pow (10.0, pow (10.0, x - 1.0));}
+	void init_locations (void) {
+		for (int ind = 1; ind <= 800; ind++) {locations [ind] = (double) scale_length * (1.0 + log10 (log10 (1.0 / (0.9 - (double) ind / 1000.0))));}
+		locations [0] = locations [1] - 100.0;
+		left_index = find_left_index (locations, 1, 800, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations, 1, 800, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations [0];
+		location = draw_markings_for_100 (dc, locations, _T (".8"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations [100], _T (".7"), x, location);
+		location = draw_markings_for_100 (dc, & locations [200], _T (".6"), x, location);
+		location = draw_markings_for_100 (dc, & locations [300], _T (".5"), x, location);
+		location = draw_markings_for_100 (dc, & locations [400], _T (".4"), x, location);
+		location = draw_markings_for_100 (dc, & locations [500], _T (".3"), x, location);
+		location = draw_markings_for_100 (dc, & locations [600], _T (".2"), x, location);
+		location = draw_markings_for_100 (dc, & locations [700], _T (".1"), x, location);
+	}
+	ScaleLLD03Up (int height) : Scale (height) {left_index = 1; right_index = 800;}
+};
+
+class ScaleLLD03Down : public ScaleLLD03Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	ScaleLLD03Down (int height) : ScaleLLD03Up (height) {}
+};
+
+class ScaleLLD04Up : public Scale {
+public:
+	double locations1 [200];
+	double locations2 [1000];
+	double locations3 [1000];
+	double locations4 [1000];
+	double locations5 [5500];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return log10 (log10 (1.0 / x));}
+	virtual double getValue (double x) {return 1.0 / pow (10.0, pow (10.0, x));}
+	void init_locations (void) {
+		for (int ind = 1; ind <= 100; ind++) {locations1 [ind] = (double) scale_length * (log10 (log10 (1.0 / (0.11 - (double) ind / 10000.0))));}
+		for (int ind = 0; ind <= 900; ind++) {locations2 [ind] = (double) scale_length * (log10 (log10 (1.0 / (0.1 - (double) ind / 10000.0))));}
+		for (int ind = 0; ind <= 900; ind++) {locations3 [ind] = (double) scale_length * (log10 (log10 (1.0 / (0.01 - (double) ind / 100000.0))));}
+		for (int ind = 0; ind <= 900; ind++) {locations4 [ind] = (double) scale_length * (log10 (log10 (1.0 / (0.001 - (double) ind / 1000000.0))));}
+		for (int ind = 0; ind <= 900; ind++) {locations5 [ind] = (double) scale_length * (log10 (log10 (1.0 / (0.0001 - (double) ind / 10000000.0))));}
+		for (int ind = 0; ind <= 900; ind++) {locations5 [900 + ind] = (double) scale_length * (log10 (log10 (1.0 / (0.00001 - (double) ind / 100000000.0))));}
+		for (int ind = 0; ind <= 900; ind++) {locations5 [1800 + ind] = (double) scale_length * (log10 (log10 (1.0 / (0.000001 - (double) ind / 1000000000.0))));}
+		for (int ind = 0; ind <= 900; ind++) {locations5 [2700 + ind] = (double) scale_length * (log10 (log10 (1.0 / (0.0000001 - (double) ind / 10000000000.0))));}
+		for (int ind = 0; ind <= 900; ind++) {locations5 [3600 + ind] = (double) scale_length * (log10 (log10 (1.0 / (0.00000001 - (double) ind / 100000000000.0))));}
+		for (int ind = 0; ind <= 900; ind++) {locations5 [4500 + ind] = (double) scale_length * (log10 (log10 (1.0 / (0.000000001 - (double) ind / 1000000000000.0))));}
+		locations1 [0] = locations1 [1] - 100.0;
+		left_index = find_left_index (locations1, 1, 800, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations5, 1, 5400, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations1 [0];
+		location = draw_markings_for_100 (dc, locations1, _T (".1"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, locations2, _T (".09"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [100], _T (".08"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [200], _T (".07"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [300], _T (".06"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [400], _T (".05"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [500], _T (".04"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [600], _T (".03"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [700], _T (".02"), x, location);
+		location = draw_markings_for_100 (dc, & locations2 [800], _T (".01"), x, location);
+		location = draw_markings_for_100 (dc, locations3, _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [100], _T ("8"), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [200], _T ("7"), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [300], _T ("6"), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [400], _T ("5"), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [500], _T ("4"), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [600], _T ("3"), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [700], _T ("2"), x, location);
+		location = draw_markings_for_100 (dc, & locations3 [800], _T ("10-3"), x, location);
+		location = draw_markings_for_100 (dc, locations4, _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [100], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [200], _T ("7"), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [300], _T ("6"), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [400], _T ("5"), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [500], _T ("4"), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [600], _T ("3"), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [700], _T ("2"), x, location);
+		location = draw_markings_for_100 (dc, & locations4 [800], _T (""), x, location);
+		draw_text_marker (dc, _T ("10-4"), x + locations4 [900]);
+		location = draw_markings_for_100 (dc, locations5, _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [100], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [200], _T ("7"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [300], _T ("6"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [400], _T ("5"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [500], _T ("4"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [600], _T ("3"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [700], _T ("2"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [800], _T (""), x, location);
+		draw_text_marker (dc, _T ("10-5"), x + locations5 [900]);
+		location = draw_markings_for_100 (dc, & locations5 [900], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1000], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1100], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1200], _T ("6"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1300], _T ("5"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1400], _T ("4"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1500], _T ("3"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1600], _T ("2"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1700], _T (""), x, location);
+		draw_text_marker (dc, _T ("10-6"), x + locations5 [1800]);
+		location = draw_markings_for_100 (dc, & locations5 [1800], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [1900], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2000], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2100], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2200], _T ("5"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2300], _T ("4"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2400], _T ("3"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2500], _T ("2"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2600], _T (""), x, location);
+		draw_text_marker (dc, _T ("10-7"), x + locations5 [2700]);
+		location = draw_markings_for_100 (dc, & locations5 [2700], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2800], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [2900], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [3000], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [3100], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [3200], _T ("4"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [3300], _T ("3"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [3400], _T ("2"), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [3500], _T (""), x, location);
+		draw_text_marker (dc, _T ("10-8"), x + locations5 [3600]);
+		//location = draw_markings_for_100 (dc, & locations5 [3600], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [3700], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [3800], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [3900], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [4000], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [4100], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [4200], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [4300], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [4400], _T (""), x, location);
+		draw_text_marker (dc, _T ("10-9"), x + locations5 [4500]);
+		//location = draw_markings_for_100 (dc, & locations5 [4500], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [4600], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [4700], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [4800], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [4900], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [5000], _T (""), x, location);
+		//location = draw_markings_for_100 (dc, & locations5 [5100], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [5200], _T (""), x, location);
+		location = draw_markings_for_100 (dc, & locations5 [5300], _T (""), x, location);
+		draw_text_marker (dc, _T ("10-10"), x + locations5 [5400]);
+	}
+	ScaleLLD04Up (int height) : Scale (height) {left_index = 1; right_index = 1000;}
+};
+
+class ScaleLLD04Down : public ScaleLLD04Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	ScaleLLD04Down (int height) : ScaleLLD04Up (height) {}
+};
+
 class ScaleLL0Up : public Scale {
 public:
 	double locations [1500];
@@ -1792,6 +2394,58 @@ public:
 	ScalePDown (int height) : ScalePUp (height) {}
 };
 
+/* GJM -- Extended P2 scales */
+class ScaleP2Up : public Scale {
+public:
+	double locations_1 [1000];
+	double locations_2 [1000];
+	double locations_3 [1000];
+	int left_index;
+	void prepare_locations (void) {
+		for (int ind = 0; ind <= 900; ind++) {
+			double value1 = (double) ind * 0.00001 + 0.99;
+			double value2 = (double) ind * 0.000001 + 0.999;
+			double value3 = (double) ind * 0.0000001 + 0.9999;
+			value1 *= value1; value2 *= value2; value3 *= value3;
+			value1 = 1.0 - value1; value2 = 1.0 - value2; value3 = 1.0 - value3;
+			value1 = sqrt (value1); value2 = sqrt (value2); value3 = sqrt (value3);
+			locations_1 [ind] = (double) scale_length + (double) scale_length + (double) scale_length * log10 (value1);
+			locations_2 [ind] = (double) scale_length + (double) scale_length + (double) scale_length * log10 (value2);
+			locations_3 [ind] = (double) scale_length + (double) scale_length + (double) scale_length * log10 (value3);
+		}
+		double sentinel = 0.0 - (double) scale_length * left_extension;
+		left_index = 0;
+		while (left_index < 899 && locations_3 [left_index + 1] >= sentinel) left_index++;
+	}
+	virtual double getLocation (double x) {return 2.0 + log10 (sqrt (1.0 - x * x));}
+	virtual double getValue (double x) {
+		double ret = pow (10.0, x - 2.0);
+		ret *= ret;
+		return sqrt (1.0 - ret);
+	}
+	virtual void scaleInit (void) {faceUp (); prepare_locations ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations_1 [500];
+		draw_index_location (dc, x + location, _T ("995"));
+		int description = 6;
+		for (int ind = 500; ind < 900; ind += 100) location = draw_markings_for_100 (dc, & locations_1 [ind], wxString :: Format (_T ("99%i"), description++), x, location);
+		description = 1;
+		for (int ind = 0; ind < 900; ind += 100) location = draw_markings_for_100 (dc, & locations_2 [ind], wxString :: Format (_T ("999%i"), description++), x, location);
+		description = 1;
+		for (int ind = 0; ind < 900; ind += 100) {
+			if (ind < left_index) location = draw_markings_for_100 (dc, & locations_3 [ind], wxString :: Format (_T ("9999%i"), description++), x, location, 0, ind + 100 <= left_index ? 100 : left_index - ind);
+		}
+	}
+	ScaleP2Up (int height) : Scale (height) {left_index = 900;}
+};
+
+class ScaleP2Down : public ScaleP2Up {
+public:
+	virtual void scaleInit (void) {faceDown (); prepare_locations ();}
+	ScaleP2Down (int height) : ScaleP2Up (height) {}
+};
+
 class Imperial : public Scale {
 public:
 	double imperial;
@@ -1948,6 +2602,47 @@ public:
 	LDown (int height) : LUp (height) {}
 };
 
+/* GJM -- Ln scale */
+class LnUp : public LogBase {
+public:
+	int left_index, right_index;
+	double locations [2500];
+	virtual double getLocation (double x) {return x / log(10.0);}
+	virtual double getValue (double x) {return log(10.0) * x;}
+	void init_values (void) {
+		for (int ind = 0; ind <= 2400; ind++) locations [ind] = (double) scale_length * (double) ind / log(10.0) / 1000.0;
+		left_index = find_left_index (locations, 0, 2400, (double) scale_length * (1.0 - left_extension));
+		right_index = find_right_index (locations, 0, 2400, (double) scale_length * right_extension);
+	}
+	virtual void scaleInit (void) {faceUp (); init_values ();}
+	virtual void draw (wxDC & dc, double x)
+	{
+		setArialFont (dc);
+		double location;
+		int description = -22;
+		x -= (double) scale_length; location = locations [0];
+		for (int ind = 0; ind < 2400; ind += 100) {
+			if (left_index <= ind + 200) location = draw_markings_for_100 (dc, & locations [ind], wxString :: Format (_T ("%i"), description), x, location, left_index <= ind ? 0 : left_index - ind, 100);
+			description++;
+		}
+		x += (double) scale_length; location = locations [0];
+		for (int ind = 100; ind < 2300; ind += 100) {location = draw_markings_for_100 (dc, & locations [ind], wxString :: Format (_T ("%i"), description++), x, location);}
+		x += (double) scale_length; location = locations [0];
+		for (int ind = 0; ind < 2400; ind += 100) {
+			if (right_index > ind) location = draw_markings_for_100 (dc, & locations [ind], wxString :: Format (_T ("%i"), description), x, location, 0, right_index > ind + 100 ? 100 : right_index - ind);
+			description++;
+		}
+	}
+	LnUp (int height) : LogBase (height) {}
+};
+
+class LnDown : public LnUp {
+public:
+	virtual void scaleInit (void) {faceDown (); init_values ();}
+	LnDown (int height) : LnUp (height) {}
+};
+
+
 class LR : public LogBase {
 public:
 	int left_index, right_index;
@@ -2050,6 +2745,40 @@ public:
 		locations [index++] = (double) scale_length;
 		locations [0] = locations [1] - 100.0;
 	}
+
+	/* GJM -- Added _1 versions for S1 and T1 scales */
+	void init_locations_1 (double multiplier, bool tangent, int to) {
+		int index = 0;
+		for (int degree = 0; degree <= to; degree++) {
+			double angle = (double) degree / 180.0;
+			for (int minute = 0; minute < 60; minute++) {
+				double sub_angle = (double) minute / 10800.0;
+				double value = _PI * (angle + sub_angle);
+				value = tangent ? tan (value) : sin (value);
+				if (value > 0.0) value = log10 (value);
+				value = (double) scale_length + (double) scale_length + (double) scale_length * value * multiplier;
+				locations [index++] = value;
+			}
+		}
+		locations [index++] = (double) scale_length;
+		locations [0] = locations [1] - 100.0;
+	}
+	void init_dec_locations_1 (double multiplier, bool tangent, int to) {
+		int index = 0;
+		for (int degree = 0; degree <= to; degree++) {
+			double angle = (double) degree / 180.0;
+			for (int minute = 0; minute < 100; minute++) {
+				double sub_angle = (double) minute / 18000.0;
+				double value = _PI * (angle + sub_angle);
+				value = tangent ? tan (value) : sin (value);
+				if (value > 0.0) value = log10 (value);
+				value = (double) scale_length + (double) scale_length + (double) scale_length * value * multiplier;
+				locations [index++] = value;
+			}
+		}
+		locations [index++] = (double) scale_length;
+		locations [0] = locations [1] - 100.0;
+	}
 	void init_small_locations (int to) {
 		for (int ind = 1; ind <= to; ind++) {
 			double angle = (double) ind * _PI / 10800.0;
@@ -2068,6 +2797,11 @@ public:
 	void init_tan (double multiplier = 1.0) {init_locations (multiplier, true, 89);}
 	void init_dec_sine (double multiplier = 1.0) {init_dec_locations (multiplier, false, 90);}
 	void init_dec_tan (double multiplier = 1.0) {init_dec_locations (multiplier, true, 89);}
+	/* GJM -- small sine and tangent inits for S1 / T1 scales */
+	void init_small_sine (double multiplier = 1.0) {init_locations_1 (multiplier, false, 90);}
+	void init_small_tan (double multiplier = 1.0) {init_locations_1 (multiplier, true, 89);}
+	void init_small_dec_sine (double multiplier = 1.0) {init_dec_locations_1 (multiplier, false, 90);}
+	void init_small_dec_tan (double multiplier = 1.0) {init_dec_locations_1 (multiplier, true, 89);}
 	double drawing_footer (wxDC & dc, double * markings, int description, double x, double last_drawn, int to, bool next_extent) {
 		double distance = absolute (markings [to] - last_drawn);
 		if (distance < minimum_step) return last_drawn;
@@ -2404,6 +3138,33 @@ public:
 	TrigTDown (int height) : TrigTUp (height) {}
 };
 
+/* GJM -- High accuracy small degree T scales (replaces ST/SRT scale) */
+class TrigT1Up : public TrigBase {
+public:
+	int left_index, right_index;
+	virtual double getLocation (double x) {x = dec_recorrection (x); return 2.0 + log10 (tan (x * _PI / 180.0));}
+	virtual double getValue (double x) {return dec_correction (atan (pow (10.0, x - 2.0)) * 180.0 / _PI);}
+	void init_this (void) {
+		init_small_tan ();
+		left_index = find_left_trig_index (0.0 - left_extension * (double) scale_length);
+		right_index = find_right_trig_index ((double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_this ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = draw_markings_for_10 (dc, locations, 0, x, locations [0], false, left_index != 0 ? left_index : 30, right_index != 6000 ? right_index : 360);
+		if (left_index <= 30) draw_text_marker (dc, _T ("30'"), x + locations [30]);
+		draw_text_marker (dc, _T ("1:30'"), x + locations [90]);
+	}
+	TrigT1Up (int height) : TrigBase (height) {left_index = 5; right_index = 600;}
+};
+
+class TrigT1Down : public TrigT1Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_this ();}
+	TrigT1Down (int height) : TrigT1Up (height) {}
+};
+
 class TrigT2Up : public TrigBase {
 public:
 	int left_index, right_index;
@@ -2494,6 +3255,33 @@ class TrigSTDown : public TrigSTUp {
 public:
 	virtual void scaleInit (void) {faceDown (); init_this ();}
 	TrigSTDown (int height) : TrigSTUp (height) {}
+};
+
+/* GJM -- High accuracy small degree S scales (replaces ST/SRT scale) */
+class TrigS1Up : public TrigBase {
+public:
+	int left_index, right_index;
+	virtual double getLocation (double x) {x = dec_recorrection (x); return 2.0 + log10 (sin (x * _PI / 180.0));}
+	virtual double getValue (double x) {return dec_correction (asin (pow (10.0, x - 2.0)) * 180.0 / _PI);}
+	void init_this (void) {
+		init_small_sine ();
+		left_index = find_left_trig_index (0.0 - left_extension * (double) scale_length);
+		right_index = find_right_trig_index ((double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_this ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = draw_markings_for_10 (dc, locations, 0, x, locations [0], false, left_index != 0 ? left_index : 30, right_index != 6000 ? right_index : 360);
+		if (left_index <= 30) draw_text_marker (dc, _T ("30'"), x + locations [30]);
+		draw_text_marker (dc, _T ("1:30'"), x + locations [90]);
+	}
+	TrigS1Up (int height) : TrigBase (height) {left_index = 5; right_index = 600;}
+};
+
+class TrigS1Down : public TrigS1Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_this ();}
+	TrigS1Down (int height) : TrigS1Up (height) {}
 };
 
 class TrigSDecUp : public TrigBase {
@@ -2593,6 +3381,33 @@ public:
 	TrigTDecDown (int height) : TrigTDecUp (height) {}
 };
 
+/* GJM -- High accuracy small degree S decimal scales (replaces STDec scale) */
+class TrigS1DecUp : public TrigBase {
+public:
+	int left_index, right_index;
+	virtual double getLocation (double x) {return 2.0 + log10 (sin (x * _PI / 180.0));}
+	virtual double getValue (double x) {return asin (pow (10.0, x - 2.0)) * 180.0 / _PI;}
+	void init_this (void) {
+		init_small_dec_sine ();
+		left_index = find_left_trig_index (0.0 - left_extension * (double) scale_length);
+		right_index = find_right_trig_index ((double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_this ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = draw_markings_for_dec_10 (dc, locations, 0, x, locations [0], false, left_index != 0 ? left_index : 50, right_index != 10000 ? right_index : 600);
+		if (left_index <= 50) draw_text_marker (dc, _T ("0.5"), x + locations [50]);
+		draw_text_marker (dc, _T ("1.5"), x + locations [150]);
+	}
+	TrigS1DecUp (int height) : TrigBase (height) {left_index = 5; right_index = 1000;}
+};
+
+class TrigS1DecDown : public TrigS1DecUp {
+public:
+	virtual void scaleInit (void) {faceDown (); init_this ();}
+	TrigS1DecDown (int height) : TrigS1DecUp (height) {}
+};
+
 class TrigT2DecUp : public TrigBase {
 public:
 	int left_index, right_index;
@@ -2683,6 +3498,33 @@ class TrigSTDecDown : public TrigSTDecUp {
 public:
 	virtual void scaleInit (void) {faceDown (); init_this ();}
 	TrigSTDecDown (int height) : TrigSTDecUp (height) {}
+};
+
+/* GJM -- High accuracy small degree T decimal scales (replaces STDec scale) */
+class TrigT1DecUp : public TrigBase {
+public:
+	int left_index, right_index;
+	virtual double getLocation (double x) {return 2.0 + log10 (tan (x * _PI / 180.0));}
+	virtual double getValue (double x) {return atan (pow (10.0, x - 2.0)) * 180.0 / _PI;}
+	void init_this (void) {
+		init_small_dec_tan ();
+		left_index = find_left_trig_index (0.0 - left_extension * (double) scale_length);
+		right_index = find_right_trig_index ((double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_this ();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = draw_markings_for_dec_10 (dc, locations, 0, x, locations [0], false, left_index != 0 ? left_index : 50, right_index != 10000 ? right_index : 600);
+		if (left_index <= 50) draw_text_marker (dc, _T ("0.5"), x + locations [50]);
+		draw_text_marker (dc, _T ("1.5"), x + locations [150]);
+	}
+	TrigT1DecUp (int height) : TrigBase (height) {left_index = 5; right_index = 1000;}
+};
+
+class TrigT1DecDown : public TrigT1DecUp {
+public:
+	virtual void scaleInit (void) {faceDown (); init_this ();}
+	TrigT1DecDown (int height) : TrigT1DecUp (height) {}
 };
 
 class TrigSrUp : public Scale {
@@ -3433,6 +4275,35 @@ class LogDIF : public LogCIF {
 public:
 	virtual void scaleInit (void) {faceDown (); extension_index_shift = log10 (_PI); log_init (-1.0);}
 	LogDIF (int height) : LogCIF (height) {}
+};
+
+/* GJM -- CFI DFI scales */
+class LogCFI : public LogBase {
+public:
+	virtual double getLocation (double x) {return 0.0 - log10 (x / _PI);}
+	virtual double getValue (double x) {return pow (10.0, 0.0 - x) * _PI;}
+	virtual void draw (wxDC & dc, double x) {
+		x -= pi_location;
+		setArialFont (dc);
+		draw_left_log_base (dc, x + (double) scale_length, left_extension_index); //200);
+		draw_right_log_base (dc, x, right_extension_index); //221);
+		draw_index_location (dc, x);
+		draw_pi (dc, x + pi_location);
+		draw_e (dc, x + e_location);
+		draw_c (dc, x + c_location);
+		draw_degree (dc, x + degree_location);
+		x += (double) scale_length;
+		draw_pi (dc, x + pi_location);
+		draw_c1 (dc, x + c1_location);
+	}
+	virtual void scaleInit (void) {faceUp (); extension_index_shift = log10 (_PI); log_init (-1.0);}
+	LogCFI (int height) : LogBase (height) {}
+};
+
+class LogDFI : public LogCFI {
+public:
+	virtual void scaleInit (void) {faceDown (); extension_index_shift = log10 (_PI); log_init (-1.0);}
+	LogDFI (int height) : LogCFI (height) {}
 };
 
 class LogCF10 : public LogBase {
@@ -5140,6 +6011,9 @@ static Sliderule * createSlideruleFromFileReader (SetupFileReader & fr, wxOperat
 		if (fr . id ("scale_DF")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LogDF (fr . int_symbol));}
 		if (fr . id ("scale_CIF")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LogCIF (fr . int_symbol));}
 		if (fr . id ("scale_DIF")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LogDIF (fr . int_symbol));}
+/* GJM -- New CFI DFI scales */
+		if (fr . id ("scale_CFI")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LogCFI (fr . int_symbol));}
+		if (fr . id ("scale_DFI")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LogDFI (fr . int_symbol));}
 		if (fr . id ("scale_CF10")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LogCF10 (fr . int_symbol));}
 		if (fr . id ("scale_DF10")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LogDF10 (fr . int_symbol));}
 		if (fr . id ("scale_CIF10")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LogCIF10 (fr . int_symbol));}
@@ -5204,6 +6078,9 @@ static Sliderule * createSlideruleFromFileReader (SetupFileReader & fr, wxOperat
 		if (fr . id ("scale_Jdk")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new Log_dk_down (15, fr . int_symbol));}
 		if (fr . id ("scale_L")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LUp (fr . int_symbol));}
 		if (fr . id ("scale_L_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LDown (fr . int_symbol));}
+/* GJM -- New Ln scale */
+		if (fr . id ("scale_Ln")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LnUp (fr . int_symbol));}
+		if (fr . id ("scale_Ln_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LnDown (fr . int_symbol));}
 		if (fr . id ("scale_LR1")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LR (fr . int_symbol, true, false));}
 		if (fr . id ("scale_LR2")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LR (fr . int_symbol, false, true));}
 		if (fr . id ("scale_LR12")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LR (fr . int_symbol, true, true));}
@@ -5281,10 +6158,16 @@ static Sliderule * createSlideruleFromFileReader (SetupFileReader & fr, wxOperat
 		}
 		if (fr . id ("scale_T")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigTUp (fr . int_symbol));}
 		if (fr . id ("scale_T_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigTDown (fr . int_symbol));}
+/* GJM -- New high accuracy T1 scales */
+		if (fr . id ("scale_T1")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigT1Up (fr . int_symbol));}
+		if (fr . id ("scale_T1_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigT1Down (fr . int_symbol));}
 		if (fr . id ("scale_T2")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigT2Up (fr . int_symbol));}
 		if (fr . id ("scale_T2_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigT2Down (fr . int_symbol));}
 		if (fr . id ("scale_ST")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigSTUp (fr . int_symbol));}
 		if (fr . id ("scale_ST_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigSTDown (fr . int_symbol));}
+/* GJM -- New high accuracy S1 scales */
+		if (fr . id ("scale_S1")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigS1Up (fr . int_symbol));}
+		if (fr . id ("scale_S1_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigS1Down (fr . int_symbol));}
 		if (fr . id ("scale_Sg")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigSgUp (fr . int_symbol));}
 		if (fr . id ("scale_Sg_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigSgDown (fr . int_symbol));}
 		if (fr . id ("scale_Tg")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigTgUp (fr . int_symbol));}
@@ -5327,14 +6210,23 @@ static Sliderule * createSlideruleFromFileReader (SetupFileReader & fr, wxOperat
 		}
 		if (fr . id ("scale_Tdec")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigTDecUp (fr . int_symbol));}
 		if (fr . id ("scale_Tdec_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigTDecDown (fr . int_symbol));}
+/* GJM -- New high accuracy T1 scales */
+		if (fr . id ("scale_T1dec")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigT1DecUp (fr . int_symbol));}
+		if (fr . id ("scale_T1dec_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigT1DecDown (fr . int_symbol));}
 		if (fr . id ("scale_T2dec")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigT2DecUp (fr . int_symbol));}
 		if (fr . id ("scale_T2dec_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigT2DecDown (fr . int_symbol));}
 		if (fr . id ("scale_STdec")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigSTDecUp (fr . int_symbol));}
 		if (fr . id ("scale_STdec_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigSTDecDown (fr . int_symbol));}
+/* GJM -- New high accuracy S1 scales */
+		if (fr . id ("scale_S1dec")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigS1DecUp (fr . int_symbol));}
+		if (fr . id ("scale_S1dec_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigS1DecDown (fr . int_symbol));}
 		if (fr . id ("scale_ISTd")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigISTdUp (fr . int_symbol));}
 		if (fr . id ("scale_ISTd_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new TrigISTdDown (fr . int_symbol));}
 		if (fr . id ("scale_P")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScalePUp (fr . int_symbol));}
 		if (fr . id ("scale_P_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScalePDown (fr . int_symbol));}
+/* GJM -- New extended P2 scales */
+		if (fr . id ("scale_P2")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleP2Up (fr . int_symbol));}
+		if (fr . id ("scale_P2_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleP2Down (fr . int_symbol));}
 		if (fr . id ("scale_PH")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScalePHUp (fr . int_symbol));}
 		if (fr . id ("scale_PH_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScalePHDown (fr . int_symbol));}
 		if (fr . id ("scale_PH2")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScalePH2Up (fr . int_symbol));}
@@ -5345,6 +6237,27 @@ static Sliderule * createSlideruleFromFileReader (SetupFileReader & fr, wxOperat
 		if (fr . id ("scale_LL_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLDown (fr . int_symbol));}
 		if (fr . id ("scale_LLR")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLRUp (fr . int_symbol));}
 		if (fr . id ("scale_LLR_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLRDown (fr . int_symbol));}
+/* GJM -- New LLD Scales (Log10 Log10) */
+		if (fr . id ("scale_LLD0")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD0Up (fr . int_symbol));}
+		if (fr . id ("scale_LLD1")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD1Up (fr . int_symbol));}
+		if (fr . id ("scale_LLD2")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD2Up (fr . int_symbol));}
+		if (fr . id ("scale_LLD3")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD3Up (fr . int_symbol));}
+		if (fr . id ("scale_LLD4")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD4Up (fr . int_symbol));}
+		if (fr . id ("scale_LLD0_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD0Down (fr . int_symbol));}
+		if (fr . id ("scale_LLD1_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD1Down (fr . int_symbol));}
+		if (fr . id ("scale_LLD2_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD2Down (fr . int_symbol));}
+		if (fr . id ("scale_LLD3_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD3Down (fr . int_symbol));}
+		if (fr . id ("scale_LLD4_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD4Down (fr . int_symbol));}
+		if (fr . id ("scale_LLD00")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD00Up (fr . int_symbol));}
+		if (fr . id ("scale_LLD01")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD01Up (fr . int_symbol));}
+		if (fr . id ("scale_LLD02")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD02Up (fr . int_symbol));}
+		if (fr . id ("scale_LLD03")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD03Up (fr . int_symbol));}
+		if (fr . id ("scale_LLD04")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD04Up (fr . int_symbol));}
+		if (fr . id ("scale_LLD00_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD00Down (fr . int_symbol));}
+		if (fr . id ("scale_LLD01_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD01Down (fr . int_symbol));}
+		if (fr . id ("scale_LLD02_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD02Down (fr . int_symbol));}
+		if (fr . id ("scale_LLD03_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD03Down (fr . int_symbol));}
+		if (fr . id ("scale_LLD04_down")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLLD04Down (fr . int_symbol));}
 		if (fr . id ("scale_LL0")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLL0Up (fr . int_symbol));}
 		if (fr . id ("scale_LL1")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLL1Up (fr . int_symbol));}
 		if (fr . id ("scale_LL2")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new ScaleLL2Up (fr . int_symbol));}
