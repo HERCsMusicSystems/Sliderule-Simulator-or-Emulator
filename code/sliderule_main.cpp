@@ -2620,7 +2620,7 @@ public:
 		setArialFont (dc);
 		double location;
 		int description = -22;
-		x -= (double) scale_length; location = locations [0];
+		x -= locations [2300]; location = locations [0];
 		for (int ind = 0; ind < 2400; ind += 100) {
 			if (left_index <= ind + 200) location = draw_markings_for_100 (dc, & locations [ind], wxString :: Format (_T ("%i"), description), x, location, left_index <= ind ? 0 : left_index - ind, 100);
 			description++;

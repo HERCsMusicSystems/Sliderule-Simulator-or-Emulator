@@ -1,5 +1,5 @@
 sliderule [
-	name ["GJM LLDLg FoldPI (1)"]
+	name ["GJM Duplex (Front)"]
 	location [4 20]
 	length [1000]
 	margin [0.125]
@@ -94,7 +94,7 @@ sliderule [
 ]
 
 sliderule [
-	name ["GJM LLDSm FoldV10 (2)"]
+	name ["GJM Duplex (Back)"]
 	location [4 20]
 	length [1000]
 	margin [0.125]
