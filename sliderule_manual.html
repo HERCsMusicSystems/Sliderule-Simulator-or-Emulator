@@ -241,6 +241,7 @@ If you intend to put just an empty space the it must be followed by a <b>spacer 
 <li><b>slide []</b>: creates a movable rule.
 You can put scales and/or spacers on it by writing necessary commands immediately after.
 You can have as many slides on your slide rule as you wish. All of them move together.</li>
+<li><b>nesting_level [ level ]</b>: sets the level of nesting of paired free slides, which moves together.</li>
 <li><b>free_slide []</b>: same as <b>slide []</b> but your free slides are not connected together. You can move them separately.</li>
 <li><b>free_slide [ number ]</b>: similar to the above but the free slide with the same number move together. The number must be greater than zero to take effect.</li>
 <li><b>rule_colour [ red green blue ]</b>: specified the background colour of your rules (stators, slides and free slides).</li>
@@ -268,6 +269,7 @@ You can have as many slides on your slide rule as you wish. All of them move tog
 The location is specific to scale C folded at PI.</li>
 <li><b>hairline_36010 []</b>: first appearance specifies the beginning of the 36010 hairline, while second specifies its end.
 the location is specific to scale C folded at sqrt (10.0).</li>
+<li><b>hairline_360st []</b>: same as hairline_360, but positioned on the left side of the main hairline. Usefull for ST scale.</li>
 <li><b>hairline_kw []</b>: first appearance specifies the beginning of the kW hairline, while second specifies its end.</li>
 <li><b>hairline_hp []</b>: first appearance specifies the beginning of the HP hairline, while second specifies its end.</li>
 
@@ -295,10 +297,12 @@ It is necessary to precisely control the left and right end of the highlight (de
 <li><b>no_e []</b>: prevents the slide rule from showing the <b>E = 2.7182...</b> marker.</li>
 <li><b>no_c []</b>: prevents the slide rule from showing the <b>C = 1.1283...</b> marker.</li>
 <li><b>no_c1 []</b>: prevents the slide rule from showing the <b>C1 = 3.5682...</b> marker.</li>
+<li><b>no_degree []</b>: prevents the slide rule from showing the <b>q = 0.01745...</b> marker (if it was previously switched-on).</li>
 <li><b>draw_pi []</b>: causes the slide rule to show the <b>PI = 3.1415...</b> marker (if it was previously switched-off).</li>
 <li><b>draw_e []</b>: causes the slide rule to show the <b>E = 2.7182...</b> marker (if it was previously switched-off).</li>
 <li><b>draw_c []</b>: causes the slide rule to show the <b>C = 1.1283...</b> marker (if it was previously switched-off).</li>
 <li><b>draw_c1 []</b>: causes the slide rule to show the <b>C1 = 3.5682...</b> marker (if it was previously switched-off).</li>
+<li><b>draw_degree []</b>: causes the slide rule to show the <b>q = 0.01745...</b> marker.</li>
 <li><b>marker_height [ index fraction ]</b>: adjusts the height of markers on the scales. The default heights are: [0 0.5] [1 0.4] [2 0.3] [3 0.2] [4 1.0].</li>
 <li><b>horizontal_line [ index ]</b>: turns-on drawing of the horizontal lines on scales at the height of the specified marker (as specified above).</li>
 <li><b>no_horizontal_line [ indedx ]</b>: turns-off drawing of the horizontal lines on scales at the height of the specified marker.</li>
