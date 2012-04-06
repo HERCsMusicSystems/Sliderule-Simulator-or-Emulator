@@ -241,7 +241,6 @@ If you intend to put just an empty space the it must be followed by a <b>spacer 
 <li><b>slide []</b>: creates a movable rule.
 You can put scales and/or spacers on it by writing necessary commands immediately after.
 You can have as many slides on your slide rule as you wish. All of them move together.</li>
-<li><b>nesting_level [ level ]</b>: sets the level of nesting of paired free slides, which moves together.</li>
 <li><b>free_slide []</b>: same as <b>slide []</b> but your free slides are not connected together. You can move them separately.</li>
 <li><b>free_slide [ number ]</b>: similar to the above but the free slide with the same number move together. The number must be greater than zero to take effect.</li>
 <li><b>rule_colour [ red green blue ]</b>: specified the background colour of your rules (stators, slides and free slides).</li>
@@ -269,7 +268,6 @@ You can have as many slides on your slide rule as you wish. All of them move tog
 The location is specific to scale C folded at PI.</li>
 <li><b>hairline_36010 []</b>: first appearance specifies the beginning of the 36010 hairline, while second specifies its end.
 the location is specific to scale C folded at sqrt (10.0).</li>
-<li><b>hairline_360st []</b>: same as hairline_360, but positioned on the left side of the main hairline. Usefull for ST scale.</li>
 <li><b>hairline_kw []</b>: first appearance specifies the beginning of the kW hairline, while second specifies its end.</li>
 <li><b>hairline_hp []</b>: first appearance specifies the beginning of the HP hairline, while second specifies its end.</li>
 
@@ -297,12 +295,10 @@ It is necessary to precisely control the left and right end of the highlight (de
 <li><b>no_e []</b>: prevents the slide rule from showing the <b>E = 2.7182...</b> marker.</li>
 <li><b>no_c []</b>: prevents the slide rule from showing the <b>C = 1.1283...</b> marker.</li>
 <li><b>no_c1 []</b>: prevents the slide rule from showing the <b>C1 = 3.5682...</b> marker.</li>
-<li><b>no_degree []</b>: prevents the slide rule from showing the <b>q = 0.01745...</b> marker (if it was previously switched-on).</li>
 <li><b>draw_pi []</b>: causes the slide rule to show the <b>PI = 3.1415...</b> marker (if it was previously switched-off).</li>
 <li><b>draw_e []</b>: causes the slide rule to show the <b>E = 2.7182...</b> marker (if it was previously switched-off).</li>
 <li><b>draw_c []</b>: causes the slide rule to show the <b>C = 1.1283...</b> marker (if it was previously switched-off).</li>
 <li><b>draw_c1 []</b>: causes the slide rule to show the <b>C1 = 3.5682...</b> marker (if it was previously switched-off).</li>
-<li><b>draw_degree []</b>: causes the slide rule to show the <b>q = 0.01745...</b> marker.</li>
 <li><b>marker_height [ index fraction ]</b>: adjusts the height of markers on the scales. The default heights are: [0 0.5] [1 0.4] [2 0.3] [3 0.2] [4 1.0].</li>
 <li><b>horizontal_line [ index ]</b>: turns-on drawing of the horizontal lines on scales at the height of the specified marker (as specified above).</li>
 <li><b>no_horizontal_line [ indedx ]</b>: turns-off drawing of the horizontal lines on scales at the height of the specified marker.</li>
@@ -339,8 +335,10 @@ Below is the list of all available scales, which you can use to create your own 
 
 <li><b>scale_CF [ height ]</b>: folded C scale (x * PI).</li>
 <li><b>scale_DF [ height ]</b>: folded D scale (x * PI).</li>
-<li><b>scale_CIF [ height ]</b>: reversed and folded C scale (PI / x).</li>
-<li><b>scale_DIF [ height ]</b>: reversed and folded D scale (PI / x).</li>
+<li><b>scale_CIF [ height ]</b>: reversed then folded C scale (PI / x).</li>
+<li><b>scale_DIF [ height ]</b>: reversed then folded D scale (PI / x).</li>
+<li><b>scale_CFI [ height ]</b>: folded then reversed C scale (1 / (x * PI)).</li>
+<li><b>scale_DFI [ height ]</b>: folded then reversed D scale (1 / (x * PI)).</li>
 
 <li><b>scale_CF10 [ height ]</b>: folded C scale (x * sqrt (10.0)).</li>
 <li><b>scale_DF10 [ height ]</b>: folded D scale (x * sqrt (10.0)).</li>
@@ -402,6 +400,8 @@ Below is the list of all available scales, which you can use to create your own 
 
 <li><b>scale_L [ height ]</b>: Logarithmic scale (log10 (x)).</li>
 <li><b>scale_L_down [height ]</b>: same as above but upside down.</li>
+<li><b>scale_Ln [ height ]</b>: Logarithmic scale (ln (x)).</li>
+<li><b>scale_Ln_down [height ]</b>: same as above but upside down.</li>
 
 <li><b>scale_LR1 [ height ]</b>: lower half of the L scale (log10 (x) * 0.5).</li>
 <li><b>scale_LR2 [ height ]</b>: upper half of the L scale (0.5 + log10 (x) * 0.5).</li>
@@ -421,26 +421,34 @@ Below is the list of all available scales, which you can use to create your own 
 <li><b>scale_imperial [ height ]</b>: inches.</li>
 <li><b>scale_imperial_down [ height ]</b>: same as above but upside down.</li>
 
-<li><b>scale_S [ height ]</b>: sine scale (sin (x)) marked in degrees and minutes.</li>
+<li><b>scale_S [ height ]</b>: sine scale (sin (x)) marked in degrees and minutes for range 5 deg 40 mins to 90 deg.</li>
 <li><b>scale_S_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_S1 [ height ]</b>: sine scale (sin (x)) marked in degrees and minutes for range 35 mins to 5 deg 40 mins.</li>
+<li><b>scale_S1_down [ height ]</b>: same as above but upside down.</li>
 <li><b>scale_SA [ height ]</b>: sine scale aligned with A scale (sin (x)) marked in degrees and minutes.</li>
 <li><b>scale_SB [ height ]</b> or <b>scale_SA_down [ height ]</b>: same as above but upside down.</li>
-<li><b>scale_T [ height ]</b>: tangent scale (tan (x)) marked in degrees and minutes.</li>
+<li><b>scale_T [ height ]</b>: tangent scale (tan (x)) marked in degrees and minutes for range 5 deg 40 mins to 45 deg.</li>
 <li><b>scale_T_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_T1 [ height ]</b>: tangent scale (tan (x)) marked in degrees and minutes for range 35 mins to 5 deg 40 mins.</li>
+<li><b>scale_T1_down [ height ]</b>: same as above but upside down.</li>
 <li><b>scale_TA [ height ]</b>: tangent scale aligned with A scale (tan (x)) marked in degrees and minutes.</li>
 <li><b>scale_TB [ height ]</b>: same as above but upside down.</li>
 
 <li><b>scale_T2 [ height ]</b>: tangent scale (tan (x)) for angles 45 degrees and above, marekd in degrees and minutes.</li>
 <li><b>scale_T2_down [ height ]</b>: same as above but upside down.</li>
-<li><b>scale_ST [ height ]</b>: sine and tangent scale for angles below 6 degrees, marked in degrees and minutes.</li>
-<li><b>scale_ST_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_ST [ height ]</b>: sine and tangent scale for angles below 6 degrees, marked in degrees and minutes (less accurate than S1/T1).</li>
+<li><b>scale_ST_down [ height ]</b>: same as above but upside down (less accurate than S1_down/T1_down).</li>
 
-<li><b>scale_Sdec [ height ]</b>: sine scale (sin (x)) marked in degrees and tenths of a degree.</li>
+<li><b>scale_Sdec [ height ]</b>: sine scale (sin (x)) marked in degrees and tenths of a degree for range 5.7 to 90 deg.</li>
 <li><b>scale_Sdec_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_S1dec [ height ]</b>: sine scale (sin (x)) marked in degrees and tenths of a degree for range .57 to 5.7 deg.</li>
+<li><b>scale_S1dec_down [ height ]</b>: same as above but upside down.</li>
 <li><b>scale_SAdec [ height ]</b>: sine scale aligned with A scale (sin (x)) marked in degrees and tenths of a degree.</li>
 <li><b>scale_SBdec [ height ]</b> or <b>scale_SAdec_down [ height ]</b>: same as above but upside down.</li>
-<li><b>scale_Tdec [ height ]</b>: tangent scale (tan (x)) marked in degrees and tenths of a degree.</li>
+<li><b>scale_Tdec [ height ]</b>: tangent scale (tan (x)) marked in degrees and tenths of a degree for range 5.7 to 45 deg.</li>
 <li><b>scale_Tdec_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_T1dec [ height ]</b>: tangent scale (tan (x)) marked in degrees and tenths of a degree for range .57 to 5.7 deg.</li>
+<li><b>scale_T1dec_down [ height ]</b>: same as above but upside down.</li>
 <li><b>scale_TAdec [ height ]</b>: tangent scale aligned with A scale (tan (x)) marked in degrees and tenths of a degree.</li>
 <li><b>scale_TBdec [ height ]</b>: same as above but upside down.</li>
 
@@ -469,11 +477,13 @@ The read-outs do not provide output value for this scale.
 </li>
 <li><b>scale_ISTd_down [ height]</b>: same as above but upside down.</li>
 
-<li><b>scale_P [ height ]</b>: pythagorean scale (sqrt (1.0 - x ^ 2)).</li>
+<li><b>scale_P [ height ]</b>: pythagorean scale (sqrt (1.0 - x ^ 2)) for range from .995 to 0.</li>
 <li><b>scale_P_down [ height ]</b>: same as above but upside down.</li>
-<li><b>scale_PH [ height ]</b>: pythagorean scale (sqrt (x ^ 2 - 1.0) for range from 1.005 to 1.5).</li>
+<li><b>scale_P2 [ height ]</b>: pythagorean scale (sqrt (1.0 - x ^ 2)) for range from .99995 to .995.</li>
+<li><b>scale_P2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_PH [ height ]</b>: pythagorean scale (sqrt (x ^ 2 + 1.0) for range from 1.005 to 1.5).</li>
 <li><b>scale_PH_down [ height ]</b>: same as above but upside down.</li>
-<li><b>scale_PH2 [ height ]</b>: pythagorean scale (sqrt (x ^ 2 - 1.0) for range from 1.4 to 10.0).</li>
+<li><b>scale_PH2 [ height ]</b>: pythagorean scale (sqrt (x ^ 2 + 1.0) for range from 1.4 to 10.0).</li>
 <li><b>scale_PH2_down [ height ]</b>: same as above but upside down.</li>
 <li><b>scale_PT [ height ]</b>: pythagorean scale (sqrt (1.0 + x ^ 2)).</li>
 <li><b>scale_PT_down [ height ]</b>: same as above but upside down.</li>
@@ -500,6 +510,28 @@ The read-outs do not provide output value for this scale.
 <li><b>scale_LL02_down [ height ]</b>: same as above but upside down.</li>
 <li><b>scale_LL03 [ height ]</b>: log-log scale (ln (x)) for range from 0.4 to 0.0001.</li>
 <li><b>scale_LL03_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_LLD0 [ height ]</b>: log-log scale (log (x)) for range from 1.0003 to 1.003.</li>
+<li><b>scale_LLD0_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD1 [ height ]</b>: log-log scale (log (x)) for range from 1.003 to 1.03.</li>
+<li><b>scale_LLD1_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD2 [ height ]</b>: log-log scale (log (x)) for range from 1.03 to 1.26.</li>
+<li><b>scale_LLD2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD3 [ height ]</b>: log-log scale (log (x)) for range from 1.26 to 10.0</li>
+<li><b>scale_LLD3_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD4 [ height ]</b>: log-log scale (log (x)) for range from 10.0 to 10,000,000,000.</li>
+<li><b>scale_LLD4_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_LLD00 [ height ]</b>: log-log scale (log (x)) for range from 0.99977 to 0.9977.</li>
+<li><b>scale_LLD00_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD01 [ height ]</b>: log-log scale (log (x)) for range from 0.9977 to 0.977.</li>
+<li><b>scale_LLD01_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD02 [ height ]</b>: log-log scale (log (x)) for range from 0.977 to 0.76.</li>
+<li><b>scale_LLD02_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD03 [ height ]</b>: log-log scale (log (x)) for range from 0.76 to 0.1.</li>
+<li><b>scale_LLD03_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD04 [ height ]</b>: log-log scale (log (x)) for range from 0.1 to 0.0000000001.</li>
+<li><b>scale_LLD04_down [ height ]</b>: same as above but upside down.</li>
 
 <li><b>scale_SINH1 [ height ]</b>: lower part of the hyperbolic sine.</li>
 <li><b>scale_SINH1_down [ height ]</b>: same as above but upside down.</li>
