@@ -1,0 +1,23 @@
+sliderule [
+
+	name ["NESTED SLIDES"]
+	nesting_level [5]
+
+
+	stator []
+	spacer [24]
+
+	free_slide [10]
+	spacer [24]
+
+	free_slide [15]
+	spacer [24]
+
+	free_slide [10]
+	spacer [24]
+
+	stator []
+	spacer [24]
+
+
+]
