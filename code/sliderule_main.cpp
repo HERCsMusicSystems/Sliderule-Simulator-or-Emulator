@@ -1802,6 +1802,7 @@ public:
 		left_index = find_left_index (locations, 10, 1400, 0.0 - (double) scale_length * left_extension);
 		right_index = find_right_index (locations, 10, 1400, (double) scale_length * (1.0 + right_extension));
 	}
+
 	virtual void scaleInit (void) {faceUp (); init_locations ();}
 	virtual void draw (wxDC & dc, double x) {
 		setArialFont (dc);
@@ -3076,6 +3077,7 @@ public:
 	virtual double getLocation (double x) {x = dec_recorrection (x); return 1.0 + log10 (tan (x * _PI / 180.0)) / fraction - shift;}
 	virtual double getValue (double x) {x += shift; return dec_correction (atan (pow (10.0, x * fraction - fraction)) * 180.0 / _PI);}
 	void init_this (void) {
+
 		init_tan (1.0 / fraction);
 		left_index = find_left_trig_index (0.0 - (left_extension - shift) * (double) scale_length);
 		right_index = find_right_trig_index ((double) scale_length * (1.0 + right_extension + shift));
@@ -7039,7 +7041,7 @@ public:
 	void OnAbout (wxCommandEvent & event) {
 		if (internal_check_update) return;
 		wxMessageDialog dialog (this,
-			_T ("Slide Rule Emulator.\nVersion: 20th August 2011.\nWritten by Robert Wolf.\nEmail: robert.wolf@hercsmusicsystems.com\nWebsite: http://www.hercsmusicsystems.com"),
+			_T ("Slide Rule Emulator.\nVersion: 1st May 2012.\nWritten by Robert Wolf.\nContribution by Greg McClure.\nEmail: robert.wolf@hercsmusicsystems.com\nWebsite: http://www.hercsmusicsystems.com"),
 			_T ("Slide Rule Emulator INFO"));
 		dialog . ShowModal ();
 	}
