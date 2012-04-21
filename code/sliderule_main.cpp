@@ -649,7 +649,7 @@ public:
 	bool markings_increasing;
 	bool inactive;
 	bool reversed;
-	bool no_pi, no_e, no_c, no_c1, no_degree;
+	bool no_pi, no_e, no_c, no_c1, no_degree, no_m, no_mm;
 	bool draw_lines [16];
 	double marker_fractions [16];
 	double left_horizontal_extension, right_horizontal_extension;
@@ -878,7 +878,15 @@ public:
 		draw_line (dc, get_bordercolour (x), x, y2, y_base);
 		dc . DrawText (_T ("q"), x + (reversed ? - dc . GetTextExtent (_T ("q")) . x - 4 : 4), font_y);
 	}
-//	void drawer (wxDC & dc, double x) {local_x = x; draw (dc, x); if (inactive) return; draw_horizontal_lines (dc, x);}
+	void draw_m (wxDC & dc, double x) {
+		if (no_m) return;
+		draw_line (dc, get_bordercolour (x), x, y2, y_base);
+		dc . DrawText (_T ("M"), x + (reversed ? - dc . GetTextExtent (_T ("M")) . x - 4 : 4), font_y);
+	}
+	void draw_mm (wxDC & dc, double x) {
+		if (no_mm) return;
+		draw_thin_line (dc, get_bordercolour (x), x, y2, y_base);
+	}
 	void drawer (wxDC & dc, double x) {local_x = x; draw (dc, x); draw_horizontal_lines (dc, x);}
 	Scale (int height) {
 		local_x = 0;
@@ -891,6 +899,7 @@ public:
 		reversed = false;
 		no_pi = no_e = no_c = no_c1 = false;
 		no_degree = true;
+		no_m = no_mm = true;
 		left_text_pixel_shift = right_text_pixel_shift = 0;
 		left_text_relative_shift = right_text_relative_shift = 0.0;
 		left_extension = right_extension = 0.0;
@@ -927,6 +936,8 @@ public:
 	double c_location;
 	double c1_location;
 	double degree_location;
+	double m_location;
+	double mm_location;
 	double extension_index_shift;
 	int left_extension_index;
 	int right_extension_index;
@@ -967,6 +978,8 @@ public:
 		c_location = multiplier * log10 (1.0 / sqrt (_PI / 4.0));
 		c1_location = c_location + multiplier * 0.5;
 		degree_location = multiplier * log10 (_PI / 1.8);
+		m_location = multiplier * log10 (100.0 / _PI);
+		mm_location = multiplier * log10 (100.0 * _PI / 4.0);
 		if (multiplier < 0.0) reversed = true;
 		prepare_extensions (extension_multiplier, 1000);
 	}
@@ -4531,8 +4544,10 @@ public:
 		setArialFont (dc);
 		draw_log_base (dc, x);
 		draw_log_base (dc, x + half_scale);
-		draw_pi (dc, x + pi_location); draw_pi (dc, x + pi_location + half_scale);
+		draw_pi (dc, x + pi_location); if (no_m) draw_pi (dc, x + pi_location + half_scale);
 		draw_e (dc, x + e_location); draw_e (dc, x + e_location + half_scale);
+		draw_m (dc, x + m_location);
+		draw_mm (dc, x + mm_location);
 		draw_index_location (dc, x);
 		if (left_extension_index < 0) return;
 		REVERSE_MARKERS;
@@ -4560,8 +4575,10 @@ public:
 		draw_index_location (dc, x);
 		draw_log_base (dc, x + (double) scale_length);
 		draw_log_base (dc, x + half_scale);
-		draw_pi (dc, x + pi_location + (double) scale_length); draw_pi (dc, x + pi_location + half_scale);
+		draw_pi (dc, x + pi_location + (double) scale_length); if (no_m) draw_pi (dc, x + pi_location + half_scale);
 		draw_e (dc, x + e_location + (double) scale_length); draw_e (dc, x + e_location + half_scale);
+		draw_m (dc, x + m_location + (double) scale_length);
+		draw_mm (dc, x + mm_location + (double) scale_length);
 		draw_index_location (dc, x + (double) scale_length);
 		if (left_extension_index < 0) return;
 		x += (double) scale_length;
@@ -5323,7 +5340,7 @@ public:
 	Hairline s_hairline, d_hairline, hairline_360, hairline_36010, hairline_360st, metric_kw_hairline, mechanical_kw_hairline, metric_hp_hairline, mechanical_hp_hairline;
 	int number_of_extra_hairlines;
 	HairlinePointer * extra_hairlines;
-	bool no_pi, no_e, no_c, no_c1, no_degree;
+	bool no_pi, no_e, no_c, no_c1, no_degree, no_m, no_mm;
 	bool draw_lines [16];
 	double marker_fractions [16];
 	double left_extension, right_extension;
@@ -5407,7 +5424,7 @@ public:
 		if (scale == NULL) return NULL;
 		if (root != NULL) {
 			scale -> position_scale (root -> stator ? rule_y - root -> y : rule_y, scale_length, root -> empty_space ? background_marker_colour : marker_colour, hairline_colour, root -> empty_space ? background_colour : rule_colour, root -> empty_space ? background_lp : root -> lcp, root -> empty_space ? background_lp : root -> hairline_lp);
-			scale -> no_pi = this -> no_pi; scale -> no_e = this -> no_e; scale -> no_c = this -> no_c; scale -> no_c1 = this -> no_c1; scale -> no_degree = this -> no_degree;
+			scale -> no_pi = this -> no_pi; scale -> no_e = this -> no_e; scale -> no_c = this -> no_c; scale -> no_c1 = this -> no_c1; scale -> no_degree = this -> no_degree; scale -> no_m = this -> no_m; scale -> no_mm = this -> no_mm;
 			scale -> left_extension = left_extension; scale -> right_extension = right_extension;
 			for (int ind = 0; ind < 16; ind++) {scale -> draw_lines [ind] = this -> draw_lines [ind]; scale -> marker_fractions [ind] = this -> marker_fractions [ind];}
 			scale -> next = root -> root;
@@ -5653,6 +5670,7 @@ public:
 		left_extension = right_extension = 0.0;
 		no_pi = no_e = no_c = no_c1 = false;
 		no_degree = true;
+		no_m = no_mm = true;
 		for (int ind = 0; ind < 16; ind++) {draw_lines [ind] = false; marker_fractions [ind] = 1.0;}
 		marker_fractions [0] = 0.5; marker_fractions [1] = 0.4; marker_fractions [2] = 0.3; marker_fractions [3] = 0.2;
 		name = _T ("Slide Rule");
@@ -6520,11 +6538,15 @@ static Sliderule * createSlideruleFromFileReader (SetupFileReader & fr, wxOperat
 		if (fr . id ("no_c")) slide_rule -> no_c = true;
 		if (fr . id ("no_c1")) slide_rule -> no_c1 = true;
 		if (fr . id ("no_degree")) slide_rule -> no_degree = true;
+		if (fr . id ("no_m")) slide_rule -> no_m = true;
+		if (fr . id ("no_mm")) slide_rule -> no_mm = true;
 		if (fr . id ("draw_pi")) slide_rule -> no_pi = false;
 		if (fr . id ("draw_e")) slide_rule -> no_e = false;
 		if (fr . id ("draw_c")) slide_rule -> no_c = false;
 		if (fr . id ("draw_c1")) slide_rule -> no_c1 = false;
 		if (fr . id ("draw_degree")) slide_rule -> no_degree = false;
+		if (fr . id ("draw_m")) slide_rule -> no_m = false;
+		if (fr . id ("draw_mm")) slide_rule -> no_mm = false;
 		if (fr . id ("marker_height")) {
 			if (! fr . get_int ()) return slide_rule;
 			int index = fr . int_symbol;
