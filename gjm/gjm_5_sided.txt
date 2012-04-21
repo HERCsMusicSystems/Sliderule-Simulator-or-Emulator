@@ -365,7 +365,7 @@ sliderule [
 ]
 
 sliderule [
-	name ["GJM Misc1 TrigDec (5)"]
+	name ["GJM Misc TrigDec (5)"]
 	location [4 20]
 	length [1000]
 	margin [0.125]
