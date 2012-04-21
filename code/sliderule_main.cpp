@@ -1802,7 +1802,6 @@ public:
 		left_index = find_left_index (locations, 10, 1400, 0.0 - (double) scale_length * left_extension);
 		right_index = find_right_index (locations, 10, 1400, (double) scale_length * (1.0 + right_extension));
 	}
-
 	virtual void scaleInit (void) {faceUp (); init_locations ();}
 	virtual void draw (wxDC & dc, double x) {
 		setArialFont (dc);
@@ -3077,7 +3076,6 @@ public:
 	virtual double getLocation (double x) {x = dec_recorrection (x); return 1.0 + log10 (tan (x * _PI / 180.0)) / fraction - shift;}
 	virtual double getValue (double x) {x += shift; return dec_correction (atan (pow (10.0, x * fraction - fraction)) * 180.0 / _PI);}
 	void init_this (void) {
-
 		init_tan (1.0 / fraction);
 		left_index = find_left_trig_index (0.0 - (left_extension - shift) * (double) scale_length);
 		right_index = find_right_trig_index ((double) scale_length * (1.0 + right_extension + shift));
@@ -5340,9 +5338,13 @@ public:
 		root -> x_scale_position = this -> x + (int) ((double) scale_length * marginal_factor);
 		root -> x = root -> x_scale_position - (int) ((double) scale_length * left);
 	}
+	void insertBlankSpacer (int height = 1) {
+		insertSpacer (height);
+		for (int ind = 0; ind < 16; ind++) {root -> root -> draw_lines [ind] = false;}
+	}
 	Rule * insertRule (int channel_index = 0) {
-		if (root != NULL && ! working_no_borderline) insertSpacer ();
-		if (root != NULL) insertSpacer (os_compensation);
+		if (root != NULL && ! working_no_borderline) insertBlankSpacer ();
+		if (root != NULL) insertBlankSpacer (os_compensation);
 		working_no_borderline = no_borderline;
 		root = new Rule (root);
 		apply_visible_margins (marginal_factor, marginal_factor);
@@ -5359,7 +5361,7 @@ public:
 		root -> background_colour = background_colour;
 		root -> no_borderline = this -> no_borderline;
 		root -> motion_multiplier = this -> motion_multiplier;
-		if (! no_borderline) insertSpacer ();
+		if (! no_borderline) insertBlankSpacer ();
 		return root;
 	}
 	void resize_length (int new_length) {
@@ -5390,8 +5392,8 @@ public:
 		}
 	}
 	void close (void) {
-		if (! no_borderline) insertSpacer ();
-		insertSpacer (os_compensation);
+		if (! no_borderline) insertBlankSpacer ();
+		insertBlankSpacer (os_compensation);
 		initialise_lanczos_colours (hairline_lp, rule_colour . red, rule_colour . green, rule_colour . blue, hairline_colour . red, hairline_colour . green, hairline_colour . blue);
 		initialise_lanczos_colours (other_hairlines_lp, rule_colour . red, rule_colour . green, rule_colour . blue, multi_hairlines_colour . red, multi_hairlines_colour . green, multi_hairlines_colour . blue);
 		initialise_lanczos_colours (background_lp, background_colour . red, background_colour . green, background_colour . blue, background_marker_colour . red, background_marker_colour . green, background_marker_colour . blue);

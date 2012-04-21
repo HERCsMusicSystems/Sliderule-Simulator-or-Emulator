@@ -31,6 +31,7 @@ sliderule [
 	scale_C [20]
 
 	channel []
+	no_horizontal_line [4]
 	rule_visible_margins [0.06 0.06]
 	spacer [8]
 	spacer [12]
@@ -39,11 +40,10 @@ sliderule [
 	spacer [4]
 	highlight [46 0 0]
 	highlight_extensions [0.06 0.06]
-	no_horizontal_line [4]
 	scale_extensions [0.04 0.04]
 	scale_metric_down [300.0 20]
-	horizontal_line [4]
 	spacer [8]
+	horizontal_line [4]
 
 	stator []
 	scale_D [20]
@@ -101,6 +101,7 @@ sliderule [
 	right_description ["T" 14]
 
 	channel []
+	no_horizontal_line [4]
 	rule_visible_margins [0.06 0.06]
 	spacer [8]
 	spacer [12]
@@ -109,11 +110,10 @@ sliderule [
 	spacer [4]
 	highlight [46 0 0]
 	highlight_extensions [0.06 0.06]
-	no_horizontal_line [4]
 	scale_extensions [0.04 0.04]
 	scale_metric_down [300.0 20]
-	horizontal_line [4]
 	spacer [8]
+	horizontal_line [4]
 
 	stator []
 	scale_extension [0.055 0.055]
