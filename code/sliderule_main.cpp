@@ -29,6 +29,9 @@
 
 #define _E        2.71828182845904523536
 #define _PI       3.14159265358979323846
+#define _MAXITER  1000
+#define _ACCURACY 0.0000000000001
+#define _OOBVALUE 1000000000.0
 
 #define DONATION_MADE "I_made_my_donation"
 #define DONATION_FREQUENCY 19
@@ -1223,7 +1226,7 @@ public:
 			nextSum /= n;
 			prevValue = value;
 			value += nextSum;
-		} while ((value != prevValue) && (n <= 1000));
+		} while ((value != prevValue) && (n <= _MAXITER));
 		return value;
 	}
 	// Hyper Geometric Function 2,1
@@ -1256,9 +1259,8 @@ public:
 	{
         double low, high, mid, midgma, deltamax, temp;
 		int loop;
-		double divzero = 0.0;
 
-        if ((x < 0.0) || (x >= 1.0)) return 1.0/divzero;
+        if ((x < 0.0) || (x >= 1.0)) return _OOBVALUE;
 		if (x == 0.0) return 0.0;
         low = 0.0;
 		high = 1.0;
@@ -1269,10 +1271,10 @@ public:
 			high = high * 2.0;
 			temp = IncompleteGammaFunction(a, high);
 		}
-        deltamax = high * 0.0000000000001;
+        deltamax = high * _ACCURACY;
         double delta = high - low;
 		loop = 0;
-        while ((abs(delta) > deltamax) && (loop <= 1000))
+        while ((abs(delta) > deltamax) && (loop <= _MAXITER))
         {
             mid = (low + high) / 2.0;
             midgma = IncompleteGammaFunction(a, mid);
@@ -1288,7 +1290,6 @@ public:
     double LogGammaF(double x) { return LnGammaF(x)/log(10.0); }
 	double InvLogGammaF(double x) { return InvLnGammaF(x * log(10.0)); }
 	double LnGammaF(double x) {
-		double divzero = 0;
         double xx = x;
         double c[] =
         {
@@ -1302,7 +1303,7 @@ public:
 	        -3617.0/122400.0
         };
         int uppity = 0;
-        if (x <= 0) return (double) 1.0/divzero;
+        if (x <= 0) return (double) _OOBVALUE;
         if (x < 20) uppity = (int) (20 - x);
         xx = x + uppity;
         double z = 1.0 / (xx * xx);
@@ -1326,16 +1327,15 @@ public:
     { // must be >= 0 [>= LnGamma(2)]
         double low, high, mid, midgma, deltamax;
 		int loop;
-		double divzero = 0;
 
-        if (x < 0) return 1.0/divzero;
+        if (x < 0) return _OOBVALUE;
         low = 2.0;
         if (x > 30) high = x;
         else high = 30.0;
-        deltamax = high * 0.0000000000001;
+        deltamax = high * _ACCURACY;
         double delta = 1.0;
 		loop = 0;
-        while ((abs(delta) > deltamax) && (loop <= 1000))
+        while ((abs(delta) > deltamax) && (loop <= _MAXITER))
         {
             mid = (low + high) / 2.0;
             midgma = LnGammaF(mid);
@@ -1356,9 +1356,8 @@ public:
 	{
         double low, high, mid, midgma, deltamax, temp;
 		int loop;
-		double divzero = 0;
 
-        if ((a < 0.0) || (a > 1.0)) return 1.0/divzero;
+        if ((a < 0.0) || (a > 1.0)) return _OOBVALUE;
 		if ((x == 0.0) || (a == 0.0)) return 0.0;
         low = 0.0;
 		high = 1.0;
@@ -1369,10 +1368,10 @@ public:
 			high = high * 2.0;
 			temp = ChiSquareDist(high, x);
 		}
-        deltamax = high * 0.0000000000001;
+        deltamax = high * _ACCURACY;
         double delta = high - low;
 		loop = 0;
-        while ((abs(delta) > deltamax) && (loop < 1000))
+        while ((abs(delta) > deltamax) && (loop < _MAXITER))
         {
             mid = (low + high) / 2.0;
             midgma = ChiSquareDist(mid, x);
@@ -1388,9 +1387,8 @@ public:
 	{
         double low, high, mid, midst, deltamax, temp;
 		int loop;
-		double divzero = 0;
 
-        if ((a < 0.0) || (a > 1.0)) return 1.0/divzero;
+        if ((a < 0.0) || (a > 1.0)) return _OOBVALUE;
 		if ((x == 0.0) || (a == 0.0)) return 0.0;
         low = 0.0;
 		high = 1.0;
@@ -1401,10 +1399,10 @@ public:
 			high = high * 2.0;
 			temp = StudentsTDist(high, x);
 		}
-        deltamax = high * 0.0000000000001;
+        deltamax = high * _ACCURACY;
         double delta = high - low;
 		loop = 0;
-        while ((abs(delta) > deltamax) && (loop < 1000))
+        while ((abs(delta) > deltamax) && (loop < _MAXITER))
         {
             mid = (low + high) / 2.0;
             midst = StudentsTDist(mid, x);
@@ -1429,7 +1427,6 @@ public:
 	{
         double low, high, mid, midgma, deltamax, temp;
 		int loop;
-		double divzero = 0.0;
 
 		if (x <= 0.0) return 0.0;
         low = 0.0;
@@ -1441,10 +1438,10 @@ public:
 			high = high * 2.0;
 			temp = IncompleteBetaFunction(a, b, high);
 		}
-        deltamax = high * 0.0000000000001;
+        deltamax = high * _ACCURACY;
         double delta = high - low;
 		loop = 0;
-        while ((abs(delta) > deltamax) && (loop <= 1000))
+        while ((abs(delta) > deltamax) && (loop <= _MAXITER))
         {
             mid = (low + high) / 2.0;
             midgma = IncompleteBetaFunction(a, b, mid);
