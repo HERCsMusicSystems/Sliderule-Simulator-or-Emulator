@@ -33,10 +33,9 @@
 #define _ACCURACY 0.0000000000001
 #define _OOBVALUE 1000000000.0
 
-#define DONATION_MADE "I_made_my_donation"
-#define DONATION_FREQUENCY 19
 #define USE_PACKED_COLOURS
 
+<<<<<<< HEAD
 #define SYMBOL_SIZE 1000
 class SetupFileReader {
 public:
@@ -6204,1078 +6203,18 @@ public:
 	}
 	LogK (int height) : LogBase (height) {}
 };
+=======
+#include "setup_file_reader.h"
+#include "config.h"
+#include "lanczos.h"
+>>>>>>> upstream/master
 
-class LogJ : public LogK {
-public:
-	virtual void scaleInit (void) {faceDown (); log_init (1.0 / 3.0);}
-	LogJ (int height) : LogK (height) {}
-};
 
-class LogKI : public LogBase {
-public:
-	virtual double getLocation (double x) {return 1.0 - log10 (x) / 3.0;}
-	virtual double getValue (double x) {return pow (10.0, 3.0 - x * 3.0);}
-	virtual void scaleInit (void) {faceUp (); log_init (-1.0 / 3.0);}
-	virtual void draw (wxDC & dc, double x) {
-		setArialFont (dc);
-		draw_index_location (dc, x);
-		draw_log_base (dc, x + (double) scale_length);
-		draw_log_base (dc, x + (double) scale_length * 2.0 / 3.0);
-		draw_log_base (dc, x + (double) scale_length / 3.0);
-		draw_index_location (dc, x + (double) scale_length);
-		if (left_extension_index < 0) return;
-		x += (double) scale_length;
-		REVERSE_MARKERS;
-		draw_left_log_base (dc, reversed ? x - (double) scale_length / 3.0 : x + (double) scale_length / 3.0, left_extension_index);
-		draw_right_log_base (dc, reversed ? x + (double) scale_length : x - (double) scale_length, right_extension_index);
-		REVERSE_MARKERS;
-	}
-	LogKI (int height) : LogBase (height) {}
-};
+#include "sliderule.h"
 
-class LogJI : public LogKI {
-public:
-	virtual void scaleInit (void) {faceDown (); log_init (-1.0 / 3.0);}
-	LogJI (int height) : LogKI (height) {}
-};
-
-class LogF : public LogBase {
-public:
-	virtual double getLocation (double x) {return log10 (x) * 0.25;}
-	virtual double getValue (double x) {return pow (10.0, x * 4.0);}
-	virtual void scaleInit (void) {faceUp (); log_init (0.25);}
-	virtual void draw (wxDC & dc, double x) {
-		setArialFont (dc);
-		draw_log_base (dc, x);
-		draw_log_base (dc, x + (double) scale_length * 0.25);
-		draw_log_base (dc, x + (double) scale_length * 0.5);
-		draw_log_base (dc, x + (double) scale_length * 0.75);
-		draw_index_location (dc, x);
-		if (left_extension_index < 0) return;
-		REVERSE_MARKERS;
-		draw_left_log_base (dc, reversed ? x - (double) scale_length * 0.25 : x + (double) scale_length * 0.25, left_extension_index);
-		draw_right_log_base (dc, reversed ? x + (double) scale_length : x - (double) scale_length, right_extension_index);
-		REVERSE_MARKERS;
-	}
-	LogF (int height) : LogBase (height) {}
-};
-
-class LogG : public LogF {
-public:
-	virtual void scaleInit (void) {faceDown (); log_init (0.25);}
-	LogG (int height) : LogF (height) {}
-};
-
-class Log_dk : public LogBase {
-public:
-	double factor;
-	double reciprocal_factor;
-	virtual double getLocation (double x) {return 0.5 + log10 (x) * reciprocal_factor;}
-	virtual double getValue (double x) {x -= 0.5; return pow (10.0, x * factor);}
-	virtual void scaleInit (void) {faceUp (); log_init (reciprocal_factor);}
-	void draw_dk_base (wxDC & dc, double x, wxString marker = _T ("1")) {
-		double location;
-		if (absolute (logs [900] - logs [800]) < minimum_step) {
-			if (absolute (logs [900] - logs [400]) > minimum_step) {
-				location = x + logs [400];
-				draw_line (dc, get_bordercolour (location - 1.0), get_bordercolour (location + 1.0), location, y0, y2);
-			}
-		} else {
-			location = x + logs [100]; draw_line (dc, get_bordercolour (location - 1.0), get_bordercolour (location + 1.0), location, y0, y2);
-			location = x + logs [200]; draw_line (dc, get_bordercolour (location - 1.0), get_bordercolour (location + 1.0), location, y0, y2);
-			location = x + logs [300]; draw_line (dc, get_bordercolour (location - 1.0), get_bordercolour (location + 1.0), location, y0, y2);
-			location = x + logs [400]; draw_line (dc, get_bordercolour (location - 1.0), get_bordercolour (location + 1.0), location, y0, y1);
-			location = x + logs [500]; draw_line (dc, get_bordercolour (location - 1.0), get_bordercolour (location + 1.0), location, y0, y2);
-			location = x + logs [600]; draw_line (dc, get_bordercolour (location - 1.0), get_bordercolour (location + 1.0), location, y0, y2);
-			location = x + logs [700]; draw_line (dc, get_bordercolour (location - 1.0), get_bordercolour (location + 1.0), location, y0, y2);
-			location = x + logs [800]; draw_line (dc, get_bordercolour (location - 1.0), get_bordercolour (location + 1.0), location, y0, y2);
-		}
-		location = x + logs [900]; draw_index_location (dc, location, marker);
-	}
-	virtual void draw (wxDC & dc, double x) {
-		setArialFont (dc);
-		int marker_shift = (int) (factor * -0.5);
-		draw_index_location (dc, x, wxString :: Format (_T ("%+i"), marker_shift++));
-		for (int ind = 0; ind < (int) factor; ind++)
-			draw_dk_base (dc, x + (double) ind * reciprocal_factor * (double) scale_length, wxString :: Format (_T ("%+i"), marker_shift++));
-	}
-	Log_dk (int factor, int height) : LogBase (height) {
-		if (factor < 0) factor = 1;
-		factor <<= 1;
-		this -> factor = (double) factor;
-		reciprocal_factor = 1.0 / this -> factor;
-	}
-};
-
-class Log_dk_down : public Log_dk {
-public:
-	virtual void scaleInit (void) {faceDown (); log_init (reciprocal_factor);}
-	Log_dk_down (int factor, int height) : Log_dk (factor, height) {}
-};
-
-class LogFI : public LogBase {
-public:
-	virtual double getLocation (double x) {return 1.0 - log10 (x) * 0.25;}
-	virtual double getValue (double x) {return pow (10.0, 4.0 - x * 4.0);}
-	virtual void scaleInit (void) {faceUp (); log_init (-0.25);}
-	virtual void draw (wxDC & dc, double x) {
-		setArialFont (dc);
-		draw_index_location (dc, x);
-		draw_log_base (dc, x + (double) scale_length);
-		draw_log_base (dc, x + (double) scale_length * 0.75);
-		draw_log_base (dc, x + (double) scale_length * 0.5);
-		draw_log_base (dc, x + (double) scale_length * 0.25);
-		draw_index_location (dc, x + (double) scale_length);
-		if (left_extension_index < 0) return;
-		x += (double) scale_length;
-		REVERSE_MARKERS;
-		draw_left_log_base (dc, reversed ? x - (double) scale_length * 0.25 : x + (double) scale_length * 0.25, left_extension_index);
-		draw_right_log_base (dc, reversed ? x + (double) scale_length : x - (double) scale_length, right_extension_index);
-		REVERSE_MARKERS;
-	}
-	LogFI (int height) : LogBase (height) {}
-};
-
-class LogGI : public LogFI {
-public:
-	virtual void scaleInit (void) {faceDown (); log_init (-0.25);}
-	LogGI (int height) : LogFI (height) {}
-};
-
-class LogR1 : public LogBase {
-public:
-	bool change_extension;
-	virtual double getLocation (double x) {return log10 (x) * 2.0;}
-	virtual double getValue (double x) {return pow (10.0, x * 0.5);}
-	virtual void scaleInit (void) {faceUp (); if (change_extension) right_extension += 1.0; change_extension = false;log_init (2.0);}
-	virtual void draw (wxDC & dc, double x) {
-		setArialFont (dc);
-		draw_index_location (dc, x);
-		draw_pi (dc, x + pi_location);
-		draw_e (dc, x + e_location);
-		draw_right_log_base (dc, x, right_extension_index);
-		REVERSE_MARKERS;
-		draw_left_log_base (dc, x - (double) scale_length - (double) scale_length, left_extension_index);
-		REVERSE_MARKERS;
-	}
-	LogR1 (int height) : LogBase (height) {change_extension = true;}
-};
-
-class LogW1 : public LogR1 {
-public:
-	virtual void scaleInit (void) {faceDown (); if (change_extension) right_extension += 1.0; change_extension = false; log_init (2.0);}
-	LogW1 (int height) : LogR1 (height) {}
-};
-
-class LogR2 : public LogBase {
-public:
-	bool change_extension;
-	virtual double getLocation (double x) {return log10 (x) * 2.0 - 1.0;}
-	virtual double getValue (double x) {return pow (10.0, 0.5 + x * 0.5);}
-	virtual void scaleInit (void) {faceUp (); if (change_extension) left_extension += 1.0; change_extension = false; log_init (2.0);}
-	virtual void draw (wxDC & dc, double x) {
-		setArialFont (dc);
-		REVERSE_MARKERS;
-		draw_right_log_base (dc, x + (double) scale_length, right_extension_index);
-		REVERSE_MARKERS;
-		x -= (double) scale_length;
-		draw_left_log_base (dc, x, left_extension_index);
-		draw_index_location (dc, x + (double) scale_length + (double) scale_length);
-	}
-	LogR2 (int height) : LogBase (height) {change_extension = true;}
-};
-
-class LogW2 : public LogR2 {
-public:
-	virtual void scaleInit (void) {faceDown (); if (change_extension) left_extension += 1.0; change_extension = false; log_init (2.0);}
-	LogW2 (int height) : LogR2 (height) {}
-};
-
-class Log3R1 : public LogBase {
-public:
-	bool change_extension;
-	double scale, shift;
-	double left_border, right_border;
-	virtual double getLocation (double x) {return log10 (x) * scale - shift;}
-	virtual double getValue (double x) {return pow (10.0, (shift + x) / scale);}
-	void scaleInitInternal (void) {
-		left_border = (0.0 - left_extension + shift) * (double) scale_length;
-		right_border = (1.0 + right_extension + shift) * (double) scale_length;
-		left_extension -= shift;
-		if (left_extension < 0.0) left_extension = 0.0;
-		right_extension += shift;
-		if (change_extension) right_extension += 1.0;
-		change_extension = false;
-		log_init (scale);
-	}
-	virtual void scaleInit (void) {faceUp (); scaleInitInternal ();}
-	virtual void draw (wxDC & dc, double x) {
-		x -= (double) scale_length * shift;
-		setArialFont (dc);
-		draw_index_location (dc, x);
-		draw_right_log_base (dc, x, right_extension_index);
-		if (pi_location <= right_border && pi_location >= left_border) draw_pi (dc, x + pi_location);
-		if (e_location <= right_border && e_location >= left_border) draw_e (dc, x + e_location);
-		if (c_location <= right_border && c_location >= left_border) draw_c (dc, x + c_location);
-		if (degree_location <= right_border && degree_location >= left_border) draw_degree (dc, x + degree_location);
-		if (c1_location <= right_border && c1_location >= left_border) draw_c1 (dc, x + c1_location);
-		REVERSE_MARKERS;
-		draw_left_log_base (dc, x - (double) scale_length * scale, left_extension_index);
-		REVERSE_MARKERS;
-	}
-	Log3R1 (int height, double scale, double shift) : LogBase (height) {
-		this -> scale = scale != 0.0 ? scale : 1.0;
-		this -> shift = shift;
-		change_extension = true;
-	}
-};
-
-class Log3W1 : public Log3R1 {
-public:
-	virtual void scaleInit (void) {faceDown (); scaleInitInternal ();}
-	Log3W1 (int height, double scale, double shift) : Log3R1 (height, scale, shift) {}
-};
-
-class Log3R2 : public LogBase {
-public:
-	bool change_extension;
-	double scale, shift;
-	double left_border, right_border;
-	virtual double getLocation (double x) {return log10 (x) * scale - shift;}
-	virtual double getValue (double x) {return pow (10.0, (shift + x) / scale);}
-	void scaleInitInternal (void) {
-		left_border = (0.0 - left_extension + shift) * (double) scale_length;
-		right_border = (1.0 + right_extension + shift) * (double) scale_length;
-		if (change_extension) {double x = left_extension; left_extension = scale - 1.0 - shift - right_extension; right_extension = shift - x;}
-		if (left_extension < 0.0) left_extension = 0.0; if (right_extension < 0.0) right_extension = 0.0;
-		change_extension = false;
-		log_init (scale);
-	}
-	virtual void scaleInit (void) {faceUp (); scaleInitInternal ();}
-	virtual void draw (wxDC & dc, double x) {
-		x -= (double) scale_length * shift;
-		setArialFont (dc);
-		draw_both_sides_log_base (dc, x, right_extension_index, left_extension_index);//, right_extension_index);
-		if (pi_location <= right_border && pi_location >= left_border) draw_pi (dc, x + pi_location);
-		if (e_location <= right_border && e_location >= left_border) draw_e (dc, x + e_location);
-		if (c_location <= right_border && c_location >= left_border) draw_c (dc, x + c_location);
-		if (degree_location <= right_border && degree_location >= left_border) draw_degree (dc, x + degree_location);
-		if (c1_location <= right_border && c1_location >= left_border) draw_c1 (dc, x + c1_location);
-	}
-	Log3R2 (int height, double scale, double shift) : LogBase (height) {
-		this -> scale = scale != 0.0 ? scale : 1.0;
-		this -> shift = shift;
-		change_extension = true;
-	}
-};
-
-class Log3W2 : public Log3R2 {
-public:
-	virtual void scaleInit (void) {faceDown (); scaleInitInternal ();}
-	Log3W2 (int height, double scale, double shift) : Log3R2 (height, scale, shift) {}
-};
-
-class Log3R3 : public LogBase {
-public:
-	bool change_extension;
-	double scale, shift;
-	double left_border, right_border;
-	virtual double getLocation (double x) {return log10 (x) * scale - shift;}
-	virtual double getValue (double x) {return pow (10.0, (shift + x) / scale);}
-	void scaleInitInternal (void) {
-		left_border = (0.0 - left_extension + shift) * (double) scale_length;
-		right_border = (1.0 + right_extension + shift) * (double) scale_length;
-		left_extension += (scale - shift - 1.0);
-		if (left_extension < -1.0) left_extension = -1.0;
-		right_extension -= (scale - shift - 1.0);
-		if (change_extension) left_extension += 1.0;
-		change_extension = false;
-		log_init (scale);
-	}
-	virtual void scaleInit (void) {faceUp (); scaleInitInternal ();}
-	virtual void draw (wxDC & dc, double x) {
-		setArialFont (dc);
-		x += (double) scale_length * (scale - shift);
-		draw_index_location (dc, x);
-		REVERSE_MARKERS;
-		draw_right_log_base (dc, x, right_extension_index);
-		REVERSE_MARKERS;
-		x -= (double) scale_length * scale;
-		draw_left_log_base (dc, x, left_extension_index);
-		if (pi_location <= right_border && pi_location >= left_border) draw_pi (dc, x + pi_location);
-		if (e_location <= right_border && e_location >= left_border) draw_e (dc, x + e_location);
-		if (c_location <= right_border && c_location >= left_border) draw_c (dc, x + c_location);
-		if (degree_location <= right_border && degree_location >= left_border) draw_degree (dc, x + degree_location);
-		if (c1_location <= right_border && c1_location >= left_border) draw_c1 (dc, x + c1_location);
-	}
-	Log3R3 (int height, double scale, double shift) : LogBase (height) {
-		this -> scale = scale != 0.0 ? scale : 1.0;
-		this -> shift = shift;
-		change_extension = true;
-	}
-};
-
-class Log3W3 : public Log3R3 {
-public:
-	virtual void scaleInit (void) {faceDown (); scaleInitInternal ();}
-	Log3W3 (int height, double scale, double shift) : Log3R3 (height, scale, shift) {}
-};
-
-class ScaleSQRTUp : public Scale {
-public:
-	double shift;
-	double locations [2100];
-	int left_index, right_index;
-	virtual double getLocation (double x) {return shift + x * x / 100.0;}
-	virtual double getValue (double x) {x -= shift; x *= 100.0; return sqrt (x);}
-	void init_locations (void) {
-		for (int ind = 0; ind <= 2000; ind++) {double x = (double) ind / 100.0; locations [ind] = (double) scale_length * (shift + x * x / 100.0);}
-		left_index = find_left_index (locations, 0, 2000, 0.0 - (double) scale_length * left_extension);
-		right_index = find_right_index (locations, 0, 2000, (double) scale_length * (1.0 + right_extension));
-	}
-	virtual void draw (wxDC & dc, double x) {
-		setArialFont (dc);
-		double location = locations [0];
-		int description = 1;
-		draw_index_location (dc, x + locations [0], _T ("0"));
-		for (int ind = 0; ind < 2000; ind += 100) {
-			if (ind > right_index) return;
-			if (left_index <= ind + 100) location = draw_markings_for_100 (dc, & locations [ind], wxString :: Format (_T ("%i"), description), x, location, left_index <= ind ? 0 : left_index - ind, right_index > ind + 100 ? 100 : right_index - ind);
-			description++;
-		}
-	}
-	virtual void scaleInit (void) {faceUp (); init_locations ();}
-	ScaleSQRTUp (double shift, int height) : Scale (height) {this -> shift = - shift; left_index = 0; right_index = 1000;}
-};
-
-class ScaleSQRTDown : public ScaleSQRTUp {
-public:
-	virtual void scaleInit (void) {faceDown (); init_locations ();}
-	ScaleSQRTDown (double shift, int height) : ScaleSQRTUp (shift, height) {}
-};
-
-class ScaleSQRTSINEUp : public TrigSUp {
-public:
-	virtual double getLocation (double x) {x = dec_recorrection (x); x = sin (x * _PI / 180.0) * 10.0; return x * x / 100.0;}
-	virtual double getValue (double x) {x *= 100.0; x = sqrt (x); return dec_correction (asin (x * 0.1) * 180.0 / _PI);}
-	void init_sqrt_sine_locations (void) {
-		int index = 0;
-		for (int degree = 0; degree <= 90; degree++) {
-			double angle = (double) degree / 180.0;
-			for (int minute = 0; minute < 60; minute++) {
-				double sub_angle = (double) minute / 10800.0;
-				double value = _PI * (angle + sub_angle);
-				value = sin (value) * 10.0;
-				value *= value / 100.0;
-				value *= (double) scale_length;
-				locations [index++] = value;
-			}
-		}
-		locations [index++] = (double) scale_length;
-		left_index = 0;
-	}
-	virtual void scaleInit (void) {faceUp (); init_sqrt_sine_locations ();}
-	virtual void draw (wxDC & dc, double x) {TrigSUp :: draw (dc, x); draw_index_location (dc, x, _T ("0"));}
-	ScaleSQRTSINEUp (int height) : TrigSUp (height) {}
-};
-
-class ScaleSQRTSINEDown : public ScaleSQRTSINEUp {
-public:
-	virtual void scaleInit (void) {faceDown (); init_sqrt_sine_locations ();}
-	ScaleSQRTSINEDown (int height) : ScaleSQRTSINEUp (height) {}
-};
-
-class ScaleSQRTSINEdecUp : public TrigSDecUp {
-public:
-	virtual double getLocation (double x) {x = sin (x * _PI / 180.0) * 10.0; return x * x / 100.0;}
-	virtual double getValue (double x) {x *= 100.0; x = sqrt (x); return asin (x * 0.1) * 180.0 / _PI;}
-	void init_sqrt_sine_locations (void) {
-		int index = 0;
-		for (int degree = 0; degree <= 90; degree++) {
-			double angle = (double) degree / 180.0;
-			for (int minute = 0; minute < 100; minute++) {
-				double sub_angle = (double) minute / 18000.0;
-				double value = _PI * (angle + sub_angle);
-				value = sin (value) * 10.0;
-				value *= value / 100.0;
-				value *= (double) scale_length;
-				locations [index++] = value;
-			}
-		}
-		locations [index++] = (double) scale_length;
-		left_index = 0;
-	}
-	virtual void scaleInit (void) {faceUp (); init_sqrt_sine_locations ();}
-	virtual void draw (wxDC & dc, double x) {TrigSDecUp :: draw (dc, x); draw_index_location (dc, x, _T ("0"));}
-	ScaleSQRTSINEdecUp (int height) : TrigSDecUp (height) {}
-};
-
-class ScaleSQRTSINEdecDown : public ScaleSQRTSINEdecUp {
-public:
-	virtual void scaleInit (void) {faceDown (); init_sqrt_sine_locations ();}
-	ScaleSQRTSINEdecDown (int height) : ScaleSQRTSINEdecUp (height) {}
-};
-
-class ScaleSQRTSINErUp : public TrigSrUp {
-public:
-	virtual double getLocation (double x) {x = sin (x) * 10.0; return x * x / 100.0;}
-	virtual double getValue (double x) {x *= 100.0; x = sqrt (x); return asin (x * 0.1);}
-	void init_sine_locations (void) {
-		for (int ind = 0; ind < 1600; ind++) {
-			double x = 10.0 * sin ((double) ind / 1000.0);
-			locations [ind] = (double) scale_length * (x * x / 100.0);
-		}
-		left_index = 0;
-	}
-	virtual void scaleInit (void) {faceUp (); init_sine_locations ();}
-	virtual void draw (wxDC & dc, double x) {TrigSrUp :: draw (dc, x); draw_index_location (dc, x, _T ("0"));}
-	ScaleSQRTSINErUp (int height) : TrigSrUp (height) {}
-};
-
-class ScaleSQRTSINErDown : public ScaleSQRTSINErUp {
-public:
-	virtual void scaleInit (void) {faceDown (); init_sine_locations ();}
-	ScaleSQRTSINErDown (int height) : ScaleSQRTSINErUp (height) {}
-};
-
-class ScaleOSCUp : public Scale {
-public:
-	double octaves;
-	double fraction;
-	double locations [256];
-	int right_index;
-	virtual double getLocation (double x) {return log10 (x) / fraction;}
-	virtual double getValue (double x) {return pow (2.0, octaves * x);}
-	void init_locations (void) {
-		double sub_scale_length = (double) scale_length / octaves;
-		double log2 = log10 (2.0);
-		double previous_location = -100.0;
-		double sentinel = (double) scale_length * (1.0 + right_extension);
-		right_index = 0;
-		for (int ind = 0; ind < 256; ind++) {
-			double location = (double) scale_length * getLocation (1.0 + (double) ind);
-			if (location > sentinel || absolute (location - previous_location) <= minimum_step) return;
-			previous_location = locations [ind] = location;
-			right_index = ind;
-		}
-	}
-	virtual void draw (wxDC & dc, double x) {
-		setArialFont (dc);
-		int extent = dc . GetTextExtent (_T ("00")) . x;
-		int ind = 0; int description = 1;
-		double previous_location = -100.0;
-		while (ind <= right_index) {
-			double location = locations [ind++];
-			if (absolute (location - previous_location) > extent) draw_index_location (dc, x + location, wxString :: Format (_T ("%i"), description++));
-			else draw_line (dc, get_bordercolour (location - 1.0), get_bordercolour (location + 1.0), x + location, y0, y1);
-			previous_location = location;
-		}
-	}
-	virtual void scaleInit (void) {faceUp (); init_locations ();}
-	ScaleOSCUp (int octaves, int height) : Scale (height) {
-		if (octaves < 1) octaves = 1;
-		this -> octaves = (double) octaves;
-		this -> fraction = log10 (2.0) * this -> octaves;
-	}
-};
-
-class ScaleOSCDown : public ScaleOSCUp {
-public:
-	virtual void scaleInit (void) {faceDown (); init_locations ();}
-	ScaleOSCDown (int octaves, int height) : ScaleOSCUp (octaves, height) {}
-};
-
-struct HA {
-	double d1, d2, d3, d4, d5;
-	bool vertical;
-	wxString s;
-	HA * next;
-	HA (HA * next = NULL) {this -> next = next;}
-	~ HA (void) {if (next != NULL) delete next; next = NULL;}
-};
-
-class Rule {
-private:
-	wxMemoryDC * stator_dc;
-	wxBitmap * stator_bitmap;
-public:
-	HA * HA_ROOT;
-	HA * HA_NEXT;
-	double HA_SCALING;
-	bool stator;
-	bool free;
-	bool channel;
-	int free_index;
-	bool empty_space;
-	double slide;
-	double visible_left_marginal_factor, visible_right_marginal_factor;
-	int x, y;
-	int x_scale_position;
-	int rule_length;
-	int rule_height;
-	int corner;
-	colour rule_colour, marker_colour, hairline_colour, background_colour;
-	bool no_borderline;
-	double motion_multiplier;
-	Scale * root;
-	Rule * next;
-	lanczos_colour lcp [256];
-	lanczos_colour hairline_lp [256];
-	void insert_HA (double d1, double d2, double d3, double d4, double d5) {
-		HA * ha_root = new HA (NULL);
-		ha_root -> d1 = d1; ha_root -> d2 = d2; ha_root -> d3 = d3; ha_root -> d4 = d4; ha_root -> d5 = d5;
-		ha_root -> vertical = d2 == d4;
-		if (HA_NEXT == NULL) {
-			HA_NEXT = HA_ROOT = ha_root;
-		} else {
-			HA_NEXT -> next = ha_root;
-			HA_NEXT = ha_root;
-		}
-	}
-	void insert_HA (double d1, double d2, double d3, char * string) {
-		HA * ha_root = new HA (NULL);
-		ha_root -> d1 = d1; ha_root -> d2 = d2; ha_root -> d3 = d3; ha_root -> s = wxString :: From8BitData (string);
-		ha_root -> vertical = false;
-		if (HA_NEXT == NULL) {
-			HA_NEXT = HA_ROOT = ha_root;
-		} else {
-			HA_NEXT -> next = ha_root;
-			HA_NEXT = ha_root;
-		}
-	}
-	void draw_HA (wxDC & dc, double x) {
-		wxFont f = dc . GetFont ();
-		f . SetFaceName (_T ("arial"));
-		dc . SetFont (f);
-		HA * ha = HA_ROOT;
-		int previous_font_size = 24;
-		double xsh = slide + (double) x;
-		while (ha != NULL) {
-			if (ha -> d1 == 0.0) {
-				if (ha -> vertical) draw_line (dc, lcp, (stator ? 0.0 : xsh) + ha -> d2 * HA_SCALING, (stator ? rule_height : rule_height + y) - ha -> d3 * HA_SCALING, (stator ? rule_height : rule_height + y) - ha -> d5 * HA_SCALING);
-				else dc . DrawLine ((stator ? 0 : (int) xsh) + ha -> d2 * HA_SCALING, (stator ? rule_height : rule_height + y) - ha -> d3 * HA_SCALING, (stator ? 0 : (int) xsh) + ha -> d4 * HA_SCALING, (stator ? rule_height : rule_height + y) - ha -> d5 * HA_SCALING);
-			} else {
-				int new_font_size = (int) (ha -> d1 * HA_SCALING);
-				if (new_font_size != previous_font_size) {
-					wxFont f = dc . GetFont ();
-					f . SetPointSize (new_font_size);
-					dc . SetFont (f);
-					previous_font_size = new_font_size;
-				}
-				dc . DrawText (ha -> s, (stator ? 0 : (int) xsh) + ha -> d2 * HA_SCALING, (stator ? rule_height : rule_height + y) - previous_font_size - ha -> d3 * HA_SCALING);
-			}
-			ha = ha -> next;
-		}
-	}
-	void draw (wxDC & dc) {
-		if (stator) {
-			if (stator_bitmap == NULL) {stator_bitmap = new wxBitmap (rule_length, rule_height, 32);}
-			if (stator_dc == NULL) {
-				stator_dc = new wxMemoryDC (* stator_bitmap);
-				stator_dc -> SetBrush (* wxWHITE_BRUSH);
-				stator_dc -> Clear ();
-				x_scale_position -= x;
-				stator_dc -> SetBackground (wxBrush (wxColour (background_colour . red, background_colour . green, background_colour . blue)));
-				stator_dc -> Clear ();
-				draw_bitmape (* stator_dc);
-			}
-			dc . Blit (x, y, rule_length, rule_height, stator_dc, 0, 0);
-		} else draw_bitmape (dc);
-		if (next != NULL) next -> draw (dc);
-	}
-	void draw_bitmape (wxDC & dc) {
-		if (! empty_space) {
-			dc . SetPen (wxPen (no_borderline ? wxColour (rule_colour . red, rule_colour . green, rule_colour . blue) : wxColour (marker_colour . red, marker_colour . green, marker_colour . blue)));
-			dc . SetBrush (wxBrush (wxColour (rule_colour . red, rule_colour . green, rule_colour . blue)));
-			dc . DrawRoundedRectangle (stator ? 0 : (int) (slide + (double) x), stator ? 0 : y, rule_length, rule_height, corner);
-		}
-		dc . SetPen (wxPen (wxColour (marker_colour . red, marker_colour . green, marker_colour . blue)));
-		Scale * skala = root;
-		while (skala != NULL) {
-			double location = (double) x_scale_position + slide;
-			skala -> draw_highlight (dc, location);
-			skala -> drawer (dc, location);
-			skala -> draw_descriptions (dc, location);
-			skala = skala -> next;
-		}
-		if (HA_ROOT != NULL) draw_HA (dc, 0);
-	}
-	Rule * captureRule (int y) {
-		if (y >= this -> y && y < this -> y + rule_height && ! channel) return this;
-		if (next == NULL) return NULL;
-		return next -> captureRule (y);
-	}
-	Scale * captureScale (int y) {
-		if (root == NULL) return NULL;
-		return root -> captureScale (y - (stator ? this -> y : 0));
-	}
-	void reBitmap (void) {
-		if (stator_dc != NULL) delete stator_dc; stator_dc = NULL;
-		if (stator_bitmap != NULL) delete stator_bitmap; stator_bitmap = NULL;
-	}
-	void initialise_lanczos (void) {
-		initialise_lanczos_colours (lcp, rule_colour . red, rule_colour . green, rule_colour . blue, marker_colour . red, marker_colour . green, marker_colour . blue);// 0xd0, 0xd0, 0, 0, 0);
-		initialise_lanczos_colours (hairline_lp, rule_colour . red, rule_colour . green, rule_colour . blue, hairline_colour . red, hairline_colour . green, hairline_colour . blue);
-	}
-	Rule (Rule * next) {
-		stator = true;
-		free = false;
-		channel = false;
-		free_index = 0;
-		empty_space = false;
-		no_borderline = false;
-		slide = 0.0;
-		corner = 6;
-		rule_colour . red = rule_colour . green = rule_colour . blue = 0xd0;
-		marker_colour . red = marker_colour . green = marker_colour . blue = 0x00;
-		hairline_colour . red = 0xff; hairline_colour . green = hairline_colour . blue = 0x00;
-		background_colour . red = background_colour . green = background_colour . blue = 0x00;
-		rule_height = 40;
-		motion_multiplier = 0.2;
-		root = NULL;
-		this -> next = next;
-		stator_dc = NULL;
-		stator_bitmap = NULL;
-		HA_ROOT = NULL;
-		HA_NEXT = NULL;
-		HA_SCALING = 200.0;
-		visible_left_marginal_factor = visible_right_marginal_factor = 0.2;
-	}
-	~ Rule (void) {
-		if (root != NULL) delete root; root = NULL;
-		if (next != NULL) delete next; next = NULL;
-		if (HA_ROOT != NULL) delete HA_ROOT; HA_ROOT = NULL;
-		reBitmap ();
-	}
-};
-
-class Hairline {
-public:
-	int from, to;
-	double location;
-	double last_drawn;
-	void draw (wxDC & dc, lanczos_colour * lcp, double x, double scale_length) {
-		if (from < 0) return;
-		last_drawn = x + location * scale_length;
-		draw_thin_line (dc, lcp, last_drawn, from, to);
-	}
-	void draw_readout (wxDC & dc, int y, double v, colour * c, colour * b) {
-		if (y < from || y >= to) return;
-		wxString text = wxString :: Format (_T ("%f"), v);
-		wxSize extent = dc . GetTextExtent (text);
-		dc . SetPen (wxPen (wxColour (c -> red, c -> green, c -> blue)));
-		dc . SetBrush (wxBrush (wxColour (b -> red, b -> green, b -> blue)));
-		int x_location = last_drawn + (location >= 0.0 ? 4 : -4 - extent . x);
-		dc . DrawRectangle (x_location - 1, y, extent . x + 2, extent . y);
-		dc . SetTextForeground (wxColour (c -> red, c -> green, c -> blue));
-		dc . DrawText (text, x_location, y);
-	}
-	bool in_range (int y) {return y >= from && y < to;}
-	bool in_range (int x, int y) {
-		if (y < from || y >= to || x + 6 < (int) last_drawn || x - 6 > (int) last_drawn) return false;
-		return true;
-	}
-	Hairline (void) {from = to = -1; last_drawn = 0.0;}
-	Hairline (double location) {from = to = -1; last_drawn = this -> location = location;}
-};
-
-typedef Hairline * HairlinePointer;
-
-class Sliderule {
-public:
-	int x, y;
-	int rule_y;
-	int corner;
-	int scale_length;
-	double marginal_factor;
-	double cursor_factor;
-	colour rule_colour;
-	colour marker_colour;
-	colour hairline_colour;
-	colour multi_hairlines_colour;
-	colour cursor_colour;
-	colour background_colour;
-	colour background_marker_colour;
-	double cursor_location;
-	bool draw_cursor_window;
-	bool draw_cursor_2_hairlines;
-	bool draw_cursor_hairline;
-	bool draw_digital_readouts_on_slide_left;
-	bool draw_digital_readouts_on_slide_right;
-	bool draw_digital_readouts_on_stator_left;
-	bool draw_digital_readouts_on_stator_right;
-	bool draw_digital_readouts_on_multi_hairlines;
-	bool draw_digital_readouts_on_main_hairline;
-	int draw_decimal_places;
-	wxString decimal_string;
-	bool no_borderline;
-	int os_compensation;
-	bool working_no_borderline;
-	double metric;
-	double motion_multiplier;
-	lanczos_colour hairline_lp [256];
-	lanczos_colour other_hairlines_lp [256];
-	lanczos_colour background_lp [256];
-	int animation_steps;
-	int animation_delay;
-	bool animation_linear;
-	bool animation_variable_speed;
-	double C;
-	double location_360;
-	double location_36010;
-	double mechanical_hp, metric_hp;
-	double sqrt_mechanical_hp, sqrt_metric_hp;
-	bool display_metric_hp, display_mechanical_hp;
-	Hairline s_hairline, d_hairline, hairline_360, hairline_36010, hairline_360st, metric_kw_hairline, mechanical_kw_hairline, metric_hp_hairline, mechanical_hp_hairline;
-	int number_of_extra_hairlines;
-	HairlinePointer * extra_hairlines;
-	bool no_pi, no_e, no_c, no_c1, no_degree, no_m, no_mm;
-	bool draw_lines [16];
-	double marker_fractions [16];
-	double left_extension, right_extension;
-	double drawed_hairline, drawed_s, drawed_d, drawed_mechanical_hp, drawed_metric_hp, drawed_mechanical_kw, drawed_metric_kw, drawed_360, drawed_36010, drawed_360st;
-	wxString name;
-	Rule * root;
-	int nesting_level;
-	void apply_visible_margins (double left, double right) {
-		if (root == NULL) return;
-		root -> visible_left_marginal_factor = left; root -> visible_right_marginal_factor = right;
-		root -> rule_length = (int) ((double) scale_length * (left + 1.0 + right));
-		root -> x_scale_position = this -> x + (int) ((double) scale_length * marginal_factor);
-		root -> x = root -> x_scale_position - (int) ((double) scale_length * left);
-	}
-	void insertBlankSpacer (int height = 1) {
-		insertSpacer (height);
-		for (int ind = 0; ind < 16; ind++) {root -> root -> draw_lines [ind] = false;}
-	}
-	Rule * insertRule (int channel_index = 0) {
-		if (root != NULL && ! working_no_borderline) insertBlankSpacer ();
-		if (root != NULL) insertBlankSpacer (os_compensation);
-		working_no_borderline = no_borderline;
-		root = new Rule (root);
-		apply_visible_margins (marginal_factor, marginal_factor);
-		root -> y = this -> rule_y;
-		Rule * rp = root;
-		while (channel_index-- > 0 && rp != NULL) {
-			rp = rp -> next;
-			if (rp != NULL) this -> rule_y = root -> y = rp -> y;
-		}
-		root -> corner = this -> corner;
-		root -> rule_colour = rule_colour;
-		root -> marker_colour = marker_colour;
-		root -> hairline_colour = hairline_colour;
-		root -> background_colour = background_colour;
-		root -> no_borderline = this -> no_borderline;
-		root -> motion_multiplier = this -> motion_multiplier;
-		if (! no_borderline) insertBlankSpacer ();
-		return root;
-	}
-	void resize_length (int new_length) {
-		double slide_ratio = (double) new_length / (double) scale_length;
-		scale_length = new_length;
-		Rule * rp = root;
-		while (rp != NULL) {
-			rp -> x_scale_position = x + (int) ((double) scale_length * marginal_factor);
-			rp -> rule_length = (int) ((double) scale_length * (rp -> visible_left_marginal_factor + 1.0 + rp -> visible_right_marginal_factor));
-			rp -> x = rp -> x_scale_position - (int) ((double) scale_length * rp -> visible_left_marginal_factor);
-			rp -> slide *= slide_ratio;
-			rp -> reBitmap ();
-			Scale * sp = rp -> root;
-			while (sp != NULL) {
-				sp -> scale_length = scale_length;
-				sp -> scaleInit ();
-				sp = sp -> next;
-			}
-			rp = rp -> next;
-		}
-	}
-	void change_motion_multipliers (double multiplier) {
-		this -> motion_multiplier = multiplier;
-		Rule * rp = root;
-		while (rp != NULL) {
-			rp -> motion_multiplier = multiplier;
-			rp = rp -> next;
-		}
-	}
-	void close (void) {
-		if (! no_borderline) insertBlankSpacer ();
-		insertBlankSpacer (os_compensation);
-		initialise_lanczos_colours (hairline_lp, rule_colour . red, rule_colour . green, rule_colour . blue, hairline_colour . red, hairline_colour . green, hairline_colour . blue);
-		initialise_lanczos_colours (other_hairlines_lp, rule_colour . red, rule_colour . green, rule_colour . blue, multi_hairlines_colour . red, multi_hairlines_colour . green, multi_hairlines_colour . blue);
-		initialise_lanczos_colours (background_lp, background_colour . red, background_colour . green, background_colour . blue, background_marker_colour . red, background_marker_colour . green, background_marker_colour . blue);
-		Rule * rp = root;
-		while (rp != NULL) {
-			rp -> initialise_lanczos ();
-			rp = rp -> next;
-		}
-	}
-	Scale * insertScale (Scale * scale) {
-		if (scale == NULL) return NULL;
-		if (root != NULL) {
-			scale -> position_scale (root -> stator ? rule_y - root -> y : rule_y, scale_length, root -> empty_space ? background_marker_colour : marker_colour, hairline_colour, root -> empty_space ? background_colour : rule_colour, root -> empty_space ? background_lp : root -> lcp, root -> empty_space ? background_lp : root -> hairline_lp);
-			scale -> no_pi = this -> no_pi; scale -> no_e = this -> no_e; scale -> no_c = this -> no_c; scale -> no_c1 = this -> no_c1; scale -> no_degree = this -> no_degree; scale -> no_m = this -> no_m; scale -> no_mm = this -> no_mm;
-			scale -> left_extension = left_extension; scale -> right_extension = right_extension;
-			for (int ind = 0; ind < 16; ind++) {scale -> draw_lines [ind] = this -> draw_lines [ind]; scale -> marker_fractions [ind] = this -> marker_fractions [ind];}
-			scale -> next = root -> root;
-			root -> root = scale;
-			scale -> os_compensation = this -> os_compensation;
-			scale -> scaleInit ();
-			rule_y += scale -> height;
-			root -> rule_height = rule_y - root -> y;
-		}
-		return scale;
-	}
-	Sliderule * insertSpacer (int height = 1) {
-		if (root == NULL) return this;
-		if (height < 1) return this;
-		Scale * spacer_scale = new Scale (height);
-		spacer_scale -> inactive = true;
-		insertScale (spacer_scale);
-		return this;
-	}
-	void draw_readout (wxDC & dc, double value, int x, int y, colour * c) {
-		//wxString readout = wxString :: Format (_T ("%.2f"), value);
-		wxString readout = wxString :: Format (decimal_string, value);
-		wxSize extent = dc . GetTextExtent (readout);
-		dc . SetPen (wxPen (wxColour (c -> red, c -> green, c -> blue)));
-		dc . SetBrush (wxBrush (wxColour (rule_colour . red, rule_colour . green, rule_colour . blue)));
-		dc . DrawRectangle (x - 1, y, extent . x + 2, extent . y);
-		dc . SetTextForeground (wxColour (c -> red, c -> green, c -> blue));
-		dc . DrawText (readout, x, y);
-	}
-	void draw_readouts (wxDC & dc) {
-		Rule * rule = root;
-		while (rule != NULL) {
-			Scale * scale = rule -> root;
-			while (! rule -> channel && scale != NULL) {
-				if (scale -> inactive) {scale = scale -> next; continue;}
-				int scale_y = (rule -> stator ? rule -> y : 0) + scale -> y;
-				wxFont f = dc . GetFont ();
-				f . SetPointSize (scale -> height / 2);
-				dc . SetFont (f);
-				double value = scale -> getValue (cursor_location - rule -> slide / (double) scale_length);
-				if ((draw_digital_readouts_on_stator_left && rule -> stator) || (draw_digital_readouts_on_slide_left && ! rule -> stator))
-					draw_readout (dc, value, x + 12 + (int) rule -> slide, scale_y, scale -> reversed ? & scale -> red_marking_colour : & scale -> marking_colour);
-				if ((draw_digital_readouts_on_stator_right && rule -> stator) || (draw_digital_readouts_on_slide_right && ! rule -> stator))
-					draw_readout (dc, value, x - 100 + (int) rule -> slide + scale_length * (1.0 + 2.0 * marginal_factor), scale_y, scale -> reversed ? & scale -> red_marking_colour : & scale -> marking_colour);
-				if (draw_digital_readouts_on_main_hairline) {
-					draw_readout (dc, value, x + 4 + (int) ((cursor_location + marginal_factor) * (double) scale_length), scale_y, & hairline_colour);
-				}
-				if (draw_digital_readouts_on_multi_hairlines) {
-					double shift = cursor_location - rule -> slide / (double) scale_length;
-					s_hairline . draw_readout (dc, scale_y, scale -> getValue (shift + s_hairline . location), & multi_hairlines_colour, & rule_colour);
-					if (display_metric_hp) {
-						metric_hp_hairline . draw_readout (dc, scale_y, scale -> getValue (shift + metric_hp_hairline . location), & multi_hairlines_colour, & rule_colour);
-						metric_kw_hairline . draw_readout (dc, scale_y, scale -> getValue (shift + metric_kw_hairline . location), & multi_hairlines_colour, & rule_colour);
-					}
-					if (display_mechanical_hp) {
-						mechanical_hp_hairline . draw_readout (dc, scale_y, scale -> getValue (shift + mechanical_hp_hairline . location), & multi_hairlines_colour, & rule_colour);
-						mechanical_kw_hairline . draw_readout (dc, scale_y, scale -> getValue (shift + mechanical_kw_hairline . location), & multi_hairlines_colour, & rule_colour);
-					}
-					d_hairline . draw_readout (dc, scale_y, scale -> getValue (shift + d_hairline . location), & multi_hairlines_colour, & rule_colour);
-					hairline_360 . draw_readout (dc, scale_y, scale -> getValue (shift + hairline_360 . location), & multi_hairlines_colour, & rule_colour);
-					hairline_36010 . draw_readout (dc, scale_y, scale -> getValue (shift + hairline_36010 . location), & multi_hairlines_colour, & rule_colour);
-					hairline_360st . draw_readout (dc, scale_y, scale -> getValue (shift + hairline_360st . location), & multi_hairlines_colour, & rule_colour);
-					for (int ind = 0; ind < number_of_extra_hairlines; ind++) extra_hairlines [ind] -> draw_readout (dc, scale_y, scale -> getValue (shift + extra_hairlines [ind] -> location), & multi_hairlines_colour, & rule_colour);
-				}
-				scale = scale -> next;
-			}
-			rule = rule -> next;
-		}
-	}
-	#ifdef CONTROL_PICTURE
-	void draw (wxBufferedPaintDC & dc) {
-		dc . DrawLine (102, 98, 298, 98);
-		dc . DrawLine (102, 202, 298, 202);
-		dc . DrawLine (98, 102, 98, 198);
-		dc . DrawLine (302, 102, 302, 198);
-		//
-		//
-		dc . DrawLine (402, 98, 598, 98);
-		dc . DrawLine (402, 202, 598, 202);
-		dc . DrawLine (398, 102, 398, 198);
-		dc . DrawLine (602, 102, 602, 198);
-		//
-		dc . DrawLine (400, 100, 600, 100);
-		dc . DrawLine (400, 200, 600, 200);
-		dc . DrawLine (400, 100, 400, 200);
-		dc . DrawLine (600, 100, 600, 200);
-		//
-		dc . DrawLine (102, 298, 298, 298);
-		dc . DrawLine (102, 402, 298, 402);
-		dc . DrawLine (98, 302, 98, 398);
-		dc . DrawLine (302, 302, 302, 398);
-		//
-		dc . SetBrush (wxBrush (wxColour (0, 0, 0)));
-		dc . DrawRoundedRectangle (100, 300, 200, 100, 6);
-		//
-		dc . DrawLine (402, 298, 598, 298);
-		dc . DrawLine (402, 402, 598, 402);
-		dc . DrawLine (398, 302, 398, 398);
-		dc . DrawLine (602, 302, 602, 398);
-		//
-		dc . SetBrush (wxBrush (wxColour (0, 0, 255)));
-		dc . DrawRoundedRectangle (400, 300, 200, 100, 6);
-		//
-	}
-	#else
-	void draw (wxBufferedPaintDC & dc) {
-		if (root == NULL) return;
-		dc . SetBackground (wxBrush (wxColour (background_colour . red, background_colour . green, background_colour . blue)));
-		dc . Clear ();
-		root -> draw (dc);
-		draw_cursor (dc);
-		draw_readouts (dc);
-	}
-	#endif
-	void draw_cursor (wxDC & dc) {
-		int cursor_left = x + (int) ((double) scale_length * (marginal_factor + cursor_location - cursor_factor * 0.5));
-		int cursor_right = cursor_left + (int) ((double) scale_length * cursor_factor);
-//		if (process_cursor_window) {
-//			for (int ind = cursor_left; ind < cursor_right; ind++) {
-//				for (int sub = y; sub < rule_y; sub++) {
-//					wxColour c;
-//					dc . GetPixel (wxPoint (ind, sub), & c);
-//					blend (& c, 0.0, 0.0, 255.0, 0.1, 0.9);
-//					dc . SetPen (c);
-//					dc . DrawPoint (ind, sub);
-//				}
-//			}
-//		}
-		dc . SetBrush (wxBrush (wxColour (cursor_colour . red, cursor_colour . green, cursor_colour . blue, cursor_colour . alpha)));
-		if (draw_cursor_window) {
-			dc . DrawRoundedRectangle (cursor_left, y - 2, cursor_right - cursor_left, rule_y - y + 4, 4);
-		}
-		dc . SetPen (wxPen (wxColour (cursor_colour . red, cursor_colour . green, cursor_colour . blue)));
-		dc . SetBrush (wxBrush (wxColour (0, 0,  0), wxTRANSPARENT));
-		dc . DrawRoundedRectangle (cursor_left, y - 2, cursor_right - cursor_left, rule_y - y + 4, 4);
-		dc . DrawRoundedRectangle (cursor_left - 1, y - 3, cursor_right - cursor_left + 2, rule_y - y + 6, 4);
-//		drawed_hairline = x + (double) scale_length * (cursor_location + marginal_factor);
-		drawed_hairline = x + (int) ((double) scale_length * marginal_factor);
-		drawed_hairline += (double) scale_length * cursor_location;
-		double S = (double) scale_length * C;
-		drawed_d = drawed_hairline + S;
-		drawed_s = drawed_hairline - S;
-		drawed_mechanical_kw = drawed_d + (double) scale_length * mechanical_hp;
-		drawed_metric_kw = drawed_d + (double) scale_length * metric_hp;
-		drawed_mechanical_hp = drawed_hairline - 0.5 * (double) scale_length * mechanical_hp;
-		drawed_metric_hp = drawed_hairline - 0.5 * (double) scale_length * metric_hp;
-		double shift_360 = (double) scale_length * location_360;
-		drawed_360 = drawed_hairline + shift_360;
-		drawed_36010 = drawed_hairline + (double) scale_length * location_36010;
-		drawed_360st = drawed_hairline - shift_360;
-//		if (process_cursor_hairline) draw_alpha_line (dc, hairline_lp, x + scale_length * (cursor_location + marginal_factor), y, rule_y);
-		if (draw_cursor_2_hairlines) {
-			draw_thin_line (dc, hairline_lp, drawed_hairline, y, rule_y);
-			d_hairline . draw (dc, other_hairlines_lp, drawed_hairline, (double) scale_length);
-			if (display_metric_hp) {
-				metric_hp_hairline . draw (dc, other_hairlines_lp, drawed_hairline, (double) scale_length);
-				metric_kw_hairline . draw (dc, other_hairlines_lp, drawed_hairline, (double) scale_length);
-			}
-			if (display_mechanical_hp) {
-				mechanical_hp_hairline . draw (dc, other_hairlines_lp, drawed_hairline, (double) scale_length);
-				mechanical_kw_hairline . draw (dc, other_hairlines_lp, drawed_hairline, (double) scale_length);
-			}
-			s_hairline . draw (dc, other_hairlines_lp, drawed_hairline, (double) scale_length);
-			hairline_360 . draw (dc, other_hairlines_lp, drawed_hairline, (double) scale_length);
-			hairline_36010 . draw (dc, other_hairlines_lp, drawed_hairline, (double) scale_length);
-			hairline_360st . draw (dc, other_hairlines_lp, drawed_hairline, (double) scale_length);
-			for (int ind = 0; ind < number_of_extra_hairlines; ind++) extra_hairlines [ind] -> draw (dc, other_hairlines_lp, drawed_hairline, (double) scale_length);
-		}
-		if (draw_cursor_hairline) draw_line (dc, hairline_lp, (double) x + (double) scale_length * (cursor_location + marginal_factor), y, rule_y);
-	}
-	Rule * captureRule (int y) {
-		if (root == NULL) return NULL;
-		return root -> captureRule (y);
-	}
-	Scale * captureScale (int y) {
-		Rule * captured_rule = captureRule (y);
-		if (captured_rule == NULL) return NULL;
-		return captured_rule -> captureScale (y);
-	}
-	void insertExtraHairlines (int extra_hairlines) {
-		number_of_extra_hairlines = extra_hairlines;
-		if (number_of_extra_hairlines < 0) number_of_extra_hairlines = 0;
-		if (number_of_extra_hairlines > 128) number_of_extra_hairlines = 128;
-		this -> extra_hairlines = new HairlinePointer [number_of_extra_hairlines + 16];
-		for (int ind = 0; ind < number_of_extra_hairlines; ind++) this -> extra_hairlines [ind] = new Hairline ();
-	}
-	Sliderule (int x, int y, int scale_length) {
-		this -> x = x; this -> rule_y = this -> y = y; this -> scale_length = scale_length;
-		this -> marginal_factor = 0.2;
-		this -> cursor_factor = 0.2;
-		this -> corner = 6;
-		rule_colour . red = rule_colour . green = rule_colour . blue = 0xd0;
-		marker_colour . red = marker_colour . green = marker_colour . blue = 0x00;
-		hairline_colour . red = 255; hairline_colour . green = hairline_colour . blue = 0;
-		multi_hairlines_colour . red = 255; multi_hairlines_colour . green = multi_hairlines_colour . blue = 0;
-		cursor_colour . red = 255; cursor_colour . green = 255; cursor_colour . blue = 0; cursor_colour . alpha = 48;
-		background_colour . red = 0; background_colour . green = 0; background_colour . blue = 255;
-		background_marker_colour . red = background_marker_colour . green = background_marker_colour . blue = 255;
-		root = NULL;
-		nesting_level = 4;
-		cursor_location = 1.0;
-		draw_cursor_window = false;
-//		process_cursor_window = false;
-//		process_cursor_hairline = false;
-		draw_cursor_2_hairlines = true;
-		draw_cursor_hairline = false;
-		draw_digital_readouts_on_slide_left = draw_digital_readouts_on_slide_right = true;
-		draw_digital_readouts_on_stator_left = draw_digital_readouts_on_stator_right = true;
-		draw_digital_readouts_on_main_hairline = draw_digital_readouts_on_multi_hairlines = true;
-		draw_decimal_places = -1;
-		decimal_string = _T ("%f");
-		no_borderline = false;
-		working_no_borderline = false;
-		metric = 304.800;
-//		top_auto_spacer = 0;
-//		bottom_auto_spacer = 0;
-//		scale_height_compensation = 0;
-		os_compensation = 0;
-		motion_multiplier = 0.2;
-		animation_steps = 100;
-		animation_delay = 50;
-		animation_linear = false;
-		animation_variable_speed = false;
-		C = log10 (1.0 / sqrt (_PI / 4.0));
-		location_360 = log10 (3.6 / _PI);
-		location_36010 = log10 (3.6 / sqrt (10.0));
-		mechanical_hp = log10 (0.74569987158227022);
-		sqrt_mechanical_hp = mechanical_hp * 0.5;
-		metric_hp = log10 (0.73549875);
-		sqrt_metric_hp = metric_hp * 0.5;
-		d_hairline . location = C;
-		s_hairline . location = - C;
-		metric_hp_hairline . location = - sqrt_metric_hp;
-		mechanical_hp_hairline . location = - sqrt_mechanical_hp;
-		metric_kw_hairline . location = C + metric_hp;
-		mechanical_kw_hairline . location = C + mechanical_hp;
-		hairline_360 . location = location_360;
-		hairline_36010 . location = location_36010;
-		hairline_360st . location = - location_360;
-		display_metric_hp = display_mechanical_hp = false;
-		number_of_extra_hairlines = 0;
-		this -> extra_hairlines = NULL;
-		left_extension = right_extension = 0.0;
-		no_pi = no_e = no_c = no_c1 = false;
-		no_degree = true;
-		no_m = no_mm = true;
-		for (int ind = 0; ind < 16; ind++) {draw_lines [ind] = false; marker_fractions [ind] = 1.0;}
-		marker_fractions [0] = 0.5; marker_fractions [1] = 0.4; marker_fractions [2] = 0.3; marker_fractions [3] = 0.2;
-		name = _T ("Slide Rule");
-	}
-	~ Sliderule (void) {
-		if (root != NULL) delete root; root = NULL;
-		if (extra_hairlines != NULL) {
-			for (int ind = 0; ind < number_of_extra_hairlines; ind++) delete extra_hairlines [ind];
-			delete [] extra_hairlines;
-			extra_hairlines = NULL;
-		}
-	}
-};
+static Config * config = NULL;
 
 typedef Sliderule * Sliderule_pointer;
-//Sliderule * slide_rule = NULL;
 static Sliderule * * slide_rules = NULL;
 static int current_slide_rule = 0;
 
@@ -7524,29 +6463,17 @@ EVT_RIGHT_DOWN(SlideruleWindow :: OnMouseRightDown)
 EVT_TEXT_ENTER(4, SlideruleWindow :: OnDigitalEnter)
 END_EVENT_TABLE()
 
-#define READ_SCALE_R_W(s)\
-			int scale_height = -1;\
-			double scale = 3.0;\
-			double shift = s;\
-			bool scale_entered = false;\
-			fr . get_symbol ();\
-			while (fr . symbol_control >= 5 && fr . symbol_control <= 6) {\
-				switch (fr . symbol_control) {\
-				case 5: scale_height = fr . int_symbol; break;\
-				case 6: if (scale_entered) shift = fr . float_symbol; else scale = fr . float_symbol; scale_entered = true; break;\
-				default: break;\
-				}\
-				fr . get_symbol ();\
-			}\
-			should_skip = false;\
-			if (scale_height < 0) return slide_rule;
+extern bool check_log_scales (bool & should_skip, SetupFileReader & fr, Sliderule * slide_rule);
+extern bool check_decimal_tracking_scales (SetupFileReader & fr, Sliderule * slide_rule);
+extern bool check_trig_scales (SetupFileReader & fr, Sliderule * slide_rule);
+extern bool check_trig_dec_scales (SetupFileReader & fr, Sliderule * slide_rule);
+extern bool check_trig_other_scales (SetupFileReader & fr, Sliderule * slide_rule);
+extern bool check_log_log_scales (SetupFileReader & fr, Sliderule * slide_rule);
+extern bool check_pythagorean_scales (SetupFileReader & fr, Sliderule * slide_rule);
+extern bool check_hyperbolic_scales (SetupFileReader & fr, Sliderule * slide_rule);
+extern bool check_statistical_scales (SetupFileReader & fr, Sliderule * slide_rule);
 
-
-//static Sliderule * createSlideruleFromFile (char * file_name, wxOperatingSystemId id, int length_override = 0) {
 static Sliderule * createSlideruleFromFileReader (SetupFileReader & fr, wxOperatingSystemId id, int length_override) {
-//	SetupFileReader fr (file_name);
-//	if (fr . file_not_found ()) return NULL;
-//	if (! fr . get_id ("sliderule")) return NULL;
 	Sliderule * slide_rule = new Sliderule (2, 12, length_override > 0 ? length_override : 800);
 	slide_rule -> motion_multiplier = config -> motion_multiplier;
 	slide_rule -> animation_steps = config -> animation_off ? 0 : config -> animation_steps;
@@ -7561,9 +6488,6 @@ static Sliderule * createSlideruleFromFileReader (SetupFileReader & fr, wxOperat
 	slide_rule -> draw_digital_readouts_on_multi_hairlines = config -> readouts_on_multi_hairlines;
 	slide_rule -> draw_decimal_places = config -> readouts_decimal_places;
 	slide_rule -> decimal_string = slide_rule -> draw_decimal_places < 0 ? _T ("%f") : wxString :: Format (_T ("%s.%if"), _T ("%"), slide_rule -> draw_decimal_places);
-//	if (id == wxOS_UNIX_LINUX) {slide_rule -> bottom_auto_spacer = slide_rule -> top_auto_spacer = 1; slide_rule -> scale_height_compensation = 0;}
-//	if (id == wxOS_WINDOWS_NT) {slide_rule -> top_auto_spacer = 1; slide_rule -> bottom_auto_spacer = 2; slide_rule -> scale_height_compensation = 1;}
-//	if (id == wxOS_MAC_OSX_DARWIN) {slide_rule -> top_auto_spacer = 1; slide_rule -> bottom_auto_spacer = 2; slide_rule -> scale_height_compensation = 1;}
 	if (id == wxOS_UNIX_LINUX) {slide_rule -> os_compensation = 1;}
 	if (id == wxOS_WINDOWS_NT) {slide_rule -> os_compensation = 0;}
 	if (id == wxOS_MAC_OSX_DARWIN) slide_rule -> draw_cursor_window = true;
@@ -7602,6 +6526,7 @@ static Sliderule * createSlideruleFromFileReader (SetupFileReader & fr, wxOperat
 			slide_rule -> root -> channel = true;
 			if (fr . symbol_control == 2) should_skip = false;
 		}
+<<<<<<< HEAD
 		if (fr . id ("scale_F")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LogF (fr . int_symbol));}
 		if (fr . id ("scale_FI")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LogFI (fr . int_symbol));}
 		if (fr . id ("scale_G")) {if (! fr . get_int ()) return slide_rule; slide_rule -> insertScale (new LogG (fr . int_symbol));}
@@ -8113,6 +7038,17 @@ static Sliderule * createSlideruleFromFileReader (SetupFileReader & fr, wxOperat
 			if (! fr . get_int ()) return slide_rule;
 			slide_rule -> insertScale (new ScaleOSCDown (octave, fr . int_symbol));
 		}
+=======
+		if (! check_log_scales (should_skip, fr, slide_rule)) return slide_rule;
+		if (! check_decimal_tracking_scales (fr, slide_rule)) return slide_rule;
+		if (! check_trig_scales (fr, slide_rule)) return slide_rule;
+		if (! check_trig_dec_scales (fr, slide_rule)) return slide_rule;
+		if (! check_trig_other_scales (fr, slide_rule)) return slide_rule;
+		if (! check_pythagorean_scales (fr, slide_rule)) return slide_rule;
+		if (! check_statistical_scales (fr, slide_rule)) return slide_rule;
+		if (! check_log_log_scales (fr, slide_rule)) return false;
+		if (! check_hyperbolic_scales (fr, slide_rule)) return false;
+>>>>>>> upstream/master
 		if (fr . id ("corner")) {if (! fr . get_int ()) return slide_rule; slide_rule -> corner = fr . int_symbol;}
 		if (fr . id ("rule_colour")) {
 			if (! fr . get_int ()) return slide_rule; slide_rule -> rule_colour . red = fr . int_symbol;
@@ -8482,6 +7418,18 @@ public:
 		if (config -> number_of_slide_rules > 9) m7 -> AppendRadioItem (710, _T ("Side 10	F10"));
 		if (config -> number_of_slide_rules > 9) m7 -> AppendRadioItem (711, _T ("Side 11	F11"));
 		if (config -> number_of_slide_rules > 10) m7 -> AppendRadioItem (712, _T ("Side 12	F12"));
+		if (config -> number_of_slide_rules > 11) m7 -> AppendRadioItem (713, _T ("Side 13"));
+		if (config -> number_of_slide_rules > 12) m7 -> AppendRadioItem (714, _T ("Side 14"));
+		if (config -> number_of_slide_rules > 13) m7 -> AppendRadioItem (715, _T ("Side 15"));
+		if (config -> number_of_slide_rules > 14) m7 -> AppendRadioItem (716, _T ("Side 16"));
+		if (config -> number_of_slide_rules > 15) m7 -> AppendRadioItem (717, _T ("Side 17"));
+		if (config -> number_of_slide_rules > 16) m7 -> AppendRadioItem (718, _T ("Side 18"));
+		if (config -> number_of_slide_rules > 17) m7 -> AppendRadioItem (719, _T ("Side 19"));
+		if (config -> number_of_slide_rules > 18) m7 -> AppendRadioItem (720, _T ("Side 20"));
+		if (config -> number_of_slide_rules > 19) m7 -> AppendRadioItem (721, _T ("Side 21"));
+		if (config -> number_of_slide_rules > 20) m7 -> AppendRadioItem (722, _T ("Side 22"));
+		if (config -> number_of_slide_rules > 21) m7 -> AppendRadioItem (723, _T ("Side 23"));
+		if (config -> number_of_slide_rules > 22) m7 -> AppendRadioItem (724, _T ("Side 24"));
 		wxMenu * m2 = new wxMenu ();
 		m2 -> AppendCheckItem (201, _T ("Readouts on stator left	Q"));
 		m2 -> AppendCheckItem (202, _T ("Readouts on stator right	W"));
@@ -8938,6 +7886,18 @@ EVT_MENU(709, SlideruleFrame :: OnChangeSide)
 EVT_MENU(710, SlideruleFrame :: OnChangeSide)
 EVT_MENU(711, SlideruleFrame :: OnChangeSide)
 EVT_MENU(712, SlideruleFrame :: OnChangeSide)
+EVT_MENU(713, SlideruleFrame :: OnChangeSide)
+EVT_MENU(714, SlideruleFrame :: OnChangeSide)
+EVT_MENU(715, SlideruleFrame :: OnChangeSide)
+EVT_MENU(716, SlideruleFrame :: OnChangeSide)
+EVT_MENU(717, SlideruleFrame :: OnChangeSide)
+EVT_MENU(718, SlideruleFrame :: OnChangeSide)
+EVT_MENU(719, SlideruleFrame :: OnChangeSide)
+EVT_MENU(720, SlideruleFrame :: OnChangeSide)
+EVT_MENU(721, SlideruleFrame :: OnChangeSide)
+EVT_MENU(722, SlideruleFrame :: OnChangeSide)
+EVT_MENU(723, SlideruleFrame :: OnChangeSide)
+EVT_MENU(724, SlideruleFrame :: OnChangeSide)
 END_EVENT_TABLE()
 
 SlideruleFrame * slide_rule_frame = NULL;
@@ -8955,6 +7915,8 @@ bool FileReceiver :: OnDropFiles (wxCoord x, wxCoord y, const wxArrayString & fi
 	return true;
 }
 
+extern void create_default_sliderule (Sliderule * slide_rule);
+
 class SlideruleApp : public wxApp {
 public:
 	bool createDefaultSliderule (wxOperatingSystemId id) {
@@ -8965,22 +7927,23 @@ public:
 		if (id == wxOS_UNIX_LINUX) {slide_rule -> os_compensation = 1;}
 		if (id == wxOS_WINDOWS_NT) {slide_rule -> os_compensation = 0;}
 		if (id == wxOS_MAC_OSX_DARWIN) slide_rule -> draw_cursor_window = true;
-		slide_rule -> insertRule ();
-		slide_rule -> root -> stator = true;
-		slide_rule -> insertScale (new LogK (18));
-		slide_rule -> insertSpacer (4);
-		slide_rule -> insertScale (new LogA (18));
-		slide_rule -> insertRule ();
-		slide_rule -> root -> stator = false;
-		slide_rule -> insertScale (new LogB (18));
-		slide_rule -> insertSpacer (4);
-		slide_rule -> insertScale (new LogC (18));
-		slide_rule -> insertRule ();
-		slide_rule -> root -> stator = true;
-		slide_rule -> insertScale (new LogD (18));
-		slide_rule -> insertSpacer (4);
-		slide_rule -> insertScale (new LDown (18));
-		slide_rule -> close ();
+		create_default_sliderule (slide_rule);
+//		slide_rule -> insertRule ();
+//		slide_rule -> root -> stator = true;
+//		slide_rule -> insertScale (new LogK (18));
+//		slide_rule -> insertSpacer (4);
+//		slide_rule -> insertScale (new LogA (18));
+//		slide_rule -> insertRule ();
+//		slide_rule -> root -> stator = false;
+//		slide_rule -> insertScale (new LogB (18));
+//		slide_rule -> insertSpacer (4);
+//		slide_rule -> insertScale (new LogC (18));
+//		slide_rule -> insertRule ();
+//		slide_rule -> root -> stator = true;
+//		slide_rule -> insertScale (new LogD (18));
+//		slide_rule -> insertSpacer (4);
+//		slide_rule -> insertScale (new LDown (18));
+//		slide_rule -> close ();
 		slide_rules [0] = slide_rule;
 		current_slide_rule = 0;
 		for (int ind = 1; ind < config -> number_of_slide_rules; ind++) slide_rules [ind] = NULL;
