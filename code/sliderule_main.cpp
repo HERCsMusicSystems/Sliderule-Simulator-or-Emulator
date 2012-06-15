@@ -1308,3 +1308,4 @@ public:
 };
 
 IMPLEMENT_APP (SlideruleApp);
+
