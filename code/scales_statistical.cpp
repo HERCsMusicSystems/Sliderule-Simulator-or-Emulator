@@ -43,18 +43,11 @@ public:
 			locations [ind + 1800] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.001 + (double) ind / 100000.0 )) - n);}
 		for (int ind = 1; ind <= 900; ind++) {
 			locations [ind + 2700] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.01 + (double) ind / 10000.0 )) - n);}
-		for (int ind = 1; ind <= 800; ind++) {
+		for (int ind = 1; ind < 900; ind++) {
 			locations [ind + 3600] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.1 + (double) ind / 1000.0 )) - n);}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 4400] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.9 + (double) ind / 1000.0 )) - n);}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 4490] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.99 + (double) ind / 10000.0 ) ) - n );}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 4580] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.999 + (double) ind / 100000.0 ) ) - n );}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 4670] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.9999 + (double) ind / 1000000.0 ) ) - n );}
-		left_index = find_left_index (locations, 1, 4760, 0.0 - (double) scale_length * left_extension);
-		right_index = find_right_index (locations, 1, 4760, (double) scale_length * (1.0 + right_extension));
+		locations [4500] = (double) scale_length * (0.0 - n);
+		left_index = find_left_index (locations, 1, 4500, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations, 1, 4500, (double) scale_length * (1.0 + right_extension));
 	}
 	virtual void scaleInit (void) {faceUp (); init_locations();}
 	virtual void draw (wxDC & dc, double x) {
@@ -108,17 +101,15 @@ public:
 		if (left_index <= 4200) location = draw_markings_for_100 (dc, & locations [4100], _T (".7"), x, location, max(0, left_index - 4100), min(right_index - 4100, 100));
 		if (left_index <= 4300) location = draw_markings_for_100 (dc, & locations [4200], _T (".8"), x, location, max(0, left_index - 4200), min(right_index - 4200, 100));
 		if (left_index <= 4400) location = draw_markings_for_100 (dc, & locations [4300], _T (".9"), x, location, max(0, left_index - 4300), min(right_index - 4300, 100));
-		if (left_index <= 4490) location = draw_markings_for_100 (dc, & locations [4400], _T (".99"), x, location, max(0, left_index - 4400), min(right_index - 4400, 90));
-		if (left_index <= 4580) location = draw_markings_for_100 (dc, & locations [4490], _T (".999"), x, location, max(0, left_index - 4490), min(right_index - 4490, 90));
-		if (left_index <= 4670) location = draw_markings_for_100 (dc, & locations [4580], _T (".9999"), x, location, max(0, left_index - 4580), min(right_index - 4580, 90));
-		if (left_index <= 4760) location = draw_markings_for_100 (dc, & locations [4670], _T (".99999"), x, location, max(0, left_index - 4670), min(right_index - 4670, 90));
+		if (left_index <= 4500) location = draw_markings_for_100 (dc, & locations [4400], _T ("1"), x, location, max(0, left_index - 4400), min(right_index - 4400, 100));
+		if ( left_index <= 4500 ) draw_text_marker (dc, _T ("1"), x + locations [4500]);
 	}
 	ScaleBetaDistUp (double powerof10, double degoffreedom1, double degoffreedom2, int height) : StatisticsBase (height) {v1 = degoffreedom1; v2 = degoffreedom2; n = powerof10; left_index = 0; right_index = 4760;}
 };
 class ScaleBetaDistDown : public ScaleBetaDistUp {
 public:
 	virtual void scaleInit (void) {faceDown (); init_locations ();}
-	ScaleBetaDistDown (double powerof10, double degoffreedom1, double degoffreedom2, int height) : ScaleBetaDistUp (degoffreedom1, degoffreedom2, powerof10, height) {}
+	ScaleBetaDistDown (double powerof10, double degoffreedom1, double degoffreedom2, int height) : ScaleBetaDistUp (powerof10, degoffreedom1, degoffreedom2, height) {}
 };
 class ScaleFDistUp : public StatisticsBase {
 public:
@@ -214,7 +205,7 @@ public:
 class ScaleFDistDown : public ScaleFDistUp {
 public:
 	virtual void scaleInit (void) {faceDown (); init_locations ();}
-	ScaleFDistDown (double powerof10, double degoffreedom1, double degoffreedom2, int height) : ScaleFDistUp (degoffreedom1, degoffreedom2, powerof10, height) {}
+	ScaleFDistDown (double powerof10, double degoffreedom1, double degoffreedom2, int height) : ScaleFDistUp (powerof10, degoffreedom1, degoffreedom2, height) {}
 };
 class ScaleChiSquareDistUp : public StatisticsBase {
 public:
@@ -723,7 +714,7 @@ public:
 class ScaleStudentsTDist1TailDown : public ScaleStudentsTDist1TailUp {
 public:
 	virtual void scaleInit (void) {faceDown (); init_locations ();}
-	ScaleStudentsTDist1TailDown (double powerof10, double degoffreedom, int height) : ScaleStudentsTDist1TailUp (degoffreedom, powerof10, height) {}
+	ScaleStudentsTDist1TailDown (double powerof10, double degoffreedom, int height) : ScaleStudentsTDist1TailUp (powerof10, degoffreedom, height) {}
 };
 class ScaleStudentsTDist2TailUp : public StatisticsBase {
 public:
@@ -824,7 +815,7 @@ public:
 class ScaleStudentsTDist2TailDown : public ScaleStudentsTDist2TailUp {
 public:
 	virtual void scaleInit (void) {faceDown (); init_locations ();}
-	ScaleStudentsTDist2TailDown (double powerof10, double degoffreedom, int height) : ScaleStudentsTDist2TailUp (degoffreedom, powerof10, height) {}
+	ScaleStudentsTDist2TailDown (double powerof10, double degoffreedom, int height) : ScaleStudentsTDist2TailUp (powerof10, degoffreedom, height) {}
 };
 class ScaleStudentsTDegOfFreedomUp : public StatisticsBase {
 public:
