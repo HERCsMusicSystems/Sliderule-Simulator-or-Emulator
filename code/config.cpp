@@ -53,7 +53,7 @@ void Config :: save (void) {
 }
 
 Config :: Config (void) {
-	number_of_slide_rules = 3;
+	number_of_slide_rules = 24;
 	readouts_on_stator_left = false;
 	readouts_on_stator_right = false;
 	readouts_on_slide_left = false;
