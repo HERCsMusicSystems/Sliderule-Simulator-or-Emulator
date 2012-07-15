@@ -22,8 +22,9 @@
 
 #include "scale_statistics_base.h"
 
-#define _MAXITER  1000
-#define _ACCURACY 0.0000000000001
+#define _MAXITER  100
+#define _HALFITER 50
+#define _ACCURACY 0.0000001
 #define _OOBVALUE 1000000000.0
 
 /* GJM -- Statistical scales base */
@@ -49,7 +50,9 @@ double StatisticsBase :: GenericHypGeoFunc(int n1, double n1array[], int n2, dou
     nextSum /= n;
     prevValue = value;
     value += nextSum;
+	if (nextSum > 1.0e100) prevValue = value;
   } while ((value != prevValue) && (n <= _MAXITER));
+  if (value > _OOBVALUE) value = _OOBVALUE;
   return value;
 }
 // Hyper Geometric Function 2,1
@@ -63,19 +66,23 @@ double StatisticsBase :: HypGeoFunc(double a, double b, double c, double x)
 double StatisticsBase :: IncompleteGammaFunction(double a, double x)
 {
   double result, sum, sum2, prod;
+  double n = 1.0;
   bool finished = false;
 
   result = pow(x, a);
-  result *= exp(-x) / exp(LnGammaF(a+1));
+  result *= exp(0.0 - x - LnGammaF(a+1));
   sum = sum2 = prod = 1.0;
   for (int k = 1; !finished; k++)
   {
     prod *= x / (a + (double) k);
     sum += prod;
-    if (sum == sum2) finished = true;
+	n += 1;
+	if (sum > 1.0e100) sum2 = sum;
+    if ((sum == sum2) || (n >= _MAXITER)) finished = true;
     sum2 = sum;
   }
   result *= sum;
+  if (result > _OOBVALUE) result = _OOBVALUE;
   return result;
 }
 double StatisticsBase :: InvIncompleteGammaFunction(double a, double x)
@@ -97,7 +104,7 @@ double StatisticsBase :: InvIncompleteGammaFunction(double a, double x)
       deltamax = high * _ACCURACY;
       double delta = high - low;
   loop = 0;
-      while ((abs(delta) > deltamax) && (loop <= _MAXITER))
+      while ((abs(delta) > deltamax) && (loop <= _HALFITER))
       {
           mid = (low + high) / 2.0;
           midgma = IncompleteGammaFunction(a, mid);
@@ -158,15 +165,15 @@ double StatisticsBase :: InvLnGammaF(double x)
       deltamax = high * _ACCURACY;
       double delta = 1.0;
   loop = 0;
-      while ((abs(delta) > deltamax) && (loop <= _MAXITER))
+      while ((abs(delta) > deltamax) && (loop <= _HALFITER))
       {
           mid = (low + high) / 2.0;
           midgma = LnGammaF(mid);
           if (midgma > x) high = mid;
           else if (midgma < x) low = mid;
           delta = (mid - low);
-    if ((high - mid) > (mid - low)) delta = (high - mid);
-    loop++;
+          if ((high - mid) > (mid - low)) delta = (high - mid);
+          loop++;
       }
       return mid;
   }
@@ -180,9 +187,9 @@ double StatisticsBase :: ChiSquareDegOfFreedom(double x, double a)
       double low, high, mid, midgma, deltamax, temp;
   int loop;
 
-      if ((a < 0.0) || (a > 1.0)) return _OOBVALUE;
+  if ((a < 0.0) || (a > 1.0)) return _OOBVALUE;
   if ((x == 0.0) || (a == 0.0)) return 0.0;
-      low = 0.0;
+  low = 0.0;
   high = 1.0;
   temp = ChiSquareDist(high, x);
   while (temp > a)
@@ -191,29 +198,29 @@ double StatisticsBase :: ChiSquareDegOfFreedom(double x, double a)
     high = high * 2.0;
     temp = ChiSquareDist(high, x);
   }
-      deltamax = high * _ACCURACY;
-      double delta = high - low;
+  deltamax = high * _ACCURACY;
+  double delta = high - low;
   loop = 0;
-      while ((abs(delta) > deltamax) && (loop < _MAXITER))
+  while ((abs(delta) > deltamax) && (loop < _HALFITER))
       {
           mid = (low + high) / 2.0;
           midgma = ChiSquareDist(mid, x);
           if (midgma < a) high = mid;
           else if (midgma > a) low = mid;
           delta = (mid - low);
-    if ((high - mid) > (mid - low)) delta = (high - mid);
-    loop++;
+          if ((high - mid) > (mid - low)) delta = (high - mid);
+          loop++;
       }
-      return mid;
+  return mid;
 }
 double StatisticsBase :: StudentsTDegOfFreedom(double x, double a)
 {
-      double low, high, mid, midst, deltamax, temp;
+  double low, high, mid, midst, deltamax, temp;
   int loop;
 
-      if ((a < 0.0) || (a > 1.0)) return _OOBVALUE;
+  if ((a < 0.0) || (a > 1.0)) return _OOBVALUE;
   if ((x == 0.0) || (a == 0.0)) return 0.0;
-      low = 0.0;
+  low = 0.0;
   high = 1.0;
   temp = StudentsTDist(high, x);
   while (temp < a)
@@ -222,19 +229,19 @@ double StatisticsBase :: StudentsTDegOfFreedom(double x, double a)
     high = high * 2.0;
     temp = StudentsTDist(high, x);
   }
-      deltamax = high * _ACCURACY;
-      double delta = high - low;
+  deltamax = high * _ACCURACY;
+  double delta = high - low;
   loop = 0;
-      while ((abs(delta) > deltamax) && (loop < _MAXITER))
+  while ((abs(delta) > deltamax) && (loop < _HALFITER))
       {
           mid = (low + high) / 2.0;
           midst = StudentsTDist(mid, x);
           if (midst > a) high = mid; else low = mid;
           delta = (mid - low);
-    if ((high - mid) > (mid - low)) delta = (high - mid);
-    loop++;
+          if ((high - mid) > (mid - low)) delta = (high - mid);
+          loop++;
       }
-      return mid;
+  return mid;
 }
 double StatisticsBase :: NormalDist(double x) { return IncompleteGammaFunction(0.5, x*x/2.0); }
 double StatisticsBase :: InvNormalDist(double x) { return sqrt(InvIncompleteGammaFunction(0.5, x) * 2.0); }
@@ -243,8 +250,14 @@ double StatisticsBase :: InvGammaDist(double a, double b, double x) { return Inv
 // Incomplete Beta and Invert Incomplete Beta functions for StudentsT, F, and Beta distributions
 double StatisticsBase :: IncompleteBetaFunction(double a, double b, double x)
 {
+	double result;
+
   if (x < 0.0) return 0.0;
-  else return ( pow(x, a) / a ) * HypGeoFunc(a, 1.0-b, a+1.0, x);
+  else
+  {
+	  result = ( pow(x, a) / a ) * HypGeoFunc(a, 1.0-b, a+1.0, x);
+	  return result;
+  }
 }
 double StatisticsBase :: InvIncompleteBetaFunction(double a, double b, double x)
 {
@@ -264,15 +277,15 @@ double StatisticsBase :: InvIncompleteBetaFunction(double a, double b, double x)
       deltamax = high * _ACCURACY;
       double delta = high - low;
   loop = 0;
-      while ((abs(delta) > deltamax) && (loop <= _MAXITER))
+      while ((abs(delta) > deltamax) && (loop <= _HALFITER))
       {
           mid = (low + high) / 2.0;
           midgma = IncompleteBetaFunction(a, b, mid);
           if (midgma > x) high = mid;
           else if (midgma < x) low = mid;
           delta = (mid - low);
-    if ((high - mid) > (mid - low)) delta = (high - mid);
-    loop++;
+          if ((high - mid) > (mid - low)) delta = (high - mid);
+          loop++;
       }
       return mid;
 }

@@ -742,6 +742,336 @@ public:
 	Log3W3 (int height, double scale, double shift) : Log3R3 (height, scale, shift) {}
 };
 
+class LogCentigrade0Up : public LogBase {
+public:
+	double locations[500];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return log10( 273.15 + x );}
+	virtual double getValue (double x) {return pow( 10, x ) - 273.15;}
+	void init_locations (void) {
+		for (int ind = 86; ind <= 300; ind++) { // from -273 to -270
+			locations [ind] = (double) scale_length * (log10(0.15 + (double) ind / 100.0));
+		}
+		for (int ind = 1; ind <= 100; ind++) { // from -270 to -260
+			locations [ind + 300] = (double) scale_length * (log10(3.15 + (double) ind / 10.0));
+		}
+		for (int ind = 0; ind <= 85; ind++) {
+			locations [ind] = locations [86] - (86-ind)*100.0;
+		}
+		left_index = find_left_index (locations, 1, 400, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations, 1, 400, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations [0];
+		location = draw_markings_for_100 (dc, locations, _T ("-272"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations [100], _T ("-271"), x, location);
+		location = draw_markings_for_100 (dc, & locations [200], _T ("-270"), x, location);
+		draw_text_marker (dc, _T ("-269"), x + locations [310]);
+		draw_text_marker (dc, _T ("-268"), x + locations [320]);
+		draw_text_marker (dc, _T ("-267"), x + locations [330]);
+		draw_text_marker (dc, _T ("-266"), x + locations [340]);
+		draw_text_marker (dc, _T ("-265"), x + locations [350]);
+		draw_text_marker (dc, _T ("-264"), x + locations [360]);
+		location = draw_markings_for_100 (dc, & locations [300], _T ("-260"), x, location, 0, right_index - 300);
+	}
+	LogCentigrade0Up (int height) : LogBase (height) {left_index = 0; right_index = 400;}
+};
+
+class LogCentigrade0Down : public LogCentigrade0Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	LogCentigrade0Down (int height) : LogCentigrade0Up (height) {}
+};
+
+class LogCentigrade1Up : public LogBase {
+public:
+	double locations[500];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return -1.0 + log10( 273.15 + x );}
+	virtual double getValue (double x) {return pow( 10, x + 1.0) - 273.15;}
+	void init_locations (void) {
+		for (int ind = 0; ind <= 300; ind++) { // from -270 to -240
+			locations [ind] = (double) scale_length * (-1.0 + log10(3.15 + (double) ind / 10.0));
+		}
+		for (int ind = 1; ind <= 100; ind++) { // from -240 to -140
+			locations [ind + 300] = (double) scale_length * (-1.0 + log10(33.15 + (double) ind));
+		}
+		left_index = find_left_index (locations, 1, 400, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations, 1, 400, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations [0];
+		location = draw_markings_for_100 (dc, locations, _T ("-260"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations [100], _T ("-250"), x, location);
+		location = draw_markings_for_100 (dc, & locations [200], _T ("-240"), x, location);
+		location = draw_markings_for_100 (dc, & locations [300], _T (""), x, location, 0, right_index - 300);
+		draw_text_marker (dc, _T ("-230"), x + locations [310]);
+		draw_text_marker (dc, _T ("-220"), x + locations [320]);
+		draw_text_marker (dc, _T ("-210"), x + locations [330]);
+		draw_text_marker (dc, _T ("-200"), x + locations [340]);
+		draw_text_marker (dc, _T ("-190"), x + locations [350]);
+		draw_text_marker (dc, _T ("-180"), x + locations [360]);
+	}
+	LogCentigrade1Up (int height) : LogBase (height) {left_index = 0; right_index = 400;}
+};
+
+class LogCentigrade1Down : public LogCentigrade1Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	LogCentigrade1Down (int height) : LogCentigrade1Up (height) {}
+};
+
+
+class LogCentigrade2Up : public LogBase {
+public:
+	double locations[600];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return -2.0 + log10( 273.15 + x );}
+	virtual double getValue (double x) {return pow( 10, x + 2.0 ) - 273.15;}
+	void init_locations (void) {
+		for (int ind = 0; ind <= 400; ind++) { // from -200 to 200
+			locations [ind] = (double) scale_length * (-2.0 + log10(73.15 + (double) ind));
+		}
+		for (int ind = 1; ind <= 100; ind++) { // from 200 to 1200
+			locations [ind + 400] = (double) scale_length * (-2.0 + log10(473.15 + (double) ind * 10.0));
+		}
+		left_index = find_left_index (locations, 1, 500, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations, 1, 500, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations [0];
+		draw_text_marker (dc, _T ("-150"), x + locations [50]);
+		location = draw_markings_for_100 (dc, locations, _T ("-100"), x, location, left_index, 100);
+		draw_text_marker (dc, _T ("-50"), x + locations [150]);
+		location = draw_markings_for_100 (dc, & locations [100], _T ("0"), x, location);
+		draw_text_marker (dc, _T ("50"), x + locations [250]);
+		location = draw_markings_for_100 (dc, & locations [200], _T ("100"), x, location);
+		draw_text_marker (dc, _T ("150"), x + locations [350]);
+		location = draw_markings_for_100 (dc, & locations [300], _T ("200"), x, location);
+		location = draw_markings_for_100 (dc, & locations [400], _T (""), x, location, 0, right_index - 400);
+		draw_text_marker (dc, _T ("300"), x + locations [410]);
+		draw_text_marker (dc, _T ("400"), x + locations [420]);
+		draw_text_marker (dc, _T ("500"), x + locations [430]);
+		draw_text_marker (dc, _T ("600"), x + locations [440]);
+		draw_text_marker (dc, _T ("700"), x + locations [450]);
+	}
+	LogCentigrade2Up (int height) : LogBase (height) {left_index = 0; right_index = 500;}
+};
+
+class LogCentigrade2Down : public LogCentigrade2Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	LogCentigrade2Down (int height) : LogCentigrade2Up (height) {}
+};
+
+class LogCentigrade3Up : public LogBase {
+public:
+	double locations[500];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return -3.0 + log10( 273.15 + x );}
+	virtual double getValue (double x) {return pow( 10, x + 3.0) - 273.15;}
+	void init_locations (void) {
+		for (int ind = 0; ind <= 300; ind++) { // from 0 to 3000
+			locations [ind] = (double) scale_length * (-3.0 + log10(273.15 + (double) ind * 10.0));
+		}
+		for (int ind = 1; ind <= 100; ind++) { // from 3000 to 13000
+			locations [ind + 300] = (double) scale_length * (-3.0 + log10(3273.15 + (double) ind * 100.0));
+		}
+		left_index = find_left_index (locations, 1, 400, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations, 1, 400, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations [0];
+		location = draw_markings_for_100 (dc, locations, _T ("1000"), x, location, left_index, 100);
+		draw_text_marker (dc, _T ("1500"), x + locations [150]);
+		location = draw_markings_for_100 (dc, & locations [100], _T ("2000"), x, location);
+		draw_text_marker (dc, _T ("2500"), x + locations [250]);
+		location = draw_markings_for_100 (dc, & locations [200], _T ("3000"), x, location);
+		draw_text_marker (dc, _T ("4000"), x + locations [310]);
+		draw_text_marker (dc, _T ("5000"), x + locations [320]);
+		draw_text_marker (dc, _T ("6000"), x + locations [330]);
+		draw_text_marker (dc, _T ("7000"), x + locations [340]);
+		draw_text_marker (dc, _T ("8000"), x + locations [350]);
+		draw_text_marker (dc, _T ("9000"), x + locations [360]);
+		location = draw_markings_for_100 (dc, & locations [300], _T (""), x, location, 0, right_index - 300);
+	}
+	LogCentigrade3Up (int height) : LogBase (height) {left_index = 0; right_index = 400;}
+};
+
+class LogCentigrade3Down : public LogCentigrade3Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	LogCentigrade3Down (int height) : LogCentigrade3Up (height) {}
+};
+
+
+class LogFahrenheit0Up : public LogBase {
+public:
+	double locations[1000];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return log10( ( x - 32.0 ) / 1.8 + 273.15 );}
+	virtual double getValue (double x) {return ( pow( 10, x ) - 273.15 ) * 1.8 + 32.0;}
+	void init_locations (void) {
+		for (int ind = 0; ind <= 800; ind++) { // from -458 to -450
+			locations [ind] = (double) scale_length * (log10( ( -490.0 + (double) ind / 100.0) / 1.8 + 273.15 ) );
+		}
+		for (int ind = 1; ind <= 100; ind++) { // from -450 to -440
+			locations [ind + 800] = (double) scale_length * (log10( ( -482.0 + (double) ind / 10.0) / 1.8 + 273.15 ) );
+		}
+		left_index = find_left_index (locations, 1, 900, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations, 1, 900, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations [0];
+		location = draw_markings_for_100 (dc, locations, _T ("-457"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations [100], _T ("-456"), x, location);
+		location = draw_markings_for_100 (dc, & locations [200], _T ("-455"), x, location);
+		location = draw_markings_for_100 (dc, & locations [300], _T ("-454"), x, location);
+		location = draw_markings_for_100 (dc, & locations [400], _T ("-453"), x, location);
+		location = draw_markings_for_100 (dc, & locations [500], _T ("-452"), x, location);
+		location = draw_markings_for_100 (dc, & locations [600], _T ("-451"), x, location);
+		location = draw_markings_for_100 (dc, & locations [700], _T ("-450"), x, location);
+		draw_text_marker (dc, _T ("-445"), x + locations [850]);
+		location = draw_markings_for_100 (dc, & locations [800], _T ("-440"), x, location, 0, right_index - 800);
+	}
+	LogFahrenheit0Up (int height) : LogBase (height) {left_index = 0; right_index = 900;}
+};
+
+class LogFahrenheit0Down : public LogFahrenheit0Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	LogFahrenheit0Down (int height) : LogFahrenheit0Up (height) {}
+};
+
+class LogFahrenheit1Up : public LogBase {
+public:
+	double locations[800];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return -1.0 + log10( ( x - 32.0 ) / 1.8 + 273.15 );}
+	virtual double getValue (double x) {return ( pow( 10, x + 1.0 ) - 273.15 ) * 1.8 + 32.0;}
+	void init_locations (void) {
+		for (int ind = 0; ind <= 500; ind++) { // from -450 to -400
+			locations [ind] = (double) scale_length * (-1.0 + (log10( ( -482.0 + (double) ind / 10.0) / 1.8 + 273.15 ) ) );
+		}
+		for (int ind = 1; ind <= 200; ind++) { // from -400 to -200
+			locations [ind + 500] = (double) scale_length * (-1.0 + (log10( ( -432.0 + (double) ind) / 1.8 + 273.15 ) ) );
+		}
+		left_index = find_left_index (locations, 1, 700, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations, 1, 700, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations [0];
+		location = draw_markings_for_100 (dc, locations, _T ("-440"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations [100], _T ("-430"), x, location);
+		location = draw_markings_for_100 (dc, & locations [200], _T ("-420"), x, location);
+		location = draw_markings_for_100 (dc, & locations [300], _T ("-410"), x, location);
+		location = draw_markings_for_100 (dc, & locations [400], _T ("-400"), x, location);
+		location = draw_markings_for_100 (dc, & locations [500], _T ("-300"), x, location);
+		draw_text_marker (dc, _T ("-350"), x + locations [550]);
+		location = draw_markings_for_100 (dc, & locations [600], _T ("-200"), x, location, 0, right_index - 600);
+	}
+	LogFahrenheit1Up (int height) : LogBase (height) {left_index = 0; right_index = 700;}
+};
+
+class LogFahrenheit1Down : public LogFahrenheit1Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	LogFahrenheit1Down (int height) : LogFahrenheit1Up (height) {}
+};
+
+
+class LogFahrenheit2Up : public LogBase { // -280 to 1500
+public:
+	double locations[800];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return -2.0 + log10( ( x - 32.0 ) / 1.8 + 273.15 );}
+	virtual double getValue (double x) {return ( pow( 10, x + 2.0 ) - 273.15 ) * 1.8 + 32.0;}
+	void init_locations (void) {
+		for (int ind = 0; ind <= 500; ind++) { // from -300 to 200
+			locations [ind] = (double) scale_length * (-2.0 + ( log10( ( -332.0 + (double) ind) / 1.8 + 273.15 ) ) );
+		}
+		for (int ind = 1; ind <= 200; ind++) { // from 200 to 2200
+			locations [ind + 500] = (double) scale_length * (-2.0 + ( log10( ( 168.0 + (double) ind * 10.0) / 1.8 + 273.15 ) ) );
+		}
+		left_index = find_left_index (locations, 1, 700, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations, 1, 700, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations [0];
+		location = draw_markings_for_100 (dc, locations, _T ("-200"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations [100], _T ("-100"), x, location);
+		location = draw_markings_for_100 (dc, & locations [200], _T ("0"), x, location);
+		location = draw_markings_for_100 (dc, & locations [300], _T ("100"), x, location);
+		location = draw_markings_for_100 (dc, & locations [400], _T ("200"), x, location);
+		location = draw_markings_for_100 (dc, & locations [500], _T (""), x, location, 0, 30);
+		location = draw_markings_for_100 (dc, & locations [530], _T (""), x, location, 0, right_index - 530);
+		draw_text_marker (dc, _T ("300"), x + locations [510]);
+		draw_text_marker (dc, _T ("400"), x + locations [520]);
+		draw_text_marker (dc, _T ("500"), x + locations [530]);
+		draw_text_marker (dc, _T ("1000"), x + locations [580]);
+	}
+	LogFahrenheit2Up (int height) : LogBase (height) {left_index = 0; right_index = 700;}
+};
+
+class LogFahrenheit2Down : public LogFahrenheit2Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	LogFahrenheit2Down (int height) : LogFahrenheit2Up (height) {}
+};
+
+class LogFahrenheit3Up : public LogBase { // 1300 to 18000
+public:
+	double locations[700];
+	int left_index, right_index;
+	virtual double getLocation (double x) {return -3.0 + log10( ( x - 32.0 ) / 1.8 + 273.15 );}
+	virtual double getValue (double x) {return ( pow( 10, x + 3.0 ) - 273.15 ) * 1.8 + 32.0;}
+	void init_locations (void) {
+		for (int ind = 0; ind <= 400; ind++) { // from 1000 to 5000
+			locations [ind] = (double) scale_length * (-3.0 + ( log10( ( 968.0 + (double) ind * 10.0) / 1.8 + 273.15 ) ) );
+		}
+		for (int ind = 1; ind <= 200; ind++) { // from 5000 to 25000
+			locations [ind + 400] = (double) scale_length * (-3.0 + ( log10( ( 4968.0 + (double) ind * 100.0) / 1.8 + 273.15 ) ) );
+		}
+		left_index = find_left_index (locations, 1, 600, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations, 1, 600, (double) scale_length * (1.0 + right_extension));
+	}
+	virtual void scaleInit (void) {faceUp (); init_locations();}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		double location = locations [0];
+		location = draw_markings_for_100 (dc, locations, _T ("2000"), x, location, left_index, 100);
+		location = draw_markings_for_100 (dc, & locations [100], _T ("3000"), x, location);
+		location = draw_markings_for_100 (dc, & locations [200], _T ("4000"), x, location);
+		location = draw_markings_for_100 (dc, & locations [300], _T ("5000"), x, location);
+		draw_text_marker (dc, _T ("1500"), x + locations [50]);
+		draw_text_marker (dc, _T ("10000"), x + locations [450]);
+		location = draw_markings_for_100 (dc, & locations [400], _T ("15000"), x, location);
+		location = draw_markings_for_100 (dc, & locations [500], _T ("25000"), x, location, 0, right_index - 500);
+	}
+	LogFahrenheit3Up (int height) : LogBase (height) {left_index = 0; right_index = 600;}
+};
+
+class LogFahrenheit3Down : public LogFahrenheit3Up {
+public:
+	virtual void scaleInit (void) {faceDown (); init_locations ();}
+	LogFahrenheit3Down (int height) : LogFahrenheit3Up (height) {}
+};
+
+
 #define READ_SCALE_R_W(s)\
 			int scale_height = -1;\
 			double scale = 3.0;\
@@ -1153,6 +1483,23 @@ bool check_log_scales (bool & should_skip, SetupFileReader & fr, Sliderule * sli
 		READ_SCALE_R_W(2.0)
 		slide_rule -> insertScale (new Log3W3 (scale_height, scale, shift));
 	}
+/* GJM -- New Cent and Fahr scales */
+	if (fr . id ("scale_Cent0")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogCentigrade0Up (fr . int_symbol));}
+	if (fr . id ("scale_Cent0_down")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogCentigrade0Down (fr . int_symbol));}
+	if (fr . id ("scale_Cent1")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogCentigrade1Up (fr . int_symbol));}
+	if (fr . id ("scale_Cent1_down")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogCentigrade1Down (fr . int_symbol));}
+	if (fr . id ("scale_Cent2")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogCentigrade2Up (fr . int_symbol));}
+	if (fr . id ("scale_Cent2_down")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogCentigrade2Down (fr . int_symbol));}
+	if (fr . id ("scale_Cent3")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogCentigrade3Up (fr . int_symbol));}
+	if (fr . id ("scale_Cent3_down")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogCentigrade3Down (fr . int_symbol));}
+	if (fr . id ("scale_Fahr0")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogFahrenheit0Up (fr . int_symbol));}
+	if (fr . id ("scale_Fahr0_down")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogFahrenheit0Down (fr . int_symbol));}
+	if (fr . id ("scale_Fahr1")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogFahrenheit1Up (fr . int_symbol));}
+	if (fr . id ("scale_Fahr1_down")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogFahrenheit1Down (fr . int_symbol));}
+	if (fr . id ("scale_Fahr2")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogFahrenheit2Up (fr . int_symbol));}
+	if (fr . id ("scale_Fahr2_down")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogFahrenheit2Down (fr . int_symbol));}
+	if (fr . id ("scale_Fahr3")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogFahrenheit3Up (fr . int_symbol));}
+	if (fr . id ("scale_Fahr3_down")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogFahrenheit3Down (fr . int_symbol));}
 	if (fr . id ("scale_L")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LUp (fr . int_symbol));}
 	if (fr . id ("scale_L_down")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LDown (fr . int_symbol));}
 /* GJM -- New Ln scale */
