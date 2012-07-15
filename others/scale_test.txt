@@ -94,7 +94,7 @@ sliderule [
 
 sliderule [
 
-	name ["LONG LOGS"]
+	name ["LONG LOGS AND TEMP SCALES"]
 
 	length [1024]
 
@@ -115,6 +115,32 @@ sliderule [
 	spacer [2]
 	scale_3R3 [18] left_description ["scale_3R3" 0.15]
 	scale_3W3 [18] left_description ["scale_3W3" 0.15]
+	spacer [2]
+
+	scale_Cent0 [18] left_description ["scale_Cent0" 0.15]
+	scale_Cent0_down [18] left_description ["scale_Cent0_down" 0.15]
+	spacer [2]
+	scale_Cent1 [18] left_description ["scale_Cent1" 0.15]
+	scale_Cent1_down [18] left_description ["scale_Cent1_down" 0.15]
+	spacer [2]
+	scale_Cent2 [18] left_description ["scale_Cent2" 0.15]
+	scale_Cent2_down [18] left_description ["scale_Cent2_down" 0.15]
+	spacer [2]
+	scale_Cent3 [18] left_description ["scale_Cent3" 0.15]
+	scale_Cent3_down [18] left_description ["scale_Cent3_down" 0.15]
+	spacer [2]
+
+	scale_Fahr0 [18] left_description ["scale_Fahr0" 0.15]
+	scale_Fahr0_down [18] left_description ["scale_Fahr0_down" 0.15]
+	spacer [2]
+	scale_Fahr1 [18] left_description ["scale_Fahr1" 0.15]
+	scale_Fahr1_down [18] left_description ["scale_Fahr1_down" 0.15]
+	spacer [2]
+	scale_Fahr2 [18] left_description ["scale_Fahr2" 0.15]
+	scale_Fahr2_down [18] left_description ["scale_Fahr2_down" 0.15]
+	spacer [2]
+	scale_Fahr3 [18] left_description ["scale_Fahr3" 0.15]
+	scale_Fahr3_down [18] left_description ["scale_Fahr3_down" 0.15]
 	spacer [2]
 
 ]

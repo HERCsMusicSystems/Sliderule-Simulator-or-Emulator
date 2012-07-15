@@ -24,6 +24,18 @@
 #include "sliderule.h"
 #include "scale_statistics_base.h"
 
+double blocations[5000];
+double clocations[5000];
+double cdlocations[2800];
+double flocations[9000];
+bool binitlocations = true;
+bool cinitlocations = true;
+bool cdinitlocations = true;
+bool finitlocations = true;
+double blastv1, blastv2, blastn, blastsl;
+double clastv, clastn, clastsl;
+double cdlasta, cdlastn, cdlastsl;
+double flastv1, flastv2, flastn, flastsl;
 class ScaleBetaDistUp : public StatisticsBase {
 public:
 	double v1, v2;
@@ -35,17 +47,32 @@ public:
 	virtual double getLocation (double x) {return log10( InvBetaDist( v1, v2, x ) ) - n; }
 	virtual double getValue (double x) {return BetaDist( v1, v2, pow(10, x + n ) ); }
 	void init_locations (void) {
-		for (int ind = 0; ind <= 900; ind++) {
-			locations [ind] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.00001 + (double) ind / 10000000.0 )) - n);}
-		for (int ind = 1; ind <= 900; ind++) {
-			locations [ind + 900] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.0001 + (double) ind / 1000000.0 )) - n);}
-		for (int ind = 1; ind <= 900; ind++) {
-			locations [ind + 1800] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.001 + (double) ind / 100000.0 )) - n);}
-		for (int ind = 1; ind <= 900; ind++) {
-			locations [ind + 2700] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.01 + (double) ind / 10000.0 )) - n);}
-		for (int ind = 1; ind < 900; ind++) {
-			locations [ind + 3600] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.1 + (double) ind / 1000.0 )) - n);}
-		locations [4500] = (double) scale_length * (0.0 - n);
+		if (binitlocations || (v1 != blastv1) || (v2 != blastv2) || (scale_length != blastsl)) {
+			for (int ind = 0; ind <= 900; ind++) {
+				blocations [ind] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.00001 + (double) ind / 10000000.0 )) - n);}
+			for (int ind = 1; ind <= 900; ind++) {
+				blocations [ind + 900] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.0001 + (double) ind / 1000000.0 )) - n);}
+			for (int ind = 1; ind <= 900; ind++) {
+				blocations [ind + 1800] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.001 + (double) ind / 100000.0 )) - n);}
+			for (int ind = 1; ind <= 900; ind++) {
+				blocations [ind + 2700] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.01 + (double) ind / 10000.0 )) - n);}
+			for (int ind = 1; ind < 900; ind++) {
+				blocations [ind + 3600] = (double) scale_length * (log10( InvBetaDist( v1, v2, 0.1 + (double) ind / 1000.0 )) - n);}
+			blocations [4500] = (double) scale_length * (0.0 - n);
+			blastn = n;
+			blastv1 = v1;
+			blastv2 = v2;
+			blastsl = scale_length;
+			binitlocations = false;
+			for (int ind = 0; ind <= 4500; ind++)
+				locations [ind] = blocations [ind]; }
+		else {
+			if (n != blastn) {
+				for (int ind = 0; ind <= 4500; ind++)
+					blocations [ind] += ((blastn - n)*scale_length);
+				blastn = n; }
+			for (int ind = 0; ind <= 4500; ind++)
+				locations [ind] = blocations [ind]; }
 		left_index = find_left_index (locations, 1, 4500, 0.0 - (double) scale_length * left_extension);
 		right_index = find_right_index (locations, 1, 4500, (double) scale_length * (1.0 + right_extension));
 	}
@@ -113,40 +140,54 @@ public:
 };
 class ScaleFDistUp : public StatisticsBase {
 public:
-	double v1, v2;
-	double n;
-	double locations[5000];
+	double v1, v2, n; 
+	double locations[9000];
 	int left_index, right_index;
 	int min(int i1, int i2) {if (i1<i2) return i1; else return i2;}
 	int max(int i1, int i2) {if (i1>i2) return i1; else return i2;}
 	virtual double getLocation (double x) { return log10( InvFDist( v1, v2, x ) ) - n; }
 	virtual double getValue (double x) {return FDist( v1, v2, pow(10, x + n ) ); }
 	void init_locations (void) {
-		for (int ind = 0; ind <= 900; ind++) {
-			locations [ind] = (double) scale_length * (log10( InvFDist( v1, v2, 0.00001 + (double) ind / 10000000.0 )) - n);}
-		for (int ind = 1; ind <= 900; ind++) {
-			locations [ind + 900] = (double) scale_length * (log10( InvFDist( v1, v2, 0.0001 + (double) ind / 1000000.0 )) - n);}
-		for (int ind = 1; ind <= 900; ind++) {
-			locations [ind + 1800] = (double) scale_length * (log10( InvFDist( v1, v2, 0.001 + (double) ind / 100000.0 )) - n);}
-		for (int ind = 1; ind <= 900; ind++) {
-			locations [ind + 2700] = (double) scale_length * (log10( InvFDist( v1, v2, 0.01 + (double) ind / 10000.0 )) - n);}
-		for (int ind = 1; ind <= 800; ind++) {
-			locations [ind + 3600] = (double) scale_length * (log10( InvFDist( v1, v2, 0.1 + (double) ind / 1000.0 )) - n);}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 4400] = (double) scale_length * (log10( InvFDist( v1, v2, 0.9 + (double) ind / 1000.0 )) - n);}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 4490] = (double) scale_length * (log10( InvFDist( v1, v2, 0.99 + (double) ind / 10000.0 ) ) - n );}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 4580] = (double) scale_length * (log10( InvFDist( v1, v2, 0.999 + (double) ind / 100000.0 ) ) - n );}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 4670] = (double) scale_length * (log10( InvFDist( v1, v2, 0.9999 + (double) ind / 1000000.0 ) ) - n );}
-		left_index = find_left_index (locations, 1, 4760, 0.0 - (double) scale_length * left_extension);
-		right_index = find_right_index (locations, 1, 4760, (double) scale_length * (1.0 + right_extension));
+		if (finitlocations || (v1 != flastv1) || (v2 != flastv2) || (scale_length != flastsl)) {
+			for (int ind = 0; ind <= 900; ind++) {
+				flocations [ind] = (double) scale_length * (log10( InvFDist( v1, v2, 0.00001 + (double) ind / 10000000.0 )) - n);}
+			for (int ind = 1; ind <= 900; ind++) {
+				flocations [ind + 900] = (double) scale_length * (log10( InvFDist( v1, v2, 0.0001 + (double) ind / 1000000.0 )) - n);}
+			for (int ind = 1; ind <= 900; ind++) {
+				flocations [ind + 1800] = (double) scale_length * (log10( InvFDist( v1, v2, 0.001 + (double) ind / 100000.0 )) - n);}
+			for (int ind = 1; ind <= 900; ind++) {
+				flocations [ind + 2700] = (double) scale_length * (log10( InvFDist( v1, v2, 0.01 + (double) ind / 10000.0 )) - n);}
+			for (int ind = 1; ind <= 700; ind++) {
+				flocations [ind + 3600] = (double) scale_length * (log10( InvFDist( v1, v2, 0.1 + (double) ind / 1000.0 )) - n);}
+			for (int ind = 1; ind <= 1900; ind++) {
+				flocations [ind + 4300] = (double) scale_length * (log10( InvFDist( v1, v2, 0.8 + (double) ind / 10000.0 )) - n);}
+			for (int ind = 1; ind <= 900; ind++) {
+				flocations [ind + 6200] = (double) scale_length * (log10( InvFDist( v1, v2, 0.99 + (double) ind / 100000.0 ) ) - n );}
+			for (int ind = 1; ind <= 900; ind++) {
+				flocations [ind + 7100] = (double) scale_length * (log10( InvFDist( v1, v2, 0.999 + (double) ind / 1000000.0 ) ) - n );}
+			for (int ind = 1; ind <= 900; ind++) {
+				flocations [ind + 8000] = (double) scale_length * (log10( InvFDist( v1, v2, 0.9999 + (double) ind / 10000000.0 ) ) - n );}
+			flastn = n;
+			flastv1 = v1;
+			flastv2 = v2;
+			flastsl = scale_length;
+			finitlocations = false;
+			for (int ind = 0; ind <= 8900; ind++)
+				locations [ind] = flocations [ind]; }
+		else {
+			if (n != flastn) {
+				for (int ind = 0; ind <= 8900; ind++)
+					flocations [ind] += ((flastn - n)*scale_length);
+				flastn = n; }
+			for (int ind = 0; ind <= 8900; ind++)
+				locations [ind] = flocations [ind]; }
+		left_index = find_left_index (flocations, 1, 8900, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (flocations, 1, 8900, (double) scale_length * (1.0 + right_extension));
 	}
 	virtual void scaleInit (void) {faceUp (); init_locations();}
 	virtual void draw (wxDC & dc, double x) {
 		setArialFont (dc);
-		double location = locations [0];
+		double location = flocations [0];
 		if (left_index <= 100) draw_index_location (dc, x + location, _T (".00001"));
 		if (left_index <= 100) location = draw_markings_for_100 (dc, locations, _T (".00002"), x, location, max(0, left_index), min(right_index, 100));
 		if (left_index <= 200) location = draw_markings_for_100 (dc, & locations [100], _T (".00003"), x, location, max(0, left_index - 100), min(right_index - 100, 100));
@@ -187,18 +228,73 @@ public:
 		if (left_index <= 3400) location = draw_markings_for_100 (dc, & locations [3300], _T (".08"), x, location, max(0, left_index - 3300), min(right_index - 3300, 100));
 		if (left_index <= 3500) location = draw_markings_for_100 (dc, & locations [3400], _T (".09"), x, location, max(0, left_index - 3400), min(right_index - 3400, 100));
 		if (left_index <= 3600) location = draw_markings_for_100 (dc, & locations [3500], _T (".1"), x, location, max(0, left_index - 3500), min(right_index - 3500, 100));
+		if (( left_index <= 3650 ) && ( right_index >= 3650 )) draw_text_marker (dc, _T (".15"), x + locations [3650]);
 		if (left_index <= 3700) location = draw_markings_for_100 (dc, & locations [3600], _T (".2"), x, location, max(0, left_index - 3600), min(right_index - 3600, 100));
+		if (( left_index <= 3750 ) && ( right_index >= 3750 )) draw_text_marker (dc, _T (".25"), x + locations [3750]);
 		if (left_index <= 3800) location = draw_markings_for_100 (dc, & locations [3700], _T (".3"), x, location, max(0, left_index - 3700), min(right_index - 3700, 100));
+		if (( left_index <= 3850 ) && ( right_index >= 3850 )) draw_text_marker (dc, _T (".35"), x + locations [3850]);
 		if (left_index <= 3900) location = draw_markings_for_100 (dc, & locations [3800], _T (".4"), x, location, max(0, left_index - 3800), min(right_index - 3800, 100));
+		if (( left_index <= 3950 ) && ( right_index >= 3950 )) draw_text_marker (dc, _T (".45"), x + locations [3950]);
 		if (left_index <= 4000) location = draw_markings_for_100 (dc, & locations [3900], _T (".5"), x, location, max(0, left_index - 3900), min(right_index - 3900, 100));
+		if (( left_index <= 4050 ) && ( right_index >= 4050 )) draw_text_marker (dc, _T (".55"), x + locations [4050]);
 		if (left_index <= 4100) location = draw_markings_for_100 (dc, & locations [4000], _T (".6"), x, location, max(0, left_index - 4000), min(right_index - 4000, 100));
+		if (( left_index <= 4150 ) && ( right_index >= 4150 )) draw_text_marker (dc, _T (".65"), x + locations [4150]);
 		if (left_index <= 4200) location = draw_markings_for_100 (dc, & locations [4100], _T (".7"), x, location, max(0, left_index - 4100), min(right_index - 4100, 100));
+		if (( left_index <= 4250 ) && ( right_index >= 4250 )) draw_text_marker (dc, _T (".75"), x + locations [4250]);
 		if (left_index <= 4300) location = draw_markings_for_100 (dc, & locations [4200], _T (".8"), x, location, max(0, left_index - 4200), min(right_index - 4200, 100));
-		if (left_index <= 4400) location = draw_markings_for_100 (dc, & locations [4300], _T (".9"), x, location, max(0, left_index - 4300), min(right_index - 4300, 100));
-		if (left_index <= 4490) location = draw_markings_for_100 (dc, & locations [4400], _T (".99"), x, location, max(0, left_index - 4400), min(right_index - 4400, 90));
-		if (left_index <= 4580) location = draw_markings_for_100 (dc, & locations [4490], _T (".999"), x, location, max(0, left_index - 4490), min(right_index - 4490, 90));
-		if (left_index <= 4670) location = draw_markings_for_100 (dc, & locations [4580], _T (".9999"), x, location, max(0, left_index - 4580), min(right_index - 4580, 90));
-		if (left_index <= 4760) location = draw_markings_for_100 (dc, & locations [4670], _T (".99999"), x, location, max(0, left_index - 4670), min(right_index - 4670, 90));
+		if (left_index <= 4400) location = draw_markings_for_100 (dc, & locations [4300], _T (".81"), x, location, max(0, left_index - 4300), min(right_index - 4300, 100));
+		if (left_index <= 4500) location = draw_markings_for_100 (dc, & locations [4400], _T (".82"), x, location, max(0, left_index - 4400), min(right_index - 4400, 100));
+		if (left_index <= 4600) location = draw_markings_for_100 (dc, & locations [4500], _T (".83"), x, location, max(0, left_index - 4500), min(right_index - 4500, 100));
+		if (left_index <= 4700) location = draw_markings_for_100 (dc, & locations [4600], _T (".84"), x, location, max(0, left_index - 4600), min(right_index - 4600, 100));
+		if (left_index <= 4800) location = draw_markings_for_100 (dc, & locations [4700], _T (".85"), x, location, max(0, left_index - 4700), min(right_index - 4700, 100));
+		if (left_index <= 4900) location = draw_markings_for_100 (dc, & locations [4800], _T (".86"), x, location, max(0, left_index - 4800), min(right_index - 4800, 100));
+		if (left_index <= 5000) location = draw_markings_for_100 (dc, & locations [4900], _T (".87"), x, location, max(0, left_index - 4900), min(right_index - 4900, 100));
+		if (left_index <= 5100) location = draw_markings_for_100 (dc, & locations [5000], _T (".88"), x, location, max(0, left_index - 5000), min(right_index - 5000, 100));
+		if (left_index <= 5200) location = draw_markings_for_100 (dc, & locations [5100], _T (".89"), x, location, max(0, left_index - 5100), min(right_index - 5100, 100));
+		if (left_index <= 5300) location = draw_markings_for_100 (dc, & locations [5200], _T (".9"), x, location, max(0, left_index - 5200), min(right_index - 5200, 100));
+		if (left_index <= 5400) location = draw_markings_for_100 (dc, & locations [5300], _T (".91"), x, location, max(0, left_index - 5300), min(right_index - 5300, 100));
+		if (left_index <= 5500) location = draw_markings_for_100 (dc, & locations [5400], _T (".92"), x, location, max(0, left_index - 5400), min(right_index - 5400, 100));
+		if (left_index <= 5600) location = draw_markings_for_100 (dc, & locations [5500], _T (".93"), x, location, max(0, left_index - 5500), min(right_index - 5500, 100));
+		if (left_index <= 5700) location = draw_markings_for_100 (dc, & locations [5600], _T (".94"), x, location, max(0, left_index - 5600), min(right_index - 5600, 100));
+		if (left_index <= 5800) location = draw_markings_for_100 (dc, & locations [5700], _T (".95"), x, location, max(0, left_index - 5700), min(right_index - 5700, 100));
+		if (left_index <= 5900) location = draw_markings_for_100 (dc, & locations [5800], _T (".96"), x, location, max(0, left_index - 5800), min(right_index - 5800, 100));
+		if (left_index <= 6000) location = draw_markings_for_100 (dc, & locations [5900], _T (".97"), x, location, max(0, left_index - 5900), min(right_index - 5900, 100));
+		if (left_index <= 6100) location = draw_markings_for_100 (dc, & locations [6000], _T (".98"), x, location, max(0, left_index - 6000), min(right_index - 6000, 100));
+		if (left_index <= 6200) location = draw_markings_for_100 (dc, & locations [6100], _T (""), x, location, max(0, left_index - 6100), min(right_index - 6100, 100));
+		if (( left_index <= 6200 ) && ( right_index >= 6200 )) draw_text_marker (dc, _T (".99"), x + locations [6200]);
+		if (left_index <= 6300) location = draw_markings_for_100 (dc, & locations [6200], _T (""), x, location, max(0, left_index - 6200), min(right_index - 6200, 100));
+		if (left_index <= 6400) location = draw_markings_for_100 (dc, & locations [6300], _T (""), x, location, max(0, left_index - 6300), min(right_index - 6300, 100));
+		if (left_index <= 6500) location = draw_markings_for_100 (dc, & locations [6400], _T (""), x, location, max(0, left_index - 6400), min(right_index - 6400, 100));
+		if (left_index <= 6600) location = draw_markings_for_100 (dc, & locations [6500], _T (""), x, location, max(0, left_index - 6500), min(right_index - 6500, 100));
+		if (left_index <= 6700) location = draw_markings_for_100 (dc, & locations [6600], _T (""), x, location, max(0, left_index - 6600), min(right_index - 6600, 100));
+		if (( left_index <= 6700 ) && ( right_index >= 6700 )) draw_text_marker (dc, _T (".995"), x + locations [6700]);
+		if (left_index <= 6800) location = draw_markings_for_100 (dc, & locations [6700], _T (""), x, location, max(0, left_index - 6700), min(right_index - 6700, 100));
+		if (left_index <= 6900) location = draw_markings_for_100 (dc, & locations [6800], _T (""), x, location, max(0, left_index - 6800), min(right_index - 6800, 100));
+		if (left_index <= 7000) location = draw_markings_for_100 (dc, & locations [6900], _T (""), x, location, max(0, left_index - 6900), min(right_index - 6900, 100));
+		if (left_index <= 7100) location = draw_markings_for_100 (dc, & locations [7000], _T (""), x, location, max(0, left_index - 7000), min(right_index - 7000, 100));
+		if (( left_index <= 7100 ) && ( right_index >= 7100 )) draw_text_marker (dc, _T (".999"), x + locations [7100]);
+		if (left_index <= 7200) location = draw_markings_for_100 (dc, & locations [7100], _T (""), x, location, max(0, left_index - 7100), min(right_index - 7100, 100));
+		if (left_index <= 7300) location = draw_markings_for_100 (dc, & locations [7200], _T (""), x, location, max(0, left_index - 7200), min(right_index - 7200, 100));
+		if (left_index <= 7400) location = draw_markings_for_100 (dc, & locations [7300], _T (""), x, location, max(0, left_index - 7300), min(right_index - 7300, 100));
+		if (left_index <= 7500) location = draw_markings_for_100 (dc, & locations [7400], _T (""), x, location, max(0, left_index - 7400), min(right_index - 7400, 100));
+		if (left_index <= 7600) location = draw_markings_for_100 (dc, & locations [7500], _T (""), x, location, max(0, left_index - 7500), min(right_index - 7500, 100));
+		if (( left_index <= 7600 ) && ( right_index >= 7600 )) draw_text_marker (dc, _T (".9995"), x + locations [7600]);
+		if (left_index <= 7700) location = draw_markings_for_100 (dc, & locations [7600], _T (""), x, location, max(0, left_index - 7600), min(right_index - 7600, 100));
+		if (left_index <= 7800) location = draw_markings_for_100 (dc, & locations [7700], _T (""), x, location, max(0, left_index - 7700), min(right_index - 7700, 100));
+		if (left_index <= 7900) location = draw_markings_for_100 (dc, & locations [7800], _T (""), x, location, max(0, left_index - 7800), min(right_index - 7800, 100));
+		if (left_index <= 8000) location = draw_markings_for_100 (dc, & locations [7900], _T (""), x, location, max(0, left_index - 7900), min(right_index - 7900, 100));
+		if (( left_index <= 8000 ) && ( right_index >= 8000 )) draw_text_marker (dc, _T (".9999"), x + locations [8000]);
+		if (left_index <= 8100) location = draw_markings_for_100 (dc, & locations [8000], _T (""), x, location, max(0, left_index - 8000), min(right_index - 8000, 100));
+		if (left_index <= 8200) location = draw_markings_for_100 (dc, & locations [8100], _T (""), x, location, max(0, left_index - 8100), min(right_index - 8100, 100));
+		if (left_index <= 8300) location = draw_markings_for_100 (dc, & locations [8200], _T (""), x, location, max(0, left_index - 8200), min(right_index - 8200, 100));
+		if (left_index <= 8400) location = draw_markings_for_100 (dc, & locations [8300], _T (""), x, location, max(0, left_index - 8300), min(right_index - 8300, 100));
+		if (left_index <= 8500) location = draw_markings_for_100 (dc, & locations [8400], _T (""), x, location, max(0, left_index - 8400), min(right_index - 8400, 100));
+		if (( left_index <= 8500 ) && ( right_index >= 8500 )) draw_text_marker (dc, _T (".99995"), x + locations [8500]);
+		if (left_index <= 8600) location = draw_markings_for_100 (dc, & locations [8500], _T (""), x, location, max(0, left_index - 8500), min(right_index - 8500, 100));
+		if (left_index <= 8700) location = draw_markings_for_100 (dc, & locations [8600], _T (""), x, location, max(0, left_index - 8600), min(right_index - 8600, 100));
+		if (left_index <= 8800) location = draw_markings_for_100 (dc, & locations [8700], _T (""), x, location, max(0, left_index - 8700), min(right_index - 8700, 100));
+		if (left_index <= 8900) location = draw_markings_for_100 (dc, & locations [8800], _T (""), x, location, max(0, left_index - 8800), min(right_index - 8800, 100));
+		if (( left_index <= 8900 ) && ( right_index >= 8900 )) draw_text_marker (dc, _T (".99999"), x + locations [8900]);
 	}
 	ScaleFDistUp (double powerof10, double degoffreedom1, double degoffreedom2, int height) : StatisticsBase (height) {v1 = degoffreedom1; v2 = degoffreedom2; n = powerof10; left_index = 0; right_index = 4760;}
 };
@@ -218,25 +314,38 @@ public:
 	virtual double getLocation (double x) {return log10( InvChiSquareDist( v, x ) ) - n; }
 	virtual double getValue (double x) {return ChiSquareDist( v, pow(10, x + n ) ); }
 	void init_locations (void) {
-		for (int ind = 0; ind <= 900; ind++) {
-			locations [ind] = (double) scale_length * (log10( InvChiSquareDist( v, 0.00001 + (double) ind / 10000000.0 )) - n);}
-		for (int ind = 1; ind <= 900; ind++) {
-			locations [ind + 900] = (double) scale_length * (log10( InvChiSquareDist( v, 0.0001 + (double) ind / 1000000.0 )) - n);}
-		for (int ind = 1; ind <= 900; ind++) {
-			locations [ind + 1800] = (double) scale_length * (log10( InvChiSquareDist( v, 0.001 + (double) ind / 100000.0 )) - n);}
-		for (int ind = 1; ind <= 900; ind++) {
-			locations [ind + 2700] = (double) scale_length * (log10( InvChiSquareDist( v, 0.01 + (double) ind / 10000.0 )) - n);}
-		for (int ind = 1; ind <= 800; ind++) {
-			locations [ind + 3600] = (double) scale_length * (log10( InvChiSquareDist( v, 0.1 + (double) ind / 1000.0 )) - n);}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 4400] = (double) scale_length * (log10( InvChiSquareDist( v, 0.9 + (double) ind / 1000.0 )) - n);}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 4490] = (double) scale_length * (log10( InvChiSquareDist( v, 0.99 + (double) ind / 10000.0 )) - n);}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 4580] = (double) scale_length * (log10( InvChiSquareDist( v, 0.999 + (double) ind / 100000.0 )) - n);}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 4670] = (double) scale_length * (log10( InvChiSquareDist( v, 0.9999 + (double) ind / 1000000.0 )) - n);}
-		//locations [0] = locations [1] - 100.0;
+		if (cinitlocations || (v != clastv) || (scale_length != clastsl)) {
+			for (int ind = 0; ind <= 900; ind++) {
+				clocations [ind] = (double) scale_length * (log10( InvChiSquareDist( v, 0.00001 + (double) ind / 10000000.0 )) - n);}
+			for (int ind = 1; ind <= 900; ind++) {
+				clocations [ind + 900] = (double) scale_length * (log10( InvChiSquareDist( v, 0.0001 + (double) ind / 1000000.0 )) - n);}
+			for (int ind = 1; ind <= 900; ind++) {
+				clocations [ind + 1800] = (double) scale_length * (log10( InvChiSquareDist( v, 0.001 + (double) ind / 100000.0 )) - n);}
+			for (int ind = 1; ind <= 900; ind++) {
+				clocations [ind + 2700] = (double) scale_length * (log10( InvChiSquareDist( v, 0.01 + (double) ind / 10000.0 )) - n);}
+			for (int ind = 1; ind <= 800; ind++) {
+				clocations [ind + 3600] = (double) scale_length * (log10( InvChiSquareDist( v, 0.1 + (double) ind / 1000.0 )) - n);}
+			for (int ind = 1; ind <= 90; ind++) {
+				clocations [ind + 4400] = (double) scale_length * (log10( InvChiSquareDist( v, 0.9 + (double) ind / 1000.0 )) - n);}
+			for (int ind = 1; ind <= 90; ind++) {
+				clocations [ind + 4490] = (double) scale_length * (log10( InvChiSquareDist( v, 0.99 + (double) ind / 10000.0 )) - n);}
+			for (int ind = 1; ind <= 90; ind++) {
+				clocations [ind + 4580] = (double) scale_length * (log10( InvChiSquareDist( v, 0.999 + (double) ind / 100000.0 )) - n);}
+			for (int ind = 1; ind <= 90; ind++) {
+				clocations [ind + 4670] = (double) scale_length * (log10( InvChiSquareDist( v, 0.9999 + (double) ind / 1000000.0 )) - n);}
+			clastn = n;
+			clastv = v;
+			clastsl = scale_length;
+			cinitlocations = false;
+			for (int ind = 0; ind <= 4760; ind++)
+				locations [ind] = clocations [ind]; }
+		else {
+			if (n != clastn) {
+				for (int ind = 0; ind <= 4760; ind++)
+					clocations [ind] += ((clastn - n)*scale_length);
+				clastn = n; }
+			for (int ind = 0; ind <= 4760; ind++)
+				locations [ind] = clocations [ind]; }
 		left_index = find_left_index (locations, 1, 4760, 0.0 - (double) scale_length * left_extension);
 		right_index = find_right_index (locations, 1, 4760, (double) scale_length * (1.0 + right_extension));
 	}
@@ -321,13 +430,26 @@ public:
 	virtual double getLocation (double x) {return log10( InvChiSquareDist( x, a ) ) - n; }
 	virtual double getValue (double x) {return ChiSquareDegOfFreedom( pow(10, x + n), a ); }
 	void init_locations (void) {
-		for (int ind = 0; ind <= 900; ind++) {
-			locations [ind] = (double) scale_length * (log10( InvChiSquareDist( 0.1 + (double) ind / 1000.0, a )) - n);}
-		for (int ind = 1; ind <= 900; ind++) {
-			locations [ind + 900] = (double) scale_length * (log10( InvChiSquareDist( 1.0 + (double) ind / 100.0, a )) - n);}
-		for (int ind = 1; ind <= 900; ind++) {
-			locations [ind + 1800] = (double) scale_length * (log10( InvChiSquareDist( 10.0 + (double) ind / 10.0, a )) - n);}
-		//locations [0] = locations [1] - 100.0;
+		if (cdinitlocations || (a != cdlasta) || (scale_length != cdlastsl)) {
+			for (int ind = 0; ind <= 900; ind++) {
+				cdlocations [ind] = (double) scale_length * (log10( InvChiSquareDist( 0.1 + (double) ind / 1000.0, a )) - n);}
+			for (int ind = 1; ind <= 900; ind++) {
+				cdlocations [ind + 900] = (double) scale_length * (log10( InvChiSquareDist( 1.0 + (double) ind / 100.0, a )) - n);}
+			for (int ind = 1; ind <= 900; ind++) {
+				cdlocations [ind + 1800] = (double) scale_length * (log10( InvChiSquareDist( 10.0 + (double) ind / 10.0, a )) - n);}
+			cdlastn = n;
+			cdlasta = a;
+			cdlastsl = scale_length;
+			cdinitlocations = false;
+			for (int ind = 0; ind <= 2700; ind++)
+				locations [ind] = cdlocations [ind]; }
+		else {
+			if (n != cdlastn) {
+				for (int ind = 0; ind <= 2700; ind++)
+					cdlocations [ind] += ((cdlastn - n)*scale_length);
+				cdlastn = n; }
+			for (int ind = 0; ind <= 2700; ind++)
+				locations [ind] = cdlocations [ind]; }
 		left_index = find_left_index (locations, 1, 2700, 0.0 - (double) scale_length * left_extension);
 		right_index = find_right_index (locations, 1, 2700, (double) scale_length * (1.0 + right_extension));
 	}
@@ -375,7 +497,7 @@ class ScaleNormalDist1TailUp : public StatisticsBase {
 public:
 	double v;
 	double n;
-	double locations[1000];
+	double locations[1300];
 	int left_index, right_index;
 	int min(int i1, int i2) {if (i1<i2) return i1; else return i2;}
 	int max(int i1, int i2) {if (i1>i2) return i1; else return i2;}
@@ -384,58 +506,56 @@ public:
 	virtual double getLocation (double x) {return (log10( InvNormalDist( doubleDistanceFrom1(x) ) ) - n); }
 	virtual double getValue (double x) {return halfDistanceFrom1(NormalDist( pow(10, x + n ) ) ); }
 	void init_locations (void) {
-		for (int ind = 1; ind <= 400; ind++) {
-			locations [ind] = (double) scale_length * (log10( InvNormalDist( doubleDistanceFrom1(0.5 + (double) ind / 1000.0 ))) - n);}
+		for (int ind = 1; ind <= 500; ind++) {
+			locations [ind] = (double) scale_length * (log10( InvNormalDist( doubleDistanceFrom1(0.5 + (double) ind / 10000.0 ))) - n);}
+		for (int ind = 1; ind <= 440; ind++) {
+			locations [ind + 500] = (double) scale_length * (log10( InvNormalDist( doubleDistanceFrom1(0.55 + (double) ind / 1000.0 ))) - n);}
 		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 400] = (double) scale_length * (log10( InvNormalDist( doubleDistanceFrom1(0.9 + (double) ind / 1000.0 ))) - n);}
+			locations [ind + 940] = (double) scale_length * (log10( InvNormalDist( doubleDistanceFrom1(0.99 + (double) ind / 10000.0 ))) - n);}
 		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 490] = (double) scale_length * (log10( InvNormalDist( doubleDistanceFrom1(0.99 + (double) ind / 10000.0 ))) - n);}
+			locations [ind + 1030] = (double) scale_length * (log10( InvNormalDist( doubleDistanceFrom1(0.999 + (double) ind / 100000.0 ))) - n);}
 		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 580] = (double) scale_length * (log10( InvNormalDist( doubleDistanceFrom1(0.999 + (double) ind / 100000.0 ))) - n);}
-		for (int ind = 1; ind <= 90; ind++) {
-			locations [ind + 670] = (double) scale_length * (log10( InvNormalDist( doubleDistanceFrom1(0.9999 + (double) ind / 1000000.0 ))) - n);}
+			locations [ind + 1120] = (double) scale_length * (log10( InvNormalDist( doubleDistanceFrom1(0.9999 + (double) ind / 1000000.0 ))) - n);}
 		locations [0] = locations [1] - 100.0;
-		left_index = find_left_index (locations, 1, 760, 0.0 - (double) scale_length * left_extension);
-		right_index = find_right_index (locations, 1, 760, (double) scale_length * (1.0 + right_extension));
+		left_index = find_left_index (locations, 1, 1210, 0.0 - (double) scale_length * left_extension);
+		right_index = find_right_index (locations, 1, 1210, (double) scale_length * (1.0 + right_extension));
 	}
 	virtual void scaleInit (void) {faceUp (); init_locations();}
 	virtual void draw (wxDC & dc, double x) {
 		setArialFont (dc);
 		double location = locations [0];
-		if (( left_index <= 1 ) && ( right_index >= 1 )) draw_text_marker (dc, _T (".501"), x + locations [1]);
-		if (( left_index <= 2 ) && ( right_index >= 2 )) draw_text_marker (dc, _T (".502"), x + locations [2]);
-		if (( left_index <= 3 ) && ( right_index >= 3 )) draw_text_marker (dc, _T (".503"), x + locations [3]);
-		if (( left_index <= 4 ) && ( right_index >= 4 )) draw_text_marker (dc, _T (".504"), x + locations [4]);
-		if (( left_index <= 5 ) && ( right_index >= 5 )) draw_text_marker (dc, _T (".505"), x + locations [5]);
-		if (( left_index <= 6 ) && ( right_index >= 6 )) draw_text_marker (dc, _T (".506"), x + locations [6]);
-		if (( left_index <= 7 ) && ( right_index >= 7 )) draw_text_marker (dc, _T (".507"), x + locations [7]);
-		if (( left_index <= 8 ) && ( right_index >= 8 )) draw_text_marker (dc, _T (".508"), x + locations [8]);
-		if (( left_index <= 9 ) && ( right_index >= 9 )) draw_text_marker (dc, _T (".509"), x + locations [9]);
-		if (( left_index <= 10 ) && ( right_index >= 10 )) draw_text_marker (dc, _T (".51"), x + locations [10]);
-		if (( left_index <= 20 ) && ( right_index >= 20 )) draw_text_marker (dc, _T (".52"), x + locations [20]);
-		if (( left_index <= 30 ) && ( right_index >= 30 )) draw_text_marker (dc, _T (".53"), x + locations [30]);
-		if (( left_index <= 40 ) && ( right_index >= 40 )) draw_text_marker (dc, _T (".54"), x + locations [40]);
-		if (( left_index <= 50 ) && ( right_index >= 50 )) draw_text_marker (dc, _T (".55"), x + locations [50]);
-		if (( left_index <= 60 ) && ( right_index >= 60 )) draw_text_marker (dc, _T (".56"), x + locations [60]);
-		if (( left_index <= 70 ) && ( right_index >= 70 )) draw_text_marker (dc, _T (".57"), x + locations [70]);
-		if (( left_index <= 80 ) && ( right_index >= 80 )) draw_text_marker (dc, _T (".58"), x + locations [80]);
-		if (( left_index <= 90 ) && ( right_index >= 90 )) draw_text_marker (dc, _T (".59"), x + locations [90]);
-		if (left_index <= 100) location = draw_markings_for_100 (dc, locations, _T (".6"), x, location, max(0, left_index), min(right_index, 100));
-		if (left_index <= 200) location = draw_markings_for_100 (dc, & locations [100], _T (".7"), x, location, max(0, left_index - 100), min(right_index - 100, 100));
-		if (left_index <= 300) location = draw_markings_for_100 (dc, & locations [200], _T (".8"), x, location, max(0, left_index - 200), min(right_index - 200, 100));
-		if (left_index <= 400) location = draw_markings_for_100 (dc, & locations [300], _T (".9"), x, location, max(0, left_index - 300), min(right_index - 300, 100));
-		if (left_index <= 490) location = draw_markings_for_100 (dc, & locations [400], _T (""), x, location, max(0, left_index - 400), min(right_index - 400, 90));
-		if (( left_index <= 490 ) && ( right_index >= 490 )) draw_text_marker (dc, _T (".99"), x + locations [490]);
-		if (( left_index <= 540 ) && ( right_index >= 540 )) draw_text_marker (dc, _T (".995"), x + locations [540]);
-		if (left_index <= 580) location = draw_markings_for_100 (dc, & locations [490], _T (""), x, location, max(0, left_index - 490), min(right_index - 490, 90));
-		if (( left_index <= 580 ) && ( right_index >= 580 )) draw_text_marker (dc, _T (".999"), x + locations [580]);
-		if (( left_index <= 630 ) && ( right_index >= 630 )) draw_text_marker (dc, _T (".9995"), x + locations [630]);
-		if (left_index <= 670) location = draw_markings_for_100 (dc, & locations [580], _T (""), x, location, max(0, left_index - 580), min(right_index - 580, 90));
-		if (( left_index <= 670 ) && ( right_index >= 670 )) draw_index_location (dc, x + locations [670], _T (".9999"));
-		if (left_index <= 760) location = draw_markings_for_100 (dc, & locations [670], _T (""), x, location, max(0, left_index - 670), min(right_index - 670, 90));
-		if (( left_index <= 760 ) && ( right_index >= 760 )) draw_index_location (dc, x + locations [760], _T (".99999"));
+		if (( left_index <= 10 ) && ( right_index >= 10 )) draw_text_marker (dc, _T (".501"), x + locations [10]);
+		if (( left_index <= 20 ) && ( right_index >= 20 )) draw_text_marker (dc, _T (".502"), x + locations [20]);
+		if (( left_index <= 30 ) && ( right_index >= 30 )) draw_text_marker (dc, _T (".503"), x + locations [30]);
+		if (( left_index <= 40 ) && ( right_index >= 40 )) draw_text_marker (dc, _T (".504"), x + locations [40]);
+		if (( left_index <= 50 ) && ( right_index >= 50 )) draw_text_marker (dc, _T (".505"), x + locations [50]);
+		if (( left_index <= 60 ) && ( right_index >= 60 )) draw_text_marker (dc, _T (".506"), x + locations [60]);
+		if (( left_index <= 70 ) && ( right_index >= 70 )) draw_text_marker (dc, _T (".507"), x + locations [70]);
+		if (( left_index <= 80 ) && ( right_index >= 80 )) draw_text_marker (dc, _T (".508"), x + locations [80]);
+		if (( left_index <= 90 ) && ( right_index >= 90 )) draw_text_marker (dc, _T (".509"), x + locations [90]);
+		if (left_index <= 100) location = draw_markings_for_100 (dc, locations, _T (".51"), x, location, max(0, left_index), min(right_index, 100));
+		if (( left_index <= 150 ) && ( right_index >= 150 )) draw_text_marker (dc, _T (".515"), x + locations [150]);
+		if (left_index <= 200) location = draw_markings_for_100 (dc, & locations [100], _T (".52"), x, location, max(0, left_index - 100), min(right_index - 100, 100));
+		if (left_index <= 300) location = draw_markings_for_100 (dc, & locations [200], _T (".53"), x, location, max(0, left_index - 200), min(right_index - 200, 100));
+		if (left_index <= 400) location = draw_markings_for_100 (dc, & locations [300], _T (".54"), x, location, max(0, left_index - 300), min(right_index - 300, 100));
+		if (left_index <= 500) location = draw_markings_for_100 (dc, & locations [400], _T (".55"), x, location, max(0, left_index - 400), min(right_index - 400, 100));
+		if (( left_index <= 550 ) && ( right_index >= 550 )) draw_text_marker (dc, _T (".6"), x + locations [550]);
+		if (left_index <= 550) location = draw_markings_for_100 (dc, & locations [500], _T (""), x, location, max(0, left_index - 500), min(right_index - 500, 50));
+		if (( left_index <= 600 ) && ( right_index >= 600 )) draw_text_marker (dc, _T (".65"), x + locations [600]);
+		if (left_index <= 650) location = draw_markings_for_100 (dc, & locations [550], _T (".7"), x, location, max(0, left_index - 550), min(right_index - 550, 100));
+		if (left_index <= 750) location = draw_markings_for_100 (dc, & locations [650], _T (".8"), x, location, max(0, left_index - 650), min(right_index - 650, 100));
+		if (left_index <= 850) location = draw_markings_for_100 (dc, & locations [750], _T (".9"), x, location, max(0, left_index - 750), min(right_index - 750, 100));
+		if (left_index <= 940) location = draw_markings_for_100 (dc, & locations [850], _T (""), x, location, max(0, left_index - 850), min(right_index - 850, 90));
+		if (( left_index <= 940 ) && ( right_index >= 940 )) draw_text_marker (dc, _T (".99"), x + locations [940]);
+		if (( left_index <= 990 ) && ( right_index >= 990 )) draw_text_marker (dc, _T (".995"), x + locations [990]);
+		if (left_index <= 1030) location = draw_markings_for_100 (dc, & locations [940], _T (""), x, location, max(0, left_index - 940), min(right_index - 940, 90));
+		if (( left_index <= 1030 ) && ( right_index >= 1030 )) draw_text_marker (dc, _T (".999"), x + locations [1030]);
+		if (left_index <= 1120) location = draw_markings_for_100 (dc, & locations [1030], _T (""), x, location, max(0, left_index - 1030), min(right_index - 1030, 90));
+		if (( left_index <= 1120 ) && ( right_index >= 1120 )) draw_index_location (dc, x + locations [1120], _T (".9999"));
+		if (left_index <= 1210) location = draw_markings_for_100 (dc, & locations [1120], _T (""), x, location, max(0, left_index - 1120), min(right_index - 1120, 90));
+		if (( left_index <= 1210 ) && ( right_index >= 1210 )) draw_index_location (dc, x + locations [1210], _T (".99999"));
 	}
-	ScaleNormalDist1TailUp (double powerof10, int height) : StatisticsBase (height) {n = powerof10; left_index = 0; right_index = 760;}
+	ScaleNormalDist1TailUp (double powerof10, int height) : StatisticsBase (height) {n = powerof10; left_index = 0; right_index = 1210;}
 };
 class ScaleNormalDist1TailDown : public ScaleNormalDist1TailUp {
 public:
@@ -509,6 +629,7 @@ public:
 		if (left_index <= 2600) location = draw_markings_for_100 (dc, & locations [2500], _T (".009"), x, location, max(0, left_index - 2500), min(right_index - 2500, 100));
 		if (left_index <= 2700) location = draw_markings_for_100 (dc, & locations [2600], _T (""), x, location, max(0, left_index - 2600), min(right_index - 2600, 100));
 		if (( left_index <= 2700 ) && ( right_index >= 2700 )) draw_text_marker (dc, _T (".01"), x + locations [2700]);
+		if (( left_index <= 2750 ) && ( right_index >= 2750 )) draw_text_marker (dc, _T (".015"), x + locations [2750]);
 		if (left_index <= 2800) location = draw_markings_for_100 (dc, & locations [2700], _T (".02"), x, location, max(0, left_index - 2700), min(right_index - 2700, 100));
 		if (left_index <= 2900) location = draw_markings_for_100 (dc, & locations [2800], _T (".03"), x, location, max(0, left_index - 2800), min(right_index - 2800, 100));
 		if (left_index <= 3000) location = draw_markings_for_100 (dc, & locations [2900], _T (".04"), x, location, max(0, left_index - 2900), min(right_index - 2900, 100));
@@ -518,6 +639,7 @@ public:
 		if (left_index <= 3400) location = draw_markings_for_100 (dc, & locations [3300], _T (".08"), x, location, max(0, left_index - 3300), min(right_index - 3300, 100));
 		if (left_index <= 3500) location = draw_markings_for_100 (dc, & locations [3400], _T (".09"), x, location, max(0, left_index - 3400), min(right_index - 3400, 100));
 		if (left_index <= 3600) location = draw_markings_for_100 (dc, & locations [3500], _T (".1"), x, location, max(0, left_index - 3500), min(right_index - 3500, 100));
+		if (( left_index <= 3650 ) && ( right_index >= 3650 )) draw_text_marker (dc, _T (".15"), x + locations [3650]);
 		if (left_index <= 3700) location = draw_markings_for_100 (dc, & locations [3600], _T (".2"), x, location, max(0, left_index - 3600), min(right_index - 3600, 100));
 		if (left_index <= 3800) location = draw_markings_for_100 (dc, & locations [3700], _T (".3"), x, location, max(0, left_index - 3700), min(right_index - 3700, 100));
 		if (left_index <= 3900) location = draw_markings_for_100 (dc, & locations [3800], _T (".4"), x, location, max(0, left_index - 3800), min(right_index - 3800, 100));
@@ -621,6 +743,7 @@ public:
 		if (left_index <= 3400) location = draw_markings_for_100 (dc, & locations [3300], _T (".08"), x, location, max(0, left_index - 3300), min(right_index - 3300, 100));
 		if (left_index <= 3500) location = draw_markings_for_100 (dc, & locations [3400], _T (".09"), x, location, max(0, left_index - 3400), min(right_index - 3400, 100));
 		if (left_index <= 3600) location = draw_markings_for_100 (dc, & locations [3500], _T (".1"), x, location, max(0, left_index - 3500), min(right_index - 3500, 100));
+		if (( left_index <= 3650) && ( right_index >= 3650 )) draw_text_marker (dc, _T (".15"), x + locations [3650]);
 		if (left_index <= 3700) location = draw_markings_for_100 (dc, & locations [3600], _T (".2"), x, location, max(0, left_index - 3600), min(right_index - 3600, 100));
 		if (left_index <= 3800) location = draw_markings_for_100 (dc, & locations [3700], _T (".3"), x, location, max(0, left_index - 3700), min(right_index - 3700, 100));
 		if (left_index <= 3900) location = draw_markings_for_100 (dc, & locations [3800], _T (".4"), x, location, max(0, left_index - 3800), min(right_index - 3800, 100));
@@ -629,6 +752,7 @@ public:
 		if (left_index <= 4200) location = draw_markings_for_100 (dc, & locations [4100], _T (".7"), x, location, max(0, left_index - 4100), min(right_index - 4100, 100));
 		if (left_index <= 4300) location = draw_markings_for_100 (dc, & locations [4200], _T (".8"), x, location, max(0, left_index - 4200), min(right_index - 4200, 100));
 		if (left_index <= 4400) location = draw_markings_for_100 (dc, & locations [4300], _T (".9"), x, location, max(0, left_index - 4300), min(right_index - 4300, 100));
+		if (( left_index <= 4450 ) && ( right_index >= 4450 )) draw_text_marker (dc, _T (".95"), x + locations [4450]);
 		if (left_index <= 4490) location = draw_markings_for_100 (dc, & locations [4400], _T (""), x, location, max(0, left_index - 4400), min(right_index - 4400, 90));
 		if (( left_index <= 4490 ) && ( right_index >= 4490 )) draw_text_marker (dc, _T (".99"), x + locations [4490]);
 		if (( left_index <= 4540 ) && ( right_index >= 4540 )) draw_text_marker (dc, _T (".995"), x + locations [4540]);
@@ -695,9 +819,13 @@ public:
 		if (( left_index <= 80 ) && ( right_index >= 80 )) draw_text_marker (dc, _T (".58"), x + locations [80]);
 		if (( left_index <= 90 ) && ( right_index >= 90 )) draw_text_marker (dc, _T (".59"), x + locations [90]);
 		if (left_index <= 100) location = draw_markings_for_100 (dc, locations, _T (".6"), x, location, max(0, left_index), min(right_index, 100));
+		if (( left_index <= 150 ) && ( right_index >= 150 )) draw_text_marker (dc, _T (".65"), x + locations [150]);
 		if (left_index <= 200) location = draw_markings_for_100 (dc, & locations [100], _T (".7"), x, location, max(0, left_index - 100), min(right_index - 100, 100));
+		if (( left_index <= 250 ) && ( right_index >= 250 )) draw_text_marker (dc, _T (".75"), x + locations [250]);
 		if (left_index <= 300) location = draw_markings_for_100 (dc, & locations [200], _T (".8"), x, location, max(0, left_index - 200), min(right_index - 200, 100));
+		if (( left_index <= 350 ) && ( right_index >= 350 )) draw_text_marker (dc, _T (".85"), x + locations [350]);
 		if (left_index <= 400) location = draw_markings_for_100 (dc, & locations [300], _T (".9"), x, location, max(0, left_index - 300), min(right_index - 300, 100));
+		if (( left_index <= 450 ) && ( right_index >= 450 )) draw_text_marker (dc, _T (".95"), x + locations [450]);
 		if (left_index <= 490) location = draw_markings_for_100 (dc, & locations [400], _T (""), x, location, max(0, left_index - 400), min(right_index - 400, 90));
 		if (( left_index <= 490 ) && ( right_index >= 490 )) draw_text_marker (dc, _T (".99"), x + locations [490]);
 		if (( left_index <= 540 ) && ( right_index >= 540 )) draw_text_marker (dc, _T (".995"), x + locations [540]);
@@ -783,6 +911,7 @@ public:
 		if (left_index <= 2600) location = draw_markings_for_100 (dc, & locations [2500], _T (".009"), x, location, max(0, left_index - 2500), min(right_index - 2500, 100));
 		if (left_index <= 2700) location = draw_markings_for_100 (dc, & locations [2600], _T (""), x, location, max(0, left_index - 2600), min(right_index - 2600, 100));
 		if (( left_index <= 2700 ) && ( right_index >= 2700 )) draw_text_marker (dc, _T (".01"), x + locations [2700]);
+		if (( left_index <= 2750 ) && ( right_index >= 2750 )) draw_text_marker (dc, _T (".015"), x + locations [2750]);
 		if (left_index <= 2800) location = draw_markings_for_100 (dc, & locations [2700], _T (".02"), x, location, max(0, left_index - 2700), min(right_index - 2700, 100));
 		if (left_index <= 2900) location = draw_markings_for_100 (dc, & locations [2800], _T (".03"), x, location, max(0, left_index - 2800), min(right_index - 2800, 100));
 		if (left_index <= 3000) location = draw_markings_for_100 (dc, & locations [2900], _T (".04"), x, location, max(0, left_index - 2900), min(right_index - 2900, 100));
@@ -792,6 +921,7 @@ public:
 		if (left_index <= 3400) location = draw_markings_for_100 (dc, & locations [3300], _T (".08"), x, location, max(0, left_index - 3300), min(right_index - 3300, 100));
 		if (left_index <= 3500) location = draw_markings_for_100 (dc, & locations [3400], _T (".09"), x, location, max(0, left_index - 3400), min(right_index - 3400, 100));
 		if (left_index <= 3600) location = draw_markings_for_100 (dc, & locations [3500], _T (".1"), x, location, max(0, left_index - 3500), min(right_index - 3500, 100));
+		if (( left_index <= 3650 ) && ( right_index >= 3650 )) draw_text_marker (dc, _T (".15"), x + locations [3650]);
 		if (left_index <= 3700) location = draw_markings_for_100 (dc, & locations [3600], _T (".2"), x, location, max(0, left_index - 3600), min(right_index - 3600, 100));
 		if (left_index <= 3800) location = draw_markings_for_100 (dc, & locations [3700], _T (".3"), x, location, max(0, left_index - 3700), min(right_index - 3700, 100));
 		if (left_index <= 3900) location = draw_markings_for_100 (dc, & locations [3800], _T (".4"), x, location, max(0, left_index - 3800), min(right_index - 3800, 100));
@@ -800,6 +930,7 @@ public:
 		if (left_index <= 4200) location = draw_markings_for_100 (dc, & locations [4100], _T (".7"), x, location, max(0, left_index - 4100), min(right_index - 4100, 100));
 		if (left_index <= 4300) location = draw_markings_for_100 (dc, & locations [4200], _T (".8"), x, location, max(0, left_index - 4200), min(right_index - 4200, 100));
 		if (left_index <= 4400) location = draw_markings_for_100 (dc, & locations [4300], _T (".9"), x, location, max(0, left_index - 4300), min(right_index - 4300, 100));
+		if (( left_index <= 4450 ) && ( right_index >= 4450 )) draw_text_marker (dc, _T (".95"), x + locations [4450]);
 		if (left_index <= 4490) location = draw_markings_for_100 (dc, & locations [4400], _T (""), x, location, max(0, left_index - 4400), min(right_index - 4400, 90));
 		if (( left_index <= 4490 ) && ( right_index >= 4490 )) draw_text_marker (dc, _T (".99"), x + locations [4490]);
 		if (( left_index <= 4540 ) && ( right_index >= 4540 )) draw_text_marker (dc, _T (".995"), x + locations [4540]);
@@ -913,7 +1044,7 @@ public:
 		location = draw_markings_for_100 (dc, & locations2 [300], _T ("2.005"), x, location);
 		location = draw_markings_for_100 (dc, & locations2 [400], _T ("2.006"), x, location, 0, right_index - 400);
 	}
-	ScaleLogGamma0Up (int height) : StatisticsBase (height) {left_index = 0; right_index = 1000;}
+	ScaleLogGamma0Up (int height) : StatisticsBase (height) {left_index = 0; right_index = 500;}
 };
 
 class ScaleLogGamma0Down : public ScaleLogGamma0Up {

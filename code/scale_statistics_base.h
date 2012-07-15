@@ -54,6 +54,7 @@ public:
   double InvBetaDist(double a, double b, double x);
   double FDist(double a, double b, double x);
   double InvFDist(double a, double b, double x);
+  double InvFDist2(double a, double b, double x);
   double StudentsTDist(double a, double x);
   double InvStudentsTDist(double a, double x);
   // constructor
