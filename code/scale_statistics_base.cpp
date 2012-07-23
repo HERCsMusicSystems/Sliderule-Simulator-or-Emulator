@@ -24,7 +24,7 @@
 
 #define _MAXITER  100
 #define _HALFITER 50
-#define _ACCURACY 0.0000001
+#define _ACCURACY 0.00000000001
 #define _OOBVALUE 1000000000.0
 
 /* GJM -- Statistical scales base */
@@ -104,7 +104,7 @@ double StatisticsBase :: InvIncompleteGammaFunction(double a, double x)
       deltamax = high * _ACCURACY;
       double delta = high - low;
   loop = 0;
-      while ((abs(delta) > deltamax) && (loop <= _HALFITER))
+      while ((delta > deltamax) && (loop <= _HALFITER))
       {
           mid = (low + high) / 2.0;
           midgma = IncompleteGammaFunction(a, mid);
@@ -165,7 +165,7 @@ double StatisticsBase :: InvLnGammaF(double x)
       deltamax = high * _ACCURACY;
       double delta = 1.0;
   loop = 0;
-      while ((abs(delta) > deltamax) && (loop <= _HALFITER))
+      while ((delta > deltamax) && (loop <= _HALFITER))
       {
           mid = (low + high) / 2.0;
           midgma = LnGammaF(mid);
@@ -201,7 +201,7 @@ double StatisticsBase :: ChiSquareDegOfFreedom(double x, double a)
   deltamax = high * _ACCURACY;
   double delta = high - low;
   loop = 0;
-  while ((abs(delta) > deltamax) && (loop < _HALFITER))
+  while ((delta > deltamax) && (loop < _HALFITER))
       {
           mid = (low + high) / 2.0;
           midgma = ChiSquareDist(mid, x);
@@ -232,7 +232,7 @@ double StatisticsBase :: StudentsTDegOfFreedom(double x, double a)
   deltamax = high * _ACCURACY;
   double delta = high - low;
   loop = 0;
-  while ((abs(delta) > deltamax) && (loop < _HALFITER))
+  while ((delta > deltamax) && (loop < _HALFITER))
       {
           mid = (low + high) / 2.0;
           midst = StudentsTDist(mid, x);
@@ -277,7 +277,7 @@ double StatisticsBase :: InvIncompleteBetaFunction(double a, double b, double x)
       deltamax = high * _ACCURACY;
       double delta = high - low;
   loop = 0;
-      while ((abs(delta) > deltamax) && (loop <= _HALFITER))
+      while ((delta > deltamax) && (loop <= _HALFITER))
       {
           mid = (low + high) / 2.0;
           midgma = IncompleteBetaFunction(a, b, mid);
