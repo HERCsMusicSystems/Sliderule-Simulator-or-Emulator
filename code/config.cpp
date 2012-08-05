@@ -25,7 +25,7 @@
 void Config :: save (void) {
 	FILE * tc = fopen ("config.txt", "wt");
 	fprintf (tc, "config [\n");
-	fprintf (tc, "	number_of_slide_rules [%i]\n", number_of_slide_rules);
+	if (number_of_slide_rules != 24) fprintf (tc, "	number_of_slide_rules [%i]\n", number_of_slide_rules);
 	if (readouts_on_stator_left) fprintf (tc, "	readouts_on_stator_left []\n");
 	if (readouts_on_stator_right) fprintf (tc, "	readouts_on_stator_right []\n");
 	if (readouts_on_slide_left) fprintf (tc, "	readouts_on_slide_left []\n");
