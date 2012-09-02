@@ -241,7 +241,6 @@ If you intend to put just an empty space the it must be followed by a <b>spacer 
 <li><b>slide []</b>: creates a movable rule.
 You can put scales and/or spacers on it by writing necessary commands immediately after.
 You can have as many slides on your slide rule as you wish. All of them move together.</li>
-<li><b>nesting_level [ level ]</b>: sets the level of nesting of paired free slides, which moves together.</li>
 <li><b>free_slide []</b>: same as <b>slide []</b> but your free slides are not connected together. You can move them separately.</li>
 <li><b>free_slide [ number ]</b>: similar to the above but the free slide with the same number move together. The number must be greater than zero to take effect.</li>
 <li><b>rule_colour [ red green blue ]</b>: specified the background colour of your rules (stators, slides and free slides).</li>
@@ -269,7 +268,6 @@ You can have as many slides on your slide rule as you wish. All of them move tog
 The location is specific to scale C folded at PI.</li>
 <li><b>hairline_36010 []</b>: first appearance specifies the beginning of the 36010 hairline, while second specifies its end.
 the location is specific to scale C folded at sqrt (10.0).</li>
-<li><b>hairline_360st []</b>: same as hairline_360, but positioned on the left side of the main hairline. Usefull for ST scale.</li>
 <li><b>hairline_kw []</b>: first appearance specifies the beginning of the kW hairline, while second specifies its end.</li>
 <li><b>hairline_hp []</b>: first appearance specifies the beginning of the HP hairline, while second specifies its end.</li>
 
@@ -297,16 +295,10 @@ It is necessary to precisely control the left and right end of the highlight (de
 <li><b>no_e []</b>: prevents the slide rule from showing the <b>E = 2.7182...</b> marker.</li>
 <li><b>no_c []</b>: prevents the slide rule from showing the <b>C = 1.1283...</b> marker.</li>
 <li><b>no_c1 []</b>: prevents the slide rule from showing the <b>C1 = 3.5682...</b> marker.</li>
-<li><b>no_degree []</b>: prevents the slide rule from showing the <b>q = 0.01745...</b> marker.</li>
-<li><b>no_m []</b>: prevents the slide rule from showing the <b>M = 31,8310...</b> marker (on A, B, AI and BI scales).</li>
-<li><b>no_mm []</b>: prevents the slide rule from showing the <b>78,5398...</b> marker (on A, B, AI and BI scales).</li>
 <li><b>draw_pi []</b>: causes the slide rule to show the <b>PI = 3.1415...</b> marker (if it was previously switched-off).</li>
 <li><b>draw_e []</b>: causes the slide rule to show the <b>E = 2.7182...</b> marker (if it was previously switched-off).</li>
 <li><b>draw_c []</b>: causes the slide rule to show the <b>C = 1.1283...</b> marker (if it was previously switched-off).</li>
 <li><b>draw_c1 []</b>: causes the slide rule to show the <b>C1 = 3.5682...</b> marker (if it was previously switched-off).</li>
-<li><b>draw_degree []</b>: causes the slide rule to show the <b>q = 0.01745...</b> marker (if it was previously switched-off).</li>
-<li><b>draw_m []</b>: causes the slide rule to show the <b>M = 31,8310...</b> marker (on A, B, AI and BI scales).</li>
-<li><b>draw_mm []</b>: causes the slide rule to show the <b>78,5398...</b> marker (on A, B, AI and BI scales).</li>
 <li><b>marker_height [ index fraction ]</b>: adjusts the height of markers on the scales. The default heights are: [0 0.5] [1 0.4] [2 0.3] [3 0.2] [4 1.0].</li>
 <li><b>horizontal_line [ index ]</b>: turns-on drawing of the horizontal lines on scales at the height of the specified marker (as specified above).</li>
 <li><b>no_horizontal_line [ indedx ]</b>: turns-off drawing of the horizontal lines on scales at the height of the specified marker.</li>
@@ -367,15 +359,6 @@ Below is the list of all available scales, which you can use to create your own 
 <li><b>scale_DF1M [ height ]</b>: folded D scale (x * log (e)).</li>
 <li><b>scale_CIF1M [ height ]</b>: reversed and folded C scale (log (e) / x).</li>
 <li><b>scale_DIF1M [ height ]</b>: reversed and folded D scale (log (e) / x).</li>
-
-<li><b>scale_Cent0 [ height ]</b>: Centigrade degrees for Kelvin degrees on x (x = 1 to 10).</li>
-<li><b>scale_Cent1 [ height ]</b>: Centigrade degrees for Kelvin degrees on x (x = 10 to 100).</li>
-<li><b>scale_Cent2 [ height ]</b>: Centigrade degrees for Kelvin degrees on x (x = 100 to 1000).</li>
-<li><b>scale_Cent3 [ height ]</b>: Centigrade degrees for Kelvin degrees on x (x = 1000 to 10000).</li>
-<li><b>scale_Fahr0 [ height ]</b>: Fahrenheit degrees for Kelvin degrees on x (x = 1 to 10).</li>
-<li><b>scale_Fahr1 [ height ]</b>: Fahrenheit degrees for Kelvin degrees on x (x = 10 to 100).</li>
-<li><b>scale_Fahr2 [ height ]</b>: Fahrenheit degrees for Kelvin degrees on x (x = 100 to 1000).</li>
-<li><b>scale_Fahr3 [ height ]</b>: Fahrenheit degrees for Kelvin degrees on x (x = 1000 to 10000).</li>
 
 <li><b>scale_R1 [ height ]</b>: scale R1 (x ^ 0.5).</li>
 <li><b>scale_R2 [ height ]</b>: scale R2 (10.0 ^ 0.5 + x ^ 0.5).</li>
@@ -502,7 +485,7 @@ The read-outs do not provide output value for this scale.
 <li><b>scale_PH_down [ height ]</b>: same as above but upside down.</li>
 <li><b>scale_PH2 [ height ]</b>: pythagorean scale (sqrt (x ^ 2 + 1.0) for range from 1.4 to 10.0).</li>
 <li><b>scale_PH2_down [ height ]</b>: same as above but upside down.</li>
-<li><b>scale_PT [ height ]</b>: pythagorean scale (sqrt (x ^ 2 - 1.0)).</li>
+<li><b>scale_PT [ height ]</b>: pythagorean scale (sqrt (1.0 + x ^ 2)).</li>
 <li><b>scale_PT_down [ height ]</b>: same as above but upside down.</li>
 
 <li><b>scale_LL [ height ]</b>: log-log scale (ln (x)) aligned with K scale for range from 1.01 to 10000.</li>
@@ -599,6 +582,69 @@ The read-outs do not provide output value for this scale.
 
 <li><b>scale_OCT [ octaves height ]</b>: musical scale for calculating harmonics.</li>
 <li><b>scale_OCT_down [ octaves height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_Fahr0 [ height ]</b>: Fahrenheit scale for x degrees Kelvin between 1 to 10.</li>
+<li><b>scale_Fahr0_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_Fahr1 [ height ]</b>: Fahrenheit scale for x degrees Kelvin between 10 to 100.</li>
+<li><b>scale_Fahr1_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_Fahr2 [ height ]</b>: Fahrenheit scale for x degrees Kelvin between 100 to 1000.</li>
+<li><b>scale_Fahr2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_Fahr3 [ height ]</b>: Fahrenheit scale for x degrees Kelvin between 1000 to 10000.</li>
+<li><b>scale_Fahr3_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_Cent0 [ height ]</b>: Centigrade scale for x degrees Kelvin between 1 to 10.</li>
+<li><b>scale_Cent0_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_Cent1 [ height ]</b>: Centigrade scale for x degrees Kelvin between 10 to 100.</li>
+<li><b>scale_Cent1_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_Cent2 [ height ]</b>: Centigrade scale for x degrees Kelvin between 100 to 1000.</li>
+<li><b>scale_Cent2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_Cent3 [ height ]</b>: Centigrade scale for x degrees Kelvin between 1000 to 10000.</li>
+<li><b>scale_Cent3_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_LogGamma0 [ height ]</b>: loggamma scale, yields the log(gamma(x)) for x between .0001 and .001, LLD0 will show gamma(x).</li>
+<li><b>scale_LogGamma0_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LogGamma1 [ height ]</b>: loggamma scale, yields the log(gamma(x)) for x between .001 and .01, LLD1 will show gamma(x)</li>
+<li><b>scale_LogGamma1_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LogGamma2 [ height ]</b>: loggamma scale, yields the log(gamma(x)) for x between .01 and .1, LLD2 will show gamma(x)</li>
+<li><b>scale_LogGamma2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LogGamma3 [ height ]</b>: loggamma scale, yields the log(gamma(x)) for x between .1 and 1, LLD3 will show gamma(x)</li>
+<li><b>scale_LogGamma3_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LogGamma4 [ height ]</b>: loggamma scale, yields the log(gamma(x)) for x between 1 and 10, LLD4 will show gamma(x)</li>
+<li><b>scale_LogGamma4_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LogGamma5 [ height ]</b>: loggamma scale, yields the log(gamma(x)) for x between 10 and 100. No LLD scale corresponds with this scale</li>
+<li><b>scale_LogGamma5_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_LnGamma0 [ height ]</b>: lngamma scale, yields the ln(gamma(x)) for x between .001 and .01, LL0 will show gamma(x)</li>
+<li><b>scale_LnGamma0_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LnGamma1 [ height ]</b>: lngamma scale, yields the ln(gamma(x)) for x between .01 and .1, LL1 will show gamma(x)</li>
+<li><b>scale_LnGamma1_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LnGamma2 [ height ]</b>: lngamma scale, yields the ln(gamma(x)) for x between .1 and 1, LL2 will show gamma(x)</li>
+<li><b>scale_LnGamma2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LnGamma3 [ height ]</b>: lngamma scale, yields the ln(gamma(x)) for x between 1 and 10, LL3 will show gamma(x)</li>
+<li><b>scale_LnGamma3_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LnGamma4 [ height ]</b>: lngamma scale, yields the ln(gamma(x)) for x between 10 and 100. No LL scale corresponds with this scale</li>
+<li><b>scale_LnGamma4_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_GammaDist [ powerof10, a, b, height ]</b>: Gamma distribution for x between 10^powerof10 and 10*10^powerof10, curve forming params a and b.</li>
+<li><b>scale_GammaDist_down [ powerof10, a, b, height ]</b>: same as above but upside down.</li>
+<li><b>scale_FDist [ powerof10, vnum, vden, height ]</b>: F distribution for x between 10^powerof10 and 10*10^powerof10, vnum and vden degrees of freedom.</li>
+<li><b>scale_FDist_down [ powerof10, vnum, vden, height ]</b>: same as above but upside down.</li>
+<li><b>scale_BetaDist [ powerof10, vleft, vright, height ]</b>: Beta distribution for x between 10^powerof10 and 10*10^powerof10, vleft and vright degrees of freedom.</li>
+<li><b>scale_BetaDist_down [ powerof10, vleft, vright, height ]</b>: same as above but upside down.</li>
+<li><b>scale_StudentsTDist_1Tail [ powerof10, v, height ]</b>: 1-tailed Students-T distribution for x between 10^powerof10 and 10*10^powerof10, v degrees of freedom.</li>
+<li><b>scale_StudentsTDist_1Tail_down [ powerof10, v, height ]</b>: same as above but upside down.</li>
+<li><b>scale_StudentsTDist_2Tail [ powerof10, v, height ]</b>: 2-tailed Students-T distribution for x between 10^powerof10 and 10*10^powerof10, v degrees of freedom.</li>
+<li><b>scale_StudentsTDist_2Tail_down [ powerof10, v, height ]</b>: same as above but upside down.</li>
+<li><b>scale_StudentsTDegOfFreedom [ powerof10, area, height ]</b>: 2-tailed Students_T degrees of Freedom for x between 10^powerof10 and 10*10^powerof10, area is confidence level.</li>
+<li><b>scale_StudentsTDegOfFreedom_down [ powerof10, area, height ]</b>: same as above but upside down.</li>
+<li><b>scale_NormalDist_1Tail [ powerof10, height ]</b>: 1-tailed Normal distribution for x between 10^powerof10 and 10*10^powerof10.</li>
+<li><b>scale_NormalDist_1Tail_down [ powerof10, height ]</b>: same as above but upside down.</li>
+<li><b>scale_NormalDist_2Tail [ powerof10, height ]</b>: 2-tailed Normal distribution for x between 10^powerof10 and 10*10^powerof10.</li>
+<li><b>scale_NormalDist_2Tail_down [ powerof10, height ]</b>: same as above but upside down.</li>
+<li><b>scale_ChiSquareDist [ powerof10, v, height ]</b>: Chi-square distribution for x between 10^powerof10 and 10*10^powerof10, v degrees of freedom.</li>
+<li><b>scale_ChiSquareDist_down [ powerof10, v, height ]</b>: same as above but upside down.</li>
+<li><b>scale_ChiSquareTDegOfFreedom [ powerof10, area, height ]</b>: Chi-square degrees of Freedom for x between 10^powerof10 and 10*10^powerof10, area is confidence level.</li>
+<li><b>scale_ChiSquareTDegOfFreedom_down [ powerof10, area, height ]</b>: same as above but upside down.</li>
 
 </ul>
 </blockquote>
