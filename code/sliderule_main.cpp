@@ -888,7 +888,7 @@ public:
 	void OnLoadFile (wxCommandEvent & event) {
 		if (internal_check_update) return;
 		wxFileDialog picker (this);
-		picker . SetWildcard (_T ("Slide rule files (*.txt)|*.txt|All files (*.*)|*.*"));
+		picker . SetWildcard (_T ("Slide rule files (*.srl)|*.srl|Text files (*.txt)|*.txt|All files (*.*)|*.*"));
 		if (picker . ShowModal () == wxID_OK) {
 			stop_threads = true;
 			sliderule_window -> captured_rule = NULL;
