@@ -48,9 +48,7 @@ OBJECTS = sliderule_main.o setup_file_reader.o config.o lanczos.o scale_base.o s
 linux: ../sliderule
 
 
+../sliderule.app/Contents/MacOS/sliderule: ${OBJECTS}
+	g++ ${OBJECTS} -o ../sliderule.app/Contents/MacOS/sliderule `wx-config --libs`
 
-osx: sliderule_main_dupa.cpp
-	g++ sliderule_main_dupa.cpp -o ../sliderule.app/Contents/MacOS/sliderule `wx-config --cxxflags` `wx-config --libs`
-
-
-
+osx: ../sliderule.app/Contents/MacOS/sliderule
