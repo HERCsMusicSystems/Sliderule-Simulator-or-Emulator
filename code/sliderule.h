@@ -119,7 +119,6 @@ public:
 	int draw_decimal_places;
 	wxString decimal_string;
 	bool no_borderline;
-	int os_compensation;
 	bool working_no_borderline;
 	double metric;
 	double motion_multiplier;

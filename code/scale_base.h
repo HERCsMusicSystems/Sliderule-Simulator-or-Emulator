@@ -109,7 +109,6 @@ public:
 	bool draw_lines [16];
 	double marker_fractions [16];
 	double left_horizontal_extension, right_horizontal_extension;
-	int os_compensation;
 private:
 	void faceUp (int h1, int h2, int h3, int h4);
 	void faceDown (int h1, int h2, int h3, int h4);

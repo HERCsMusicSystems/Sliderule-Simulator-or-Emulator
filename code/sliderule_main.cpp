@@ -315,8 +315,6 @@ static Sliderule * createSlideruleFromFileReader (SetupFileReader & fr, wxOperat
 	slide_rule -> draw_digital_readouts_on_multi_hairlines = config -> readouts_on_multi_hairlines;
 	slide_rule -> draw_decimal_places = config -> readouts_decimal_places;
 	slide_rule -> decimal_string = slide_rule -> draw_decimal_places < 0 ? _T ("%f") : wxString :: Format (_T ("%s.%if"), _T ("%"), slide_rule -> draw_decimal_places);
-	if (id == wxOS_UNIX_LINUX) {slide_rule -> os_compensation = 1;}
-	if (id == wxOS_WINDOWS_NT) {slide_rule -> os_compensation = 0;}
 	if (id == wxOS_MAC_OSX_DARWIN) slide_rule -> draw_cursor_window = true;
 	while (fr . get_id ()) {
 		bool should_skip = true;
@@ -1237,8 +1235,6 @@ public:
 //		if (id == wxOS_UNIX_LINUX) {slide_rule -> bottom_auto_spacer = slide_rule -> top_auto_spacer = 1; slide_rule -> scale_height_compensation = 0;}
 //		if (id == wxOS_WINDOWS_NT) {slide_rule -> top_auto_spacer = 1; slide_rule -> bottom_auto_spacer = 2; slide_rule -> scale_height_compensation = 1;}
 //		if (id == wxOS_MAC_OSX_DARWIN) {slide_rule -> top_auto_spacer = 1; slide_rule -> bottom_auto_spacer = 2; slide_rule -> scale_height_compensation = 1;}
-		if (id == wxOS_UNIX_LINUX) {slide_rule -> os_compensation = 1;}
-		if (id == wxOS_WINDOWS_NT) {slide_rule -> os_compensation = 0;}
 		if (id == wxOS_MAC_OSX_DARWIN) slide_rule -> draw_cursor_window = true;
 		create_default_sliderule (slide_rule);
 //		slide_rule -> insertRule ();

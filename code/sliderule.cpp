@@ -201,6 +201,8 @@ void Sliderule :: apply_visible_margins (double left, double right) {
 
 void Sliderule :: insertBlankSpacer (int height) {
 	insertSpacer (height);
+	if (root == 0) return;
+	if (root -> root == 0) return;
 	for (int ind = 0; ind < 16; ind++) {root -> root -> draw_lines [ind] = false;}
 }
 
@@ -278,7 +280,6 @@ Scale * Sliderule :: insertScale (Scale * scale) {
 		for (int ind = 0; ind < 16; ind++) {scale -> draw_lines [ind] = this -> draw_lines [ind]; scale -> marker_fractions [ind] = this -> marker_fractions [ind];}
 		scale -> next = root -> root;
 		root -> root = scale;
-		scale -> os_compensation = this -> os_compensation;
 		scale -> scaleInit ();
 		rule_y += scale -> height;
 		root -> rule_height = rule_y - root -> y;
@@ -452,7 +453,6 @@ Sliderule :: Sliderule (int x, int y, int scale_length) {
 //	top_auto_spacer = 0;
 //	bottom_auto_spacer = 0;
 //	scale_height_compensation = 0;
-	os_compensation = 0;
 	motion_multiplier = 0.2;
 	animation_steps = 100;
 	animation_delay = 50;

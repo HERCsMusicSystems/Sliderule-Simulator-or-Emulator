@@ -103,7 +103,9 @@ void draw_thin_line (wxDC & dc, lanczos_colour * colour_table, double x, int y1,
 #else
 #define RKBANG(r, g, b)\
 	dc . SetPen (wxPen (wxColour (colour_table -> r, colour_table -> g, colour_table -> b)));\
-	dc . DrawLine (base_x, y1, base_x, y2); base_x++;
+	dc . DrawLine (base_x, y1, base_x, y2);\
+	dc . DrawPoint (base_x, y2);\
+	base_x++;
 void draw_line (wxDC & dc, lanczos_colour * colour_table, double x, int y1, int y2) {
 	int base_x = (int) x;
 	colour_table += (int) (256.0 * (x - (double) base_x));

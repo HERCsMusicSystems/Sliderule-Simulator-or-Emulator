@@ -74,11 +74,11 @@ double dec_recorrection (double value) {
 }
 
 void Scale :: faceUp (int h1, int h2, int h3, int h4) {
-	y_base = y; y0 = y + height - 1 + os_compensation; y1 = y0 - h1; y2 = y0 - h2; y3 = y0 - h3; y4 = y0 - h4; font_y = y - height / 8;
+	y_base = y; y0 = y + height - 1; y1 = y0 - h1; y2 = y0 - h2; y3 = y0 - h3; y4 = y0 - h4; font_y = y - height / 8;
 }
 
 void Scale :: faceDown (int h1, int h2, int h3, int h4) {
-	y_base = y + height - 1 + os_compensation; y0 = y; y1 = y0 + h1; y2 = y0 + h2; y3 = y0 + h3; y4 = y0 + h4; font_y = y - height / 8 + height / 2;
+	y_base = y + height - 1; y0 = y; y1 = y0 + h1; y2 = y0 + h2; y3 = y0 + h3; y4 = y0 + h4; font_y = y - height / 8 + height / 2;
 }
 
 void Scale :: faceUp (void) {
@@ -360,7 +360,6 @@ Scale :: Scale (int height) {
 	individual_lcp = individual_red_lp = alt_lcp = alt_red_lp = NULL;
 	for (int ind = 0; ind < 16; ind++) {draw_lines [ind] = false; marker_fractions [ind] = 1.0;}
 	marker_fractions [0] = 0.5; marker_fractions [1] = 0.4; marker_fractions [2] = 0.3; marker_fractions [3] = 0.2;
-	os_compensation = 0;
 	left_horizontal_extension = right_horizontal_extension = 0.0;
 	y_base = y0 = y1 = y2 = y3 = y4 = 0;
 }
