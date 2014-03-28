@@ -358,8 +358,8 @@ static Sliderule * createSlideruleFromFileReader (SetupFileReader & fr, wxOperat
 		if (! check_trig_other_scales (fr, slide_rule)) return slide_rule;
 		if (! check_pythagorean_scales (fr, slide_rule)) return slide_rule;
 		if (! check_statistical_scales (fr, slide_rule)) return slide_rule;
-		if (! check_log_log_scales (fr, slide_rule)) return false;
-		if (! check_hyperbolic_scales (fr, slide_rule)) return false;
+		if (! check_log_log_scales (fr, slide_rule)) return slide_rule;
+		if (! check_hyperbolic_scales (fr, slide_rule)) return slide_rule;
 		if (fr . id ("corner")) {if (! fr . get_int ()) return slide_rule; slide_rule -> corner = fr . int_symbol;}
 		if (fr . id ("rule_colour")) {
 			if (! fr . get_int ()) return slide_rule; slide_rule -> rule_colour . red = fr . int_symbol;

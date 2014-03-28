@@ -208,7 +208,7 @@ void Sliderule :: insertBlankSpacer (int height) {
 
 Rule * Sliderule :: insertRule (int channel_index) {
 	if (root != NULL && ! working_no_borderline) insertBlankSpacer ();
-	if (root != NULL) insertBlankSpacer (os_compensation);
+	if (root != NULL) insertBlankSpacer (0);
 	working_no_borderline = no_borderline;
 	root = new Rule (root);
 	apply_visible_margins (marginal_factor, marginal_factor);
@@ -260,7 +260,7 @@ void Sliderule :: change_motion_multipliers (double multiplier) {
 
 void Sliderule :: close (void) {
 	if (! no_borderline) insertBlankSpacer ();
-	insertBlankSpacer (os_compensation);
+	insertBlankSpacer (0);
 	initialise_lanczos_colours (hairline_lp, rule_colour . red, rule_colour . green, rule_colour . blue, hairline_colour . red, hairline_colour . green, hairline_colour . blue);
 	initialise_lanczos_colours (other_hairlines_lp, rule_colour . red, rule_colour . green, rule_colour . blue, multi_hairlines_colour . red, multi_hairlines_colour . green, multi_hairlines_colour . blue);
 	initialise_lanczos_colours (background_lp, background_colour . red, background_colour . green, background_colour . blue, background_marker_colour . red, background_marker_colour . green, background_marker_colour . blue);
