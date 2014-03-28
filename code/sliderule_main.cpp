@@ -654,7 +654,7 @@ public:
 		Sliderule * slide_rule = slide_rules [current_slide_rule];
 		if (slide_rule == NULL) return;
 		current_length = slide_rule -> scale_length;
-		if (! IsMaximized ()) this -> SetSize ((int) ((double) slide_rule -> scale_length * (1.0 + slide_rule -> marginal_factor * 2.0)) + slide_rule -> x * 2 + 8, slide_rule -> rule_y + slide_rule -> y + 40 + (osid == wxOS_WINDOWS_NT ? 24 : 0));
+		if (! IsMaximized ()) this -> SetSize ((int) ((double) slide_rule -> scale_length * (1.0 + slide_rule -> marginal_factor * 2.0)) + slide_rule -> x * 2 + 16, slide_rule -> rule_y + slide_rule -> y + 40 + (osid == wxOS_WINDOWS_NT ? 24 : 0));
 		this -> SetTitle (slide_rule -> name);
 		wxMenuBar * bar = GetMenuBar ();
 		if (bar == NULL) return;
