@@ -1,0 +1,82 @@
+sliderule [
+
+	name ["Ultra Log (front)"]
+	margin [0.1]
+
+	rule_colour [255 255 255]
+
+	stator []
+	scale_LL00 [24] scale_marker_colour [255 0 0] left_description ["LL/0" 0.06]
+	scale_LL01 [24] scale_marker_colour [255 0 0] left_description ["LL/1" 0.06]
+	scale_LL02 [24] scale_marker_colour [255 0 0] left_description ["LL/2" 0.06]
+	scale_LL03 [24] scale_marker_colour [255 0 0] left_description ["LL/3" 0.06]
+	scale_CF [24] highlight [255 255 0] left_description ["DF" 0.05]
+
+	slide []
+	scale_DF [24] highlight [255 255 0] left_description ["CF" 0.05]
+	scale_DIF [24] highlight [255 255 0] left_description ["CIF" 0.05]
+
+	scale_SINH1_down [24] left_description ["SH1" 0.06]
+	scale_SINH2_down [24] left_description ["SH2" 0.06]
+	scale_COSH_down [24] left_description ["CH" 0.06]
+	scale_TANH_down [24] left_description ["TH" 0.06]
+
+	spacer [2]
+	spacer [1] highlight [0 0 0]
+	spacer [2]
+
+	scale_Ln [24] left_description ["Ln" 0.05]
+	scale_L [24] left_description ["L" 0.05]
+
+	scale_CI [24] highlight [255 255 0] left_description ["CI" 0.05]
+	scale_C [24] highlight [255 255 0] left_description ["C" 0.05]
+
+	stator []
+	scale_D [24] highlight [255 255 0] left_description ["D" 0.05]
+	scale_LL3_down [24] left_description ["LL3" 0.06]
+	scale_LL2_down [24] left_description ["LL2" 0.06]
+	scale_LL1_down [24] left_description ["LL1" 0.06]
+	scale_LL0_down [24] left_description ["LL0" 0.06]
+]
+
+sliderule [
+
+	name ["Ultra Log (back)"]
+	margin [0.1]
+
+	rule_colour [255 255 255]
+
+	stator []
+	horizontal_line [0]
+	scale_LOG_custom [24 2.7182 "e" 3.1415 "Pi" 7.4569 "W" 9.8066 "g"] left_description ["Const" 0.05]
+	no_horizontal_line [0]
+	scale_R1 [24] left_description ["R1" 0.05]
+	scale_R2 [24] left_description ["R2" 0.05]
+	scale_K [24] highlight [255 255 0] left_description ["K" 0.05]
+	scale_A [24] highlight [255 255 0] left_description ["A" 0.05]
+
+	slide []
+	scale_B [24] highlight [255 255 0] left_description ["B" 0.05]
+	scale_T1_down [24] left_description ["T1" 0.05]
+	scale_T2_down [24] left_description ["T2" 0.05]
+	scale_ST_down [24] left_description ["ST" 0.05]
+	scale_S_down [24] left_description ["S" 0.05]
+
+	spacer [2]
+	spacer [1] highlight [0 0 0]
+	spacer [2]
+
+	scale_P [24] left_description ["P" 0.05]
+	scale_PH [24] left_description ["H1" 0.05]
+	scale_PH2 [24] left_description ["H1" 0.05]
+
+	scale_CI [24] highlight [255 255 0] left_description ["CI" 0.05]
+	scale_C [24] highlight [255 255 0] left_description ["C" 0.05]
+
+	stator []
+	scale_D [24] highlight [255 255 0] left_description ["D" 0.05]
+	scale_DI [24] highlight [255 255 0] left_description ["DI" 0.05]
+	scale_3W1 [24] left_description ["Q1" 0.05]
+	scale_3W2 [24] left_description ["Q2" 0.05]
+	scale_3W3 [24] left_description ["Q3" 0.05]
+]
