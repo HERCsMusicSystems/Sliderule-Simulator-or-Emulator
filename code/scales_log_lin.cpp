@@ -1415,6 +1415,57 @@ public:
 	ScaleOSCDown (int octaves, int height) : ScaleOSCUp (octaves, height) {}
 };
 
+class ScaleCustom : public Scale {
+private:
+	int counter;
+public:
+	double positions [256];
+	wxString descriptions [256];
+	void insertConstant (double position, char * description) {
+		if (counter > 255) return;
+		positions [counter] = getLocation (position);
+		descriptions [counter] = wxString :: From8BitData (description);
+		counter++;
+	}
+	virtual void draw (wxDC & dc, double x) {
+		setArialFont (dc);
+		for (int ind = 0; ind < counter; ind++) {
+			draw_index_location (dc, x + positions [ind] * scale_length, descriptions [ind]);
+		}
+	}
+	virtual void scaleInit (void) {faceUp ();}
+	ScaleCustom (int height) : Scale (height) {counter = 0;}
+};
+
+class ScaleCustomDown : public ScaleCustom {
+public:
+	virtual void scaleInit (void) {faceDown ();}
+	ScaleCustomDown (int height) : ScaleCustom (height) {}
+};
+
+class ScaleLOGCustom : public ScaleCustom {
+public:
+	virtual double getLocation (double x) {return log10 (x);}
+	virtual double getValue (double x) {return pow (10.0, x);}
+	virtual void scaleInit (void) {faceUp ();}
+	ScaleLOGCustom (int height) : ScaleCustom (height) {}
+};
+
+class ScaleLOGCustomDown : public ScaleLOGCustom {
+public:
+	virtual void scaleInit (void) {faceDown ();}
+	ScaleLOGCustomDown (int height) : ScaleLOGCustom (height) {}
+};
+
+void read_custom_constants (SetupFileReader & fr, ScaleCustom * scale) {
+	while (true) {
+		if (! fr . get_float ()) return;
+		float position = fr . float_symbol;
+		if (! fr . get_string ()) return;
+		scale -> insertConstant (position, fr . symbol);
+	}
+}
+
 bool check_log_scales (bool & should_skip, SetupFileReader & fr, Sliderule * slide_rule) {
 	if (fr . id ("scale_F")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogF (fr . int_symbol));}
 	if (fr . id ("scale_FI")) {if (! fr . get_int ()) return false; slide_rule -> insertScale (new LogFI (fr . int_symbol));}
@@ -1565,6 +1616,34 @@ bool check_log_scales (bool & should_skip, SetupFileReader & fr, Sliderule * sli
 		int octave = fr . int_symbol;
 		if (! fr . get_int ()) return false;
 		slide_rule -> insertScale (new ScaleOSCDown (octave, fr . int_symbol));
+	}
+	if (fr . id ("scale_LIN_custom")) {
+		if (! fr . get_int ()) return false;
+		ScaleCustom * sc = new ScaleCustom (fr . int_symbol);
+		slide_rule -> insertScale (sc);
+		read_custom_constants (fr, sc);
+		should_skip = false;
+	}
+	if (fr . id ("scale_LIN_custom_down")) {
+		if (! fr . get_int ()) return false;
+		ScaleCustom * sc = new ScaleCustomDown (fr . int_symbol);
+		slide_rule -> insertScale (sc);
+		read_custom_constants (fr, sc);
+		should_skip = false;
+	}
+	if (fr . id ("scale_LOG_custom")) {
+		if (! fr . get_int ()) return false;
+		ScaleCustom * sc = new ScaleLOGCustom (fr . int_symbol);
+		slide_rule -> insertScale (sc);
+		read_custom_constants (fr, sc);
+		should_skip = false;
+	}
+	if (fr . id ("scale_LOG_custom_down")) {
+		if (! fr . get_int ()) return false;
+		ScaleCustom * sc = new ScaleLOGCustomDown (fr . int_symbol);
+		slide_rule -> insertScale (sc);
+		read_custom_constants (fr, sc);
+		should_skip = false;
 	}
 
 	return true;
