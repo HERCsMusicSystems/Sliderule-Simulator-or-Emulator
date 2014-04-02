@@ -123,7 +123,7 @@ double Scale :: draw_markings_for_100 (wxDC & dc, double * markings, wxString de
 	int index;
 	bool half;
 	int counter;
-	lanczos_colour * lp = get_bordercolour (x + markings [from] + 1.0);
+	lanczos_colour * lp = get_bordercolour (x + markings [from] + (reversed ? -1.0 : 1.0));
 	while (step < 100
 		&& (absolute (markings [to] - markings [to - step]) < minimum_step
 		|| absolute (markings [from + step] - markings [from]) < minimum_step)) step = stepProgress (step);
@@ -173,7 +173,8 @@ double Scale :: draw_markings_for_100 (wxDC & dc, double * markings, wxString de
 	double distance = absolute (markings [100] - last_drawn);
 	if (distance < minimum_step) return last_drawn;
 	double location = x + markings [100];
-	draw_line (dc, lp, get_bordercolour (location + 1.0), location, y0, y1);
+	if (reversed) draw_line (dc, get_bordercolour (location - 1.0), lp, location, y0, y1);
+	else draw_line (dc, lp, get_bordercolour (location + 1.0), location, y0, y1);
 	wxSize extent = dc . GetTextExtent (description);
 	if (distance < (double) extent . x) return markings [100];
 	dc . DrawText (description, x + markings [100] - extent . x / 2, font_y);
