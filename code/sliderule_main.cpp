@@ -207,7 +207,7 @@ public:
 		}
 	}
 	void OnMouse (wxMouseEvent & event) {if (! event . Dragging ()) return; mouse_process (event);}
-	void removeCtrl (void) {if (ctrl == NULL) return; RemoveChild (ctrl); delete ctrl; ctrl = NULL;}
+	void removeCtrl (void) {if (ctrl == NULL) return; ctrl -> Show (false); RemoveChild (ctrl); ctrl = NULL;}
 	void checkClickedInCursor (wxPoint & location) {
 		Sliderule * slide_rule = slide_rules [current_slide_rule];
 		if (slide_rule == NULL) return;

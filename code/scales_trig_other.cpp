@@ -238,7 +238,7 @@ public:
 		if (x <= 1.0) {double alpha = asin (x); alpha *= 18.0 / _PI; return 1.0 - log10 (alpha / x);}
 		double sine = sin (x * _PI / 180.0); return log10 (x * 0.1 / sine);
 	}
-	virtual double getValue (double x) {return x;}
+	virtual double getValue (double x) {return pow (10.0, x);}
 	virtual void scaleInit (void) {faceUp (); init_angles ();}
 	virtual void draw (wxDC & dc, double x) {
 		setArialFont (dc);
