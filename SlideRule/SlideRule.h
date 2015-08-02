@@ -17,14 +17,14 @@ public:
 };
 
 class Rule {
-private:
+public:
 	double vertical_position, height;
 	double left_margin, right_margin;
 	int slide_id; // 0 = stator, 1 = slide [1], 2 = slide [2], etc.
 public:
 	Rule * next;
 	void draw (cairo_t * cr, SlideRule * root);
-	Rule (int id);
+	Rule (int id, Rule * next);
 };
 
 class SlideRuleSide {

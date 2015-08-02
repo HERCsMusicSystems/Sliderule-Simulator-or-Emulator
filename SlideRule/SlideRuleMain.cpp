@@ -101,6 +101,8 @@ public:
 		sliderule_action * machine = new sliderule_action (atom -> getAtom (), sides == 0 ? 3 : sides -> getInteger ());
 		if (! atom -> getAtom () -> setMachine (machine)) {delete machine; return false;}
 		SlideRuleSide * sd = machine -> sliderule -> createSide ();
+		Rule * r = sd -> createRule (1);
+		r -> height = 40.0;
 		g_idle_add ((GSourceFunc) CreateSlideRuleViewport, machine);
 		return true;
 	}
