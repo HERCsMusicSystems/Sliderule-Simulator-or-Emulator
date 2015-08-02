@@ -35,6 +35,7 @@ public:
 	void draw (cairo_t * cr, SlideRule * root);
 	Rule * createRule (int id);
 	SlideRuleSide (SlideRuleSide * next);
+	~ SlideRuleSide (void);
 };
 
 class SlideRule {

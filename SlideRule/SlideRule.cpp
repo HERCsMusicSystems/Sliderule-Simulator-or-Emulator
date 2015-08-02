@@ -29,7 +29,18 @@ void SlideRule :: setSide (int side) {
 
 SlideRuleSide * SlideRule :: createSide (void) {return root = current = new SlideRuleSide (root);}
 
-SlideRule :: SlideRule (void) {current = root = 0;}
-
-SlideRule :: ~ SlideRule (void) {
+SlideRuleSide :: SlideRuleSide (SlideRuleSide * next) {
+	rules = 0;
+	this -> next = next;
 }
+SlideRuleSide :: ~ SlideRuleSide (void) {
+	if (rules != 0) delete rules; rules = 0;
+	if (next != 0) delete next; next = 0;
+}
+
+SlideRule :: SlideRule (void) {current = root = 0;}
+SlideRule :: ~ SlideRule (void) {
+	current = 0;
+	if (root != 0) delete root; root = 0;
+}
+

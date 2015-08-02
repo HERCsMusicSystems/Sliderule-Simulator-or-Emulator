@@ -2,6 +2,7 @@
 #include "prolog.h"
 #include "gtk/gtk.h"
 #include "SlideRule.h"
+#include <string.h>
 
 static gboolean RemoveViewportIdleCode (GtkWidget * viewport) {gtk_widget_destroy (viewport); return FALSE;}
 
@@ -127,4 +128,14 @@ extern "C" {
 }
 #endif
 
+#ifdef LINUX_OPERATING_SYSTEM
+extern "C" {
+	extern char * get_module_code (void);
+	extern PrologServiceClass * create_service_class (void);
+}
+extern char resource_sliderule;
+char * get_module_code (void) {return & resource_sliderule;}
+#endif
+
 PrologServiceClass * create_service_class (void) {return new SlideRuleServiceClass ();}
+
