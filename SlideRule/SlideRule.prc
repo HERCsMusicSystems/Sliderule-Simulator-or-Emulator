@@ -2,7 +2,7 @@
 import studio
 import prcgtk
 
-program SlideRule #machine := "SlideRule"
+program sliderule #machine := "sliderule"
 		[
 			sliderule
 			sr
