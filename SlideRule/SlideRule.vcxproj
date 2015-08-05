@@ -16,14 +16,14 @@
     <ClCompile Include="SlideRuleMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SlideRule.prc" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="SlideRule.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\prolog\code\prolog\graphics2d.h" />
     <ClInclude Include="SlideRule.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sliderule.prc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{159A0A8B-AD2C-4CF8-98CD-B56E5AEF2F0D}</ProjectGuid>
