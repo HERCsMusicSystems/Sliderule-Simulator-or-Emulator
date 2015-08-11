@@ -40,8 +40,10 @@ public:
 
 class SlideRule {
 private:
-	SlideRuleSide * root, * current;
+	SlideRuleSide * root;
 public:
+	SlideRuleSide * current;
+	char name [128];
 	double length, vertical_margin, horizontal_margin;
 	void draw (cairo_t * cr);
 	void setSide (int side);

@@ -4,6 +4,8 @@
 #include "SlideRule.h"
 #include <string.h>
 
+class sliderule_action;
+
 static gboolean RemoveViewportIdleCode (GtkWidget * viewport) {gtk_widget_destroy (viewport); return FALSE;}
 
 class sliderule_action : public PrologNativeCode {
@@ -13,6 +15,8 @@ public:
 	GtkWidget * viewport, * area;
 	int gtk_redrawer;
 	SlideRule * sliderule;
+	PrologAtom * stator, * slide, * name;
+	PrologAtom * view;
 	void draw (cairo_t * cr) {if (sliderule != 0) sliderule -> draw (cr);}
 	bool remove (bool remove_gtk = true) {
 		if (remove_gtk) {
@@ -22,14 +26,48 @@ public:
 		delete this;
 		return true;
 	}
-	bool code (PrologElement * parameters, PrologResolution * resolution) {
-		if (parameters -> isEarth ()) return remove ();
+	bool try_name (PrologAtom * selector, PrologElement * a) {
+		if (name != selector) return false; if (! a -> isText ()) return false;
+		if (strlen (a -> getText ()) > 127) return false;
+		strcpy (sliderule -> name, a -> getText ());
 		return true;
 	}
-	sliderule_action (PrologAtom * atom, int sides) {
+	bool try_slide (PrologAtom * selector, PrologElement * a) {
+		if (selector == slide) {
+			int index = 1;
+			if (a != 0) {if (! a -> isInteger ()) return false; index = a -> getInteger ();}
+			Rule * r = sliderule -> current -> createRule (index);
+			r -> height = 40.0;
+			return true;
+		}
+		return false;
+	}
+	bool try_view (PrologAtom * selector);
+	bool code (PrologElement * parameters, PrologResolution * resolution) {
+		if (parameters -> isEarth ()) return remove ();
+		PrologAtom * selector = 0;
+		PrologElement * a = 0, * b = 0, * c = 0;
+		while (parameters -> isPair ()) {
+			PrologElement * el = parameters -> getLeft ();
+			if (el -> isAtom ()) selector = el -> getAtom ();
+			else if (a == 0) a = el;
+			else if (b == 0) b = el;
+			else if (c == 0) c = el;
+			parameters = parameters -> getRight ();
+		}
+		if (try_slide (selector, a)) return true;
+		if (try_name (selector, a)) return true;
+		if (try_view (selector)) return true;
+		return false;
+	}
+	sliderule_action (PrologDirectory * dir, PrologAtom * atom, int sides) {
 		viewport = 0;
 		this -> atom = atom; COLLECTOR_REFERENCE_INC (atom);
 		this -> sides = sides;
+		stator = dir ? dir -> searchAtom ("stator") : 0;
+		slide = dir ? dir -> searchAtom ("slide") : 0;
+		name = dir ? dir -> searchAtom ("name") : 0;
+		view = dir ? dir -> searchAtom ("view") : 0;
 		sliderule = new SlideRule ();
 	}
 	~ sliderule_action (void) {
@@ -51,7 +89,7 @@ static gboolean RedrawSlideRule (GtkWidget * viewport, GdkEvent * event, slideru
 }
 static gboolean CreateSlideRuleViewport (sliderule_action * action) {
 	action -> viewport = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title (GTK_WINDOW (action -> viewport), "Slide Rule Emulator");
+	gtk_window_set_title (GTK_WINDOW (action -> viewport), action -> sliderule -> name);
 	g_signal_connect (action -> viewport, "delete-event", G_CALLBACK (ViewportDeleteEvent), action);
 	action -> area = gtk_drawing_area_new ();
 	gtk_container_add (GTK_CONTAINER (action -> viewport), action -> area);
@@ -82,8 +120,17 @@ static gboolean CreateSlideRuleViewport (sliderule_action * action) {
 	g_signal_connect (action -> area, "drag-leave", G_CALLBACK (dnd_leave), 0);
 
 */
+
+bool sliderule_action :: try_view (PrologAtom * selector) {
+	if (selector != view) return false;
+	if (this -> viewport != 0) return false;
+	g_idle_add ((GSourceFunc) CreateSlideRuleViewport, this);
+	return true;
+}
+
 class sliderule_code : public PrologNativeCode {
 public:
+	PrologDirectory * dir;
 	bool code (PrologElement * parameters, PrologResolution * resolution) {
 		PrologElement * atom = 0;
 		PrologElement * sides = 0;
@@ -98,20 +145,19 @@ public:
 		if (atom -> isVar ()) atom -> setAtom (new PrologAtom ());
 		if (! atom -> isAtom ()) return false;
 		if (atom -> getAtom () -> getMachine () != 0) return false;
-		sliderule_action * machine = new sliderule_action (atom -> getAtom (), sides == 0 ? 3 : sides -> getInteger ());
+		sliderule_action * machine = new sliderule_action (dir, atom -> getAtom (), sides == 0 ? 3 : sides -> getInteger ());
 		if (! atom -> getAtom () -> setMachine (machine)) {delete machine; return false;}
-		SlideRuleSide * sd = machine -> sliderule -> createSide ();
-		Rule * r = sd -> createRule (1);
-		r -> height = 40.0;
-		g_idle_add ((GSourceFunc) CreateSlideRuleViewport, machine);
 		return true;
 	}
+	sliderule_code (PrologDirectory * dir) {this -> dir = dir;}
 };
 
 class SlideRuleServiceClass : public PrologServiceClass {
 public:
+	PrologDirectory * dir;
+	void init (PrologRoot * root, PrologDirectory * directory) {this -> dir = directory;}
 	PrologNativeCode * getNativeCode (char * name) {
-		if (strcmp (name, "sliderule") == 0) return new sliderule_code ();
+		if (strcmp (name, "sliderule") == 0) return new sliderule_code (dir);
 		return 0;
 	}
 };
