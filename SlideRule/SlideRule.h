@@ -3,6 +3,7 @@
 #define _SLIDE_RULE
 
 #include "gtk/gtk.h"
+#include "graphics2d.h"
 
 class Scale;
 class Rule;
@@ -21,6 +22,7 @@ public:
 	double vertical_position, height;
 	double left_margin, right_margin;
 	int slide_id; // 0 = stator, 1 = slide [1], 2 = slide [2], etc.
+	colour rule_colour, border_colour;
 public:
 	Rule * next;
 	void draw (cairo_t * cr, SlideRule * root);
@@ -28,9 +30,9 @@ public:
 };
 
 class SlideRuleSide {
-private:
-	Rule * rules;
 public:
+	Rule * rules;
+	colour background_colour, rule_colour, border_colour;
 	SlideRuleSide * next;
 	void draw (cairo_t * cr, SlideRule * root);
 	Rule * createRule (int id);
@@ -46,6 +48,8 @@ public:
 	char name [128];
 	double length, vertical_margin, horizontal_margin;
 	void draw (cairo_t * cr);
+	double totalHeight (void);
+	double lengthWithMargins (void);
 	void setSide (int side);
 	SlideRuleSide * createSide (void);
 	SlideRule (void);

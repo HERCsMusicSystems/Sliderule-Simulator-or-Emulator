@@ -15,7 +15,8 @@ public:
 	GtkWidget * viewport, * area;
 	int gtk_redrawer;
 	SlideRule * sliderule;
-	PrologAtom * stator, * slide, * name;
+	PrologAtom * stator, * slide, * name, * length;
+	PrologAtom * background_colour, * rule_colour, * border_colour;
 	PrologAtom * view;
 	void draw (cairo_t * cr) {if (sliderule != 0) sliderule -> draw (cr);}
 	bool remove (bool remove_gtk = true) {
@@ -32,6 +33,11 @@ public:
 		strcpy (sliderule -> name, a -> getText ());
 		return true;
 	}
+	bool try_length (PrologAtom * selector, PrologElement * a) {
+		if (length != selector) return false; if (! a -> isNumber ()) return false;
+		sliderule -> length = a -> getNumber ();
+		return true;
+	}
 	bool try_slide (PrologAtom * selector, PrologElement * a) {
 		if (selector == slide) {
 			int index = 1;
@@ -42,21 +48,35 @@ public:
 		}
 		return false;
 	}
+	bool try_colour (PrologAtom * selector, PrologElement * red, PrologElement * green, PrologElement * blue, PrologElement * alpha) {
+		colour c;
+		if (red != 0) {if (! red -> isNumber ()) return false; c . red = red -> isDouble () ? red -> getDouble () : int_to_colour (red -> getInteger ());}
+		if (green != 0) {if (! green -> isNumber ()) return false; c . green = green -> isDouble () ? green -> getDouble () : int_to_colour (green -> getInteger ());}
+		if (blue != 0) {if (! blue -> isNumber ()) return false; c . blue = blue -> isDouble () ? blue -> getDouble () : int_to_colour (blue -> getInteger ());}
+		if (alpha != 0) {if (! alpha -> isNumber ()) return false; c . alpha = alpha -> isDouble () ? alpha -> getDouble () : int_to_colour (alpha -> getInteger ());}
+		if (selector == background_colour) {sliderule -> current -> background_colour = c; return true;}
+		if (selector == rule_colour) {sliderule -> current -> rule_colour = c; return true;}
+		if (selector == border_colour) {sliderule -> current -> border_colour = c; return true;}
+		return false;
+	}
 	bool try_view (PrologAtom * selector);
 	bool code (PrologElement * parameters, PrologResolution * resolution) {
 		if (parameters -> isEarth ()) return remove ();
 		PrologAtom * selector = 0;
-		PrologElement * a = 0, * b = 0, * c = 0;
+		PrologElement * a = 0, * b = 0, * c = 0, * d = 0;
 		while (parameters -> isPair ()) {
 			PrologElement * el = parameters -> getLeft ();
 			if (el -> isAtom ()) selector = el -> getAtom ();
 			else if (a == 0) a = el;
 			else if (b == 0) b = el;
 			else if (c == 0) c = el;
+			else if (d == 0) d = el;
 			parameters = parameters -> getRight ();
 		}
 		if (try_slide (selector, a)) return true;
 		if (try_name (selector, a)) return true;
+		if (try_length (selector, a)) return true;
+		if (try_colour (selector, a, b, c, d)) return true;
 		if (try_view (selector)) return true;
 		return false;
 	}
@@ -67,7 +87,11 @@ public:
 		stator = dir ? dir -> searchAtom ("stator") : 0;
 		slide = dir ? dir -> searchAtom ("slide") : 0;
 		name = dir ? dir -> searchAtom ("name") : 0;
+		length = dir ? dir -> searchAtom ("length") : 0;
 		view = dir ? dir -> searchAtom ("view") : 0;
+		background_colour = dir ? dir -> searchAtom ("background_colour") : 0;
+		rule_colour = dir ? dir -> searchAtom ("rule_colour") : 0;
+		border_colour = dir ? dir -> searchAtom ("border_colour") : 0;
 		sliderule = new SlideRule ();
 	}
 	~ sliderule_action (void) {
@@ -94,14 +118,14 @@ static gboolean CreateSlideRuleViewport (sliderule_action * action) {
 	action -> area = gtk_drawing_area_new ();
 	gtk_container_add (GTK_CONTAINER (action -> viewport), action -> area);
 	action -> gtk_redrawer = g_signal_connect (G_OBJECT (action -> area), "expose-event", G_CALLBACK (RedrawSlideRule), action);
+	gtk_window_resize (GTK_WINDOW (action -> viewport),
+		(int) (action -> sliderule -> lengthWithMargins () + action -> sliderule -> horizontal_margin * 2.0),
+		(int) (action -> sliderule -> totalHeight () + action -> sliderule -> vertical_margin * 2.0));
 
 	gtk_widget_show_all (action -> viewport);
 	return FALSE;
 }
 /*
-	action -> area = gtk_drawing_area_new ();
-	gtk_container_add (GTK_CONTAINER (action -> viewport), action -> area);
-	action -> gtk_redrawer = g_signal_connect (G_OBJECT (action -> area), "expose-event", G_CALLBACK (RedrawAudioModulePanel), action);
 	gtk_widget_add_events (action -> viewport, GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK);
 	g_signal_connect (G_OBJECT (action -> viewport), "button_press_event", G_CALLBACK (AudioModulePanelKeyon), action);
 	g_signal_connect (G_OBJECT (action -> viewport), "button_release_event", G_CALLBACK (AudioModulePanelKeyoff), action);
