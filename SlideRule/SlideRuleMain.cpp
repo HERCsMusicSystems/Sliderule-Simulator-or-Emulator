@@ -15,9 +15,10 @@ public:
 	GtkWidget * viewport, * area;
 	int gtk_redrawer;
 	SlideRule * sliderule;
-	PrologAtom * stator, * slide, * name, * length;
+	PrologAtom * stator, * slide, * name, * length, * location, * margin;
 	PrologAtom * background_colour, * rule_colour, * border_colour;
 	PrologAtom * view;
+	PrologAtom * scale;
 	void draw (cairo_t * cr) {if (sliderule != 0) sliderule -> draw (cr);}
 	bool remove (bool remove_gtk = true) {
 		if (remove_gtk) {
@@ -38,9 +39,26 @@ public:
 		sliderule -> length = a -> getNumber ();
 		return true;
 	}
+	bool try_location (PrologAtom * selector, PrologElement * x, PrologElement * y) {
+		if (selector != location) return false;
+		if (x == 0 || ! x -> isNumber ()) return false;
+		if (y == 0 || ! y -> isNumber ()) return false;
+		sliderule -> horizontal_margin = x -> getNumber ();
+		sliderule -> vertical_margin = y -> getNumber ();
+		return true;
+	}
+	bool try_margin (PrologAtom * selector, PrologElement * left, PrologElement * right) {
+		if (selector != margin) return false;
+		if (left == 0 || ! left -> isNumber ()) return false;
+		if (right == 0) right = left;
+		if (! right -> isNumber ()) return false;
+		sliderule -> current -> left_margin = left -> getNumber ();
+		sliderule -> current -> right_margin = right -> getNumber ();
+		return true;
+	}
 	bool try_slide (PrologAtom * selector, PrologElement * a) {
 		if (selector == slide) {
-			int index = 1;
+			int index = 0;
 			if (a != 0) {if (! a -> isInteger ()) return false; index = a -> getInteger ();}
 			Rule * r = sliderule -> current -> createRule (index);
 			r -> height = 40.0;
@@ -60,6 +78,13 @@ public:
 		return false;
 	}
 	bool try_view (PrologAtom * selector);
+	bool try_scale (PrologAtom * selector) {
+		if (selector != scale) return false;
+		Rule * rule = sliderule -> current -> rules;
+		if (rule == 0) return false;
+		MainScale * s = new MainScale (rule);
+		return true;
+	}
 	bool code (PrologElement * parameters, PrologResolution * resolution) {
 		if (parameters -> isEarth ()) return remove ();
 		PrologAtom * selector = 0;
@@ -76,8 +101,11 @@ public:
 		if (try_slide (selector, a)) return true;
 		if (try_name (selector, a)) return true;
 		if (try_length (selector, a)) return true;
+		if (try_location (selector, a, b)) return true;
+		if (try_margin (selector, a, b)) return true;
 		if (try_colour (selector, a, b, c, d)) return true;
 		if (try_view (selector)) return true;
+		if (try_scale (selector)) return true;
 		return false;
 	}
 	sliderule_action (PrologDirectory * dir, PrologAtom * atom, int sides) {
@@ -88,10 +116,13 @@ public:
 		slide = dir ? dir -> searchAtom ("slide") : 0;
 		name = dir ? dir -> searchAtom ("name") : 0;
 		length = dir ? dir -> searchAtom ("length") : 0;
-		view = dir ? dir -> searchAtom ("view") : 0;
+		location = dir ? dir -> searchAtom ("location") : 0;
+		margin = dir ? dir -> searchAtom ("margin") : 0;
 		background_colour = dir ? dir -> searchAtom ("background_colour") : 0;
 		rule_colour = dir ? dir -> searchAtom ("rule_colour") : 0;
 		border_colour = dir ? dir -> searchAtom ("border_colour") : 0;
+		view = dir ? dir -> searchAtom ("view") : 0;
+		scale = dir ? dir -> searchAtom ("scale") : 0;
 		sliderule = new SlideRule ();
 	}
 	~ sliderule_action (void) {
@@ -118,8 +149,9 @@ static gboolean CreateSlideRuleViewport (sliderule_action * action) {
 	action -> area = gtk_drawing_area_new ();
 	gtk_container_add (GTK_CONTAINER (action -> viewport), action -> area);
 	action -> gtk_redrawer = g_signal_connect (G_OBJECT (action -> area), "expose-event", G_CALLBACK (RedrawSlideRule), action);
+	action -> sliderule -> recalculate_margins ();
 	gtk_window_resize (GTK_WINDOW (action -> viewport),
-		(int) (action -> sliderule -> lengthWithMargins () + action -> sliderule -> horizontal_margin * 2.0),
+		(int) (action -> sliderule -> length_with_margins + action -> sliderule -> horizontal_margin * 2.0),
 		(int) (action -> sliderule -> totalHeight () + action -> sliderule -> vertical_margin * 2.0));
 
 	gtk_widget_show_all (action -> viewport);
