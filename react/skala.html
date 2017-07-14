@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <titlee>SKALA</titlee>
+  </head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+
+<script type="text/babel">
+
+var sliderules = new Sliderules ();
+
+var sliderule = new Sliderule (1200, {cursor_position: 0.1});
+sliderules . sliderules . push (sliderule);
+var r = new Rule (1200);
+sliderule . rules . push (r);
+r . scales . push (new spacer (4));
+r . scales . push (new scale_L (24));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_K (24, {left_description: 'X sonda\u03c0 \u03c9'}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_A (24, {right_description: '\u221A(XAB\u00B2)'}));
+r = new Rule (1200);
+sliderule . rules . push (r);
+r . stator = 1;
+r . scales . push (new scale_B (24));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_C (24));
+r = new Rule (1200);
+sliderule . rules . push (r);
+r . scales . push (new scale_D (24));
+r . scales . push (new spacer (4));
+
+sliderule = new Sliderule (1200, {position: {x: -6, y: 22}, cursor_rounding: 24});
+sliderules . sliderules . push (sliderule);
+sliderule . cursor_position = 0.4;
+sliderule . cursors . push (new Cursor (-0.06, 40, 120, 'blue'));
+r = new Rule (1200);
+sliderule . rules . push (r);
+r . scales . push (new scale_L (24));
+r . scales . push (new spacer (24));
+r . scales . push (new scale_C (48, {left_extension: 0.1, right_extension: 0.1}));
+r . scales . push (new scale_C (48, {highlight: 'green', highlight_left: 0.05, highlight_right: 0.05}));
+r . scales . push (new scale_D (48, {right_description: '\u221AX\u0305A\u0305B\u0305\u00B2\u0305 \u0305', ra: 'left'}));
+r . scales . push (new scale_A (48, {left_description: 'X\u00B2', ls: 0.09, left_extension: 0.1, right_extension: 0.1}));
+r . scales . push (new spacer (24, {left_description: 'sputnik', centre_description: 'SKALA', baseline: 24, font: '24px arial', textBaseline: 'bottom'}));
+sliderule . rules . push (new spacer (4));
+r = new Rule (1200, {left_margin: 0.1});
+sliderule . rules . push (r);
+r . scales . push (new scale_B (48, {right_description: 'X\u00B3'}));
+r . scales . push (new scale_D (48));
+r . scales . push (new scale_M (28));
+r . stator = 1;
+
+</script>
+
+<script src="sliderule_application.js" type="text/babel"></script>
+<script type="text/babel">
+ReactDOM.render(
+    <SlideruleApplication />,
+    document.getElementById('root')
+);
+</script>
+
+</body></html>
