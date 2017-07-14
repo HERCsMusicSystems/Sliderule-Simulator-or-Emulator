@@ -31,17 +31,17 @@ var SlideruleApplication = React . createClass ({
   },
   componentDidMount: function () {setInterval (this . draw, 20);},
   getInitialState: function () {return {width: 200, height: 100, dragging: false};},
-  render: function () {
-    return (
-      <div style = {{align: 'center'}}>
-        <canvas ref = 'sliderule' width = {this . state . width} height = {this . state . height} style = {{display: 'block'}}
-          onMouseDown = {this . onMouseDown}
-          onMouseMove = {this . onMouseMove}
-          onMouseUp = {this . onMouseUp}
-          onMouseLeave = {this . onMouseUp}
-          onContextMenu = {this . onContext}
-        />
-      </div>
+  render: function render() {
+    return React.createElement(
+      'div',
+      { style: { align: 'center' } },
+      React.createElement('canvas', { ref: 'sliderule', width: this.state.width, height: this.state.height, style: { display: 'block' },
+        onMouseDown: this.onMouseDown,
+        onMouseMove: this.onMouseMove,
+        onMouseUp: this.onMouseUp,
+        onMouseLeave: this.onMouseUp,
+        onContextMenu: this.onContext
+      })
     );
   }
 });

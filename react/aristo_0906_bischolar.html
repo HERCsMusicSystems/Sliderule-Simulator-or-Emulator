@@ -6,9 +6,8 @@
 
 <div id="root"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
 
 <script src="sliderule_construction_kit.js"></script>
 <script src="scales.js"></script>
@@ -37,12 +36,11 @@ r . scales . push (new scale_M (24, {left: "L", right: "lg x", rs: 0.08, ra: 'le
 
 </script>
 
-<script src="sliderule_application.js" type="text/babel"></script>
-<script type="text/babel">
-ReactDOM.render(
-    <SlideruleApplication />,
-    document.getElementById('root')
-);
+<script src="sliderule_application.js"></script>
+<script>
+'use strict';
+
+ReactDOM.render(React.createElement(SlideruleApplication, null), document.getElementById('root'));
 </script>
 
 </body></html>
