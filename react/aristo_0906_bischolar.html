@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>Aristo 0906 bischolar</title>
+  </head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+
+<script>
+
+var sliderules = new Sliderules ();
+var s = new Sliderule (1200);
+sliderules . sliderules . push (s);
+var r = new Rule (1200);
+s . rules . push (r);
+r . scales . push (new spacer (24, {left: "ARISTO-BISCHOLAR", ls: 0, colour: 'red', right: "ARISTO 0906 GERMANY", rs: 0}));
+r . scales . push (new scale_K (24, {left: "K", right: "X\u00B3", rs: 0.08, ra: 'left'}));
+r . scales . push (new scale_A (24, {left: "A", right: "X\u00B2", rs: 0.08, ra: 'left'}));
+r = new Rule (1200, {rounding: 0}); r . stator = 1;
+s . rules . push (r);
+r . scales . push (new scale_B (24, {left: "B", right: "X\u00B2", rs: 0.08, ra: 'left', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2}));
+r . scales . push (new scale_AI (24, {left: "BI", right: "1/X\u00B2", marking_colour: 'red', rs: 0.08, ra: 'left'}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_S (24, {left: "S", right: "\u2222 sin", rs: 0.08, ra: 'left', left_extension: 0.1}));
+r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.08, ra: 'left', highlight: 'yellow', hightlight_left: 0.2, hightligh_right: 0.2}));
+r = new Rule (1200);
+s . rules . push (r);
+r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.08, ra: 'left'}));
+r . scales . push (new scale_M (24, {left: "L", right: "lg x", rs: 0.08, ra: 'left'}));
+
+</script>
+
+<script src="sliderule_application.js" type="text/babel"></script>
+<script type="text/babel">
+ReactDOM.render(
+    <SlideruleApplication />,
+    document.getElementById('root')
+);
+</script>
+
+</body></html>
