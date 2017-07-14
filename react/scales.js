@@ -78,6 +78,12 @@ var scale_M = function (height, options) {
 
 var scale_S = function (height, options) {
   var s = new spacer (height, options);
-  s . draw = function (ctx, length) {draw_deg (ctx, length, - s. height, s);};
+  s . draw = function (ctx, length) {draw_deg (ctx, length, - s . height, s);};
+  return s;
+};
+
+var scale_P = function (height, options) {
+  var s = new spacer (height, options);
+  s . draw = function (ctx, length) {draw_pe (ctx, length, - s. height, s);};
   return s;
 };

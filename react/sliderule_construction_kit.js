@@ -149,6 +149,30 @@ var draw_deg = function (ctx, length, height, scale) {
   draw_01L (ctx, fn_sin_deg, length, 3, 15, - scale . left_extension, height * 0.2);
 };
 
+var fn_pe = function (value) {return Math . log10 (10 * Math . sqrt (1 - value * value));};
+var draw_pe = function (ctx, length, height, scale) {
+  mark (ctx, ".995", length * fn_pe (0.995), height * 0.5);
+  mark (ctx, ".99", length * fn_pe (0.99), height * 0.5);
+  mark (ctx, ".98", length * fn_pe (0.98), height * 0.5);
+  mark (ctx, ".97", length * fn_pe (0.97), height * 0.5);
+  mark (ctx, ".96", length * fn_pe (0.96), height * 0.5);
+  mark (ctx, ".95", length * fn_pe (0.95), height * 0.5);
+  mark (ctx, ".94", length * fn_pe (0.94), height * 0.5);
+  mark (ctx, ".93", length * fn_pe (0.93), height * 0.5);
+  mark (ctx, ".92", length * fn_pe (0.92), height * 0.5);
+  mark (ctx, ".91", length * fn_pe (0.91), height * 0.5);
+  mark (ctx, ".9", length * fn_pe (0.9), height * 0.5);
+  mark (ctx, ".8", length * fn_pe (0.8), height * 0.5);
+  mark (ctx, ".7", length * fn_pe (0.7), height * 0.5);
+  mark (ctx, ".6", length * fn_pe (0.6), height * 0.5);
+  mark (ctx, ".5", length * fn_pe (0.5), height * 0.5);
+  mark (ctx, ".4", length * fn_pe (0.4), height * 0.5);
+  mark (ctx, ".3", length * fn_pe (0.3), height * 0.5);
+  mark (ctx, ".2", length * fn_pe (0.2), height * 0.5);
+  mark (ctx, "", length * fn_pe (0.1), height * 0.5);
+  mark (ctx, 0, length, height * 0.5);
+};
+
 var spacer = function (height, options) {
   this . height = height;
   this . ruleHeight = function () {return this . height;};
