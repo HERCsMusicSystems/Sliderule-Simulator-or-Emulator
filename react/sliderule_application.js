@@ -21,6 +21,7 @@ var SlideruleApplication = React . createClass ({
   },
   onMouseUp: function (event) {this . dragging = false; this . setState ({});},
   draw: function () {
+  	if (sliderules . noChange ()) return;
     var width = window . innerWidth; var height = window . innerHeight;
     this . setState ({width: width, height: height});
     var ctx = this . refs . sliderule . getContext ('2d');
