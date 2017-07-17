@@ -66,24 +66,30 @@ var scale_J = function (height, options) {
 var scale_L = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return location * 10;};
+  s . location = function (value) {return value * 0.1;};
   s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_lin (ctx, length, s . height, s);};
   return s;
 };
 var scale_M = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return location * 10;};
+  s . location = function (value) {return value * 0.1;};
   s . draw = function (ctx, length) {draw_lin (ctx, length, - s . height, s);};
   return s;
 };
 
 var scale_S = function (height, options) {
   var s = new spacer (height, options);
+  s . value = function (location) {return Math . asin (Math . pow (10, location - 1)) * 180 / Math . PI;};
+  s . location = function (value) {return 1 + Math . log10 (Math . sin (value * Math . PI / 180));};
   s . draw = function (ctx, length) {draw_deg (ctx, length, - s . height, s);};
   return s;
 };
 
 var scale_P = function (height, options) {
   var s = new spacer (height, options);
+  s . value = function (location) {var ret = Math . pow (10, location - 1); return Math . sqrt (1 - ret * ret);};
+  s . location = function (value) {return 1 + Math . log10 (Math . sqrt (1 - value * value));};
   s . draw = function (ctx, length) {draw_pe (ctx, length, - s. height, s);};
   return s;
 };

@@ -18,8 +18,20 @@ var smark = function (ctx, ind, x, base, height) {
   else ctx . fillText (ind, x, - height - 2);
 };
 
+var draw_XRI = function (ctx, fn, length, from, to, limit, height, step, micro_from, micro_to) {
+  var esc = true; var location;
+  to -= 0.0000001;
+  for (var ind = from; esc && ind < to; ind += step) {
+    for (var sub = micro_from; esc && sub < micro_to; sub += micro_from) {
+      location = fn (ind + sub);
+      if (location < limit) esc = false;
+      else tick (ctx, length * location, height);
+    }
+  }
+};
 var draw_XR = function (ctx, fn, length, from, to, limit, height, step, micro_from, micro_to) {
   var esc = true; var location;
+  to -= 0.0000001;
   for (var ind = from; esc && ind < to; ind += step) {
     for (var sub = micro_from; esc && sub < micro_to; sub += micro_from) {
       location = fn (ind + sub);
@@ -36,8 +48,10 @@ var draw_01R = function (ctx, fn, length, from, to, limit, height) {draw_XR (ctx
 var draw_005R = function (ctx, fn, length, from, to, limit, height) {draw_XR (ctx, fn, length, from, to, limit, height, 0.1, 0.05, 0.1);};
 var draw_002R = function (ctx, fn, length, from, to, limit, height) {draw_XR (ctx, fn, length, from, to, limit, height, 0.1, 0.02, 0.1);};
 var draw_001R = function (ctx, fn, length, from, to, limit, height) {draw_XR (ctx, fn, length, from, to, limit, height, 0.05, 0.01, 0.05);};
+var draw_0001R = function (ctx, fn, length, from, to, limit, height) {draw_XR (ctx, fn, length, from, to, limit, height, 0.005, 0.001, 0.005);};
 var draw_XL = function (ctx, fn, length, from, to, limit, height, step, micro_from, micro_to) {
   var esc = true; var location;
+  from += 0.0000001;
   for (var ind = to; esc && ind > from; ind -= step) {
     for (var sub = micro_from; esc & sub < micro_to; sub += micro_from) {
       location = fn (ind - sub);
@@ -49,8 +63,10 @@ var draw_XL = function (ctx, fn, length, from, to, limit, height, step, micro_fr
 var draw_05L = function (ctx, fn, length, from, to, limit, height) {draw_XL (ctx, fn, length, from, to, limit, height, 1, 0.5, 1);};
 var draw_02L = function (ctx, fn, length, from, to, limit, height) {draw_XL (ctx, fn, length, from, to, limit, height, 1, 0.2, 1);};
 var draw_01L = function (ctx, fn, length, from, to, limit, height) {draw_XL (ctx, fn, length, from, to, limit, height, 0.5, 0.1, 0.5);};
+var draw_005L = function (ctx, fn, length, from, to, limit, height) {draw_XL (ctx, fn, length, from, to, limit, height, 0.1, 0.05, 0.1);};
 var draw_002L = function (ctx, fn, length, from, to, limit, height) {draw_XL (ctx, fn, length, from, to, limit, height, 0.1, 0.02, 0.1);};
 var draw_001L = function (ctx, fn, length, from, to, limit, height) {draw_XL (ctx, fn, length, from, to, limit, height, 0.05, 0.01, 0.05);};
+var draw_0001L = function (ctx, fn, length, from, to, limit, height) {draw_XL (ctx, fn, length, from, to, limit, height, 0.005, 0.001, 0.005);};
 var draw_MR = function (ctx, fn, length, from, to, limit, height) {draw_MRS (ctx, fn, length, from, to, 1, limit, height);};
 var draw_MRS = function (ctx, fn, length, from, to, step, limit, height) {
   var esc = true; var location;
@@ -171,6 +187,10 @@ var draw_pe = function (ctx, length, height, scale) {
   mark (ctx, ".2", length * fn_pe (0.2), height * 0.5);
   mark (ctx, "", length * fn_pe (0.1), height * 0.5);
   mark (ctx, 0, length, height * 0.5);
+  draw_XRI (ctx, fn_pe, length, 0.2, 0.3, - scale . left_extension, height * 0.4, 0.1, 0.05, 0.1);
+  draw_XRI (ctx, fn_pe, length, 0.3, 0.4, - scale . left_extension, height * 0.3, 0.1, 0.02, 0.1);
+  draw_XRI (ctx, fn_pe, length, 0.4, 0.9, - scale . left_extension, height * 0.4, 0.1, 0.05, 0.1);
+  draw_XRI (ctx, fn_pe, length, 0.4, 0.9, - scale . left_extension, height * 0.2, 0.05, 0.01, 0.05);
 };
 
 var spacer = function (height, options) {
