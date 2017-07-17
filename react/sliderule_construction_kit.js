@@ -191,6 +191,11 @@ var draw_pe = function (ctx, length, height, scale) {
   draw_XRI (ctx, fn_pe, length, 0.3, 0.4, - scale . left_extension, height * 0.3, 0.1, 0.02, 0.1);
   draw_XRI (ctx, fn_pe, length, 0.4, 0.9, - scale . left_extension, height * 0.4, 0.1, 0.05, 0.1);
   draw_XRI (ctx, fn_pe, length, 0.4, 0.9, - scale . left_extension, height * 0.2, 0.05, 0.01, 0.05);
+  draw_XRI (ctx, fn_pe, length, 0.9, 0.99, - scale . left_extension, height * 0.2, 0.005, 0.001, 0.005);
+  draw_XRI (ctx, fn_pe, length, 0.9, 0.99, - scale . left_extension, height * 0.4, 0.01, 0.005, 0.01);
+  draw_XRI (ctx, fn_pe, length, 0.99, 1, - scale . left_extension, height * 0.4, 0.005, 0.001, 0.005);
+  draw_XRI (ctx, fn_pe, length, 0.99, 1, - scale . left_extension, height * 0.2, 0.0005, 0.0001, 0.0005);
+  draw_XRI (ctx, fn_pe, length, 0.99, 1, - scale . left_extension, height * 0.3, 0.001, 0.0005, 0.001);
 };
 
 var spacer = function (height, options) {
@@ -242,18 +247,17 @@ var spacer = function (height, options) {
   for (var key in options) this [key] = options [key];
 };
 
-var Rule = function (length, options) {
-  this . length = length;
+var Rule = function (options) {
   this . stator = 0;
   this . left_margin = 0.2; this . right_margin = 0.2;
   this . shift = 0; this . target = 0; this . animation_delta = 0.004;
   this . rule_motion = 0.1;
   this . rounding = 8;
   this . scales = [];
-  this . move = function (delta) {this . target += this . rule_motion * delta / this . length;};
+  this . move = function (delta, length) {this . target += this . rule_motion * delta / length;};
   this . ruleHeight = function () {var h = 0; for (var ind in this . scales) h += this . scales [ind] . height; return h;};
   this . hitTest = function (y) {return this . stator > 0 && y >= 0 && y <= this . ruleHeight ();};
-  this . draw = function (ctx) {
+  this . draw = function (ctx, length) {
     if (this . target < this . shift) {
       this . shift -= this . animation_delta;
       if (this . shift < this . target) this . shift = this . target;
@@ -265,15 +269,17 @@ var Rule = function (length, options) {
     ctx . save ();
     ctx . fillStyle = 'white';
     ctx . lineWidth = 1;
-    ctx . translate (this . length * (this . shift - this . left_margin), 0);
-    ctx . beginPath (); roundRect (ctx, 0, 0, (1 + this . left_margin + this . right_margin) * this . length, this . ruleHeight (), this . rounding); ctx . fill (); ctx . stroke ();
+    ctx . translate (length * (this . shift - this . left_margin), 0);
+    ctx . beginPath ();
+    	roundRect (ctx, 0, 0, (1 + this . left_margin + this . right_margin) * length, this . ruleHeight (), this . rounding);
+    	ctx . fill (); ctx . stroke ();
     ctx . fillStyle = 'black';
-    ctx . translate (this . left_margin * this . length, 0);
+    ctx . translate (this . left_margin * length, 0);
     var scale;
     for (var ind in this . scales) {
       scale = this . scales [ind];
       ctx . save ();
-      scale . sub_draw (ctx, this . length);
+      scale . sub_draw (ctx, length);
       ctx . restore ();
       ctx . translate (0, this . scales [ind] . height);
     }
@@ -309,7 +315,7 @@ var Sliderule = function (length, options) {
   this . position = {x: 0, y: 0};
   this . rules = [];
   this . animation_delta = 0.004;
-  this . cursor_position = 0.1; this . cursor_target = 0; this . cursor_colour = 'red'; this . cursor_motion = 0.1;
+  this . cursor_position = 0; this . cursor_target = 0; this . cursor_colour = 'red'; this . cursor_motion = 0.1;
   this . cursors = [];
   this . cursor_left_extension = 0.1; this . cursor_right_extension = 0.1;
   this . cursor_markings = true;
@@ -321,7 +327,7 @@ var Sliderule = function (length, options) {
     if (position . y > this . height ()) return;
     var y = position . y;
     for (var ind in this . rules) {
-      if (this . rules [ind] . hitTest (y)) {this . rules [ind] . move (delta . x); return this . rules [ind] . stator;}
+      if (this . rules [ind] . hitTest (y)) {this . rules [ind] . move (delta . x, this . length); return this . rules [ind] . stator;}
       y -= this . rules [ind] . ruleHeight ();
     }
     this . moveCursor (delta . x);
@@ -340,7 +346,7 @@ var Sliderule = function (length, options) {
     ctx . translate (this . length * this . left_margin, 0);
     var ind;
     for (ind in this . rules) {
-      this . rules [ind] . draw (ctx);
+      this . rules [ind] . draw (ctx, this . length);
       ctx . translate (0, this . rules [ind] . ruleHeight ());
     }
     ctx . restore ();
@@ -399,7 +405,6 @@ var Sliderule = function (length, options) {
         }
         return true;
       }
-      //if (value !== null) {this . cursor_target = position . x / this . length; return true;}
       position = subv (position, {x: 0, y: this . rules [ind] . ruleHeight ()});
     }
     return false;
@@ -413,6 +418,7 @@ var Sliderule = function (length, options) {
 };
 
 var Sliderules = function (options) {
+  this . requireRedraw = true;
   this . position = {x: 32.5, y: 32.5};
   this . sliderules = [];
   this . synchroniseRules = function () {
@@ -420,6 +426,7 @@ var Sliderules = function (options) {
   this . synchroniseCursors = function () {
   };
   this . draw = function (ctx) {
+  	this . requireRedraw = false;
     ctx . translate (this . position . x, this . position . y);
     for (var ind in this . sliderules) {
       ctx . translate (this . sliderules [ind] . position . x, this . sliderules [ind] . position . y);
@@ -448,6 +455,7 @@ var Sliderules = function (options) {
   };
   for (var key in options) this [key] = options [key];
   this . noChange = function () {
+  	if (this . requireRedraw) return false;
   	for (var ind in this . sliderules) {if (this . sliderules [ind] . changed ()) return false;}
   	return true;
   };
