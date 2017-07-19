@@ -5,10 +5,7 @@ var SlideruleApplication = React . createClass ({
   onContext: function (event) {event . preventDefault ();},
   onMouseDown: function (event) {
     var position = {x: event . clientX, y: event . clientY};
-    if (event . button === 2) {
-      sliderules . examine (addv (position, {x: 0.5, y: 0}));
-      return;
-    }
+    if (event . button === 2) return sliderules . synchroniseTarget (addv (position, {x: 0.5, y: 0}));
     this . dragging = true;
     this . mousePosition = position;
   },
@@ -16,7 +13,7 @@ var SlideruleApplication = React . createClass ({
     if (! this . dragging) return;
     var position = {x: event . clientX, y: event . clientY};
     var delta = subv (position, this . mousePosition);
-    sliderules . move (delta, position);
+    sliderules . synchroniseMove (delta, position);
     this . mousePosition = position;
   },
   onMouseUp: function (event) {this . dragging = false; this . setState ({});},
