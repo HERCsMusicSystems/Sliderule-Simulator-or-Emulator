@@ -32,7 +32,7 @@ s . rules . push (r);
 r . scales . push (new scale_B (24, {left: "B", right: "X\u00B2", rs: 0.08, ra: 'left', highlight: 'yellow', highlight_left: 0.199, highlight_right: 0.199}));
 r . scales . push (new scale_AI (24, {left: "BI", right: "1/X\u00B2", marking_colour: 'red', rs: 0.08, ra: 'left'}));
 r . scales . push (new spacer (4));
-r . scales . push (new scale_S (24, {left: "S", right: "\u2222 sin", rs: 0.08, ra: 'left', left_extension: 0.1}));
+r . scales . push (new scale_S_down (24, {left: "S", right: "\u2222 sin", rs: 0.08, ra: 'left', left_extension: 0.1}));
 r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.08, ra: 'left', highlight: 'yellow', highlight_left: 0.199, higtligh_right: 0.199}));
 r = new Rule ();
 s . rules . push (r);
@@ -44,21 +44,9 @@ s = new Sliderule (1000, {position: {x: 0, y: 10}});
 sliderules . sliderules . push (s);
 r = new Rule ();
 s . rules . push (r);
-r . scales . push (new spacer (24));
-r = new Rule ({stator: 1});
-s . rules . push (r);
-r . scales . push (new spacer (24));
-r = new Rule ({stator: 2});
-s . rules . push (r);
-r . scales . push (new spacer (24));
-r = new Rule ();
-s . rules . push (r);
-r . scales . push (new spacer (24));
-
-s = new Sliderule (1000, {position: {x: 0, y: 10}});
-sliderules . sliderules . push (s);
-r = new Rule ();
-s . rules . push (r);
+r . scales . push (new spacer (4));
+r . scales . push (new scale_ST (24, {left_extension: 0.02, right_extension: 0.025}));
+r . scales . push (new scale_T (24, {left_extension: 0.02, right_extension: 0.025}));
 r . scales . push (new spacer (24, {left: "ARISTO-BISCHOLAR", ls: 0, colour: 'red', right: "ARISTO 0906 GERMANY", rs: 0}));
 r . scales . push (new scale_K (24, {left: "K", right: "X\u00B3", rs: 0.08, ra: 'left'}));
 r . scales . push (new scale_A (24, {left: "A", right: "X\u00B2", rs: 0.08, ra: 'left'}));
@@ -74,6 +62,21 @@ s . rules . push (r);
 r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.08, ra: 'left'}));
 r . scales . push (new scale_M (24, {left: "L", right: "lg x", rs: 0.08, ra: 'left'}));
 r . scales . push (new scale_P (24, {marking_colour: 'red', left: "P", right: "\u221A(1-x\u00B2)", ra: 'left', rs: 0.08, left_extension: 0.0}));
+
+s = new Sliderule (1000, {position: {x: 0, y: 10}, noSync: true});
+sliderules . sliderules . push (s);
+r = new Rule ();
+s . rules . push (r);
+r . scales . push (new spacer (24));
+r = new Rule ({stator: 1, noSync: true});
+s . rules . push (r);
+r . scales . push (new spacer (24));
+r = new Rule ({stator: 2});
+s . rules . push (r);
+r . scales . push (new spacer (24));
+r = new Rule ();
+s . rules . push (r);
+r . scales . push (new spacer (24));
 
 </script>
 

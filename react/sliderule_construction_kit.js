@@ -73,7 +73,7 @@ var draw_MRS = function (ctx, fn, length, from, to, step, limit, height) {
   for (var ind = from; esc && ind <= to; ind += step) {
     location = fn (ind);
     if (location > limit) esc = false;
-    else mark (ctx, ind, length * location, height);
+    else mark (ctx, Number (ind . toFixed (4)), length * location, height);
   }
 };
 var draw_ML = function (ctx, fn, length, from, to, limit, height) {draw_MLS (ctx, fn, length, from, to, 1, limit, height);};
@@ -82,7 +82,7 @@ var draw_MLS = function (ctx, fn, length, from, to, step, limit, height) {
   for (var ind = to; esc && ind >= from; ind -= step) {
     location = fn (ind);
     if (location < limit) esc = false;
-    else mark (ctx, ind, length * location, height);
+    else mark (ctx, Number (ind . toFixed (4)), length * location, height);
   }
 };
 
@@ -153,7 +153,7 @@ var draw_lin = function (ctx, length, height, scale) {
 };
 
 var fn_sin_deg = function (value) {return Math . log10 (10 * Math . sin (value * Math . PI / 180));};
-var draw_deg = function (ctx, length, height, scale) {
+var draw_sine_deg = function (ctx, length, height, scale) {
   draw_MRS (ctx, fn_sin_deg, length, 10, 35, 5, 1, height * 0.5);
   draw_MRS (ctx, fn_sin_deg, length, 40, 90, 10, 1, height * 0.5);
   draw_MLS (ctx, fn_sin_deg, length, 4, 9, 1, - scale . left_extension, height * 0.5);
@@ -163,6 +163,19 @@ var draw_deg = function (ctx, length, height, scale) {
   draw_50R (ctx, fn_sin_deg, length, 40, 90, 1, height * 0.5);
   draw_05L (ctx, fn_sin_deg, length, 3, 15, - scale . left_extension, height * 0.3);
   draw_01L (ctx, fn_sin_deg, length, 3, 15, - scale . left_extension, height * 0.2);
+};
+var fn_small_sin_deg = function (value) {return Math . log10 (value * Math . PI / 1.8);};
+var draw_small_sine_deg = function (ctx, length, height, scale) {
+  draw_MLS (ctx, fn_small_sin_deg, length, 0.6, 0.9, 0.1, - scale . left_extension, height * 0.5);
+  draw_MLS (ctx, fn_small_sin_deg, length, 0.1, 0.55, 0.05, - scale . left_extension, height * 0.5);
+  draw_MRS (ctx, fn_small_sin_deg, length, 1, 3.5, 0.5, 1 + scale . right_extension, height * 0.5);
+  draw_MR (ctx, fn_small_sin_deg, length, 4, 10, 1 + scale . right_extension, height * 0.5);
+  draw_05R (ctx, fn_small_sin_deg, length, 4, 10, 1 + scale . right_extension, height * 0.4);
+  draw_01R (ctx, fn_small_sin_deg, length, 2, 10, 1 + scale . right_extension, height * 0.3);
+  draw_01L (ctx, fn_small_sin_deg, length, 1, 2, - scale . left_extension, height * 0.4);
+  draw_001L (ctx, fn_small_sin_deg, length, 0.1, 2, - scale . left_extension, height * 0.2);
+  draw_005L (ctx, fn_small_sin_deg, length, 0.1, 2, - scale . left_extension, height * 0.3);
+  draw_005R (ctx, fn_small_sin_deg, length, 2, 5, 1, height * 0.2);
 };
 
 var fn_pe = function (value) {return Math . log10 (10 * Math . sqrt (1 - value * value));};
