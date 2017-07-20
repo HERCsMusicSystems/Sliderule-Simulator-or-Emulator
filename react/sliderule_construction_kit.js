@@ -177,6 +177,26 @@ var draw_small_sine_deg = function (ctx, length, height, scale) {
   draw_005L (ctx, fn_small_sin_deg, length, 0.1, 2, - scale . left_extension, height * 0.3);
   draw_005R (ctx, fn_small_sin_deg, length, 2, 5, 1, height * 0.2);
 };
+var fn_tan_deg = function (value) {return 1 + Math . log10 (Math . tan (value * Math . PI / 180));};
+var draw_tan_deg = function (ctx, length, height, scale) {
+  draw_MLS (ctx, fn_tan_deg, length, 1, 5.5, 0.5, - scale . left_extension, height * 0.5);
+  draw_MR (ctx, fn_tan_deg, length, 6, 10, 1, height * 0.5);
+  draw_MRS (ctx, fn_tan_deg, length, 15, 90, 5, 1 + scale . right_extension, height * 0.5);
+  draw_XR (ctx, fn_tan_deg, length, 10, 90, 1 + scale . right_extension, height * 0.4, 5, 1, 5);
+  draw_XR (ctx, fn_tan_deg, length, 10, 90, 1 + scale . right_extension, height * 0.2, 1, 0.2, 1);
+  draw_XL (ctx, fn_tan_deg, length, 6, 10, - scale . left_extension, height * 0.4, 1, 0.5, 1);
+  draw_XL (ctx, fn_tan_deg, length, 1, 10, - scale . left_extension, height * 0.2, 0.5, 0.1, 0.5);
+};
+var fn_big_tan_deg = function (value) {return Math . log10 (Math . tan (value * Math . PI / 180));};
+var draw_big_tan_deg = function (ctx, length, height, scale) {
+  draw_MRS (ctx, fn_big_tan_deg, length, 60, 75, 5, 1 + scale . right_extension, height * 0.5);
+  draw_MR (ctx, fn_big_tan_deg, length, 80, 90, 1 + scale . right_extension, height * 0.5);
+  draw_MLS (ctx, fn_big_tan_deg, length, 10, 55, 5, - scale . left_extension, height * 0.5);
+  draw_XL (ctx, fn_big_tan_deg, length, 10, 80, - scale . left_extension, height * 0.4, 5, 1, 5);
+  draw_01R (ctx, fn_big_tan_deg, length, 60, 90, 1 + scale . right_extension, height * 0.2);
+  draw_05R (ctx, fn_big_tan_deg, length, 60, 90, 1 + scale . right_extension, height * 0.3);
+  draw_02L (ctx, fn_big_tan_deg, length, 10, 60, - scale . left_extension, height * 0.2);
+};
 
 var fn_pe = function (value) {return Math . log10 (10 * Math . sqrt (1 - value * value));};
 var draw_pe = function (ctx, length, height, scale) {
