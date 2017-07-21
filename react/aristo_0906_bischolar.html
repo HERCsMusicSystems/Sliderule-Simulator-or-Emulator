@@ -33,7 +33,7 @@ r . scales . push (new scale_B (24, {left: "B", right: "X\u00B2", rs: 0.08, ra: 
 r . scales . push (new scale_AI (24, {left: "BI", right: "1/X\u00B2", marking_colour: 'red', rs: 0.08, ra: 'left'}));
 r . scales . push (new spacer (4));
 r . scales . push (new scale_S_down (24, {left: "S", right: "\u2222 sin", rs: 0.08, ra: 'left', left_extension: 0.1}));
-r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.08, ra: 'left', highlight: 'yellow', highlight_left: 0.199, higtligh_right: 0.199}));
+r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.08, ra: 'left', highlight: 'yellow', highlight_left: 0.199, highlight_right: 0.199}));
 r = new Rule ();
 s . rules . push (r);
 r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.08, ra: 'left'}));
@@ -45,10 +45,17 @@ sliderules . sliderules . push (s);
 r = new Rule ();
 s . rules . push (r);
 r . scales . push (new spacer (4));
-r . scales . push (new scale_ST (24, {left_extension: 0.02, right_extension: 0.025}));
-r . scales . push (new scale_T (24, {left_extension: 0.2, right_extension: 0.25}));
+r . scales . push (new scale_ST (24, {left: "ST", right: "\u2222 arc", rs: 0.08, ra: 'left', left_extension: 0.02, right_extension: 0.025}));
+r . scales . push (new scale_T (24, {left: "T1", right: "\u2222 tan", rs: 0.08, ra: 'left', left_extension: 0.02}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_T1_down (24, {left_extension: 0.2, right_extension: 0.25}));
+r . scales . push (new scale_T1_down (24, {left: "T2", right: "\u2222 tan", rs: 0.08, ra: 'left', right_extension: 0.02}));
+r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.04, right_extension: 0.06, index: '>>1<<'}));
+r = new Rule ({stator: 1, rounding: 0});
+s . rules . push (r);
+r . scales . push (new scale_DF (24,
+  {left: "CF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.04, right_extension: 0.06,
+  highlight: 'yellow', highlight_left: 0.199, highlight_right: 0.199, index: '>>1<<'}));
+r . scales . push (new scale_CIF (24, {left: "CIF", right: "1/(\u03c0X)", marking_colour: 'red', left_extension: 0.03, right_extension: 0.03}));
 r . scales . push (new spacer (24, {left: "ARISTO-BISCHOLAR", ls: 0, colour: 'red', right: "ARISTO 0906 GERMANY", rs: 0}));
 r . scales . push (new scale_K (24, {left: "K", right: "X\u00B3", rs: 0.08, ra: 'left'}));
 r . scales . push (new scale_A (24, {left: "A", right: "X\u00B2", rs: 0.08, ra: 'left'}));

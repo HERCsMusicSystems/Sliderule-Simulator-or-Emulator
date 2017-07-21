@@ -79,6 +79,7 @@ var draw_MRS = function (ctx, fn, length, from, to, step, limit, height) {
 var draw_ML = function (ctx, fn, length, from, to, limit, height) {draw_MLS (ctx, fn, length, from, to, 1, limit, height);};
 var draw_MLS = function (ctx, fn, length, from, to, step, limit, height) {
   var esc = true; var location;
+  limit -= 0.0000001;
   for (var ind = to; esc && ind >= from; ind -= step) {
     location = fn (ind);
     if (location < limit) esc = false;
@@ -111,6 +112,21 @@ var draw_one_log = function (ctx, length, height) {
   draw_02R (ctx, Math . log10, length, 8, 10, 1, height * 0.3);
   draw_01R (ctx, Math . log10, length, 1, 8, 1, height * 0.3);
   draw_002R (ctx, Math . log10, length, 1, 2, 1, height * 0.2);
+};
+var draw_log_1R = function (ctx, length, height, extension) {
+  draw_MR (ctx, Math . log10, length, 2, 9, extension, height * 0.5);
+  draw_05R (ctx, Math . log10, length, 1, 8, extension, height * 0.4);
+  draw_02R (ctx, Math . log10, length, 8, 10, extension, height * 0.3);
+  draw_01R (ctx, Math . log10, length, 1, 8, extension, height * 0.3);
+  draw_002R (ctx, Math . log10, length, 1, 2, extension, height * 0.2);
+};
+var draw_log_1L = function (ctx, length, height, extension) {
+  draw_ML (ctx, Math . log10, length, 2, 9, extension, height * 0.5);
+  smark (ctx, '\u03c0', length * Math . log10 (Math . PI), height * 0.2, height * 0.5);
+  draw_05L (ctx, Math . log10, length, 1, 8, extension, height * 0.4);
+  draw_02L (ctx, Math . log10, length, 8, 10, extension, height * 0.3);
+  draw_01L (ctx, Math . log10, length, 1, 8, extension, height * 0.3);
+  draw_002L (ctx, Math . log10, length, 1, 2, extension, height * 0.2);
 };
 var draw_log_log = function (ctx, length, height, scale) {
   mark (ctx, 1, length, height * 0.5); length *= 0.5;
@@ -233,6 +249,7 @@ var draw_pe = function (ctx, length, height, scale) {
 
 var spacer = function (height, options) {
   this . height = height;
+  this . index = '1';
   this . ruleHeight = function () {return this . height;};
   this . hitTest = function (y) {return false;};
   this . la = 'left'; this . ra = 'right'; this . ca = 'center';

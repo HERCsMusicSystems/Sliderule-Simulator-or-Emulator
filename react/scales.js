@@ -47,6 +47,51 @@ var scale_D = function (height, options) {
   return s;
 };
 
+var scale_CF = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (10, location) * Math . PI * 0.1;};
+  s . location = function (value) {return Math . log10 (10 * value / Math . PI);};
+  s . draw = function (ctx, length) {
+    var shift = s . location (1);
+    ctx . translate (length * shift, s . height);
+    draw_log_1R (ctx, length, s . height, 1 - shift + s . right_extension);
+    mark (ctx, s . index, 0, s . height * 0.5);
+    ctx . translate (- length, 0);
+    draw_log_1L (ctx, length, s . height, shift - s . left_extension);
+  };
+  return s;
+};
+
+var scale_DF = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (10, location) * Math . PI * 0.1;};
+  s . location = function (value) {return Math . log10 (10 * value / Math . PI);};
+  s . draw = function (ctx, length) {
+    var shift = s . location (1);
+    ctx . translate (length * shift, 0);
+    draw_log_1R (ctx, length, - s . height, 1 - shift + s . right_extension);
+    mark (ctx, s . index, 0, - s . height * 0.5);
+    ctx . translate (- length, 0);
+    draw_log_1L (ctx, length, - s . height, shift - s . left_extension);
+  };
+  return s;
+};
+
+var scale_CIF = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (10, 1 - location) * Math . PI;};
+  s . location = function (value) {return 1 - Math . log10 (value / Math . PI);};
+  s . draw = function (ctx, length) {
+    var shift = Math . log10 (10 / Math . PI);
+    ctx . translate (length * shift, s . height);
+    draw_log_1R (ctx, - length, s . height, 1 - shift + s . left_extension);
+    mark (ctx, s . index, 0, s . height * 0.5);
+    ctx . translate (length, 0);
+    draw_log_1L (ctx, - length, s . height, shift - s . right_extension);
+  };
+  return s;
+};
+
 var scale_K = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return Math . pow (10, location * 3);};
