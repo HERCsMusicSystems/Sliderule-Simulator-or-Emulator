@@ -47,6 +47,22 @@ var scale_D = function (height, options) {
   return s;
 };
 
+var scale_CI = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (10, location);};
+  s . location = function (value) {return Math . log10 (value);};
+  s . draw = function (ctx, length) {ctx . translate (length, s . height); draw_log (ctx, - length, s . height, s);};
+  return s;
+};
+
+var scale_DI = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (10, location);};
+  s . location = function (value) {return Math . log10 (value);};
+  s . draw = function (ctx, length) {ctx . translate (length, 0); draw_log (ctx, - length, - s . height, s);};
+  return s;
+};
+
 var scale_CF = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return Math . pow (10, location) * Math . PI * 0.1;};
@@ -79,8 +95,8 @@ var scale_DF = function (height, options) {
 
 var scale_CIF = function (height, options) {
   var s = new spacer (height, options);
-  s . value = function (location) {return Math . pow (10, 1 - location) * Math . PI;};
-  s . location = function (value) {return 1 - Math . log10 (value / Math . PI);};
+  s . value = function (location) {return 10 / (Math . pow (10, location) * Math . PI);};
+  s . location = function (value) {return Math . log10 (1 / (Math . PI * value * 0.1));};
   s . draw = function (ctx, length) {
     var shift = Math . log10 (10 / Math . PI);
     ctx . translate (length * shift, s . height);
@@ -184,6 +200,22 @@ var scale_T1_down = function (height, options) {
   s . value = function (location) {return Math . atan (Math . pow (10, location)) * 180 / Math . PI;};
   s . location = function (value) {return Math . log10 (Math . tan (value * Math . PI / 180));};
   s . draw = function (ctx, length) {draw_big_tan_deg (ctx, length, - s . height, s);};
+  return s;
+};
+
+var scale_SC = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . asin (Math . pow (10, location - 1)) * 180 / Math . PI;};
+  s . location = function (value) {return 1 + Math . log10 (Math . sin (value * Math . PI / 180));};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_sine_cosine_deg (ctx, length, s . height, s);};
+  return s;
+};
+
+var scale_SC_down = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . asin (Math . pow (10, location - 1)) * 180 / Math . PI;};
+  s . location = function (value) {return 1 + Math . log10 (Math . sin (value * Math . PI / 180));};
+  s . draw = function (ctx, length) {draw_sine_cosine_deg (ctx, length, - s . height, s);};
   return s;
 };
 

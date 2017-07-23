@@ -12,6 +12,7 @@ var scalv = function (vector, scale) {return {x: vector . x * scale, y: vector .
 var tick = function (ctx, x, height) {ctx . beginPath (); ctx . moveTo (x, 0); ctx . lineTo (x, - height); ctx . stroke ();};
 var stick = function (ctx, x, base, height) {ctx . beginPath (); ctx . moveTo (x, - base); ctx . lineTo (x, - height); ctx . stroke ();};
 var mark = function (ctx, ind, x, height) {tick (ctx, x, height); if (height < 0) ctx . fillText (ind, x, - height - height - 3); else ctx . fillText (ind, x, - height - 2);};
+var mmark = function (ctx, ind, x, height) {if (height < 0) ctx . fillText (ind, x, - height - height - 3); else ctx . fillText (ind, x, - height - 2);};
 var smark = function (ctx, ind, x, base, height) {
   stick (ctx, x, base, height);
   if (height < 0) ctx . fillText (ind, x, - height - height - 3);
@@ -180,6 +181,23 @@ var draw_sine_deg = function (ctx, length, height, scale) {
   draw_05L (ctx, fn_sin_deg, length, 3, 15, - scale . left_extension, height * 0.3);
   draw_01L (ctx, fn_sin_deg, length, 3, 15, - scale . left_extension, height * 0.2);
 };
+var fn_cos_deg = function (value) {return Math . log10 (10 * Math . cos (value * Math . PI / 180));};
+var draw_sine_cosine_deg = function (ctx, length, height, scale) {
+  draw_MLS (ctx, fn_sin_deg, length, 4, 9, 1, - scale . left_extension, height * 0.5);
+  draw_MRS (ctx, fn_sin_deg, length, 80, 90, 10, 1, height * 0.5);
+  draw_MRS (ctx, fn_sin_deg, length, 15, 35, 10, 1, height * 0.5);
+  ctx . textAlign = 'left';
+  draw_MRS (ctx, fn_sin_deg, length, 10, 70, 10, 1, height * 0.5);
+  ctx . textAlign = 'right';
+  ctx . fillStyle = scale . alt;
+  for (var degree = 20; degree <= 80; degree += 10) mmark (ctx, degree, length * fn_sin_deg (90 - degree), height * 0.5);
+  mmark (ctx, 20, length * fn_sin_deg (70), height * 0.5);
+  draw_10R (ctx, fn_sin_deg, length, 15, 80, 1, height * 0.4);
+  draw_10R (ctx, fn_sin_deg, length, 10, 15, 1, height * 0.5);
+  draw_50R (ctx, fn_sin_deg, length, 40, 90, 1, height * 0.5);
+  draw_05L (ctx, fn_sin_deg, length, 3, 15, - scale . left_extension, height * 0.3);
+  draw_01L (ctx, fn_sin_deg, length, 3, 15, - scale . left_extension, height * 0.2);
+};
 var fn_small_sin_deg = function (value) {return Math . log10 (value * Math . PI / 1.8);};
 var draw_small_sine_deg = function (ctx, length, height, scale) {
   draw_MLS (ctx, fn_small_sin_deg, length, 0.6, 0.9, 0.1, - scale . left_extension, height * 0.5);
@@ -275,6 +293,7 @@ var spacer = function (height, options) {
     if (this . textBaseline !== undefined) ctx . textBaseline = this . textBaseline;
     if (this . left !== undefined) {ctx . textAlign = this . la; ctx . fillText (this . left, - length * this . ls, textBase);}
     if (this . right !== undefined) {ctx . textAlign = this . ra; ctx . fillText (this . right, length * (1 + this . rs), textBase);}
+    if (this . cc !== undefined) ctx . fillStyle = this . cc;
     if (this . centre !== undefined) {ctx . textAlign = this . ca; ctx . fillText (this . centre, length * this . cs, textBase);}
   };
   this . examine = function (position) {
@@ -359,6 +378,19 @@ var Cursor = function (shift, from, to, colour) {
   };
 };
 
+var CursorText = function (text, shift, v, font, colour, align, baseline) {
+	this . draw = function (ctx, length) {
+		length *= shift;
+		ctx . save ();
+		ctx . font = font;
+		ctx . fillStyle = colour;
+		ctx . textAlign = align;
+		ctx . textBaseline = baseline ? baseline : 'middle';
+		ctx . fillText (text, length, v);
+		ctx . restore ();
+	};
+};
+
 var Sliderule = function (length, options) {
   this . length = length;
   this . left_margin = 0.2; this . right_margin = 0.2;
@@ -399,6 +431,7 @@ var Sliderule = function (length, options) {
       ctx . translate (0, this . rules [ind] . ruleHeight ());
     }
     ctx . restore ();
+    this . drawMarkings (ctx);
     ctx . translate (this . length * (this . left_margin + this . cursor_position), 0);
     ctx . strokeStyle = this . cursor_colour;
     ctx . beginPath ();
@@ -410,6 +443,9 @@ var Sliderule = function (length, options) {
     ctx . moveTo (0, -4); ctx . lineTo (0, this . height () + 4);
     ctx . stroke ();
     for (ind in this . cursors) {this . cursors [ind] . draw (ctx, this . length);}
+    this . drawMarkings (ctx);
+  };
+  this . drawMarkings = function (ctx) {
     var y = 0;
     ctx . textBaseline = 'middle';
     ctx . font = '12px arial';
