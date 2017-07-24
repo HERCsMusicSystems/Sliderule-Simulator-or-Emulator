@@ -20,7 +20,7 @@
 <script>
 
 var sliderules = new Sliderules ();
-var s = new Sliderule (1000, {position: {x: -30, y: -20}});
+var s = new Sliderule (1000);
 s . cursors . push (new CursorText ("ARISTO", 0.094, 226, '12px arial', 'black', 'right', 'middle'));
 sliderules . sliderules . push (s);
 var r = new Rule ();
@@ -41,7 +41,7 @@ r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.08, ra: 'left'
 r . scales . push (new scale_M (24, {left: "L", right: "lg x", rs: 0.08, ra: 'left'}));
 r . scales . push (new scale_P (24, {marking_colour: 'red', left: "P", right: "\u221A(1-x\u00B2)", ra: 'left', rs: 0.08, left_extension: 0.0}));
 
-s = new Sliderule (1000, {position: {x: 0, y: 10}});
+s = new Sliderule (1000, {position: {x: 0, y: 30}, cursor_motion: 4});
 sliderules . sliderules . push (s);
 r = new Rule ();
 s . rules . push (r);
@@ -51,7 +51,7 @@ r . scales . push (new scale_T (24, {left: "T1", right: "\u2222 tan", rs: 0.08, 
 r . scales . push (new spacer (2));
 r . scales . push (new scale_T1_down (24, {left: "T2", right: "\u2222 tan", rs: 0.08, ra: 'left', right_extension: 0.02}));
 r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.04, right_extension: 0.06, index: '>>1<<'}));
-r = new Rule ({stator: 1, rounding: 0});
+r = new Rule ({stator: 1, rounding: 0, rule_motion: 4});
 s . rules . push (r);
 r . scales . push (new scale_DF (24,
   {left: "CF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.04, right_extension: 0.06,

@@ -323,7 +323,7 @@ var Rule = function (options) {
   this . rule_motion = 0.1;
   this . rounding = 8;
   this . scales = [];
-  this . move = function (delta, length) {delta *= this . rule_motion; delta /= length; this . target += delta; return delta;};
+  this . move = function (delta, length) {delta *= this . rule_motion; delta /= length; this . target += delta; this . shift = this . target; return delta;};
   this . ruleHeight = function () {var h = 0; for (var ind in this . scales) h += this . scales [ind] . height; return h;};
   this . hitTest = function (y) {return this . stator != 0 && y >= 0 && y <= this . ruleHeight ();};
   this . draw = function (ctx, length) {
@@ -404,9 +404,11 @@ var Sliderule = function (length, options) {
   this . cursor_rounding = 4;
   this . precision = 5;
   this . height = function () {var h = 0; for (var ind in this . rules) h += this . rules [ind] . ruleHeight (); return h;};
-  this . moveCursor = function (delta) {delta *= this . cursor_motion; delta /= this . length; this . cursor_target += delta; return delta;};
+  this . moveCursor = function (delta) {
+    delta *= this . cursor_motion; delta /= this . length; this . cursor_target += delta; this . cursor_position = this . cursor_target; return delta;
+  };
   this . moveRule = function (delta, position) {
-    if (position . y > this . height ()) return null;
+    if (position . y < 0 || position . y > this . height ()) return null;
     var y = position . y;
     for (var ind in this . rules) {
       if (this . rules [ind] . hitTest (y)) {return {rule: this . rules [ind], delta: this . rules [ind] . move (delta . x, this . length)};}
@@ -516,12 +518,16 @@ var Sliderules = function (options) {
       for (ind in this . sliderules) {
         for (sub in this . sliderules [ind] . rules) {
           r = this . sliderules [ind] . rules [sub];
-          if ((isNaN (r . stator) ? (r . stator == rule . stator) : (r . stator >= rule . stator)) && r != rule && ! r . noSync) {r . target += delta;}
+          if ((isNaN (r . stator) ? (r . stator == rule . stator) : (r . stator >= rule . stator)) && r != rule && ! r . noSync) {
+            r . target += delta; r . shift = rule . shift; this . requireRedraw = true;
+          }
         }
       }
     } else {
       for (ind in this . sliderules) {
-        if (this . sliderules [ind] != rule && ! this . sliderules [ind] . noSync) {this . sliderules [ind] . cursor_target += delta;}
+        if (this . sliderules [ind] != rule && ! this . sliderules [ind] . noSync) {
+          this . sliderules [ind] . cursor_target += delta; this . sliderules [ind] . cursor_position = rule . cursor_position; this . requireRedraw = true;
+        }
       }
     }
   };
@@ -532,6 +538,7 @@ var Sliderules = function (options) {
   this . synchroniseMove = function (delta, position) {
     var esc = sliderules . move (delta, position);
     if (esc) sliderules . synchronise (esc . rule, esc . delta);
+    else {this . position = addv (this . position, delta); this . requireRedraw = true;}
   };
   this . draw = function (ctx) {
   	this . requireRedraw = false;
