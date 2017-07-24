@@ -517,12 +517,12 @@ var Sliderule = function (length, options) {
       ctx . translate (0, this . rules [ind] . ruleHeight ());
     }
     ctx . restore ();
-    if (this . static_markings) this . drawMarkings (ctx);
     for (ind in this . braces) {
       ctx . save ();
       this . braces [ind] . draw (ctx, this);
       ctx . restore ();
     }
+    if (this . static_markings) this . drawMarkings (ctx);
     ctx . translate (this . length * (this . left_margin + this . cursor_position), 0);
     ctx . strokeStyle = this . cursor_colour;
     ctx . beginPath ();
