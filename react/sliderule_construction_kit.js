@@ -400,6 +400,17 @@ var CursorText = function (text, shift, v, font, colour, align, baseline) {
 	};
 };
 
+var Brace = function (margin, width, radius, colour, background) {
+  this . draw = function (ctx, length, height) {
+    ctx . beginPath ();
+    roundRect (ctx, margin, margin, width * length, height - margin, 8);
+    ctx . fillStyle = background;
+    ctx . fill ();
+    ctx . strokeStyle = colour;
+    ctx . stroke;
+  };
+};
+
 var Sliderule = function (length, options) {
   this . length = length;
   this . left_margin = 0.2; this . right_margin = 0.2;
@@ -408,6 +419,7 @@ var Sliderule = function (length, options) {
   this . animation_delta = 0.004;
   this . cursor_position = 0; this . cursor_target = 0; this . cursor_colour = 'red'; this . cursor_motion = 0.1;
   this . cursors = [];
+  this . braces = [];
   this . cursor_left_extension = 0.1; this . cursor_right_extension = 0.1;
   this . cursor_markings = true;
   this . cursor_rounding = 4;
@@ -450,6 +462,12 @@ var Sliderule = function (length, options) {
     }
     ctx . restore ();
     if (this . static_markings) this . drawMarkings (ctx);
+    var h = this . height ();
+    for (ind in this . braces) {
+      ctx . save ();
+      this . braces [ind] . draw (ctx, this . length, h);
+      ctx . restore ();
+    }
     ctx . translate (this . length * (this . left_margin + this . cursor_position), 0);
     ctx . strokeStyle = this . cursor_colour;
     ctx . beginPath ();
