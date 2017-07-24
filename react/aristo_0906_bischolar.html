@@ -21,9 +21,9 @@
 
 var sliderules = new Sliderules ();
 var bg = new Image (); bg . src = "architecture008.jpg";
-sliderules . background = bg;
+//sliderules . background = bg;
 var s = new Sliderule (1000, {cursor_markings: false});
-s . braces . push (new Brace (8, 0.1, 8, 'black', 'gold'));
+s . braces . push (new RightBrace (2, 0.1, 8, 'black', 'gold', 60, 1));
 s . cursors . push (new CursorText ("ARISTO", 0.094, 226, '12px arial', 'black', 'right', 'middle'));
 sliderules . sliderules . push (s);
 var r = new Rule ({border_colour: 'white'});
@@ -46,6 +46,7 @@ r . scales . push (new scale_P (24, {marking_colour: 'red', left: "P", right: "\
 
 s = new Sliderule (1000, {position: {x: 0, y: 30}, cursor_motion: 4, markings_colour: 'gold', markings_background: 'black'});
 sliderules . sliderules . push (s);
+s . backBraces . push (new RightBrace (2, 0.1, 8, 'black', 'gold', 60, 1));
 r = new Rule ();
 s . rules . push (r);
 r . scales . push (new spacer (4));

@@ -5,6 +5,43 @@ var roundRect = function (ctx, left, top, right, bottom, radius) {
   ctx . arc (left + radius, bottom - radius, radius, step, step + step); ctx . lineTo (left, top + radius); ctx . arc (left + radius, top + radius, radius, step + step, - step);
 };
 
+var leftBrace = function (ctx, left, top, right, bottom, radius, braceRadius, angle) {
+  var step = Math . PI * 0.5; ctx . moveTo (left + radius, top); ctx . lineTo (right - radius, top); ctx . arc (right - radius, top + radius, radius, -step, 0);
+  ctx . lineTo (right, bottom - radius); ctx . arc (right - radius, bottom - radius, radius, 0, step); ctx . lineTo (left + radius, bottom);
+  ctx . arc (left + radius, bottom - radius, radius, step, step + step);
+  var half = (top + bottom) * 0.5;
+  ctx . lineTo (left, half + braceRadius);
+  ctx . arc (left - Math . cos (angle) * braceRadius, half, braceRadius, angle, - angle, true);
+  ctx . lineTo (left, half - braceRadius);
+  ctx . lineTo (left, top + radius); ctx . arc (left + radius, top + radius, radius, step + step, - step);
+};
+
+var rightBrace = function (ctx, left, top, right, bottom, radius, braceRadius, angle) {
+  var step = Math . PI * 0.5; ctx . moveTo (left + radius, top); ctx . lineTo (right - radius, top); ctx . arc (right - radius, top + radius, radius, -step, 0);
+  var half = (top + bottom) * 0.5;
+  ctx . lineTo (right, half - braceRadius);
+  ctx . arc (right + Math . cos (angle) * braceRadius, half, braceRadius, Math . PI + angle, Math . PI - angle, true);
+  ctx . lineTo (right, bottom - radius);
+  ctx . arc (right - radius, bottom - radius, radius, 0, step); ctx . lineTo (left + radius, bottom);
+  ctx . arc (left + radius, bottom - radius, radius, step, step + step);
+  ctx . lineTo (left, half - braceRadius);
+  ctx . lineTo (left, top + radius); ctx . arc (left + radius, top + radius, radius, step + step, - step);
+};
+
+var doubleBrace = function (ctx, left, top, right, bottom, radius, braceRadius, angle) {
+  var step = Math . PI * 0.5; ctx . moveTo (left + radius, top); ctx . lineTo (right - radius, top); ctx . arc (right - radius, top + radius, radius, -step, 0);
+  var half = (top + bottom) * 0.5;
+  ctx . lineTo (right, half - braceRadius);
+  ctx . arc (right + Math . cos (angle) * braceRadius, half, braceRadius, Math . PI + angle, Math . PI - angle, true);
+  ctx . lineTo (right, bottom - radius);
+  ctx . arc (right - radius, bottom - radius, radius, 0, step); ctx . lineTo (left + radius, bottom);
+  ctx . arc (left + radius, bottom - radius, radius, step, step + step);
+  ctx . lineTo (left, half + braceRadius);
+  ctx . arc (left - Math . cos (angle) * braceRadius, half, braceRadius, angle, - angle, true);
+  ctx . lineTo (left, half - braceRadius);
+  ctx . lineTo (left, top + radius); ctx . arc (left + radius, top + radius, radius, step + step, - step);
+};
+
 var addv = function (v1, v2) {return {x: v1 . x + v2 . x, y: v1 . y + v2 . y};};
 var subv = function (v1, v2) {return {x: v1 . x - v2 . x, y: v1 . y - v2 . y};};
 var scalv = function (vector, scale) {return {x: vector . x * scale, y: vector . y * scale};};
@@ -400,14 +437,27 @@ var CursorText = function (text, shift, v, font, colour, align, baseline) {
 	};
 };
 
-var Brace = function (margin, width, radius, colour, background) {
-  this . draw = function (ctx, length, height) {
+var LeftBrace = function (margin, width, radius, background, colour, braceRadius, braceAngle) {
+  this . draw = function (ctx, s) {
     ctx . beginPath ();
-    roundRect (ctx, margin, margin, width * length, height - margin, 8);
+    leftBrace (ctx, margin, margin, width * s . length, s . height () - margin, 8, braceRadius, braceAngle);
     ctx . fillStyle = background;
     ctx . fill ();
     ctx . strokeStyle = colour;
-    ctx . stroke;
+    ctx . stroke ();
+  };
+};
+
+var RightBrace = function (margin, width, radius, background, colour, braceRadius, braceAngle) {
+  this . draw = function (ctx, s) {
+    ctx . beginPath ();
+    ctx . translate (s . length * (1 + s . left_margin + s . right_margin), 0);
+    ctx . scale (-1, 1);
+    leftBrace (ctx, margin, margin, width * s . length, s . height () - margin, 8, braceRadius, braceAngle);
+    ctx . fillStyle = background;
+    ctx . fill ();
+    ctx . strokeStyle = colour;
+    ctx . stroke ();
   };
 };
 
@@ -420,6 +470,7 @@ var Sliderule = function (length, options) {
   this . cursor_position = 0; this . cursor_target = 0; this . cursor_colour = 'red'; this . cursor_motion = 0.1;
   this . cursors = [];
   this . braces = [];
+  this . backBraces = [];
   this . cursor_left_extension = 0.1; this . cursor_right_extension = 0.1;
   this . cursor_markings = true;
   this . cursor_rounding = 4;
@@ -453,19 +504,23 @@ var Sliderule = function (length, options) {
       this . cursor_position += this . animation_delta;
       if (this . cursor_position > this . cursor_target) this . cursor_position = this . cursor_target;
     }
+    var ind;
+    for (ind in this . backBraces) {
+      ctx . save ();
+      this . backBraces [ind] . draw (ctx, this);
+      ctx . restore ();
+    }
     ctx . save ();
     ctx . translate (this . length * this . left_margin, 0);
-    var ind;
     for (ind in this . rules) {
       this . rules [ind] . draw (ctx, this . length);
       ctx . translate (0, this . rules [ind] . ruleHeight ());
     }
     ctx . restore ();
     if (this . static_markings) this . drawMarkings (ctx);
-    var h = this . height ();
     for (ind in this . braces) {
       ctx . save ();
-      this . braces [ind] . draw (ctx, this . length, h);
+      this . braces [ind] . draw (ctx, this);
       ctx . restore ();
     }
     ctx . translate (this . length * (this . left_margin + this . cursor_position), 0);
