@@ -23,10 +23,7 @@ var SlideruleApplication = React . createClass ({
     var bound = this . refs . sliderule . getBoundingClientRect ();
     this . setState ({width: width - bound . x * 4, height: height - bound . y * 4});
     var ctx = this . refs . sliderule . getContext ('2d');
-    ctx . setTransform (1, 0, 0, 1, 0, 0);
-    ctx . fillStyle = '#99F';
-    ctx . fillRect (0, 0, width, height);
-    sliderules . draw (ctx);
+    sliderules . draw (ctx, width, height);
   },
   componentDidMount: function () {setInterval (this . draw, 20);},
   getInitialState: function () {return {width: 200, height: 100, dragging: false};},

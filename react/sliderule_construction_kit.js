@@ -322,6 +322,8 @@ var Rule = function (options) {
   this . shift = 0; this . target = 0; this . animation_delta = 0.004;
   this . rule_motion = 0.1;
   this . rounding = 8;
+  this . rule_colour = 'white';
+  this . border_colour = 'black';
   this . scales = [];
   this . move = function (delta, length) {
     delta *= this . rule_motion; delta /= length;
@@ -343,12 +345,12 @@ var Rule = function (options) {
       if (this . shift > this . target) this . shift = this . target;
     }
     ctx . save ();
-    ctx . fillStyle = 'white';
+    ctx . fillStyle = this . rule_colour;
     ctx . lineWidth = 1;
     ctx . translate (length * (this . shift - this . left_margin), 0);
     ctx . beginPath ();
     	roundRect (ctx, 0, 0, (1 + this . left_margin + this . right_margin) * length, this . ruleHeight (), this . rounding);
-    	ctx . fill (); ctx . stroke ();
+    	ctx . fill (); ctx . strokeStyle = this . border_colour; ctx . stroke ();
     ctx . fillStyle = 'black';
     ctx . translate (this . left_margin * length, 0);
     var scale;
@@ -411,6 +413,7 @@ var Sliderule = function (length, options) {
   this . cursor_rounding = 4;
   this . precision = 5;
   this . static_markings = true;
+  this . markings_colour = 'black'; this . markings_background = 'white';
   this . height = function () {var h = 0; for (var ind in this . rules) h += this . rules [ind] . ruleHeight (); return h;};
   this . moveCursor = function (delta) {
     delta *= this . cursor_motion; delta /= this . length;
@@ -472,10 +475,10 @@ var Sliderule = function (length, options) {
         description = this . rules [ind] . scales [sub] . value (this . cursor_position - this . rules [ind] . shift);
         if (description !== null) {
           description = description . toFixed (this . precision);
-          ctx . fillStyle = 'white';
+          ctx . fillStyle = this . markings_background;
           measure = ctx . measureText (description);
           ctx . fillRect (4, y + hh - 8, measure . width + 8, 14);
-          ctx . fillStyle = 'black';
+          ctx . fillStyle = this . markings_colour;
           ctx . fillText (description, 8, y + hh);
         }
         y += h;
@@ -523,6 +526,8 @@ var Sliderule = function (length, options) {
 var Sliderules = function (options) {
   this . requireRedraw = true;
   this . position = {x: 32.5, y: 32.5};
+  this . background_colour = '#99f';
+  this . background_translation = {x: 0, y: 0};
   this . sliderules = [];
   this . synchronise = function (rule, delta) {
     if (! rule) return;
@@ -554,8 +559,19 @@ var Sliderules = function (options) {
     if (esc) sliderules . synchronise (esc . rule, esc . delta);
     else {this . position = addv (this . position, delta); this . requireRedraw = true;}
   };
-  this . draw = function (ctx) {
+  this . draw = function (ctx, width, height) {
   	this . requireRedraw = false;
+    ctx . setTransform (1, 0, 0, 1, 0, 0);
+    if (this . background) {
+      ctx . clearRect (0, 0, width, height);
+      ctx . save ();
+      if (this . background_scaling) ctx . scale (this . background_scaling . x, this . background_scaling . y);
+      ctx . drawImage (this . background, this . background_translation . x, this . background_translation . y);
+      ctx . restore ();
+    } else {
+      ctx . fillStyle = this . background_colour;
+      ctx . fillRect (0, 0, width, height);
+    }
     ctx . translate (this . position . x, this . position . y);
     for (var ind in this . sliderules) {
       ctx . translate (this . sliderules [ind] . position . x, this . sliderules [ind] . position . y);
