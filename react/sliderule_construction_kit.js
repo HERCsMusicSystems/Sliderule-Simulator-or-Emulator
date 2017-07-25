@@ -424,6 +424,8 @@ var Cursor = function (shift, from, to, colour) {
   };
 };
 
+var CursorS = function (from, to, colour) {return new Cursor (- Math . log10 (1 / Math . sqrt (Math . PI * 0.25)), from, to, colour);};
+
 var CursorText = function (text, shift, v, font, colour, align, baseline) {
 	this . draw = function (ctx, length) {
 		length *= shift;
@@ -498,12 +500,13 @@ var Sliderule = function (length, options) {
   this . markings_colour = 'black'; this . markings_background = 'white';
   this . static_markings_shift = 0.01; this . static_markings_align = 'left';
   this . cursor_markings_shift = 0.01; this . cursor_markings_align = 'left';
+  this . cursor_limit_left = 0.2; this . cursor_limit_right = 0.2;
   this . height = function () {var h = 0; for (var ind in this . rules) h += this . rules [ind] . ruleHeight (); return h;};
   this . moveCursor = function (delta) {
     delta *= this . cursor_motion; delta /= this . length;
     this . cursor_target += delta;
-    if (this . cursor_target > 1 + this . right_margin) this . cursor_target = 1 + this . right_margin;
-    if (this . cursor_target < - this . left_margin) this . cursor_target = - this . left_margin;
+    if (this . cursor_target > 1 + this . cursor_limit_right) this . cursor_target = 1 + this . cursor_limit_right;
+    if (this . cursor_target < - this . cursor_limit_left) this . cursor_target = - this . cursor_limit_left;
     this . cursor_position = this . cursor_target;
     return delta;
   };
