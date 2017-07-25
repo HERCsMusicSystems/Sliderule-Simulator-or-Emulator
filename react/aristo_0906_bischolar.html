@@ -20,12 +20,17 @@
 <script>
 
 var sliderules = new Sliderules ();
-var bg = new Image (); bg . src = "architecture008.jpg";
+//var bg = new Image (); bg . src = "wallpaper1.jpg";
 //sliderules . background = bg;
-var s = new Sliderule (1000, {cursor_markings: false});
+var s = new Sliderule (1000,
+  {static_markings: false, cursor_markings_shift: -0.02, cursor_markings_align: 'right', markings_colour: 'gold', markings_background: 'black',
+  cursor_rounding: 8});
 s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 60, 1));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 60, 1));
 s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 60, 1));
+s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 60, 1));
 s . cursors . push (new CursorText ("ARISTO", 0.094, 226, '12px arial', 'black', 'right', 'middle'));
+s . cursorBraces . push (new CursorBrace (0.11, 0.11, 16, 4, 'gray'));
 sliderules . sliderules . push (s);
 var r = new Rule ({border_colour: 'white'});
 s . rules . push (r);
@@ -45,10 +50,12 @@ r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.08, ra: 'left'
 r . scales . push (new scale_M (24, {left: "L", right: "lg x", rs: 0.08, ra: 'left'}));
 r . scales . push (new scale_P (24, {marking_colour: 'red', left: "P", right: "\u221A(1-x\u00B2)", ra: 'left', rs: 0.08, left_extension: 0.0}));
 
-s = new Sliderule (1000, {position: {x: 0, y: 30}, cursor_motion: 4, markings_colour: 'gold', markings_background: 'black'});
+s = new Sliderule (1000,
+  {position: {x: 0, y: 40}, cursor_motion: 4, static_markings: false, markings_colour: 'gold', markings_background: 'black', cursor_markings_shift: -0.02, cursor_markings_align: 'right', cursor_rounding: 8});
 sliderules . sliderules . push (s);
 s . backBraces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 60, 1));
 s . backBraces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 60, 1));
+s . cursorBraces . push (new CursorBrace (0.11, 0.11, 16, 4, 'gray'));
 r = new Rule ();
 s . rules . push (r);
 r . scales . push (new spacer (4));

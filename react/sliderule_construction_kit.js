@@ -461,6 +461,24 @@ var RightBrace = function (margin, width, radius, background, colour, braceRadiu
   };
 };
 
+var CursorBrace = function (left, right, top, bottom, colour) {
+  this . draw = function (ctx, s) {
+    ctx . fillStyle = colour;
+    ctx . beginPath ();
+    var l = - left * s . length, r = right * s . length;
+    ctx . moveTo (l, bottom); ctx . lineTo (l, 0); ctx . arc (l + top, 0, top, Math . PI, Math . PI * 1.5);//ctx . lineTo (l + top, - top);
+    ctx . arc (r - top, 0, top, Math . PI * 1.5, 0); //ctx . lineTo (r - top, - top);
+    ctx . lineTo (r, 0); ctx . lineTo (r, bottom);
+    ctx . fill ();
+    ctx . beginPath ();
+    ctx . translate (0, s . height ());
+    ctx . moveTo (l, - bottom); ctx . lineTo (l, 0); ctx . arc (l + top, 0, top, Math . PI, Math . PI * 0.5, true); //ctx . lineTo (l + top, top);
+    ctx . lineTo (r - top, top); ctx . arc (r - top, 0, top, Math . PI * 0.5, 0, true); //ctx . lineTo (r, 0);
+    ctx . lineTo (r, - bottom);
+    ctx . fill ();
+  };
+}
+
 var Sliderule = function (length, options) {
   this . length = length;
   this . left_margin = 0.2; this . right_margin = 0.2;
@@ -471,12 +489,15 @@ var Sliderule = function (length, options) {
   this . cursors = [];
   this . braces = [];
   this . backBraces = [];
+  this . cursorBraces = [];
   this . cursor_left_extension = 0.1; this . cursor_right_extension = 0.1;
   this . cursor_markings = true;
   this . cursor_rounding = 4;
   this . precision = 5;
   this . static_markings = true;
   this . markings_colour = 'black'; this . markings_background = 'white';
+  this . static_markings_shift = 0.01; this . static_markings_align = 'left';
+  this . cursor_markings_shift = 0.01; this . cursor_markings_align = 'left';
   this . height = function () {var h = 0; for (var ind in this . rules) h += this . rules [ind] . ruleHeight (); return h;};
   this . moveCursor = function (delta) {
     delta *= this . cursor_motion; delta /= this . length;
@@ -522,8 +543,13 @@ var Sliderule = function (length, options) {
       this . braces [ind] . draw (ctx, this);
       ctx . restore ();
     }
-    if (this . static_markings) this . drawMarkings (ctx);
+    if (this . static_markings) this . drawMarkings (ctx, this . length * this . static_markings_shift, this . static_markings_align);
     ctx . translate (this . length * (this . left_margin + this . cursor_position), 0);
+    for (ind in this . cursorBraces) {
+      ctx . save ();
+      this . cursorBraces [ind] . draw (ctx, this);
+      ctx . restore ();
+    }
     ctx . strokeStyle = this . cursor_colour;
     ctx . beginPath ();
     roundRect (ctx, - this . length * this . cursor_left_extension, - this . cursor_rounding,
@@ -531,16 +557,17 @@ var Sliderule = function (length, options) {
     ctx . fillStyle = "rgba(0, 0, 0, 0.1)";
     ctx . fill (); ctx . stroke ();
     ctx . beginPath ();
-    ctx . moveTo (0, -4); ctx . lineTo (0, this . height () + 4);
+    ctx . moveTo (0, - this . cursor_rounding); ctx . lineTo (0, this . height () + this . cursor_rounding);
     ctx . stroke ();
     for (ind in this . cursors) {this . cursors [ind] . draw (ctx, this . length);}
-    if (this . cursor_markings) this . drawMarkings (ctx);
+    if (this . cursor_markings) this . drawMarkings (ctx, this . length * this . cursor_markings_shift, this . cursor_markings_align);
   };
-  this . drawMarkings = function (ctx) {
+  this . drawMarkings = function (ctx, shift, align) {
     var y = 0;
     ctx . textBaseline = 'middle';
     ctx . font = '12px arial';
     var h; var hh; var description; var measure;
+    ctx . textAlign = align;
     for (ind in this . rules) {
       for (var sub in this . rules [ind] . scales) {
         h = this . rules [ind] . scales [sub] . height;
@@ -550,9 +577,16 @@ var Sliderule = function (length, options) {
           description = description . toFixed (this . precision);
           ctx . fillStyle = this . markings_background;
           measure = ctx . measureText (description);
-          ctx . fillRect (4, y + hh - 8, measure . width + 8, 14);
-          ctx . fillStyle = this . markings_colour;
-          ctx . fillText (description, 8, y + hh);
+          if (align === 'left') {
+            ctx . fillRect (shift, y + hh - 8, measure . width + 8, 14);
+            ctx . fillStyle = this . markings_colour;
+            ctx . fillText (description, shift + 4, y + hh);
+          }
+          else {
+            ctx . fillRect (shift - measure . width - 8, y + hh - 8, measure . width + 8, 14);
+            ctx . fillStyle = this . markings_colour;
+            ctx . fillText (description, shift - 4, y + hh);
+          }
         }
         y += h;
       }
