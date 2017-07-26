@@ -425,7 +425,16 @@ var Cursor = function (shift, from, to, colour) {
 };
 
 var CursorS = function (from, to, colour) {return new Cursor (- Math . log10 (1 / Math . sqrt (Math . PI * 0.25)), from, to, colour);};
-
+var CursorD = function (from, to, colour) {return new Cursor (Math . log10 (1 / Math . sqrt (Math . PI * 0.25)), from, to, colour);};
+var CursorHPElectrical = function (from, to, colour) {return new Cursor (- Math . log10 (Math . sqrt (0.746)), from, to, colour);};
+var CursorHPMechanical = function (from, to, colour) {return new Cursor (- Math . log10 (Math . sqrt (0.74569987158227022)), from, to, colour);};
+var CursorHPMetric = function (from, to, colour) {return new Cursor (- Math . log10 (Math . sqrt (0.73549875)), from, to, colour);};
+var CursorHP = function (from, to, colour) {return new Cursor (- Math . log10 (Math . sqrt (0.736)), from, to, colour);};
+var CursorHPUS = CursorHPElectrical;
+var CursorHPEurope = CursorHP;
+var CursorHPJapan = CursorHP;
+var CursorPS = CursorHPMetric;
+var Cursor360 = function (from, to, colour) {return new Cursor (Math . log10 (3.60 / Math . PI), from, to, colour);};
 var CursorText = function (text, shift, v, font, colour, align, baseline) {
 	this . draw = function (ctx, length) {
 		length *= shift;
@@ -481,6 +490,24 @@ var CursorBrace = function (left, right, top, bottom, colour) {
   };
 }
 
+var CursorAngledBrace = function (left, right, top, bottom, colour) {
+  this . draw = function (ctx, s) {
+    ctx . fillStyle = colour;
+    ctx . beginPath ();
+    var l = - left * s . length, r = right * s . length;
+    ctx . moveTo (l, bottom); ctx . lineTo (l, 0); ctx . lineTo (l + top, - top);
+    ctx . lineTo (r - top, - top);
+    ctx . lineTo (r, 0); ctx . lineTo (r, bottom);
+    ctx . fill ();
+    ctx . beginPath ();
+    ctx . translate (0, s . height ());
+    ctx . moveTo (l, - bottom); ctx . lineTo (l, 0); ctx . lineTo (l + top, top);
+    ctx . lineTo (r - top, top); ctx . lineTo (r, 0);
+    ctx . lineTo (r, - bottom);
+    ctx . fill ();
+  };
+}
+
 var Sliderule = function (length, options) {
   this . length = length;
   this . left_margin = 0.2; this . right_margin = 0.2;
@@ -488,10 +515,13 @@ var Sliderule = function (length, options) {
   this . rules = [];
   this . animation_delta = 0.004;
   this . cursor_position = 0; this . cursor_target = 0; this . cursor_colour = 'red'; this . cursor_motion = 0.1;
+  this . cursorGlass = "rgba(0, 0, 0, 0.1)";
+  this . cursorFrame = "rgba(0, 0, 0, 0.1)";
   this . cursors = [];
   this . braces = [];
   this . backBraces = [];
   this . cursorBraces = [];
+  this . cursorGlassBraces = [];
   this . cursor_left_extension = 0.1; this . cursor_right_extension = 0.1;
   this . cursor_markings = true;
   this . cursor_rounding = 4;
@@ -548,21 +578,18 @@ var Sliderule = function (length, options) {
     }
     if (this . static_markings) this . drawMarkings (ctx, this . length * this . static_markings_shift, this . static_markings_align);
     ctx . translate (this . length * (this . left_margin + this . cursor_position), 0);
-    for (ind in this . cursorBraces) {
-      ctx . save ();
-      this . cursorBraces [ind] . draw (ctx, this);
-      ctx . restore ();
-    }
-    ctx . strokeStyle = this . cursor_colour;
+    for (ind in this . cursorGlassBraces) {ctx . save (); this . cursorGlassBraces [ind] . draw (ctx, this); ctx . restore ();}
     ctx . beginPath ();
     roundRect (ctx, - this . length * this . cursor_left_extension, - this . cursor_rounding,
       this . length * this . cursor_right_extension, this . height () + this . cursor_rounding, this . cursor_rounding);
-    ctx . fillStyle = "rgba(0, 0, 0, 0.1)";
-    ctx . fill (); ctx . stroke ();
+    if (this . cursorGlass) {ctx . fillStyle = this . cursorGlass; ctx . fill ();}
+    if (this . cursorFrame) {ctx . strokeStyle = this . cursorFrame; ctx . stroke ();}
     ctx . beginPath ();
     ctx . moveTo (0, - this . cursor_rounding); ctx . lineTo (0, this . height () + this . cursor_rounding);
+    ctx . strokeStyle = this . cursor_colour;
     ctx . stroke ();
     for (ind in this . cursors) {this . cursors [ind] . draw (ctx, this . length);}
+    for (ind in this . cursorBraces) {ctx . save (); this . cursorBraces [ind] . draw (ctx, this); ctx . restore ();}
     if (this . cursor_markings) this . drawMarkings (ctx, this . length * this . cursor_markings_shift, this . cursor_markings_align);
   };
   this . drawMarkings = function (ctx, shift, align) {

@@ -17,6 +17,10 @@ var SlideruleApplication = React . createClass ({
     this . mousePosition = position;
   },
   onMouseUp: function (event) {this . dragging = false; this . setState ({});},
+  onChange: function (event) {
+    for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . cursor_markings = event . target . checked;
+    sliderules . requireRedraw = true;
+  },
   draw: function () {
   	if (sliderules . noChange ()) return;
     var width = window . innerWidth; var height = window . innerHeight;
@@ -30,14 +34,16 @@ var SlideruleApplication = React . createClass ({
   render: function render() {
     return React.createElement(
       'div',
-      { style: { align: 'center' } },
-      React.createElement('canvas', { ref: 'sliderule', width: this.state.width, height: this.state.height, style: { display: 'block' },
+      { style: { align: 'center', position: 'relative' } }, [
+      React.createElement('canvas', { key: 1, ref: 'sliderule', width: this.state.width, height: this.state.height, style: { display: 'block' },
         onMouseDown: this.onMouseDown,
         onMouseMove: this.onMouseMove,
         onMouseUp: this.onMouseUp,
         onMouseLeave: this.onMouseUp,
         onContextMenu: this.onContext
-      })
+      }),
+      React . createElement ('input', {key: 2, type: 'checkbox', value: 'sonda', onChange: this . onChange, style: {position: 'absolute', left: '0px', top: '0px'}})
+      ]
     );
   }
 });
