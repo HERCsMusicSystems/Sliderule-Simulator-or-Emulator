@@ -50,9 +50,16 @@ var SlideruleApplication = React . createClass ({
         onMouseLeave: this.onMouseUp,
         onContextMenu: this.onContext
       }),
-      React . createElement ('input', {key: 2, type: 'checkbox', onChange: this . SM, style: {position: 'absolute', left: '0px', top: '0px'}}),
-      React . createElement ('input', {key: 3, type: 'checkbox', onChange: this . CM, style: {position: 'absolute', left: '0px', top: '15px'}}),
-      React . createElement ('input', {key: 4, type: 'checkbox', onChange: this . EM, style: {position: 'absolute', left: '0px', top: '30px'}})
+      React . createElement (
+      	'div',
+      	{ key: 2, style: {position: 'absolute', left: '0px', top: '0px'}}, [
+		  React . createElement ('input', {key: 3, type: 'checkbox', onChange: this . SM}),
+		  	'Markings on stator\u2003\u2003',
+		  React . createElement ('input', {key: 4, type: 'checkbox', onChange: this . CM}),
+		  	'Markings on hairline\u2003\u2003',
+		  React . createElement ('input', {key: 5, type: 'checkbox', onChange: this . EM}),
+		  	'Markings on additional hairlines\u2003\u2003',
+		  ])
       ]
     );
   }

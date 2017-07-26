@@ -514,6 +514,19 @@ var CursorAngledBrace = function (left, right, top, bottom, colour) {
   };
 }
 
+var Screw = function (shift, top, radius, angle, background, colour) {
+	this . draw = function (ctx, s) {
+		var location = shift * s . length;
+		var s = Math . sin (angle) * radius;
+		var c = Math . cos (angle) * radius;
+		ctx . fillStyle = background; ctx . strokeStyle = colour;
+		ctx . beginPath ();
+		ctx . arc (location, top, radius, 0, Math . PI * 2);
+		ctx . fill (); ctx . stroke ();
+		ctx . beginPath (); ctx . moveTo (location + c, top + s); ctx . lineTo (location - c, top - s); ctx . stroke ();
+	};
+}
+
 var Sliderule = function (length, options) {
   this . length = length;
   this . left_margin = 0.2; this . right_margin = 0.2;
@@ -531,9 +544,9 @@ var Sliderule = function (length, options) {
   this . cursor_left_extension = 0.1; this . cursor_right_extension = 0.1;
   this . cursor_rounding = 4;
   this . precision = 5;
-  this . static_markings = true;
-  this . cursor_markings = true;
-  this . extra_cursor_markings = true;
+  this . static_markings = false;
+  this . cursor_markings = false;
+  this . extra_cursor_markings = false;
   this . markings_colour = 'black'; this . markings_background = 'white';
   this . static_markings_shift = 0.01; this . static_markings_align = 'left';
   this . cursor_markings_shift = 0.01; this . cursor_markings_align = 'left';

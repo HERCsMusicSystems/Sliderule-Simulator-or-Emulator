@@ -27,6 +27,7 @@ var s = new Sliderule (1200,
   cursor_rounding: 8, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
 s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 60, 1));
 s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 60, 1));
+//s . braces . push (new Screw (0.04, 42, 12, 0.3, '#b5a642', '#605321'));
 s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 60, 1));
 s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 60, 1));
 s . cursors . push (new CursorText ("ARISTO", 0.07, 270, '12px arial', 'black', 'right', 'middle'));
@@ -68,6 +69,7 @@ sliderules . sliderules . push (s);
 s . backBraces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 60, 1));
 s . backBraces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 60, 1));
 s . cursorBraces . push (new CursorAngledBrace (0.08, 0.08, 16, 4, 'gray'));
+s . cursorBraces . push (new Screw (0, -6, 8, 0.5, '#b5a642', '#605321'));
 s . cursor_left_extension = 0.074; s . cursor_right_extension = 0.074;
 s . cursors . push (Cursor360 (50, 146, 'red'));
 r = new Rule ();
