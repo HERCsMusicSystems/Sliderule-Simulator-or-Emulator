@@ -17,8 +17,16 @@ var SlideruleApplication = React . createClass ({
     this . mousePosition = position;
   },
   onMouseUp: function (event) {this . dragging = false; this . setState ({});},
-  onChange: function (event) {
+  SM: function (event) {
+    for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . static_markings = event . target . checked;
+    sliderules . requireRedraw = true;
+  },
+  CM: function (event) {
     for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . cursor_markings = event . target . checked;
+    sliderules . requireRedraw = true;
+  },
+  EM: function (event) {
+    for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . extra_cursor_markings = event . target . checked;
     sliderules . requireRedraw = true;
   },
   draw: function () {
@@ -42,7 +50,9 @@ var SlideruleApplication = React . createClass ({
         onMouseLeave: this.onMouseUp,
         onContextMenu: this.onContext
       }),
-      React . createElement ('input', {key: 2, type: 'checkbox', value: 'sonda', onChange: this . onChange, style: {position: 'absolute', left: '0px', top: '0px'}})
+      React . createElement ('input', {key: 2, type: 'checkbox', onChange: this . SM, style: {position: 'absolute', left: '0px', top: '0px'}}),
+      React . createElement ('input', {key: 3, type: 'checkbox', onChange: this . CM, style: {position: 'absolute', left: '0px', top: '15px'}}),
+      React . createElement ('input', {key: 4, type: 'checkbox', onChange: this . EM, style: {position: 'absolute', left: '0px', top: '30px'}})
       ]
     );
   }

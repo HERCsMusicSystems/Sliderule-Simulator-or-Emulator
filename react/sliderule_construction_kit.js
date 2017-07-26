@@ -414,7 +414,11 @@ var Rule = function (options) {
   for (var key in options) this [key] = options [key];
 };
 
-var Cursor = function (shift, from, to, colour) {
+var Cursor = function (shift, from, to, colour, options) {
+  this . shift = shift;
+  this . from = from;
+  this . to = to;
+  this . marking_shift = 0.01; this . marking_align = 'left';
   this . draw = function (ctx, length) {
     length *= shift;
     ctx . save ();
@@ -422,20 +426,21 @@ var Cursor = function (shift, from, to, colour) {
     ctx . beginPath (); ctx . moveTo (length, from); ctx . lineTo (length, to); ctx . stroke ();
     ctx . restore ();
   };
+  for (var key in options) this [key] = options [key];
 };
 
-var CursorS = function (from, to, colour) {return new Cursor (- Math . log10 (1 / Math . sqrt (Math . PI * 0.25)), from, to, colour);};
-var CursorD = function (from, to, colour) {return new Cursor (Math . log10 (1 / Math . sqrt (Math . PI * 0.25)), from, to, colour);};
-var CursorHPElectrical = function (from, to, colour) {return new Cursor (- Math . log10 (Math . sqrt (0.746)), from, to, colour);};
-var CursorHPMechanical = function (from, to, colour) {return new Cursor (- Math . log10 (Math . sqrt (0.74569987158227022)), from, to, colour);};
-var CursorHPMetric = function (from, to, colour) {return new Cursor (- Math . log10 (Math . sqrt (0.73549875)), from, to, colour);};
-var CursorHP = function (from, to, colour) {return new Cursor (- Math . log10 (Math . sqrt (0.736)), from, to, colour);};
+var CursorS = function (from, to, colour, options) {return new Cursor (- Math . log10 (1 / Math . sqrt (Math . PI * 0.25)), from, to, colour, options);};
+var CursorD = function (from, to, colour, options) {return new Cursor (Math . log10 (1 / Math . sqrt (Math . PI * 0.25)), from, to, colour, options);};
+var CursorHPElectrical = function (from, to, colour, options) {return new Cursor (- Math . log10 (Math . sqrt (0.746)), from, to, colour, options);};
+var CursorHPMechanical = function (from, to, colour, options) {return new Cursor (- Math . log10 (Math . sqrt (0.74569987158227022)), from, to, colour, options);};
+var CursorHPMetric = function (from, to, colour, options) {return new Cursor (- Math . log10 (Math . sqrt (0.73549875)), from, to, colour, options);};
+var CursorHP = function (from, to, colour, options) {return new Cursor (- Math . log10 (Math . sqrt (0.736)), from, to, colour, options);};
 var CursorHPUS = CursorHPElectrical;
 var CursorHPEurope = CursorHP;
 var CursorHPJapan = CursorHP;
 var CursorPS = CursorHPMetric;
-var Cursor360 = function (from, to, colour) {return new Cursor (Math . log10 (3.60 / Math . PI), from, to, colour);};
-var CursorText = function (text, shift, v, font, colour, align, baseline) {
+var Cursor360 = function (from, to, colour, options) {return new Cursor (Math . log10 (3.60 / Math . PI), from, to, colour, options);};
+var CursorText = function (text, shift, v, font, colour, align, baseline, options) {
 	this . draw = function (ctx, length) {
 		length *= shift;
 		ctx . save ();
@@ -446,6 +451,7 @@ var CursorText = function (text, shift, v, font, colour, align, baseline) {
 		ctx . fillText (text, length, v);
 		ctx . restore ();
 	};
+  for (var key in options) this [key] = options [key];
 };
 
 var LeftBrace = function (margin, width, radius, background, colour, braceRadius, braceAngle) {
@@ -523,10 +529,11 @@ var Sliderule = function (length, options) {
   this . cursorBraces = [];
   this . cursorGlassBraces = [];
   this . cursor_left_extension = 0.1; this . cursor_right_extension = 0.1;
-  this . cursor_markings = true;
   this . cursor_rounding = 4;
   this . precision = 5;
   this . static_markings = true;
+  this . cursor_markings = true;
+  this . extra_cursor_markings = true;
   this . markings_colour = 'black'; this . markings_background = 'white';
   this . static_markings_shift = 0.01; this . static_markings_align = 'left';
   this . cursor_markings_shift = 0.01; this . cursor_markings_align = 'left';
@@ -591,14 +598,14 @@ var Sliderule = function (length, options) {
     for (ind in this . cursors) {this . cursors [ind] . draw (ctx, this . length);}
     for (ind in this . cursorBraces) {ctx . save (); this . cursorBraces [ind] . draw (ctx, this); ctx . restore ();}
     if (this . cursor_markings) this . drawMarkings (ctx, this . length * this . cursor_markings_shift, this . cursor_markings_align);
+    if (this . extra_cursor_markings) this . drawExtraMarkings (ctx);
   };
   this . drawMarkings = function (ctx, shift, align) {
     var y = 0;
     ctx . textBaseline = 'middle';
     ctx . font = '12px arial';
     var h; var hh; var description; var measure;
-    ctx . textAlign = align;
-    for (ind in this . rules) {
+    for (var ind in this . rules) {
       for (var sub in this . rules [ind] . scales) {
         h = this . rules [ind] . scales [sub] . height;
         hh = h * 0.5;
@@ -607,6 +614,7 @@ var Sliderule = function (length, options) {
           description = description . toFixed (this . precision);
           ctx . fillStyle = this . markings_background;
           measure = ctx . measureText (description);
+          ctx . textAlign = align;
           if (align === 'left') {
             ctx . fillRect (shift, y + hh - 8, measure . width + 8, 14);
             ctx . fillStyle = this . markings_colour;
@@ -616,6 +624,40 @@ var Sliderule = function (length, options) {
             ctx . fillRect (shift - measure . width - 8, y + hh - 8, measure . width + 8, 14);
             ctx . fillStyle = this . markings_colour;
             ctx . fillText (description, shift - 4, y + hh);
+          }
+        }
+        y += h;
+      }
+    }
+  };
+  this . drawExtraMarkings = function (ctx) {
+    var y = 0;
+    ctx . textBaseline = 'middle';
+    ctx . font = '12px arial';
+    var h; var hh; var description; var measure;
+    for (var ind in this . rules) {
+      for (var sub in this . rules [ind] . scales) {
+        h = this . rules [ind] . scales [sub] . height;
+        hh = h * 0.5;
+        for (var esc in this . cursors) {
+          var offset = this . cursors [esc] . shift;
+          if (y + hh >= this . cursors [esc] . from && (y + hh) <= this . cursors [esc] . to) {
+            ctx . fillStyle = this . markings_background;
+            description = this . rules [ind] . scales [sub] . value (this . cursor_position - this . rules [ind] . shift + offset);
+            if (description !== null) {
+              description = description . toFixed (this . precision);
+              measure = ctx . measureText (description);
+              ctx . textAlign = this . cursors [esc] . marking_align;
+              if (this . cursors [esc] . marking_align === 'left') {
+                ctx . fillRect ((offset + this . cursors [esc] . marking_shift) * this . length, y + hh - 8, measure . width + 8, 14);
+                ctx . fillStyle = this . markings_colour;
+                ctx . fillText (description, (offset + this . cursors [esc] . marking_shift) * this . length + 4, y + hh);
+              } else {
+                ctx . fillRect ((offset + this . cursors [esc] . marking_shift) * this . length - measure . width - 8, y + hh - 8, measure . width + 8, 14);
+                ctx . fillStyle = this . markings_colour;
+                ctx . fillText (description, (offset + this . cursors [esc] . marking_shift) * this . length - 4, y + hh);
+              }
+            }
           }
         }
         y += h;
