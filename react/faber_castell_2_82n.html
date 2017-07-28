@@ -15,14 +15,34 @@
 <script>
 
 var sliderules = new Sliderules ();
-var s = new Sliderule (1200);
-sliderules . sliderules . push (s);
+var s = new Sliderule (1200); sliderules . sliderules . push (s);
+s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 60, 1));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 60, 1));
+s . braces . push (new LeftBraceBar (0.054, 14, 14, 4, 'red', 'black'));
+s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 60, 1));
+s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 60, 1));
+s . braces . push (new RightBraceBar (0.054, 14, 14, 4, 'red', 'black'));
 var r = new Rule ();
 s . rules . push (r);
 r . scales . push (new scale_T (24));
 r . scales . push (new scale_T1_down (24));
 r . scales . push (new scale_L (24));
 r . scales . push (new scale_A (24));
+
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . markings . push (new RuleBars (-0.194, 1, 4, 4, 8, 6, 4, 'black'));
+r . markings . push (new RuleBars (1.194, -1, 4, 4, 8, 6, 4, 'black'));
+r . scales . push (new scale_B (24));
+r . scales . push (new scale_AI (24, {colour: 'red'}));
+r . scales . push (new scale_DI (24, {colour: 'red'}));
+r . scales . push (new scale_S (24));
+r . scales . push (new scale_C (24, {highlight: '#aaffaa'}));
+
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (24));
+r . scales . push (new scale_S (24));
+r . scales . push (new scale_ST (24));
+r . scales . push (new scale_P_down (24));
 
 
 </script>

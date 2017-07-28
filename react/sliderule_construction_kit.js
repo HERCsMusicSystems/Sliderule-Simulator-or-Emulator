@@ -353,6 +353,18 @@ var spacer = function (height, options) {
   for (var key in options) this [key] = options [key];
 };
 
+var RuleBars = function (shift, direction, top, bottom, bars, step, width, colour) {
+  this . draw = function (ctx, length, rule) {
+    var position = (rule . shift + shift) * length;
+    var bar_top = rule . ruleHeight () - bottom;
+    ctx . strokeStyle = colour;
+    ctx . lineWidth = width;
+    for (var ind = 0; ind < bars; ind++) {
+      ctx . beginPath (); ctx . moveTo (position + direction * ind * step, top); ctx . lineTo (position + direction * ind * step, bar_top); ctx . stroke ();
+    }
+  }
+};
+
 var Rule = function (options) {
   this . stator = 0;
   this . left_margin = 0.2; this . right_margin = 0.2;
@@ -362,6 +374,7 @@ var Rule = function (options) {
   this . rule_colour = 'white';
   this . border_colour = 'black';
   this . scales = [];
+  this . markings = [];
   this . move = function (delta, length) {
     delta *= this . rule_motion; delta /= length;
     this . target += delta;
@@ -399,6 +412,7 @@ var Rule = function (options) {
       ctx . translate (0, this . scales [ind] . height);
     }
     ctx . restore ();
+    for (var mark in this . markings) {ctx . save (); this . markings [mark] . draw (ctx, length, this); ctx . restore ();}
   };
   this . examine = function (position) {
     if (position . y < 0 || position . y > this . ruleHeight ()) return null;
@@ -474,6 +488,42 @@ var RightBrace = function (margin, width, radius, background, colour, braceRadiu
     ctx . fillStyle = background;
     ctx . fill ();
     ctx . strokeStyle = colour;
+    ctx . stroke ();
+  };
+};
+
+var LeftBraceBar = function (location, top, bottom, radius, background, colour) {
+  this . draw = function (ctx, s) {
+    var position = location * s . length;
+    var h = s . height ();
+    ctx . beginPath ();
+    ctx . moveTo (position + radius, top + radius);
+    ctx . lineTo (position + radius, h - bottom - radius);
+    ctx . arc (position, h - bottom - radius, radius, 0, Math . PI);
+    ctx . lineTo (position - radius, top + radius);
+    ctx . arc (position, top + radius, radius, Math . PI, 0);
+    ctx . fillStyle = background;
+    ctx . strokeStyle = colour;
+    ctx . fill ();
+    ctx . stroke ();
+  };
+};
+
+var RightBraceBar = function (location, top, bottom, radius, background, colour) {
+  this . draw = function (ctx, s) {
+    var position = location * s . length;
+    var h = s . height ();
+    ctx . beginPath ();
+    ctx . translate (s . length * (1 + s . left_margin + s . right_margin), 0);
+    ctx . scale (-1, 1);
+    ctx . moveTo (position + radius, top + radius);
+    ctx . lineTo (position + radius, h - bottom - radius);
+    ctx . arc (position, h - bottom - radius, radius, 0, Math . PI);
+    ctx . lineTo (position - radius, top + radius);
+    ctx . arc (position, top + radius, radius, Math . PI, 0);
+    ctx . fillStyle = background;
+    ctx . strokeStyle = colour;
+    ctx . fill ();
     ctx . stroke ();
   };
 };
@@ -579,11 +629,9 @@ var Sliderule = function (length, options) {
       if (this . cursor_position > this . cursor_target) this . cursor_position = this . cursor_target;
     }
     var ind;
-    for (ind in this . backBraces) {
-      ctx . save ();
-      this . backBraces [ind] . draw (ctx, this);
-      ctx . restore ();
-    }
+    // BACK BRACES
+    for (ind in this . backBraces) {ctx . save (); this . backBraces [ind] . draw (ctx, this); ctx . restore ();}
+    // RULES
     ctx . save ();
     ctx . translate (this . length * this . left_margin, 0);
     for (ind in this . rules) {
@@ -591,14 +639,13 @@ var Sliderule = function (length, options) {
       ctx . translate (0, this . rules [ind] . ruleHeight ());
     }
     ctx . restore ();
-    for (ind in this . braces) {
-      ctx . save ();
-      this . braces [ind] . draw (ctx, this);
-      ctx . restore ();
-    }
+    // BRACES
+    for (ind in this . braces) {ctx . save (); this . braces [ind] . draw (ctx, this); ctx . restore ();}
     if (this . static_markings) this . drawMarkings (ctx, this . length * this . static_markings_shift, this . static_markings_align);
     ctx . translate (this . length * (this . left_margin + this . cursor_position), 0);
+    // CURSOR GLASS BRACES
     for (ind in this . cursorGlassBraces) {ctx . save (); this . cursorGlassBraces [ind] . draw (ctx, this); ctx . restore ();}
+    // CURSOR
     ctx . beginPath ();
     roundRect (ctx, - this . length * this . cursor_left_extension, - this . cursor_rounding,
       this . length * this . cursor_right_extension, this . height () + this . cursor_rounding, this . cursor_rounding);
@@ -608,9 +655,13 @@ var Sliderule = function (length, options) {
     ctx . moveTo (0, - this . cursor_rounding); ctx . lineTo (0, this . height () + this . cursor_rounding);
     ctx . strokeStyle = this . cursor_colour;
     ctx . stroke ();
+    // CURSORS
     for (ind in this . cursors) {this . cursors [ind] . draw (ctx, this . length);}
+    // CURSOR BRACES
     for (ind in this . cursorBraces) {ctx . save (); this . cursorBraces [ind] . draw (ctx, this); ctx . restore ();}
+    // CURSOR MARKINGS
     if (this . cursor_markings) this . drawMarkings (ctx, this . length * this . cursor_markings_shift, this . cursor_markings_align);
+    // CURSOR EXTRA MARKINGS
     if (this . extra_cursor_markings) this . drawExtraMarkings (ctx);
   };
   this . drawMarkings = function (ctx, shift, align) {
@@ -749,7 +800,8 @@ var Sliderules = function (options) {
   this . synchroniseMove = function (delta, position) {
     var esc = sliderules . move (delta, position);
     if (esc) sliderules . synchronise (esc . rule, esc . delta);
-    else {this . position = addv (this . position, delta); this . requireRedraw = true;}
+    else this . position = addv (this . position, delta);
+    this . requireRedraw = true;
   };
   this . draw = function (ctx, width, height) {
   	this . requireRedraw = false;
