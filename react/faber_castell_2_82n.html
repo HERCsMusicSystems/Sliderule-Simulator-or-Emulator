@@ -24,8 +24,8 @@ s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 60, 1));
 s . braces . push (new RightBraceBar (0.054, 14, 14, 4, 'red', 'black'));
 var r = new Rule ();
 s . rules . push (r);
-r . scales . push (new scale_T (24));
-r . scales . push (new scale_T1_down (24));
+r . scales . push (new scale_TCT (24, {left_extension: 0.06, right_extension: 0.061}));
+r . scales . push (new scale_TCT1_down (24, {left_extension: 0.061, right_extension: 0.06}));
 r . scales . push (new scale_L (24));
 r . scales . push (new scale_A (24));
 
@@ -40,9 +40,9 @@ r . scales . push (new scale_C (24, {highlight: '#aaffaa'}));
 
 r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_D (24));
-r . scales . push (new scale_S (24));
-r . scales . push (new scale_ST (24));
-r . scales . push (new scale_P_down (24));
+r . scales . push (new scale_SC (24));
+r . scales . push (new scale_ST_down (24));
+r . scales . push (new scale_P_down (24, {colour: 'red'}));
 
 
 </script>

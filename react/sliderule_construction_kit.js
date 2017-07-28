@@ -223,11 +223,29 @@ var draw_sine_cosine_deg = function (ctx, length, height, scale) {
   draw_MLS (ctx, fn_sin_deg, length, 4, 9, 1, - scale . left_extension, height * 0.5);
   draw_MRS (ctx, fn_sin_deg, length, 80, 90, 10, 1, height * 0.5);
   draw_MRS (ctx, fn_sin_deg, length, 15, 35, 10, 1, height * 0.5);
+  for (var degree = 10; degree <= 70; degree += 10) tick (ctx, length * fn_sin_deg (degree), height * 0.5);
+  ctx . textAlign = 'right';
+  for (var degree = 10; degree <= 70; degree += 10) mmark (ctx, degree, length * fn_sin_deg (degree) - 1, height * 0.5);
   ctx . textAlign = 'left';
-  draw_MRS (ctx, fn_sin_deg, length, 10, 70, 10, 1, height * 0.5);
+  ctx . fillStyle = scale . alt;
+  for (var degree = 20; degree <= 80; degree += 10) mmark (ctx, degree, length * fn_sin_deg (90 - degree) + 1, height * 0.5);
+  mmark (ctx, 20, length * fn_sin_deg (70), height * 0.5);
+  draw_10R (ctx, fn_sin_deg, length, 15, 80, 1, height * 0.4);
+  draw_10R (ctx, fn_sin_deg, length, 10, 15, 1, height * 0.5);
+  draw_50R (ctx, fn_sin_deg, length, 40, 90, 1, height * 0.5);
+  draw_05L (ctx, fn_sin_deg, length, 3, 15, - scale . left_extension, height * 0.3);
+  draw_01L (ctx, fn_sin_deg, length, 3, 15, - scale . left_extension, height * 0.2);
+};
+var draw_cosine_sine_deg = function (ctx, length, height, scale) {
+  draw_MLS (ctx, fn_sin_deg, length, 4, 9, 1, - scale . left_extension, height * 0.5);
+  draw_MRS (ctx, fn_sin_deg, length, 80, 90, 10, 1, height * 0.5);
+  draw_MRS (ctx, fn_sin_deg, length, 15, 35, 10, 1, height * 0.5);
+  for (var degree = 10; degree <= 70; degree += 10) tick (ctx, length * fn_sin_deg (degree), height * 0.5);
+  ctx . textAlign = 'left';
+  for (var degree = 10; degree <= 70; degree += 10) mmark (ctx, degree, length * fn_sin_deg (degree) + 1, height * 0.5);
   ctx . textAlign = 'right';
   ctx . fillStyle = scale . alt;
-  for (var degree = 20; degree <= 80; degree += 10) mmark (ctx, degree, length * fn_sin_deg (90 - degree), height * 0.5);
+  for (var degree = 20; degree <= 80; degree += 10) mmark (ctx, degree, length * fn_sin_deg (90 - degree) - 1, height * 0.5);
   mmark (ctx, 20, length * fn_sin_deg (70), height * 0.5);
   draw_10R (ctx, fn_sin_deg, length, 15, 80, 1, height * 0.4);
   draw_10R (ctx, fn_sin_deg, length, 10, 15, 1, height * 0.5);
@@ -258,11 +276,47 @@ var draw_tan_deg = function (ctx, length, height, scale) {
   draw_XL (ctx, fn_tan_deg, length, 6, 10, - scale . left_extension, height * 0.4, 1, 0.5, 1);
   draw_XL (ctx, fn_tan_deg, length, 1, 10, - scale . left_extension, height * 0.2, 0.5, 0.1, 0.5);
 };
+var draw_tan_cotan_deg = function (ctx, length, height, scale) {
+  draw_MLS (ctx, fn_tan_deg, length, 1, 5.5, 0.5, - scale . left_extension, height * 0.5);
+  draw_MR (ctx, fn_tan_deg, length, 6, 9, 1, height * 0.5);
+  draw_MRS (ctx, fn_tan_deg, length, 15, 90, 10, 1 + scale . right_extension, height * 0.5);
+  var esc = true;
+  for (var ind = 10; ind <= 90; ind += 10) {
+    var location = fn_tan_deg (ind);
+    if (location > 1 + scale . right_extension) esc = false;
+    else {
+      location *= length;
+      tick (ctx, length * fn_tan_deg (ind), height * 0.5);
+      ctx . textAlign = 'right'; ctx . fillStyle = scale . colour; mmark (ctx, ind, location - 1, height * 0.5);
+      ctx . textAlign = 'left'; ctx . fillStyle = scale . alt; mmark (ctx, 90 - ind, location + 1, height * 0.5);
+    }
+  }
+  draw_XR (ctx, fn_tan_deg, length, 10, 90, 1 + scale . right_extension, height * 0.4, 5, 1, 5);
+  draw_XR (ctx, fn_tan_deg, length, 10, 90, 1 + scale . right_extension, height * 0.2, 1, 0.2, 1);
+  draw_XL (ctx, fn_tan_deg, length, 6, 10, - scale . left_extension, height * 0.4, 1, 0.5, 1);
+  draw_XL (ctx, fn_tan_deg, length, 1, 10, - scale . left_extension, height * 0.2, 0.5, 0.1, 0.5);
+};
 var fn_big_tan_deg = function (value) {return Math . log10 (Math . tan (value * Math . PI / 180));};
 var draw_big_tan_deg = function (ctx, length, height, scale) {
   draw_MRS (ctx, fn_big_tan_deg, length, 60, 75, 5, 1 + scale . right_extension, height * 0.5);
   draw_MR (ctx, fn_big_tan_deg, length, 80, 90, 1 + scale . right_extension, height * 0.5);
   draw_MLS (ctx, fn_big_tan_deg, length, 10, 55, 5, - scale . left_extension, height * 0.5);
+  draw_XL (ctx, fn_big_tan_deg, length, 10, 80, - scale . left_extension, height * 0.4, 5, 1, 5);
+  draw_01R (ctx, fn_big_tan_deg, length, 60, 90, 1 + scale . right_extension, height * 0.2);
+  draw_05R (ctx, fn_big_tan_deg, length, 60, 90, 1 + scale . right_extension, height * 0.3);
+  draw_02L (ctx, fn_big_tan_deg, length, 10, 60, - scale . left_extension, height * 0.2);
+};
+
+var draw_big_tan_cotan_deg = function (ctx, length, height, scale) {
+  draw_MRS (ctx, fn_big_tan_deg, length, 55, 75, 10, 1 + scale . right_extension, height * 0.5);
+  draw_MR (ctx, fn_big_tan_deg, length, 81, 90, 1 + scale . right_extension, height * 0.5);
+  draw_MLS (ctx, fn_big_tan_deg, length, 10, 45, 5, - scale . left_extension, height * 0.5);
+  for (var degree = 50; degree <= 80; degree += 10) {
+    var location = length * fn_big_tan_deg (degree);
+    tick (ctx, length * fn_big_tan_deg (degree), height * 0.5);
+    ctx . textAlign = 'right'; ctx . fillStyle = scale . colour; mmark (ctx, degree, location - 1, height * 0.5);
+    ctx . textAlign = 'left'; ctx . fillStyle = scale . alt; mmark (ctx, 90 - degree, location + 1, height * 0.5);
+  }
   draw_XL (ctx, fn_big_tan_deg, length, 10, 80, - scale . left_extension, height * 0.4, 5, 1, 5);
   draw_01R (ctx, fn_big_tan_deg, length, 60, 90, 1 + scale . right_extension, height * 0.2);
   draw_05R (ctx, fn_big_tan_deg, length, 60, 90, 1 + scale . right_extension, height * 0.3);
