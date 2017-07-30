@@ -582,6 +582,24 @@ var RightBraceBar = function (location, top, bottom, radius, background, colour)
   };
 };
 
+var Logo = function (logo, location, top, scaling, rotation) {
+	this . draw = function (ctx, s) {
+		ctx . translate (location * s . length, top);
+		if (scaling !== undefined) ctx . scale (scaling, scaling);
+		if (rotation !== undefined) ctx . rotate (rotation);
+		ctx . translate (logo . width * -0.5, logo . height * -0.5);
+		ctx . drawImage (logo, 0, 0);
+	};
+};
+
+var Engraving = function (text, font, colour, location, top) {
+	this . draw = function (ctx, s) {
+		ctx . fillStyle = colour;
+		ctx . font = font;
+		ctx . fillText (text, location * s . length, top);
+	};
+};
+
 var CursorBrace = function (left, right, top, bottom, colour) {
   this . draw = function (ctx, s) {
     ctx . fillStyle = colour;
