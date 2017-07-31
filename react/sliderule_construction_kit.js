@@ -204,6 +204,16 @@ var draw_lin = function (ctx, length, height, scale) {
   draw_05R (ctx, fn_lin, length, 0, 10, 1, height * 0.4);
   draw_01R (ctx, fn_lin, length, 0, 10, 1, height * 0.3);
   draw_005R (ctx, fn_lin, length, 0, 10, 1, height * 0.2);
+  ctx . translate (- length, 0);
+  draw_ML (ctx, fn_lin, length, 0, 9, 1 - scale . left_extension, height * 0.5);
+  draw_05L (ctx, fn_lin, length, 0, 10, 1 - scale . left_extension, height * 0.4);
+  draw_01L (ctx, fn_lin, length, 0, 10, 1 - scale . left_extension, height * 0.3);
+  draw_005L (ctx, fn_lin, length, 0, 10, 1 - scale . left_extension, height * 0.2);
+  ctx . translate (length + length, 0);
+  draw_MR (ctx, fn_lin, length, 1, 10, scale . right_extension, height * 0.5);
+  draw_05R (ctx, fn_lin, length, 0, 10, scale . right_extension, height * 0.4);
+  draw_01R (ctx, fn_lin, length, 0, 10, scale . right_extension, height * 0.3);
+  draw_005R (ctx, fn_lin, length, 0, 10, scale . right_extension, height * 0.2);
 };
 
 var fn_sin_deg = function (value) {return Math . log10 (10 * Math . sin (value * Math . PI / 180));};
@@ -408,13 +418,12 @@ var spacer = function (height, options) {
 };
 
 var RuleBars = function (shift, direction, top, bottom, bars, step, width, colour) {
-  this . draw = function (ctx, length, rule) {
-    var position = (rule . shift + shift) * length;
-    var bar_top = rule . ruleHeight () - bottom;
+  this . draw = function (ctx, rule) {
+    var position = shift * rule . length;
     ctx . strokeStyle = colour;
     ctx . lineWidth = width;
     for (var ind = 0; ind < bars; ind++) {
-      ctx . beginPath (); ctx . moveTo (position + direction * ind * step, top); ctx . lineTo (position + direction * ind * step, bar_top); ctx . stroke ();
+      ctx . beginPath (); ctx . moveTo (position + direction * ind * step, top); ctx . lineTo (position + direction * ind * step, bottom); ctx . stroke ();
     }
   }
 };
@@ -439,7 +448,7 @@ var Rule = function (options) {
   };
   this . ruleHeight = function () {var h = 0; for (var ind in this . scales) h += this . scales [ind] . height; return h;};
   this . hitTest = function (y) {return this . stator != 0 && y >= 0 && y <= this . ruleHeight ();};
-  this . draw = function (ctx, length) {
+  this . draw = function (ctx, length, sliderule) {
     if (this . target < this . shift) {
       this . shift -= this . animation_delta;
       if (this . shift < this . target) this . shift = this . target;
@@ -466,7 +475,7 @@ var Rule = function (options) {
       ctx . translate (0, this . scales [ind] . height);
     }
     ctx . restore ();
-    for (var mark in this . markings) {ctx . save (); this . markings [mark] . draw (ctx, length, this); ctx . restore ();}
+    for (var mark in this . markings) {ctx . save (); ctx . translate (this . shift * length, 0); this . markings [mark] . draw (ctx, sliderule); ctx . restore ();}
   };
   this . examine = function (position) {
     if (position . y < 0 || position . y > this . ruleHeight ()) return null;
@@ -592,11 +601,15 @@ var Logo = function (logo, location, top, scaling, rotation) {
 	};
 };
 
-var Engraving = function (text, font, colour, location, top) {
+var Engraving = function (text, font, align, colour, location, top, rotation) {
 	this . draw = function (ctx, s) {
 		ctx . fillStyle = colour;
 		ctx . font = font;
-		ctx . fillText (text, location * s . length, top);
+    ctx . textAlign = align;
+    ctx . translate (location * s . length, top);
+    if (rotation !== undefined) ctx . rotate (rotation);
+		ctx . fillText (text, 0, 0);
+    //ctx . fillRect (0, 0, 100, 100);
 	};
 };
 
@@ -707,7 +720,7 @@ var Sliderule = function (length, options) {
     ctx . save ();
     ctx . translate (this . length * this . left_margin, 0);
     for (ind in this . rules) {
-      this . rules [ind] . draw (ctx, this . length);
+      this . rules [ind] . draw (ctx, this . length, this);
       ctx . translate (0, this . rules [ind] . ruleHeight ());
     }
     ctx . restore ();

@@ -17,37 +17,39 @@
 var logo = new Image (); logo . src = "Logo_1951.png";
 
 var sliderules = new Sliderules ();
-var s = new Sliderule (1200); sliderules . sliderules . push (s);
+var s = new Sliderule (1200, {left_margin: 0.24, right_margin: 0.24}); sliderules . sliderules . push (s);
 s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 60, 1));
 s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 60, 1));
 s . braces . push (new LeftBraceBar (0.054, 14, 14, 4, 'red', 'black'));
 s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 60, 1));
 s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 60, 1));
 s . braces . push (new RightBraceBar (0.054, 14, 14, 4, 'red', 'black'));
-s . braces . push (new Logo (logo, 0.1, 48, 0.125, Math . PI * -0.5));
-s . braces . push (new Engraving ("FABER", '18px arial', 'black', 0.1, 240));
-s . braces . push (new Engraving ("CASTELL", 'italic 18px arial', 'black', 0.1, 260));
-var r = new Rule ();
+s . braces . push (new Logo (logo, 0.105, 48, 0.125));
+s . braces . push (new Engraving ("CASTELL", 'italic 16px arial', 'left', 'black', 0.072, 260));
+s . braces . push (new Engraving ("DUPLEX", '16px arial', 'left', 'black', 0.072, 280));
+var r = new Rule ({left_margin: 0.24, right_margin: 0.24});
 s . rules . push (r);
-r . scales . push (new scale_TCT (24, {left_extension: 0.06, right_extension: 0.061}));
-r . scales . push (new scale_TCT1_down (24, {left_extension: 0.061, right_extension: 0.06}));
-r . scales . push (new scale_L (24));
-r . scales . push (new scale_A (24));
+r . scales . push (new scale_TCT (24, {left_extension: 0.06, right_extension: 0.061, left: "T\u2081"}));
+r . scales . push (new scale_TCT1_down (24, {left_extension: 0.061, right_extension: 0.06, left: "T\u2082"}));
+r . scales . push (new scale_L (24, {left_extension: 0.06, right_extension: 0.06, left: "L"}));
+r . scales . push (new scale_A (24, {left: "A"}));
 
-r = new Rule ({stator: 1}); s . rules . push (r);
-r . markings . push (new RuleBars (-0.194, 1, 4, 4, 8, 6, 4, 'black'));
-r . markings . push (new RuleBars (1.194, -1, 4, 4, 8, 6, 4, 'black'));
-r . scales . push (new scale_B (24));
-r . scales . push (new scale_AI (24, {colour: 'red'}));
-r . scales . push (new scale_DI (24, {colour: 'red'}));
-r . scales . push (new scale_S (24));
-r . scales . push (new scale_C (24, {highlight: '#aaffaa'}));
+r = new Rule ({stator: 1, left_margin: 0.24, right_margin: 0.24}); s . rules . push (r);
+r . markings . push (new RuleBars (-0.234, 1, 4, 116, 8, 6, 4, 'black'));
+r . markings . push (new RuleBars (1.234, -1, 4, 116, 8, 6, 4, 'black'));
+r . markings . push (new Engraving ("2/82 N", '12px arial', 'center', 'black', -0.14, 60, Math . PI * -0.5));
+r . markings . push (new Engraving ("MADE IN GERMANY", '10px arial', 'center', 'black', -0.13, 60, Math . PI * -0.5));
+r . scales . push (new scale_B (24, {left: "B"}));
+r . scales . push (new scale_AI (24, {left: "BI", colour: 'red'}));
+r . scales . push (new scale_DI (24, {left: "CI", colour: 'red'}));
+r . scales . push (new scale_S (24, {left: "S'"}));
+r . scales . push (new scale_C (24, {left: "C", highlight: '#aaffaa'}));
 
-r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (24));
-r . scales . push (new scale_SC (24));
-r . scales . push (new scale_ST_down (24));
-r . scales . push (new scale_P_down (24, {colour: 'red'}));
+r = new Rule ({left_margin: 0.24, right_margin: 0.24}); s . rules . push (r);
+r . scales . push (new scale_D (24, {left: "D"}));
+r . scales . push (new scale_SC (24, {left: "S"}));
+r . scales . push (new scale_ST_down (24, {left: "ST"}));
+r . scales . push (new scale_P_down (24, {left: "P", colour: 'red'}));
 
 
 </script>
