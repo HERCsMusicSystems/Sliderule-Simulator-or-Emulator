@@ -125,7 +125,7 @@ var draw_MLS = function (ctx, fn, length, from, to, step, limit, height) {
   }
 };
 
-var draw_log = function (ctx, length, height, scale) {
+var draw_log = function (ctx, length, height, scale, left_extension, right_extension) {
   mark (ctx, 1, length, height * 0.5);
   smark (ctx, '\u03c0', length * Math . log10 (Math . PI), height * 0.2, height * 0.5);
   smark (ctx, 'e', length * Math . log10 (Math . E), height * 0.2, height * 0.5);
@@ -137,12 +137,12 @@ var draw_log = function (ctx, length, height, scale) {
   draw_05R (ctx, Math . log10, length, 1, 10, 1, height * 0.4);
   ctx . translate (length, 0);
   ctx . strokeStyle = scale . alt; ctx . fillStyle = scale . alt;
-  draw_002R (ctx, Math . log10, length, 1, 10, scale . right_extension, height * 0.2);
-  draw_01R (ctx, Math . log10, length, 1, 10, scale . right_extension, height * 0.3);
+  draw_002R (ctx, Math . log10, length, 1, 10, right_extension, height * 0.2);
+  draw_01R (ctx, Math . log10, length, 1, 10, right_extension, height * 0.3);
   ctx . translate (- length - length, 0);
-  draw_01L (ctx, Math . log10, length, 1, 10, 1 - scale . left_extension, height * 0.2);
-  draw_05L (ctx, Math . log10, length, 1, 10, 1 - scale . left_extension, height * 0.3);
-  draw_ML (ctx, Math . log10, length, 1, 9, 1 - scale . left_extension, height * 0.5);
+  draw_01L (ctx, Math . log10, length, 1, 10, 1 - left_extension, height * 0.2);
+  draw_05L (ctx, Math . log10, length, 1, 10, 1 - left_extension, height * 0.3);
+  draw_ML (ctx, Math . log10, length, 1, 9, 1 - left_extension, height * 0.5);
 };
 var draw_one_log = function (ctx, length, height) {
   draw_MR (ctx, Math . log10, length, 1, 9, 1, height * 0.5);
@@ -166,7 +166,7 @@ var draw_log_1L = function (ctx, length, height, extension) {
   draw_01L (ctx, Math . log10, length, 1, 8, extension, height * 0.3);
   draw_002L (ctx, Math . log10, length, 1, 2, extension, height * 0.2);
 };
-var draw_log_log = function (ctx, length, height, scale) {
+var draw_log_log = function (ctx, length, height, scale, left_extension, right_extension) {
   mark (ctx, 1, length, height * 0.5); length *= 0.5;
   smark (ctx, '\u03c0', length * Math . log10 (Math . PI), height * 0.2, height * 0.5);
   smark (ctx, 'e', length * Math . log10 (Math . E), height * 0.2, height * 0.5);
@@ -175,14 +175,14 @@ var draw_log_log = function (ctx, length, height, scale) {
   draw_one_log (ctx, length, height); ctx . translate (length, 0); draw_one_log (ctx, length, height);
   ctx . strokeStyle = scale . alt; ctx . fillStyle = scale . alt;
   ctx . translate (length, 0);
-  draw_05R (ctx, Math . log10, length, 1, 9, scale . right_extension * 2, height * 0.4);
-  draw_01R (ctx, Math . log10, length, 1, 8, scale . right_extension * 2, height * 0.3);
-  draw_002R (ctx, Math . log10, length, 1, 2, scale . right_extension * 2, height * 0.2);
+  draw_05R (ctx, Math . log10, length, 1, 9, right_extension * 2, height * 0.4);
+  draw_01R (ctx, Math . log10, length, 1, 8, right_extension * 2, height * 0.3);
+  draw_002R (ctx, Math . log10, length, 1, 2, right_extension * 2, height * 0.2);
   ctx . translate (length * -3, 0);
-  draw_ML (ctx, Math . log10, length, 1, 9, 1 - scale . left_extension * 2, height * 0.5);
-  draw_05L (ctx, Math . log10, length, 1, 8, 1 - scale . left_extension * 2, height * 0.4);
-  draw_02L (ctx, Math . log10, length, 8, 10, 1 - scale . left_extension * 2, height * 0.3);
-  draw_01L (ctx, Math . log10, length, 1, 8, 1 - scale . left_extension * 2, height * 0.3);
+  draw_ML (ctx, Math . log10, length, 1, 9, 1 - left_extension * 2, height * 0.5);
+  draw_05L (ctx, Math . log10, length, 1, 8, 1 - left_extension * 2, height * 0.4);
+  draw_02L (ctx, Math . log10, length, 8, 10, 1 - left_extension * 2, height * 0.3);
+  draw_01L (ctx, Math . log10, length, 1, 8, 1 - left_extension * 2, height * 0.3);
 };
 var draw_log_log_log = function (ctx, length, height, scale) {
   mark (ctx, 1, length, height * 0.5); length /= 3;
@@ -371,7 +371,7 @@ var spacer = function (height, options) {
   this . index = '1';
   this . ruleHeight = function () {return this . height;};
   this . hitTest = function (y) {return false;};
-  this . la = 'left'; this . ra = 'right'; this . ca = 'center';
+  this . la = 'left'; this . ra = 'left'; this . ca = 'center';
   this . ls = 0.1; this . rs = 0.1; this . cs = 0.5;
   this . colour = 'black'; this . alt = 'red';
   this . left_extension = 0; this . right_extension = 0;
@@ -668,6 +668,7 @@ var Sliderule = function (length, options) {
   this . position = {x: 0, y: 0};
   this . rules = [];
   this . animation_delta = 0.004;
+  this . hairline_top = 0; this . hairline_bottom = 0;
   this . cursor_position = 0; this . cursor_target = 0; this . cursor_colour = 'red'; this . cursor_motion = 0.1;
   this . cursorGlass = "rgba(0, 0, 0, 0.1)";
   this . cursorFrame = "rgba(0, 0, 0, 0.1)";
@@ -737,7 +738,7 @@ var Sliderule = function (length, options) {
     if (this . cursorGlass) {ctx . fillStyle = this . cursorGlass; ctx . fill ();}
     if (this . cursorFrame) {ctx . strokeStyle = this . cursorFrame; ctx . stroke ();}
     ctx . beginPath ();
-    ctx . moveTo (0, - this . cursor_rounding); ctx . lineTo (0, this . height () + this . cursor_rounding);
+    ctx . moveTo (0, - this . hairline_top); ctx . lineTo (0, this . height () + this . hairline_bottom);
     ctx . strokeStyle = this . cursor_colour;
     ctx . stroke ();
     // CURSORS
