@@ -726,7 +726,9 @@ var Sliderule = function (length, options) {
     ctx . restore ();
     // BRACES
     for (ind in this . braces) {ctx . save (); this . braces [ind] . draw (ctx, this); ctx . restore ();}
+    ctx . save ();
     if (this . static_markings) this . drawMarkings (ctx, this . length * this . static_markings_shift, this . static_markings_align);
+    ctx . restore ();
     ctx . translate (this . length * (this . left_margin + this . cursor_position), 0);
     // CURSOR GLASS BRACES
     for (ind in this . cursorGlassBraces) {ctx . save (); this . cursorGlassBraces [ind] . draw (ctx, this); ctx . restore ();}
