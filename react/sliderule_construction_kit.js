@@ -506,6 +506,18 @@ var Cursor = function (shift, from, to, colour, options) {
   for (var key in options) this [key] = options [key];
 };
 
+var HairlineD = Math . log10 (1 / Math . sqrt (Math . PI * 0.25));
+var HairlineS = - HairlineD;
+var HairlineHPElectrical = - Math . log10 (Math . sqrt (0.746));
+var HairlineHPMechanical = - Math . log10 (Math . sqrt (0.74569987158227022));
+var HairlineHPMetric = - Math . log10 (Math . sqrt (0.73549875));
+var HairlineHP = - Math . log10 (Math . sqrt (0.736));
+var HairlineHPUS = HairlineHPElectrical;
+var HairlineHPEurope = HairlineHP;
+var HairlineHPJapan = HairlineHP;
+var HairlinePS = HairlineHP;
+var Hairline360 = Math . log10 (3.60 / Math . PI);
+
 var CursorS = function (from, to, colour, options) {return new Cursor (- Math . log10 (1 / Math . sqrt (Math . PI * 0.25)), from, to, colour, options);};
 var CursorD = function (from, to, colour, options) {return new Cursor (Math . log10 (1 / Math . sqrt (Math . PI * 0.25)), from, to, colour, options);};
 var CursorHPElectrical = function (from, to, colour, options) {return new Cursor (- Math . log10 (Math . sqrt (0.746)), from, to, colour, options);};
@@ -515,21 +527,8 @@ var CursorHP = function (from, to, colour, options) {return new Cursor (- Math .
 var CursorHPUS = CursorHPElectrical;
 var CursorHPEurope = CursorHP;
 var CursorHPJapan = CursorHP;
-var CursorPS = CursorHPMetric;
+var CursorPS = CursorHP;
 var Cursor360 = function (from, to, colour, options) {return new Cursor (Math . log10 (3.60 / Math . PI), from, to, colour, options);};
-var CursorText = function (text, shift, v, font, colour, align, baseline, options) {
-	this . draw = function (ctx, length) {
-		length *= shift;
-		ctx . save ();
-		ctx . font = font;
-		ctx . fillStyle = colour;
-		ctx . textAlign = align;
-		ctx . textBaseline = baseline ? baseline : 'middle';
-		ctx . fillText (text, length, v);
-		ctx . restore ();
-	};
-  for (var key in options) this [key] = options [key];
-};
 
 var LeftBrace = function (margin, width, radius, background, colour, braceRadius, braceAngle) {
   this . draw = function (ctx, s) {
