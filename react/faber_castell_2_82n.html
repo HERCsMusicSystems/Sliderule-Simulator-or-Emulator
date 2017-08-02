@@ -7,6 +7,7 @@
 	<input type = checkbox onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox onchange = "javascript: changeSide (this . checked ? 'front' : 'back');" />Other side.
 	<input type = checkbox onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
 </div>
 <div id="root"></div>
@@ -35,7 +36,7 @@ var logo = new Image (); logo . src = "Logo_1951.png";
 
 var sliderules = new Sliderules ();
 var s = new Sliderule (1200, {left_margin: 0.24, right_margin: 0.24, cursor_rounding: 16, hairline_top: -8, hairline_bottom: -8,
-  cursor_left_extension: 0.093, cursor_right_extension: 0.093, markings_background: 'black', markings_colour: 'gold', markings_size: 24});
+  cursor_left_extension: 0.093, cursor_right_extension: 0.093, markings_background: 'black', markings_colour: 'gold', markings_size: 15});
 front_sliderule = s;
 sliderules . sliderules . push (s);
 s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 84, 1));

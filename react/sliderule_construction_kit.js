@@ -126,7 +126,7 @@ var draw_MLS = function (ctx, fn, length, from, to, step, limit, height) {
 };
 
 var draw_log = function (ctx, length, height, scale, left_extension, right_extension) {
-  mark (ctx, 1, length, height * 0.5);
+  mark (ctx, 10, length, height * 0.5);
   smark (ctx, '\u03c0', length * Math . log10 (Math . PI), height * 0.2, height * 0.5);
   smark (ctx, 'e', length * Math . log10 (Math . E), height * 0.2, height * 0.5);
   smark (ctx, 'c', length * Math . log10 (Math . sqrt (4 / Math . PI)), height * 0.2, height * 0.5);
@@ -145,7 +145,7 @@ var draw_log = function (ctx, length, height, scale, left_extension, right_exten
   draw_ML (ctx, Math . log10, length, 1, 9, 1 - left_extension, height * 0.5);
 };
 var draw_one_log = function (ctx, length, height) {
-  draw_MR (ctx, Math . log10, length, 1, 9, 1, height * 0.5);
+  draw_MR (ctx, Math . log10, length, 2, 9, 1, height * 0.5);
   draw_05R (ctx, Math . log10, length, 1, 8, 1, height * 0.4);
   draw_02R (ctx, Math . log10, length, 8, 10, 1, height * 0.3);
   draw_01R (ctx, Math . log10, length, 1, 8, 1, height * 0.3);
@@ -167,12 +167,13 @@ var draw_log_1L = function (ctx, length, height, extension) {
   draw_002L (ctx, Math . log10, length, 1, 2, extension, height * 0.2);
 };
 var draw_log_log = function (ctx, length, height, scale, left_extension, right_extension) {
-  mark (ctx, 1, length, height * 0.5); length *= 0.5;
+  mark (ctx, 1, 0, height * 0.5);
+  mark (ctx, 100, length, height * 0.5); length *= 0.5;
   smark (ctx, '\u03c0', length * Math . log10 (Math . PI), height * 0.2, height * 0.5);
   smark (ctx, 'e', length * Math . log10 (Math . E), height * 0.2, height * 0.5);
   smark (ctx, '\u03c0', length * Math . log10 (Math . PI * 10), height * 0.2, height * 0.5);
   smark (ctx, 'e', length * Math . log10 (Math . E * 10), height * 0.2, height * 0.5);
-  draw_one_log (ctx, length, height); ctx . translate (length, 0); draw_one_log (ctx, length, height);
+  draw_one_log (ctx, length, height); ctx . translate (length, 0); mark (ctx, 10, 0, height * 0.5); draw_one_log (ctx, length, height);
   ctx . strokeStyle = scale . alt; ctx . fillStyle = scale . alt;
   ctx . translate (length, 0);
   draw_05R (ctx, Math . log10, length, 1, 9, right_extension * 2, height * 0.4);
@@ -185,8 +186,11 @@ var draw_log_log = function (ctx, length, height, scale, left_extension, right_e
   draw_01L (ctx, Math . log10, length, 1, 8, 1 - left_extension * 2, height * 0.3);
 };
 var draw_log_log_log = function (ctx, length, height, scale) {
-  mark (ctx, 1, length, height * 0.5); length /= 3;
-  draw_one_log (ctx, length, height); ctx . translate (length, 0); draw_one_log (ctx, length, height); ctx . translate (length, 0); draw_one_log (ctx, length, height);
+  mark (ctx, 1, 0, height * 0.5);
+  mark (ctx, 1000, length, height * 0.5); length /= 3;
+  draw_one_log (ctx, length, height);
+  ctx . translate (length, 0); draw_one_log (ctx, length, height); mark (ctx, 10, 0, height * 0.5);
+  ctx . translate (length, 0); draw_one_log (ctx, length, height); mark (ctx, 100, 0, height * 0.5);
   ctx . strokeStyle = scale . alt; ctx . fillStyle = scale . alt;
   ctx . translate (length, 0);
   draw_05R (ctx, Math . log10, length, 1, 9, scale . right_extension * 2, height * 0.4);
@@ -767,12 +771,12 @@ var Sliderule = function (length, options) {
           measure = ctx . measureText (description);
           ctx . textAlign = align;
           if (align === 'left') {
-            ctx . fillRect (shift, y + hh - 8, measure . width + 8, 14);
+            ctx . fillRect (shift, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
             ctx . fillStyle = this . markings_colour;
             ctx . fillText (description, shift + 4, y + hh);
           }
           else {
-            ctx . fillRect (shift - measure . width - 8, y + hh - 8, measure . width + 8, 14);
+            ctx . fillRect (shift - measure . width - 8, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
             ctx . fillStyle = this . markings_colour;
             ctx . fillText (description, shift - 4, y + hh);
           }
@@ -784,7 +788,7 @@ var Sliderule = function (length, options) {
   this . drawExtraMarkings = function (ctx) {
     var y = 0;
     ctx . textBaseline = 'middle';
-    ctx . font = '12px arial';
+    ctx . font = this . markings_size + 'px arial';
     var h; var hh; var description; var measure;
     for (var ind in this . rules) {
       for (var sub in this . rules [ind] . scales) {
@@ -800,11 +804,11 @@ var Sliderule = function (length, options) {
               measure = ctx . measureText (description);
               ctx . textAlign = this . cursors [esc] . marking_align;
               if (this . cursors [esc] . marking_align === 'left') {
-                ctx . fillRect ((offset + this . cursors [esc] . marking_shift) * this . length, y + hh - 8, measure . width + 8, 14);
+                ctx . fillRect ((offset + this . cursors [esc] . marking_shift) * this . length, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
                 ctx . fillStyle = this . markings_colour;
                 ctx . fillText (description, (offset + this . cursors [esc] . marking_shift) * this . length + 4, y + hh);
               } else {
-                ctx . fillRect ((offset + this . cursors [esc] . marking_shift) * this . length - measure . width - 8, y + hh - 8, measure . width + 8, 14);
+                ctx . fillRect ((offset + this . cursors [esc] . marking_shift) * this . length - measure . width - 8, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
                 ctx . fillStyle = this . markings_colour;
                 ctx . fillText (description, (offset + this . cursors [esc] . marking_shift) * this . length - 4, y + hh);
               }
