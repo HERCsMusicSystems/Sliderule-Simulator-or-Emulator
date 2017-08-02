@@ -4,9 +4,10 @@
   </head>
 <body>
 <div>
-	<input type = checkbox onchange = "javascript: changeMarkings ('stator', this . checked);" />
-	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />
-	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />
+	<input type = checkbox onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
 </div>
 <div id="root"></div>
 
@@ -18,11 +19,24 @@
 
 <script>
 
+var front_sliderule;
+var back_sliderule;
+
+var changeVersion = function (version) {
+	switch (version) {
+	case 'us': front_sliderule . cursorBraces = front_us_braces; front_sliderule . cursors = front_us_cursors; break;
+	case 'german': front_sliderule . cursorBraces = front_german_braces; front_sliderule . cursors = front_german_cursors; break;
+	default: break;
+	}
+	sliderules . requireRedraw = true;
+};
+
 var logo = new Image (); logo . src = "Logo_1951.png";
 
 var sliderules = new Sliderules ();
 var s = new Sliderule (1200, {left_margin: 0.24, right_margin: 0.24, cursor_rounding: 16, hairline_top: -8, hairline_bottom: -8,
-  cursor_left_extension: 0.093, cursor_right_extension: 0.093});
+  cursor_left_extension: 0.093, cursor_right_extension: 0.093, markings_background: 'black', markings_colour: 'gold', markings_size: 24});
+front_sliderule = s;
 sliderules . sliderules . push (s);
 s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 84, 1));
 s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 86, 1));
@@ -44,30 +58,61 @@ s . braces . push (new Logo (logo, 0.105, 48, 0.125));
 s . braces . push (new Engraving ("CASTELL", 'italic 16px arial', 'left', 'black', 0.072, 300));
 s . braces . push (new Engraving ("DUPLEX", '16px arial', 'left', 'black', 0.072, 318));
 s . cursorGlassBraces . push (new CursorBrace (0.098, 0.098, 20, 0, '#deb887'));
+var front_german_braces = [];
+var front_german_cursors = [];
+var front_us_braces = [];
+var front_us_cursors = [];
 var HairlineLeft = HairlineD - HairlinePS - HairlinePS;
 var HairlineRight = HairlineLeft - Math . log10 (Math . log (2));
-s . cursorBraces . push (new Screw (HairlineLeft, -8, 6, 0.5, '#b5a642', '#605321'));
-s . cursorBraces . push (new Screw (-HairlineLeft, -8, 6, 0.5, '#b5a642', '#605321'));
-s . cursorBraces . push (new Screw (HairlineLeft, 374, 6, 0.5, '#b5a642', '#605321'));
-s . cursorBraces . push (new Screw (- HairlineLeft, 374, 6, 0.5, '#b5a642', '#605321'));
-s . cursorBraces . push (new Engraving ("CASTELL", 'italic 12px arial', 'right', 'black', -0.015, 378));
-s . cursorBraces . push (new Engraving ("2/82 N", '12px arial', 'left', 'black', 0.015, 378));
-s . cursorBraces . push (new Engraving ("s", '12px arial', 'center', 'red', HairlineS, 96));
-s . cursorBraces . push (new Engraving ("kW", '12px arial', 'left', 'red', 0.006, 96));
-s . cursorBraces . push (new Engraving ("PS", '12px arial', 'center', 'red', HairlinePS, 96));
-s . cursorBraces . push (new Engraving ("PS", '12px arial', 'center', 'red', HairlineD, 280));
-s . cursorBraces . push (new Engraving ("kW", '12px arial', 'left', 'red', HairlineLeft + 0.006, 280));
-s . cursors . push (new Cursor (HairlineS, 98, 146, 'red'));
-s . cursors . push (new Cursor (HairlinePS, 98, 146, 'red'));
-s . cursors . push (new Cursor (HairlineD, 222, 268, 'red'));
-s . cursors . push (new Cursor (HairlineLeft, 8, 92, 'red'));
-s . cursors . push (new Cursor (HairlineLeft, 98, 170, 'red'));
-s . cursors . push (new Cursor (HairlineLeft, 172, 268, 'red'));
-s . cursors . push (new Cursor (HairlineLeft, 274, 358, 'red'));
-s . cursors . push (new Cursor (HairlineRight, 8, 92, 'red'));
-s . cursors . push (new Cursor (HairlineRight, 98, 170, 'red'));
-s . cursors . push (new Cursor (HairlineRight, 172, 268, 'red'));
-s . cursors . push (new Cursor (HairlineRight, 274, 358, 'red'));
+console . log (HairlineLeft);
+front_german_braces . push (new Screw (-0.075, -8, 6, 0.5, '#b5a642', '#605321'));
+front_german_braces . push (new Screw (0.075, -8, 6, 0.5, '#b5a642', '#605321'));
+front_german_braces . push (new Screw (-0.075, 374, 6, 0.5, '#b5a642', '#605321'));
+front_german_braces . push (new Screw (0.075, 374, 6, 0.5, '#b5a642', '#605321'));
+front_german_braces . push (new Engraving ("CASTELL", 'italic 12px arial', 'right', 'black', -0.015, 378));
+front_german_braces . push (new Engraving ("2/82 N", '12px arial', 'left', 'black', 0.015, 378));
+front_german_braces . push (new Engraving ("s", '12px arial', 'center', 'red', HairlineS, 96));
+front_german_braces . push (new Engraving ("kW", '12px arial', 'left', 'red', 0.006, 96));
+front_german_braces . push (new Engraving ("PS", '12px arial', 'center', 'red', HairlinePS, 96));
+front_german_braces . push (new Engraving ("PS", '12px arial', 'center', 'red', HairlineD, 280));
+front_german_braces . push (new Engraving ("kW", '12px arial', 'left', 'red', HairlineLeft + 0.006, 280));
+front_german_cursors . push (new Cursor (HairlineS, 98, 146, 'red'));
+front_german_cursors . push (new Cursor (HairlinePS, 98, 146, 'red'));
+front_german_cursors . push (new Cursor (HairlineD, 222, 268, 'red'));
+front_german_cursors . push (new Cursor (HairlineLeft, 8, 92, 'red'));
+front_german_cursors . push (new Cursor (HairlineLeft, 98, 170, 'red'));
+front_german_cursors . push (new Cursor (HairlineLeft, 172, 268, 'red'));
+front_german_cursors . push (new Cursor (HairlineLeft, 274, 358, 'red'));
+front_german_cursors . push (new Cursor (HairlineRight, 8, 92, 'red'));
+front_german_cursors . push (new Cursor (HairlineRight, 98, 170, 'red'));
+front_german_cursors . push (new Cursor (HairlineRight, 172, 268, 'red'));
+front_german_cursors . push (new Cursor (HairlineRight, 274, 358, 'red'));
+HairlineLeft = HairlineD - HairlineHPUS - HairlineHPUS;
+HairlineRight = HairlineLeft - Math . log10 (Math . log (2));
+console . log (HairlineLeft);
+front_us_braces . push (new Screw (-0.075, -8, 6, 0.5, '#b5a642', '#605321'));
+front_us_braces . push (new Screw (0.075, -8, 6, 0.5, '#b5a642', '#605321'));
+front_us_braces . push (new Screw (-0.075, 374, 6, 0.5, '#b5a642', '#605321'));
+front_us_braces . push (new Screw (0.075, 374, 6, 0.5, '#b5a642', '#605321'));
+front_us_braces . push (new Engraving ("CASTELL", 'italic 12px arial', 'right', 'black', -0.015, 378));
+front_us_braces . push (new Engraving ("2/82 N", '12px arial', 'left', 'black', 0.015, 378));
+front_us_braces . push (new Engraving ("s", '12px arial', 'center', 'red', HairlineS, 96));
+front_us_braces . push (new Engraving ("kW", '12px arial', 'left', 'red', 0.006, 96));
+front_us_braces . push (new Engraving ("HP", '12px arial', 'center', 'red', HairlineHPUS, 96));
+front_us_braces . push (new Engraving ("HP", '12px arial', 'center', 'red', HairlineD, 280));
+front_us_braces . push (new Engraving ("kW", '12px arial', 'left', 'red', HairlineLeft + 0.006, 280));
+front_us_cursors . push (new Cursor (HairlineS, 98, 146, 'red'));
+front_us_cursors . push (new Cursor (HairlineHPUS, 98, 146, 'red'));
+front_us_cursors . push (new Cursor (HairlineD, 222, 268, 'red'));
+front_us_cursors . push (new Cursor (HairlineLeft, 8, 92, 'red'));
+front_us_cursors . push (new Cursor (HairlineLeft, 98, 170, 'red'));
+front_us_cursors . push (new Cursor (HairlineLeft, 172, 268, 'red'));
+front_us_cursors . push (new Cursor (HairlineLeft, 274, 358, 'red'));
+front_us_cursors . push (new Cursor (HairlineRight, 8, 92, 'red'));
+front_us_cursors . push (new Cursor (HairlineRight, 98, 170, 'red'));
+front_us_cursors . push (new Cursor (HairlineRight, 172, 268, 'red'));
+front_us_cursors . push (new Cursor (HairlineRight, 274, 358, 'red'));
+
 var r = new Rule ({left_margin: 0.24, right_margin: 0.24});
 s . rules . push (r);
 r . scales . push (new spacer (8));
@@ -101,6 +146,7 @@ r . scales . push (new spacer (6));
 r . scales . push (new scale_P_down (24, {left_extension: 0.07, left: "P", right: "\u221a1-(0.1X)\u00b2", rs: 0.08, colour: 'red'}));
 r . scales . push (new spacer (8));
 
+changeVersion ('german');
 
 </script>
 

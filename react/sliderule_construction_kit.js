@@ -682,7 +682,7 @@ var Sliderule = function (length, options) {
   this . static_markings = false;
   this . cursor_markings = false;
   this . extra_cursor_markings = false;
-  this . markings_colour = 'black'; this . markings_background = 'white';
+  this . markings_colour = 'black'; this . markings_background = 'white'; this . markings_size = 12;
   this . static_markings_shift = 0.01; this . static_markings_align = 'left';
   this . cursor_markings_shift = 0.01; this . cursor_markings_align = 'left';
   this . cursor_limit_left = 0.2; this . cursor_limit_right = 0.2;
@@ -754,7 +754,7 @@ var Sliderule = function (length, options) {
   this . drawMarkings = function (ctx, shift, align) {
     var y = 0;
     ctx . textBaseline = 'middle';
-    ctx . font = '12px arial';
+    ctx . font = this . markings_size + 'px arial';
     var h; var hh; var description; var measure;
     for (var ind in this . rules) {
       for (var sub in this . rules [ind] . scales) {
