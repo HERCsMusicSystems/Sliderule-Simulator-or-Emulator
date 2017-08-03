@@ -7,7 +7,7 @@
 	<input type = checkbox onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
-	<input type = checkbox onchange = "javascript: changeSide (this . checked ? 'front' : 'back');" />Other side.
+	<input type = checkbox onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
 	<input type = checkbox onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
 </div>
 <div id="root"></div>
@@ -27,6 +27,15 @@ var changeVersion = function (version) {
 	switch (version) {
 	case 'us': front_sliderule . cursorBraces = front_us_braces; front_sliderule . cursors = front_us_cursors; break;
 	case 'german': front_sliderule . cursorBraces = front_german_braces; front_sliderule . cursors = front_german_cursors; break;
+	default: break;
+	}
+	sliderules . requireRedraw = true;
+};
+
+var changeSide = function (side) {
+	switch (side) {
+	case 'front': front_sliderule . inactive = false; back_sliderule . inactive = true; break;
+	case 'back': front_sliderule . inactive = true; back_sliderule . inactive = false; break;
 	default: break;
 	}
 	sliderules . requireRedraw = true;
@@ -65,7 +74,6 @@ var front_us_braces = [];
 var front_us_cursors = [];
 var HairlineLeft = HairlineD - HairlinePS - HairlinePS;
 var HairlineRight = HairlineLeft - Math . log10 (Math . log (2));
-console . log (HairlineLeft);
 front_german_braces . push (new Screw (-0.075, -8, 6, 0.5, '#b5a642', '#605321'));
 front_german_braces . push (new Screw (0.075, -8, 6, 0.5, '#b5a642', '#605321'));
 front_german_braces . push (new Screw (-0.075, 374, 6, 0.5, '#b5a642', '#605321'));
@@ -90,7 +98,6 @@ front_german_cursors . push (new Cursor (HairlineRight, 172, 268, 'red'));
 front_german_cursors . push (new Cursor (HairlineRight, 274, 358, 'red'));
 HairlineLeft = HairlineD - HairlineHPUS - HairlineHPUS;
 HairlineRight = HairlineLeft - Math . log10 (Math . log (2));
-console . log (HairlineLeft);
 front_us_braces . push (new Screw (-0.075, -8, 6, 0.5, '#b5a642', '#605321'));
 front_us_braces . push (new Screw (0.075, -8, 6, 0.5, '#b5a642', '#605321'));
 front_us_braces . push (new Screw (-0.075, 374, 6, 0.5, '#b5a642', '#605321'));
@@ -147,8 +154,117 @@ r . scales . push (new spacer (6));
 r . scales . push (new scale_P_down (24, {left_extension: 0.07, left: "P", right: "\u221a1-(0.1X)\u00b2", rs: 0.08, colour: 'red'}));
 r . scales . push (new spacer (8));
 
-changeVersion ('german');
 
+
+s = new Sliderule (1200, {left_margin: 0.24, right_margin: 0.24, cursor_rounding: 16, hairline_top: -8, hairline_bottom: -8,
+  cursor_left_extension: 0.093, cursor_right_extension: 0.093, markings_background: 'black', markings_colour: 'gold', markings_size: 15});
+back_sliderule = s;
+sliderules . sliderules . push (s);
+s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 84, 1));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 86, 1));
+s . braces . push (new LeftBraceBar (0.054, 20, 20, 4, 'red', 'black'));
+s . braces . push (new LeftBraceBar (0.054, 20, 310, 4, 'gray', 'black'));
+s . braces . push (new LeftBraceBar (0.054, 310, 20, 4, 'gray', 'black'));
+s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 84, 1));
+s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 86, 1));
+s . braces . push (new RightBraceBar (0.054, 20, 20, 4, 'red', 'black'));
+s . braces . push (new RightBraceBar (0.054, 20, 310, 4, 'gray', 'black'));
+s . braces . push (new RightBraceBar (0.054, 310, 20, 4, 'gray', 'black'));
+s . braces . push (new Screw (0.03, 318, 12, 0.5, '#b5a642', '#605321'));
+s . braces . push (new Screw (0.016, 90, 8, 0.1, '#b5a642', '#605321'));
+s . braces . push (new Screw (0.036, 36, 8, 0.8, '#b5a642', '#605321'));
+s . braces . push (new Screw (1.45, 318, 12, 1.4, '#b5a642', '#605321'));
+s . braces . push (new Screw (1.464, 90, 8, 2.5, '#b5a642', '#605321'));
+s . braces . push (new Screw (1.444, 36, 8, 3.1, '#b5a642', '#605321'));
+s . braces . push (new Engraving ("CASTELL", 'italic 16px arial', 'left', 'black', 0.072, 300));
+s . braces . push (new Engraving ("DUPLEX", '16px arial', 'left', 'black', 0.072, 318));
+s . cursorGlassBraces . push (new CursorBrace (0.098, 0.098, 20, 0, '#deb887'));
+var back_german_braces = [];
+var back_german_cursors = [];
+var back_us_braces = [];
+var back_us_cursors = [];
+HairlineLeft = HairlineD - HairlinePS - HairlinePS;
+HairlineRight = HairlineLeft - Math . log10 (Math . log (2));
+back_german_braces . push (new Screw (-0.075, -8, 6, 0.5, '#b5a642', '#605321'));
+back_german_braces . push (new Screw (0.075, -8, 6, 0.5, '#b5a642', '#605321'));
+back_german_braces . push (new Screw (-0.075, 374, 6, 0.5, '#b5a642', '#605321'));
+back_german_braces . push (new Screw (0.075, 374, 6, 0.5, '#b5a642', '#605321'));
+back_german_braces . push (new Engraving ("CASTELL", 'italic 12px arial', 'right', 'black', -0.015, 378));
+back_german_braces . push (new Engraving ("2/82 N", '12px arial', 'left', 'black', 0.015, 378));
+back_german_braces . push (new Engraving ("s", '12px arial', 'center', 'red', HairlineS, 96));
+back_german_braces . push (new Engraving ("kW", '12px arial', 'left', 'red', 0.006, 96));
+back_german_braces . push (new Engraving ("PS", '12px arial', 'center', 'red', HairlinePS, 96));
+back_german_braces . push (new Engraving ("PS", '12px arial', 'center', 'red', HairlineD, 280));
+back_german_braces . push (new Engraving ("kW", '12px arial', 'left', 'red', HairlineLeft + 0.006, 280));
+back_german_cursors . push (new Cursor (HairlineS, 98, 146, 'red'));
+back_german_cursors . push (new Cursor (HairlinePS, 98, 146, 'red'));
+back_german_cursors . push (new Cursor (HairlineD, 222, 268, 'red'));
+back_german_cursors . push (new Cursor (HairlineLeft, 8, 92, 'red'));
+back_german_cursors . push (new Cursor (HairlineLeft, 98, 170, 'red'));
+back_german_cursors . push (new Cursor (HairlineLeft, 172, 268, 'red'));
+back_german_cursors . push (new Cursor (HairlineLeft, 274, 358, 'red'));
+back_german_cursors . push (new Cursor (HairlineRight, 8, 92, 'red'));
+back_german_cursors . push (new Cursor (HairlineRight, 98, 170, 'red'));
+back_german_cursors . push (new Cursor (HairlineRight, 172, 268, 'red'));
+back_german_cursors . push (new Cursor (HairlineRight, 274, 358, 'red'));
+HairlineLeft = HairlineD - HairlineHPUS - HairlineHPUS;
+HairlineRight = HairlineLeft - Math . log10 (Math . log (2));back_us_braces . push (new Screw (-0.075, -8, 6, 0.5, '#b5a642', '#605321'));
+back_us_braces . push (new Screw (0.075, -8, 6, 0.5, '#b5a642', '#605321'));
+back_us_braces . push (new Screw (-0.075, 374, 6, 0.5, '#b5a642', '#605321'));
+back_us_braces . push (new Screw (0.075, 374, 6, 0.5, '#b5a642', '#605321'));
+back_us_braces . push (new Engraving ("CASTELL", 'italic 12px arial', 'right', 'black', -0.015, 378));
+back_us_braces . push (new Engraving ("2/82 N", '12px arial', 'left', 'black', 0.015, 378));
+back_us_braces . push (new Engraving ("s", '12px arial', 'center', 'red', HairlineS, 96));
+back_us_braces . push (new Engraving ("kW", '12px arial', 'left', 'red', 0.006, 96));
+back_us_braces . push (new Engraving ("HP", '12px arial', 'center', 'red', HairlineHPUS, 96));
+back_us_braces . push (new Engraving ("HP", '12px arial', 'center', 'red', HairlineD, 280));
+back_us_braces . push (new Engraving ("kW", '12px arial', 'left', 'red', HairlineLeft + 0.006, 280));
+back_us_cursors . push (new Cursor (HairlineS, 98, 146, 'red'));
+back_us_cursors . push (new Cursor (HairlineHPUS, 98, 146, 'red'));
+back_us_cursors . push (new Cursor (HairlineD, 222, 268, 'red'));
+back_us_cursors . push (new Cursor (HairlineLeft, 8, 92, 'red'));
+back_us_cursors . push (new Cursor (HairlineLeft, 98, 170, 'red'));
+back_us_cursors . push (new Cursor (HairlineLeft, 172, 268, 'red'));
+back_us_cursors . push (new Cursor (HairlineLeft, 274, 358, 'red'));
+back_us_cursors . push (new Cursor (HairlineRight, 8, 92, 'red'));
+back_us_cursors . push (new Cursor (HairlineRight, 98, 170, 'red'));
+back_us_cursors . push (new Cursor (HairlineRight, 172, 268, 'red'));
+back_us_cursors . push (new Cursor (HairlineRight, 274, 358, 'red'));
+
+r = new Rule ({left_margin: 0.24, right_margin: 0.24});
+s . rules . push (r);
+r . scales . push (new spacer (2));
+r . scales . push (new scale_L (24, {left_extension: 0.06, right_extension: 0.061, left: "T\u2081", right: "\u2222 tan 0.1X", rs: 0.08, centre: "cot", ca: 'left', cs: 1.13, cc: 'red'}));
+r . scales . push (new scale_L (24, {left_extension: 0.061, right_extension: 0.06, left: "T\u2082", right: "\u2222 tan X", rs: 0.08, centre: "cot", ca: 'left', cs: 1.12, cc: 'red'}));
+r . scales . push (new scale_L (24, {left_extension: 0.06, right_extension: 0.06, left: "L", right: "lgX", rs: 0.08}));
+r . scales . push (new scale_K (24, {left_extension: 0.065, right_extension: 0.06, left: "K", right: "X\u00b2", rs: 0.08, alt: 'black'}));
+r . scales . push (new scale_DF (24, {left_extension: 0.065, right_extension: 0.06, left: "DF", index: "<-1->"}));
+
+r = new Rule ({stator: 1, left_margin: 0.26, right_margin: 0.26}); s . rules . push (r);
+r . markings . push (new RuleBars (-0.254, 1, 4, 116, 9, 6, 4, 'black'));
+r . markings . push (new RuleBars (1.254, -1, 4, 116, 9, 6, 4, 'black'));
+r . markings . push (new Engraving ("2/82 N", '12px arial', 'center', 'black', -0.14, 61, Math . PI * -0.5));
+r . markings . push (new Engraving ("MADE IN GERMANY", '10px arial', 'center', 'black', -0.13, 61, Math . PI * -0.5));
+r . scales . push (new scale_DF (24, {left_extension: 0.065, right_extension: 0.06, left: "CF", right: "X\u00b2", rs: 0.08, alt: 'black'}));
+r . scales . push (new scale_J (24, {left_extension: 0.06, right_extension: 0.065, left: "K'", right: "100/X\u00b2", rs: 0.08, alt: 'black'}));
+r . scales . push (new scale_CIF (24, {left_extension: 0.064, right_extension: 0.065, left: "CIF", right: "10/X\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DI (24, {left_extension: 0.06, left: "CI'", right: "\u2222 sin 0.1X", rs: 0.08, centre: "cos", ca: 'left', cs: 1.13, cc: 'red', colour: 'red'}));
+r . scales . push (new scale_C (24, {left_extension: 0.065, right_extension: 0.06, left: "C", right: "X", rs: 0.08, alt: 'black', highlight: '#aaffaa'}));
+
+r = new Rule ({left_margin: 0.24, right_margin: 0.24}); s . rules . push (r);
+r . scales . push (new scale_D (24, {left_extension: 0.065, right_extension: 0.06, left: "D", right: "X", rs: 0.08, alt: 'black'}));
+r . scales . push (new spacer (6));
+r . scales . push (new scale_M (24, {left_extension: 0.065, left: "S", right: "\u2222 sin 0.1X", rs: 0.08, centre: "cos", ca: 'left', cs: 1.13, cc: 'red'}));
+r . scales . push (new spacer (6));
+
+r . scales . push (new scale_M (24, {left_extension: 0.065, left: "ST", right: "\u2222 arc 0.01X", rs: 0.08}));
+r . scales . push (new spacer (6));
+r . scales . push (new scale_M (24, {left_extension: 0.07, left: "P", right: "\u221a1-(0.1X)\u00b2", rs: 0.08}));
+r . scales . push (new spacer (8));
+
+changeVersion ('german');
+changeSide ('back');
 </script>
 
 <script src="sliderule_application.js"></script>

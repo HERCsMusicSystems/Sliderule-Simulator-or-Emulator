@@ -196,7 +196,7 @@ var draw_log_log_log = function (ctx, length, height, scale) {
   draw_05R (ctx, Math . log10, length, 1, 9, scale . right_extension * 2, height * 0.4);
   draw_01R (ctx, Math . log10, length, 1, 8, scale . right_extension * 2, height * 0.3);
   draw_002R (ctx, Math . log10, length, 1, 2, scale . right_extension * 2, height * 0.2);
-  ctx . translate (length * -3, 0);
+  ctx . translate (length * -4, 0);
   draw_ML (ctx, Math . log10, length, 1, 9, 1 - scale . left_extension * 2, height * 0.5);
   draw_05L (ctx, Math . log10, length, 1, 8, 1 - scale . left_extension * 2, height * 0.4);
   draw_02L (ctx, Math . log10, length, 8, 10, 1 - scale . left_extension * 2, height * 0.3);
@@ -666,6 +666,7 @@ var Screw = function (shift, top, radius, angle, background, colour) {
 }
 
 var Sliderule = function (length, options) {
+  this . inactive = false;
   this . length = length;
   this . left_margin = 0.2; this . right_margin = 0.2;
   this . position = {x: 0, y: 0};
@@ -717,6 +718,9 @@ var Sliderule = function (length, options) {
       this . cursor_position += this . animation_delta;
       if (this . cursor_position > this . cursor_target) this . cursor_position = this . cursor_target;
     }
+    if (this . inactive) return;
+    ctx . translate (this . position . x, this . position . y);
+    ctx . save ();
     var ind;
     // BACK BRACES
     for (ind in this . backBraces) {ctx . save (); this . backBraces [ind] . draw (ctx, this); ctx . restore ();}
@@ -754,6 +758,8 @@ var Sliderule = function (length, options) {
     if (this . cursor_markings) this . drawMarkings (ctx, this . length * this . cursor_markings_shift, this . cursor_markings_align);
     // CURSOR EXTRA MARKINGS
     if (this . extra_cursor_markings) this . drawExtraMarkings (ctx);
+    ctx . restore ();
+    ctx . translate (0, this . height ());
   };
   this . drawMarkings = function (ctx, shift, align) {
     var y = 0;
@@ -909,11 +915,7 @@ var Sliderules = function (options) {
     }
     ctx . translate (this . position . x, this . position . y);
     for (var ind in this . sliderules) {
-      ctx . translate (this . sliderules [ind] . position . x, this . sliderules [ind] . position . y);
-      ctx . save ();
       this . sliderules [ind] . draw (ctx);
-      ctx . restore ();
-      ctx . translate (0, this . sliderules [ind] . height ());
     }
   };
   this . move = function (delta, position) {
