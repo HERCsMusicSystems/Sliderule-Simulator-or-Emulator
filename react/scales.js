@@ -297,3 +297,13 @@ var scale_P_down = function (height, options) {
   s . draw = function (ctx, length) {draw_pe (ctx, length, - s. height, s);};
   return s;
 };
+
+var scale_LL3_down = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location));};
+  s . location = function (value) {return Math . log10 (Math . log (value));};
+  s . draw = function (ctx, length) {draw_LL3 (ctx, length, - s . height, s);};
+  return s;
+};
+
+

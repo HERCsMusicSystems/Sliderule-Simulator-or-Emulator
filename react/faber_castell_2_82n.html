@@ -238,7 +238,7 @@ r . scales . push (new scale_L (24, {left_extension: 0.06, right_extension: 0.06
 r . scales . push (new scale_L (24, {left_extension: 0.061, right_extension: 0.06, left: "T\u2082", right: "\u2222 tan X", rs: 0.08, centre: "cot", ca: 'left', cs: 1.12, cc: 'red'}));
 r . scales . push (new scale_L (24, {left_extension: 0.06, right_extension: 0.06, left: "L", right: "lgX", rs: 0.08}));
 r . scales . push (new scale_K (24, {left_extension: 0.065, right_extension: 0.06, left: "K", right: "X\u00b2", rs: 0.08, alt: 'black'}));
-r . scales . push (new scale_DF (24, {left_extension: 0.065, right_extension: 0.06, left: "DF", index: "<-1->"}));
+r . scales . push (new scale_CF (24, {left_extension: 0.065, right_extension: 0.06, left: "DF", index: "<-1->"}));
 
 r = new Rule ({stator: 1, left_margin: 0.26, right_margin: 0.26}); s . rules . push (r);
 r . markings . push (new RuleBars (-0.254, 1, 4, 116, 9, 6, 4, 'black'));
@@ -260,7 +260,7 @@ r . scales . push (new spacer (6));
 
 r . scales . push (new scale_M (24, {left_extension: 0.065, left: "ST", right: "\u2222 arc 0.01X", rs: 0.08}));
 r . scales . push (new spacer (6));
-r . scales . push (new scale_M (24, {left_extension: 0.07, left: "P", right: "\u221a1-(0.1X)\u00b2", rs: 0.08}));
+r . scales . push (new scale_LL3_down (24, {left_extension: 0.07, right_extension: 0.07, left: "LL\u2083", right: "e\u2093", rs: 0.08}));
 r . scales . push (new spacer (8));
 
 changeVersion ('german');

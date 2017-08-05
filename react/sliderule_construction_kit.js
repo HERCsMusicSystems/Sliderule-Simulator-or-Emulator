@@ -370,6 +370,51 @@ var draw_pe = function (ctx, length, height, scale) {
   draw_XRI (ctx, fn_pe, length, 0.99, 1, - scale . left_extension, height * 0.3, 0.001, 0.0005, 0.001);
 };
 
+var draw_LL3 = function (ctx, length, height, s) {
+	var esc; var limit = 1 + s . right_extension;
+	draw_ML (ctx, s . location, length, 1, 9, - s . left_extension, height * 0.5);
+	draw_MRS (ctx, s . location, length, 10, 50, 10, 1, height * 0.5);
+	mark (ctx, "10\u00b2", length * s . location (100), height * 0.5);
+	mark (ctx, "2", length * s . location (200), height * 0.5);
+	mark (ctx, "3", length * s . location (300), height * 0.5);
+	mark (ctx, "4", length * s . location (400), height * 0.5);
+	mark (ctx, "5", length * s . location (500), height * 0.5);
+	mark (ctx, "10\u00b3", length * s . location (1000), height * 0.5);
+	mark (ctx, "2", length * s . location (2000), height * 0.5);
+	mark (ctx, "3", length * s . location (3000), height * 0.5);
+	mark (ctx, "4", length * s . location (4000), height * 0.5);
+	mark (ctx, "5", length * s . location (5000), height * 0.5);
+	mark (ctx, "10\u2074", length * s . location (10000), height * 0.5);
+	mark (ctx, "2", length * s . location (20000), height * 0.5);
+	esc = s . location (30000); if (esc <= limit) mark (ctx, "3", length * esc, height * 0.5);
+	esc = s . location (40000); if (esc <= limit) mark (ctx, "4", length * esc, height * 0.5);
+	esc = s . location (50000); if (esc <= limit) mark (ctx, "5", length * esc, height * 0.5);
+	esc = s . location (100000); if (esc <= limit) mark (ctx, "10\u2075", length * esc, height * 0.5);
+	draw_XL (ctx, s . location, length, 1, 3, - s . left_extension, height * 0.4, 1, 0.5, 1);
+	draw_XL (ctx, s . location, length, 1, 3, - s . left_extension, height * 0.3, 0.5, 0.1, 0.5);
+	draw_XL (ctx, s . location, length, 1, 3, - s . left_extension, height * 0.2, 0.1, 0.02, 0.1);
+	draw_XR (ctx, s . location, length, 3, 6, 1, height * 0.4, 1, 0.5, 1);
+	draw_XR (ctx, s . location, length, 3, 6, 1, height * 0.3, 0.5, 0.1, 0.5);
+	draw_XR (ctx, s . location, length, 3, 6, 1, height * 0.2, 0.1, 0.05, 0.1);
+	draw_XR (ctx, s . location, length, 6, 10, 1, height * 0.3, 1, 0.5, 1);
+	draw_XR (ctx, s . location, length, 6, 10, 1, height * 0.2, 0.5, 0.1, 0.5);
+	draw_XR (ctx, s . location, length, 10, 30, 1, height * 0.4, 10, 5, 10);
+	draw_XR (ctx, s . location, length, 10, 30, 1, height * 0.3, 5, 1, 5);
+	draw_XR (ctx, s . location, length, 10, 30, 1, height * 0.2, 1, 0.5, 1);
+	draw_XR (ctx, s . location, length, 30, 50, 1, height * 0.3, 10, 5, 10);
+	draw_XR (ctx, s . location, length, 30, 50, 1, height * 0.2, 5, 1, 5);
+	draw_XR (ctx, s . location, length, 50, 100, 1, height * 0.3, 50, 10, 50);
+	draw_XR (ctx, s . location, length, 50, 100, 1, height * 0.2, 10, 2, 10);
+	draw_XR (ctx, s . location, length, 100, 400, 1, height * 0.3, 100, 50, 100);
+	draw_XR (ctx, s . location, length, 100, 400, 1, height * 0.2, 50, 10, 50);
+	draw_XR (ctx, s . location, length, 400, 500, 1, height * 0.2, 100, 20, 100);
+	draw_XR (ctx, s . location, length, 500, 1000, 1, height * 0.3, 500, 100, 500);
+	draw_XR (ctx, s . location, length, 500, 1000, 1, height * 0.2, 100, 50, 100);
+	draw_XR (ctx, s . location, length, 1000, 3000, 1, height * 0.3, 1000, 500, 1000);
+	draw_XR (ctx, s . location, length, 1000, 3000, 1, height * 0.2, 500, 100, 500);
+	draw_XR (ctx, s . location, length, 3000, 5000, 1, height * 0.2, 1000, 200, 1000);
+};
+
 var spacer = function (height, options) {
   this . height = height;
   this . index = '1';
@@ -934,10 +979,12 @@ var Sliderules = function (options) {
     position = subv (position, this . position);
     var esc;
     for (var ind in this . sliderules) {
-      position = subv (position, this . sliderules [ind] . position);
-      esc = this . sliderules [ind] . examine (position);
-      if (esc) return esc;
-      position = subv (position, {x: 0, y: this . sliderules [ind] . height ()});
+      if (! this . sliderules [ind] . inactive) {
+        position = subv (position, this . sliderules [ind] . position);
+        esc = this . sliderules [ind] . examine (position);
+        if (esc) return esc;
+        position = subv (position, {x: 0, y: this . sliderules [ind] . height ()});
+      }
     }
   };
   for (var key in options) this [key] = options [key];
