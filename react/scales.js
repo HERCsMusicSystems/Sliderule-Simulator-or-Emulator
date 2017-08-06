@@ -298,6 +298,15 @@ var scale_P_down = function (height, options) {
   return s;
 };
 
+var scale_LL3 = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location));};
+  s . location = function (value) {return Math . log10 (Math . log (value));};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL3 (ctx, length, s . height, s);};
+  return s;
+};
+
+
 var scale_LL3_down = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location));};
@@ -305,5 +314,23 @@ var scale_LL3_down = function (height, options) {
   s . draw = function (ctx, length) {draw_LL3 (ctx, length, - s . height, s);};
   return s;
 };
+
+var scale_LL2 = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location - 1));};
+  s . location = function (value) {return 1 + Math . log10 (Math . log (value));};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL2 (ctx, length, s . height, s);};
+  return s;
+};
+
+
+var scale_LL2_down = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location - 1));};
+  s . location = function (value) {return 1 + Math . log10 (Math . log (value));};
+  s . draw = function (ctx, length) {draw_LL2 (ctx, length, - s . height, s);};
+  return s;
+};
+
 
 
