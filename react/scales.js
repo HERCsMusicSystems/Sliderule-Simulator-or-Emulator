@@ -332,5 +332,22 @@ var scale_LL2_down = function (height, options) {
   return s;
 };
 
+var scale_LL1 = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location - 2));};
+  s . location = function (value) {return 2 + Math . log10 (Math . log (value));};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL1 (ctx, length, s . height, s);};
+  return s;
+};
+
+
+var scale_LL1_down = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location - 2));};
+  s . location = function (value) {return 2 + Math . log10 (Math . log (value));};
+  s . draw = function (ctx, length) {draw_LL1 (ctx, length, - s . height, s);};
+  return s;
+};
+
 
 

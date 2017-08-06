@@ -9,6 +9,7 @@
 	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
 	<input type = checkbox onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
 	<input type = checkbox onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
+	<input type = checkbox onchange = "javascript: changeSize (this . checked ? 1200 : 900);" />Long/Short
 </div>
 <div id="root"></div>
 
@@ -40,6 +41,8 @@ var changeSide = function (side) {
 	}
 	sliderules . requireRedraw = true;
 };
+
+var changeSize = function (length) {for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . length = length; sliderules . requireRedraw = true;};
 
 var logo = new Image (); logo . src = "Logo_1951.png";
 
@@ -238,14 +241,14 @@ r . scales . push (new scale_L (24, {left_extension: 0.06, right_extension: 0.06
 r . scales . push (new scale_L (24, {left_extension: 0.061, right_extension: 0.06, left: "T\u2082", right: "\u2222 tan X", rs: 0.08, centre: "cot", ca: 'left', cs: 1.12, cc: 'red'}));
 r . scales . push (new scale_L (24, {left_extension: 0.06, right_extension: 0.06, left: "L", right: "lgX", rs: 0.08}));
 r . scales . push (new scale_K (24, {left_extension: 0.065, right_extension: 0.06, left: "K", right: "X\u00b2", rs: 0.08, alt: 'black'}));
-r . scales . push (new scale_CF (24, {left_extension: 0.065, right_extension: 0.06, left: "DF", index: "<-1->"}));
+r . scales . push (new scale_CF (24, {left_extension: 0.065, right_extension: 0.06, left: "DF", index: "\u21e61\u21e8"}));
 
 r = new Rule ({stator: 1, left_margin: 0.26, right_margin: 0.26}); s . rules . push (r);
 r . markings . push (new RuleBars (-0.254, 1, 4, 116, 9, 6, 4, 'black'));
 r . markings . push (new RuleBars (1.254, -1, 4, 116, 9, 6, 4, 'black'));
 r . markings . push (new Engraving ("2/82 N", '12px arial', 'center', 'black', -0.14, 61, Math . PI * -0.5));
 r . markings . push (new Engraving ("MADE IN GERMANY", '10px arial', 'center', 'black', -0.13, 61, Math . PI * -0.5));
-r . scales . push (new scale_DF (24, {left_extension: 0.065, right_extension: 0.06, left: "CF", right: "X\u00b2", rs: 0.08, alt: 'black'}));
+r . scales . push (new scale_DF (24, {left_extension: 0.065, right_extension: 0.06, left: "CF", right: "X\u00b2", rs: 0.08, alt: 'black', index: "\u21e61\u21e8"}));
 r . scales . push (new scale_J (24, {left_extension: 0.06, right_extension: 0.065, left: "K'", right: "100/X\u00b2", rs: 0.08, alt: 'black'}));
 r . scales . push (new scale_CIF (24, {left_extension: 0.064, right_extension: 0.065, left: "CIF", right: "10/X\u00b2", rs: 0.08, colour: 'red'}));
 r . scales . push (new spacer (2));
@@ -255,7 +258,7 @@ r . scales . push (new scale_C (24, {left_extension: 0.065, right_extension: 0.0
 r = new Rule ({left_margin: 0.24, right_margin: 0.24}); s . rules . push (r);
 r . scales . push (new scale_D (24, {left_extension: 0.065, right_extension: 0.06, left: "D", right: "X", rs: 0.08, alt: 'black'}));
 r . scales . push (new spacer (6));
-r . scales . push (new scale_M (24, {left_extension: 0.065, left: "S", right: "\u2222 sin 0.1X", rs: 0.08, centre: "cos", ca: 'left', cs: 1.13, cc: 'red'}));
+r . scales . push (new scale_LL1_down (24, {left_extension: 0.07, right_extension: 0.07, left: "LL\u2081", right: "e\u2093", rs: 0.08}));
 r . scales . push (new spacer (6));
 
 r . scales . push (new scale_LL2_down (24, {left_extension: 0.07, right_extension: 0.07, left: "LL\u2082", right: "e\u2093", rs: 0.08}));
@@ -265,6 +268,7 @@ r . scales . push (new spacer (8));
 
 changeVersion ('german');
 changeSide ('back');
+changeSize (1200);
 </script>
 
 <script src="sliderule_application.js"></script>
