@@ -58,11 +58,11 @@ var smark = function (ctx, ind, x, base, height) {
 
 var draw_XRI = function (ctx, fn, length, from, to, limit, height, step, micro_from, micro_to) {
   var esc = true; var location;
-  to -= 0.0000001;
-  for (var ind = from; esc && ind < to; ind += step) {
+  to += 0.0000001;
+  for (var ind = from; esc && ind > to; ind -= step) {
     for (var sub = micro_from; esc && sub < micro_to; sub += micro_from) {
-      location = fn (ind + sub);
-      if (location < limit) esc = false;
+      location = fn (ind - sub);
+      if (location > limit) esc = false;
       else tick (ctx, length * location, height);
     }
   }
@@ -402,15 +402,15 @@ var draw_pe = function (ctx, length, height, scale) {
   mark (ctx, ".2", length * fn_pe (0.2), height * 0.5);
   mark (ctx, "", length * fn_pe (0.1), height * 0.5);
   mark (ctx, 0, length, height * 0.5);
-  draw_XRI (ctx, fn_pe, length, 0.2, 0.3, - scale . left_extension, height * 0.4, 0.1, 0.05, 0.1);
-  draw_XRI (ctx, fn_pe, length, 0.3, 0.4, - scale . left_extension, height * 0.3, 0.1, 0.02, 0.1);
-  draw_XRI (ctx, fn_pe, length, 0.4, 0.9, - scale . left_extension, height * 0.4, 0.1, 0.05, 0.1);
-  draw_XRI (ctx, fn_pe, length, 0.4, 0.9, - scale . left_extension, height * 0.2, 0.05, 0.01, 0.05);
-  draw_XRI (ctx, fn_pe, length, 0.9, 0.99, - scale . left_extension, height * 0.2, 0.005, 0.001, 0.005);
-  draw_XRI (ctx, fn_pe, length, 0.9, 0.99, - scale . left_extension, height * 0.4, 0.01, 0.005, 0.01);
-  draw_XRI (ctx, fn_pe, length, 0.99, 1, - scale . left_extension, height * 0.4, 0.005, 0.001, 0.005);
-  draw_XRI (ctx, fn_pe, length, 0.99, 1, - scale . left_extension, height * 0.2, 0.0005, 0.0001, 0.0005);
-  draw_XRI (ctx, fn_pe, length, 0.99, 1, - scale . left_extension, height * 0.3, 0.001, 0.0005, 0.001);
+  draw_XLI (ctx, fn_pe, length, 0.3, 0.2, - scale . left_extension, height * 0.4, 0.1, 0.05, 0.1);
+  draw_XLI (ctx, fn_pe, length, 0.4, 0.3, - scale . left_extension, height * 0.3, 0.1, 0.02, 0.1);
+  draw_XLI (ctx, fn_pe, length, 0.9, 0.4, - scale . left_extension, height * 0.4, 0.1, 0.05, 0.1);
+  draw_XLI (ctx, fn_pe, length, 0.9, 0.4, - scale . left_extension, height * 0.2, 0.05, 0.01, 0.05);
+  draw_XLI (ctx, fn_pe, length, 0.99, 0.9, - scale . left_extension, height * 0.2, 0.005, 0.001, 0.005);
+  draw_XLI (ctx, fn_pe, length, 0.99, 0.9, - scale . left_extension, height * 0.4, 0.01, 0.005, 0.01);
+  draw_XLI (ctx, fn_pe, length, 1, 0.99, - scale . left_extension, height * 0.4, 0.005, 0.001, 0.005);
+  draw_XLI (ctx, fn_pe, length, 1, 0.99, - scale . left_extension, height * 0.2, 0.0005, 0.0001, 0.0005);
+  draw_XLI (ctx, fn_pe, length, 1, 0.99, - scale . left_extension, height * 0.3, 0.001, 0.0005, 0.001);
 };
 
 var draw_LL3 = function (ctx, length, height, s) {
@@ -518,6 +518,28 @@ var draw_LL03 = function (ctx, length, height, s) {
 	draw_XLI (ctx, s . location, length, 0.1, 0.02, limit, h4, 0.02, 0.01, 0.02);
 	draw_XLI (ctx, s . location, length, 0.1, 0.01, limit, h3, 0.01, 0.005, 0.01);
 	draw_XLI (ctx, s . location, length, 0.1, 0.01, limit, h2, 0.005, 0.001, 0.005);
+  mark (ctx, "10\u207b\u00b2", length * s . location (0.01), h5);
+  mark (ctx, "5", length * s . location (0.005), h5);
+  mark (ctx, "2", length * s . location (0.002), h5);
+  draw_XLI (ctx, s . location, length, 0.01, 0.005, limit, h4, 0.005, 0.001, 0.005);
+  draw_XLI (ctx, s . location, length, 0.005, 0.002, limit, h4, 0.003, 0.001, 0.003);
+  draw_XLI (ctx, s . location, length, 0.01, 0.001, limit, h2, 0.001, 0.0002, 0.001);
+  mark (ctx, "10\u207b\u00b3", length * s . location (0.001), h5);
+  mark (ctx, "5", length * s . location (0.0005), h5);
+  mark (ctx, "2", length * s . location (0.0002), h5);
+  draw_XLI (ctx, s . location, length, 0.001, 0.0005, limit, h4, 0.0005, 0.0001, 0.0005);
+  draw_XLI (ctx, s . location, length, 0.0005, 0.0002, limit, h4, 0.0003, 0.0001, 0.0003);
+  draw_XLI (ctx, s . location, length, 0.001, 0.0005, limit, h2, 0.0001, 0.00005, 0.0001);
+  draw_XLI (ctx, s . location, length, 0.0005, 0.0001, limit, h2, 0.0001, 0.00002, 0.0001);
+  mark (ctx, "10\u207b\u2074", length * s . location (0.0001), h5);
+  limit = 1 + s . right_extension;
+  mark (ctx, "5", length * s . location (0.00005), h5);
+  var location = s . location (0.00002); if (location < limit) mark (ctx, "2", length * location, h5);
+  draw_XRI (ctx, s . location, length, 0.0001, 0.00005, limit, h4, 0.00005, 0.00001, 0.00005);
+  draw_XRI (ctx, s . location, length, 0.00005, 0.00002, limit, h4, 0.00003, 0.00001, 0.00003);
+  draw_XRI (ctx, s . location, length, 0.0001, 0.00002, limit, h2, 0.00001, 0.000005, 0.00001);
+  draw_XRI (ctx, s . location, length, 0.00002, 0.00001, limit, h2, 0.00001, 0.000002, 0.00001);
+  location = s . location (0.00001); if (location < limit) mark (ctx, "10\u207b\u2075", length * s . location (0.00001), h5);
 };
 
 var spacer = function (height, options) {
