@@ -87,6 +87,17 @@ var draw_005R = function (ctx, fn, length, from, to, limit, height) {draw_XR (ct
 var draw_002R = function (ctx, fn, length, from, to, limit, height) {draw_XR (ctx, fn, length, from, to, limit, height, 0.1, 0.02, 0.1);};
 var draw_001R = function (ctx, fn, length, from, to, limit, height) {draw_XR (ctx, fn, length, from, to, limit, height, 0.05, 0.01, 0.05);};
 var draw_0001R = function (ctx, fn, length, from, to, limit, height) {draw_XR (ctx, fn, length, from, to, limit, height, 0.005, 0.001, 0.005);};
+var draw_XLI = function (ctx, fn, length, to, from, limit, height, step, micro_from, micro_to) {
+  var esc = true; var location;
+  from += 0.0000001;
+  for (var ind = from; esc && ind < to; ind += step) {
+    for (var sub = micro_from; esc & sub < micro_to; sub += micro_from) {
+      location = fn (ind + sub);
+      if (location < limit) esc = false;
+      else tick (ctx, length * location, height);
+    }
+  }
+};
 var draw_XL = function (ctx, fn, length, from, to, limit, height, step, micro_from, micro_to) {
   var esc = true; var location;
   from += 0.0000001;
@@ -143,6 +154,16 @@ var draw_MLSF = function (ctx, fn, length, from, to, step, fixed, limit, height)
     location = fn (ind);
     if (location < limit) esc = false;
     else mark (ctx, ind . toFixed (fixed), length * location, height);
+  }
+};
+var draw_MLSI = function (ctx, fn, length, to, from, step, limit, height) {
+  var esc = true; var location;
+  limit -= 0.0000001;
+  from -= 0.0000001;
+  for (var ind = from; esc && ind <= to; ind += step) {
+    location = fn (ind);
+    if (location < limit) esc = false;
+    else mark (ctx, Number (ind . toFixed (4)), length * location, height);
   }
 };
 
@@ -485,6 +506,18 @@ var draw_LL1 = function (ctx, length, height, s) {
 	draw_XL (ctx, s . location, length, 1, 1.02, limit, h4, 0.002, 0.001, 0.002);
 	draw_XL (ctx, s . location, length, 1, 1.02, limit, h3, 0.001, 0.0005, 0.001);
 	draw_XL (ctx, s . location, length, 1, 1.02, limit, h2, 0.0005, 0.0001, 0.0005);
+};
+
+var draw_LL03 = function (ctx, length, height, s) {
+	var limit = - s . left_extension;
+	var h5 = height * 0.5; var h2 = height * 0.2; var h3 = height * 0.3; var h4 = height * 0.4;
+	draw_MLSI (ctx, s . location, length, 0.9, 0.1, 0.05, limit, h5);
+	draw_XLI (ctx, s . location, length, 0.9, 0.1, limit, h3, 0.05, 0.01, 0.05);
+	draw_XLI (ctx, s . location, length, 0.9, 0.1, limit, h2, 0.01, 0.002, 0.01);
+	draw_MLSI (ctx, s . location, length, 0.08, 0.02, 0.02, limit, h5);
+	draw_XLI (ctx, s . location, length, 0.1, 0.02, limit, h4, 0.02, 0.01, 0.02);
+	draw_XLI (ctx, s . location, length, 0.1, 0.01, limit, h3, 0.01, 0.005, 0.01);
+	draw_XLI (ctx, s . location, length, 0.1, 0.01, limit, h2, 0.005, 0.001, 0.005);
 };
 
 var spacer = function (height, options) {
