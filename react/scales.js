@@ -357,5 +357,29 @@ var scale_LL03 = function (height, options) {
 	return s;
 };
 
+var scale_LL03_down = function (height, options) {
+	var s = new spacer (height, options);
+	s . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location));};
+	s . location = function (value) {return Math . log10 (- Math . log (value));};
+	s . draw = function (ctx, length) {draw_LL03 (ctx, length, - s . height, s);};
+	return s;
+};
+
+var scale_LL02 = function (height, options) {
+	var s = new spacer (height, options);
+	s . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 1));};
+	s . location = function (value) {return 1 + Math . log10 (- Math . log (value));};
+	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL02 (ctx, length, s . height, s);};
+	return s;
+};
+
+var scale_LL02_down = function (height, options) {
+	var s = new spacer (height, options);
+	s . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location));};
+	s . location = function (value) {return Math . log10 (- Math . log (value));};
+	s . draw = function (ctx, length) {draw_LL02 (ctx, length, - s . height, s);};
+	return s;
+};
+
 
 

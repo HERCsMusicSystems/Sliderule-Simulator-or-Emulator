@@ -135,6 +135,15 @@ var draw_MRSF = function (ctx, fn, length, from, to, step, fixed, limit, height)
     else mark (ctx, ind . toFixed (fixed), length * location, height);
   }
 };
+var draw_MRSI = function (ctx, fn, length, from, to, step, limit, height) {
+  var esc = true; var location;
+  to += 0.0000001;
+  for (var ind = from; esc && ind >= to; ind -= step) {
+    location = fn (ind);
+    if (location > limit) esc = false;
+    else mark (ctx, Number (ind . toFixed (4)), length * location, height);
+  }
+};
 var draw_ML = function (ctx, fn, length, from, to, limit, height) {draw_MLS (ctx, fn, length, from, to, 1, limit, height);};
 var draw_MLS = function (ctx, fn, length, from, to, step, limit, height) {
   var esc = true; var location;
@@ -511,6 +520,7 @@ var draw_LL1 = function (ctx, length, height, s) {
 var draw_LL03 = function (ctx, length, height, s) {
 	var limit = - s . left_extension;
 	var h5 = height * 0.5; var h2 = height * 0.2; var h3 = height * 0.3; var h4 = height * 0.4;
+  smark (ctx, "1/e", 0, h3, h5);
 	draw_MLSI (ctx, s . location, length, 0.9, 0.1, 0.05, limit, h5);
 	draw_XLI (ctx, s . location, length, 0.9, 0.1, limit, h3, 0.05, 0.01, 0.05);
 	draw_XLI (ctx, s . location, length, 0.9, 0.1, limit, h2, 0.01, 0.002, 0.01);
@@ -540,6 +550,23 @@ var draw_LL03 = function (ctx, length, height, s) {
   draw_XRI (ctx, s . location, length, 0.0001, 0.00002, limit, h2, 0.00001, 0.000005, 0.00001);
   draw_XRI (ctx, s . location, length, 0.00002, 0.00001, limit, h2, 0.00001, 0.000002, 0.00001);
   location = s . location (0.00001); if (location < limit) mark (ctx, "10\u207b\u2075", length * s . location (0.00001), h5);
+};
+
+var draw_LL02 = function (ctx, length, height, s) {
+	var limit = 1 + s . right_extension;
+	var h5 = height * 0.5; var h2 = height * 0.2; var h3 = height * 0.3; var h4 = height * 0.4;
+  smark (ctx, "1/e", length, h3, h5);
+  draw_MRSI (ctx, s . location, length, 0.9, 0.1, 0.05, limit, h5);
+  draw_XRI (ctx, s . location, length, 0.8, 0.1, limit, h3, 0.05, 0.01, 0.05);
+  draw_XRI (ctx, s . location, length, 0.8, 0.1, limit, h2, 0.01, 0.002, 0.01);
+  limit = - s . left_extension;
+  draw_XLI (ctx, s . location, length, 0.9, 0.8, limit, h4, 0.05, 0.01, 0.05);
+  draw_XLI (ctx, s . location, length, 0.9, 0.8, limit, h3, 0.01, 0.005, 0.01);
+  draw_XLI (ctx, s . location, length, 0.9, 0.8, limit, h2, 0.005, 0.001, 0.005);
+  draw_MLSI (ctx, s . location, length, 0.99, 0.91, 0.01, limit, h5);
+  draw_XLI (ctx, s . location, length, 0.99, 0.9, limit, h4, 0.01, 0.005, 0.01);
+  draw_XLI (ctx, s . location, length, 0.99, 0.9, limit, h3, 0.005, 0.001, 0.005);
+  draw_XLI (ctx, s . location, length, 0.99, 0.9, limit, h2, 0.001, 0.0005, 0.001);
 };
 
 var spacer = function (height, options) {
