@@ -569,6 +569,28 @@ var draw_LL02 = function (ctx, length, height, s) {
   draw_XLI (ctx, s . location, length, 0.99, 0.9, limit, h2, 0.001, 0.0005, 0.001);
 };
 
+var draw_LL01 = function (ctx, length, height, s) {
+	var limit = 1 + s . right_extension;
+	var h5 = height * 0.5; var h2 = height * 0.2; var h3 = height * 0.3; var h4 = height * 0.4;
+  draw_MRSI (ctx, s . location, length, 0.96, 0.8, 0.01, limit, h5);
+  draw_XRI (ctx, s . location, length, 0.95, 0.9, limit, h4, 0.01, 0.005, 0.01);
+  draw_XRI (ctx, s . location, length, 0.95, 0.9, limit, h3, 0.005, 0.001, 0.005);
+  draw_XRI (ctx, s . location, length, 0.95, 0.9, limit, h2, 0.001, 0.0005, 0.001);
+  draw_XRI (ctx, s . location, length, 0.97, 0.95, limit, h4, 0.01, 0.005, 0.01);
+  draw_XRI (ctx, s . location, length, 0.98, 0.95, limit, h3, 0.005, 0.001, 0.005);
+  draw_XRI (ctx, s . location, length, 0.98, 0.95, limit, h2, 0.001, 0.0002, 0.001);
+  limit = - s . left_extension;
+  draw_MLSI (ctx, s . location, length, 0.99, 0.97, 0.005, limit, h5);
+  draw_MLSI (ctx, s . location, length, 0.999, 0.99, 0.001, limit, h5);
+  draw_XLI (ctx, s . location, length, 0.99, 0.98, limit, h4, 0.005, 0.001, 0.005);
+  draw_XLI (ctx, s . location, length, 0.99, 0.98, limit, h3, 0.001, 0.0005, 0.001);
+  draw_XLI (ctx, s . location, length, 0.99, 0.98, limit, h2, 0.0005, 0.0001, 0.0005);
+  draw_MLSI (ctx, s . location, length, 0.999, 0.991, 0.001, limit, h5);
+  draw_XLI (ctx, s . location, length, 0.999, 0.99, limit, h4, 0.001, 0.0005, 0.001);
+  draw_XLI (ctx, s . location, length, 0.999, 0.99, limit, h3, 0.0005, 0.0001, 0.0005);
+  draw_XLI (ctx, s . location, length, 0.999, 0.99, limit, h2, 0.0001, 0.00005, 0.0001);
+};
+
 var spacer = function (height, options) {
   this . height = height;
   this . index = '1';
