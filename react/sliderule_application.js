@@ -16,14 +16,14 @@ var SlideruleApplication = React . createClass ({
   mousePosition: {x: 0, y: 0},
   onContext: function (event) {event . preventDefault ();},
   onMouseDown: function (event) {
-    var position = subv ({x: event . clientX, y: event . clientY}, this . refs . sliderule . getBoundingClientRect ());
+    var position = subvbc ({x: event . clientX, y: event . clientY}, this . refs . sliderule . getBoundingClientRect ());
     if (event . button === 2) return sliderules . synchroniseTarget (addv (position, {x: 0.5, y: 0}));
     this . dragging = true;
     this . mousePosition = position;
   },
   onMouseMove: function (event) {
     if (! this . dragging) return;
-    var position = subv ({x: event . clientX, y: event . clientY}, this . refs . sliderule . getBoundingClientRect ());
+    var position = subvbc ({x: event . clientX, y: event . clientY}, this . refs . sliderule . getBoundingClientRect ());
     var delta = subv (position, this . mousePosition);
     sliderules . synchroniseMove (delta, position);
     this . mousePosition = position;
@@ -36,7 +36,7 @@ var SlideruleApplication = React . createClass ({
   	if (sliderules . noChange ()) return;
     var width = window . innerWidth; var height = window . innerHeight;
     var bound = this . refs . sliderule . getBoundingClientRect ();
-    this . setState ({width: width - bound . x * 4, height: height - bound . y * 4});
+    this . setState ({width: width - bound . left * 4, height: height - bound . top * 4});
     //this . setState ({width: width, height: height});
     var ctx = this . refs . sliderule . getContext ('2d');
     sliderules . draw (ctx, width, height);

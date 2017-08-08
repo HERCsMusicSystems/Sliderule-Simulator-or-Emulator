@@ -44,6 +44,7 @@ var doubleBrace = function (ctx, left, top, right, bottom, radius, braceRadius, 
 
 var addv = function (v1, v2) {return {x: v1 . x + v2 . x, y: v1 . y + v2 . y};};
 var subv = function (v1, v2) {return {x: v1 . x - v2 . x, y: v1 . y - v2 . y};};
+var subvbc = function (v1, v2) {return {x: v1 . x - v2 . left, y: v1 . y - v2 . top};};
 var scalv = function (vector, scale) {return {x: vector . x * scale, y: vector . y * scale};};
 
 var tick = function (ctx, x, height) {ctx . beginPath (); ctx . moveTo (x, 0); ctx . lineTo (x, - height); ctx . stroke ();};
@@ -176,83 +177,103 @@ var draw_MLSI = function (ctx, fn, length, to, from, step, limit, height) {
   }
 };
 
-var draw_log = function (ctx, length, height, scale, left_extension, right_extension) {
-  mark (ctx, 10, length, height * 0.5);
-  smark (ctx, '\u03c0', length * Math . log10 (Math . PI), height * 0.2, height * 0.5);
-  smark (ctx, 'e', length * Math . log10 (Math . E), height * 0.2, height * 0.5);
-  smark (ctx, 'c', length * Math . log10 (Math . sqrt (4 / Math . PI)), height * 0.2, height * 0.5);
-  smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), height * 0.2, height * 0.5);
-  draw_MR (ctx, Math . log10, length, 1, 9, 1, height * 0.5);
-  draw_002R (ctx, Math . log10, length, 1, 2, 1, height * 0.2);
-  draw_01R (ctx, Math . log10, length, 1, 10, 1, height * 0.3);
-  draw_05R (ctx, Math . log10, length, 1, 10, 1, height * 0.4);
-  ctx . translate (length, 0);
-  ctx . strokeStyle = scale . alt; ctx . fillStyle = scale . alt;
-  draw_002R (ctx, Math . log10, length, 1, 10, right_extension, height * 0.2);
-  draw_01R (ctx, Math . log10, length, 1, 10, right_extension, height * 0.3);
-  ctx . translate (- length - length, 0);
-  draw_01L (ctx, Math . log10, length, 1, 10, 1 - left_extension, height * 0.2);
-  draw_05L (ctx, Math . log10, length, 1, 10, 1 - left_extension, height * 0.3);
-  draw_ML (ctx, Math . log10, length, 1, 9, 1 - left_extension, height * 0.5);
+var draw_log_1R = function (ctx, length, height, extension, scale) {
+  var location;
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+  draw_MR (ctx, Math . log10, length, 2, 9, extension, h5);
+  if (Math . abs (length) >= 1024) draw_MRS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
+  location = Math . log10 (Math . PI); if (location < extension) smark (ctx, '\u03c0', length * location, h2, h5);
+  location = Math . log10 (Math . E); if (location < extension) smark (ctx, 'e', length * location, h2, h5);
+  if (scale . draw_c) {
+    location = Math . log10 (Math . sqrt (4 / Math . PI)); if (location < extension) smark (ctx, 'c', length * location, h2, h5);
+    location = (0.5 + Math . log10 (Math . sqrt (4 / Math . PI)));
+      if (location < extension) smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), h2, h5);
+  }
+  location = 1 + Math . log10 (Math . PI / 180); if (scale . draw_q && location < extension) smark (ctx, 'q', length * location, h2, h5);
+  if (Math . abs (length) < 1024) {
+    draw_XR (ctx, Math . log10, length, 1, 5, extension, h4, 1, 0.5, 1);
+    draw_XR (ctx, Math . log10, length, 1, 5, extension, h3, 0.5, 0.1, 0.5);
+    draw_XR (ctx, Math . log10, length, 1, 2, extension, h2, 0.1, 0.02, 0.1);
+    draw_XR (ctx, Math . log10, length, 2, 5, extension, h2, 0.1, 0.05, 0.1);
+    draw_XR (ctx, Math . log10, length, 5, 10, extension, h3, 1, 0.5, 1);
+    draw_XR (ctx, Math . log10, length, 5, 10, extension, h2, 0.5, 0.1, 0.5);
+  } else {
+    draw_XR (ctx, Math . log10, length, 1, 2, extension, h3, 0.1, 0.05, 0.1);
+    draw_XR (ctx, Math . log10, length, 1, 2, extension, h2, 0.05, 0.01, 0.05);
+    draw_XR (ctx, Math . log10, length, 2, 10, extension, h4, 1, 0.5, 1);
+    draw_XR (ctx, Math . log10, length, 2, 10, extension, h3, 0.5, 0.1, 0.5);
+    draw_XR (ctx, Math . log10, length, 2, 4, extension, h2, 0.1, 0.02, 0.1);
+    draw_XR (ctx, Math . log10, length, 4, 10, extension, h2, 0.1, 0.05, 0.1);
+  }
 };
-var draw_one_log = function (ctx, length, height) {
-  draw_MR (ctx, Math . log10, length, 2, 9, 1, height * 0.5);
-  draw_05R (ctx, Math . log10, length, 1, 8, 1, height * 0.4);
-  draw_02R (ctx, Math . log10, length, 8, 10, 1, height * 0.3);
-  draw_01R (ctx, Math . log10, length, 1, 8, 1, height * 0.3);
-  draw_002R (ctx, Math . log10, length, 1, 2, 1, height * 0.2);
-};
-var draw_log_1R = function (ctx, length, height, extension) {
-  draw_MR (ctx, Math . log10, length, 2, 9, extension, height * 0.5);
-  smark (ctx, '\u03c0', length * Math . log10 (Math . PI), height * 0.2, height * 0.5);
-  draw_05R (ctx, Math . log10, length, 1, 8, extension, height * 0.4);
-  draw_02R (ctx, Math . log10, length, 8, 10, extension, height * 0.3);
-  draw_01R (ctx, Math . log10, length, 1, 8, extension, height * 0.3);
-  draw_002R (ctx, Math . log10, length, 1, 2, extension, height * 0.2);
-};
-var draw_log_1L = function (ctx, length, height, extension) {
+var draw_log_1L = function (ctx, length, height, extension, scale) {
+  var location;
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   draw_ML (ctx, Math . log10, length, 2, 9, extension, height * 0.5);
-  smark (ctx, '\u03c0', length * Math . log10 (Math . PI), height * 0.2, height * 0.5);
-  draw_05L (ctx, Math . log10, length, 1, 8, extension, height * 0.4);
-  draw_02L (ctx, Math . log10, length, 8, 10, extension, height * 0.3);
-  draw_01L (ctx, Math . log10, length, 1, 8, extension, height * 0.3);
-  draw_002L (ctx, Math . log10, length, 1, 2, extension, height * 0.2);
+  if (Math . abs (length) >= 1024) draw_MLS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
+  location = Math . log10 (Math . PI); if (location > extension) smark (ctx, '\u03c0', length * location, height * 0.2, height * 0.5);
+  location = Math . log10 (Math . E); if (location > extension) smark (ctx, 'e', length * location, height * 0.2, height * 0.5);
+  if (scale . draw_c) {
+    location = Math . log10 (Math . sqrt (4 / Math . PI)); if (location > extension) smark (ctx, 'c', length * location, height * 0.2, height * 0.5);
+    location = (0.5 + Math . log10 (Math . sqrt (4 / Math . PI)));
+      if (location > extension) smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), height * 0.2, height * 0.5);
+  }
+  if (Math . abs (length) < 1024) {
+    draw_XL (ctx, Math . log10, length, 1, 5, extension, h4, 1, 0.5, 1);
+    draw_XL (ctx, Math . log10, length, 1, 5, extension, h3, 0.5, 0.1, 0.5);
+    draw_XL (ctx, Math . log10, length, 1, 2, extension, h2, 0.1, 0.02, 0.1);
+    draw_XL (ctx, Math . log10, length, 2, 5, extension, h2, 0.1, 0.05, 0.1);
+    draw_XL (ctx, Math . log10, length, 5, 10, extension, h3, 1, 0.5, 1);
+    draw_XL (ctx, Math . log10, length, 5, 10, extension, h2, 0.5, 0.1, 0.5);
+  } else {
+    draw_XL (ctx, Math . log10, length, 1, 2, extension, h3, 0.1, 0.05, 0.1);
+    draw_XL (ctx, Math . log10, length, 1, 2, extension, h2, 0.05, 0.01, 0.05);
+    draw_XL (ctx, Math . log10, length, 2, 10, extension, h4, 1, 0.5, 1);
+    draw_XL (ctx, Math . log10, length, 2, 10, extension, h3, 0.5, 0.1, 0.5);
+    draw_XL (ctx, Math . log10, length, 2, 4, extension, h2, 0.1, 0.02, 0.1);
+    draw_XL (ctx, Math . log10, length, 4, 10, extension, h2, 0.1, 0.05, 0.1);
+  }
+};
+var draw_log = function (ctx, length, height, scale, left_extension, right_extension) {
+  mark (ctx, scale . indices [0], 0, height * 0.5);
+  mark (ctx, scale . indices [1], length, height * 0.5);
+  draw_log_1R (ctx, length, height, 1, scale);
+  ctx . fillStyle = scale . alt; ctx . strokeStyle = scale . alt;
+  ctx . translate (length, 0);
+  draw_log_1R (ctx, length, height, scale . right_extension, scale);
+  ctx . translate (- length - length, 0);
+  draw_log_1L (ctx, length, height, 1 - scale . left_extension, scale);
 };
 var draw_log_log = function (ctx, length, height, scale, left_extension, right_extension) {
-  mark (ctx, 1, 0, height * 0.5);
-  mark (ctx, 100, length, height * 0.5); length *= 0.5;
-  smark (ctx, '\u03c0', length * Math . log10 (Math . PI), height * 0.2, height * 0.5);
-  smark (ctx, 'e', length * Math . log10 (Math . E), height * 0.2, height * 0.5);
-  smark (ctx, '\u03c0', length * Math . log10 (Math . PI * 10), height * 0.2, height * 0.5);
-  smark (ctx, 'e', length * Math . log10 (Math . E * 10), height * 0.2, height * 0.5);
-  draw_one_log (ctx, length, height); ctx . translate (length, 0); mark (ctx, 10, 0, height * 0.5); draw_one_log (ctx, length, height);
-  ctx . strokeStyle = scale . alt; ctx . fillStyle = scale . alt;
+  length *= 0.5;
+  mark (ctx, scale . indices [0], 0, height * 0.5);
+  draw_log_1R (ctx, length, height, 1, scale);
   ctx . translate (length, 0);
-  draw_05R (ctx, Math . log10, length, 1, 9, right_extension * 2, height * 0.4);
-  draw_01R (ctx, Math . log10, length, 1, 8, right_extension * 2, height * 0.3);
-  draw_002R (ctx, Math . log10, length, 1, 2, right_extension * 2, height * 0.2);
-  ctx . translate (length * -3, 0);
-  draw_ML (ctx, Math . log10, length, 1, 9, 1 - left_extension * 2, height * 0.5);
-  draw_05L (ctx, Math . log10, length, 1, 8, 1 - left_extension * 2, height * 0.4);
-  draw_02L (ctx, Math . log10, length, 8, 10, 1 - left_extension * 2, height * 0.3);
-  draw_01L (ctx, Math . log10, length, 1, 8, 1 - left_extension * 2, height * 0.3);
+  mark (ctx, scale . indices [1], 0, height * 0.5);
+  draw_log_1R (ctx, length, height, 1, scale);
+  ctx . translate (length, 0);
+  mark (ctx, scale . indices [2], 0, height * 0.5);
+  ctx . fillStyle = scale . alt; ctx . strokeStyle = scale . alt;
+  draw_log_1R (ctx, length, height, scale . right_extension, scale);
+  ctx . translate (-3 * length, 0);
+  draw_log_1L (ctx, length, height, 1 - scale . left_extension, scale);
 };
 var draw_log_log_log = function (ctx, length, height, scale) {
-  mark (ctx, 1, 0, height * 0.5);
-  mark (ctx, 1000, length, height * 0.5); length /= 3;
-  draw_one_log (ctx, length, height);
-  ctx . translate (length, 0); draw_one_log (ctx, length, height); mark (ctx, 10, 0, height * 0.5);
-  ctx . translate (length, 0); draw_one_log (ctx, length, height); mark (ctx, 100, 0, height * 0.5);
-  ctx . strokeStyle = scale . alt; ctx . fillStyle = scale . alt;
+  length /= 3;
+  mark (ctx, scale . indices [0], 0, height * 0.5);
+  draw_log_1R (ctx, length, height, 1, scale);
   ctx . translate (length, 0);
-  draw_05R (ctx, Math . log10, length, 1, 9, scale . right_extension * 2, height * 0.4);
-  draw_01R (ctx, Math . log10, length, 1, 8, scale . right_extension * 2, height * 0.3);
-  draw_002R (ctx, Math . log10, length, 1, 2, scale . right_extension * 2, height * 0.2);
-  ctx . translate (length * -4, 0);
-  draw_ML (ctx, Math . log10, length, 1, 9, 1 - scale . left_extension * 2, height * 0.5);
-  draw_05L (ctx, Math . log10, length, 1, 8, 1 - scale . left_extension * 2, height * 0.4);
-  draw_02L (ctx, Math . log10, length, 8, 10, 1 - scale . left_extension * 2, height * 0.3);
-  draw_01L (ctx, Math . log10, length, 1, 8, 1 - scale . left_extension * 2, height * 0.3);
+  mark (ctx, scale . indices [1], 0, height * 0.5);
+  draw_log_1R (ctx, length, height, 1, scale);
+  ctx . translate (length, 0);
+  mark (ctx, scale . indices [2], 0, height * 0.5);
+  draw_log_1R (ctx, length, height, 1, scale);
+  ctx . translate (length, 0);
+  mark (ctx, scale . indices [3], 0, height * 0.5);
+  ctx . fillStyle = scale . alt; ctx . strokeStyle = scale . alt;
+  draw_log_1R (ctx, length, height, scale . right_extension, scale);
+  ctx . translate (-3 * length, 0);
+  draw_log_1L (ctx, length, height, 1 - scale . left_extension, scale);
 };
 var fn_lin = function (value) {return value * 0.1;};
 var draw_lin = function (ctx, length, height, scale) {
@@ -593,7 +614,8 @@ var draw_LL01 = function (ctx, length, height, s) {
 
 var spacer = function (height, options) {
   this . height = height;
-  this . index = '1';
+  this . indices = ['1', '10', '100', '1000', '10000', '100000'];
+  this . draw_c = true;
   this . ruleHeight = function () {return this . height;};
   this . hitTest = function (y) {return false;};
   this . la = 'left'; this . ra = 'left'; this . ca = 'center';
@@ -633,6 +655,7 @@ var spacer = function (height, options) {
       case 'e1': p = Math . E * 10; break;
       case 'c': p = Math . sqrt (4 / Math . PI); break;
       case 'c1': p = Math . sqrt (40 / Math . PI); break;
+      case 'q': p = Math . PI / 1.8; break;
       default: p = Number (p); break;
     }
     p = this . location (p);
@@ -673,7 +696,7 @@ var Rule = function (options) {
   };
   this . ruleHeight = function () {var h = 0; for (var ind in this . scales) h += this . scales [ind] . height; return h;};
   this . hitTest = function (y) {return this . stator != 0 && y >= 0 && y <= this . ruleHeight ();};
-  this . draw = function (ctx, length, sliderule) {
+  this . animate = function () {
     if (this . target < this . shift) {
       this . shift -= this . animation_delta;
       if (this . shift < this . target) this . shift = this . target;
@@ -682,6 +705,9 @@ var Rule = function (options) {
       this . shift += this . animation_delta;
       if (this . shift > this . target) this . shift = this . target;
     }
+  }
+  this . draw = function (ctx, length, sliderule) {
+    this . animate ();
     ctx . save ();
     ctx . fillStyle = this . rule_colour;
     ctx . lineWidth = 1;
@@ -939,7 +965,10 @@ var Sliderule = function (length, options) {
       this . cursor_position += this . animation_delta;
       if (this . cursor_position > this . cursor_target) this . cursor_position = this . cursor_target;
     }
-    if (this . inactive) return;
+    if (this . inactive) {
+      for (var ind in this . rules) this . rules [ind] . animate ();
+      return;
+    }
     ctx . translate (this . position . x, this . position . y);
     ctx . save ();
     var ind;
@@ -1143,11 +1172,13 @@ var Sliderules = function (options) {
     position = subv (position, this . position);
     var ret;
     for (var ind in this . sliderules) {
-      position = subv (position, this . sliderules [ind] . position);
-      ret = this . sliderules [ind] . moveRule (delta, position);
-      if (ret) return ret;
-      position = subv (position, {x: 0, y: this . sliderules [ind] . height ()});
-      if (position . y < 0) return null;
+      if (! this . sliderules [ind] . inactive) {
+        position = subv (position, this . sliderules [ind] . position);
+        ret = this . sliderules [ind] . moveRule (delta, position);
+        if (ret) return ret;
+        position = subv (position, {x: 0, y: this . sliderules [ind] . height ()});
+        if (position . y < 0) return null;
+      }
     }
     return null;
   };
