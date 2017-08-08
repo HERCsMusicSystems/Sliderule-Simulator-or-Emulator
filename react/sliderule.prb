@@ -1,0 +1,18 @@
+#!/home/rama/bin/studio
+
+[add_search_directory "/home/rama/Desktop/dev/Sliderule-Simulator-or-Emulator/react/"]
+
+[import "studio"]
+[import "http"]
+
+[[route *req *res GET ""] [*res "HTTP/1.0 200 OK\n\n"] [*res [] : "index.html"]]
+[[route *req *res GET *sliderule] [*res "HTTP/1.0 200 OK\n\n"] [*res [] : *sliderule]]; "</h1><body>"]]
+[[route *req *res : *route] [*res "HTTP/1.0 200 OK\n\n<body><h1>Prolog Webserver" [*route] "</h1></body>"]]
+
+[res [http_request *req] [*req HTTP_URI : *route] [route *req http_responder : *route]]
+
+
+
+[exit]
+
+
