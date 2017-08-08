@@ -189,7 +189,7 @@ var draw_log_1R = function (ctx, length, height, extension, scale) {
     location = (0.5 + Math . log10 (Math . sqrt (4 / Math . PI)));
       if (location < extension) smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), h2, h5);
   }
-  location = 1 + Math . log10 (Math . PI / 180); if (scale . draw_q && location < extension) smark (ctx, 'q', length * location, h2, h5);
+  location = Math . log10 (Math . PI / 1.8); if (scale . draw_q && location < extension) smark (ctx, 'q', length * location, h2, h5);
   if (Math . abs (length) < 1024) {
     draw_XR (ctx, Math . log10, length, 1, 5, extension, h4, 1, 0.5, 1);
     draw_XR (ctx, Math . log10, length, 1, 5, extension, h3, 0.5, 0.1, 0.5);
@@ -218,6 +218,7 @@ var draw_log_1L = function (ctx, length, height, extension, scale) {
     location = (0.5 + Math . log10 (Math . sqrt (4 / Math . PI)));
       if (location > extension) smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), height * 0.2, height * 0.5);
   }
+  location = Math . log10 (Math . PI / 1.8); if (scale . draw_q && location > extension) smark (ctx, 'q', length * location, h2, h5);
   if (Math . abs (length) < 1024) {
     draw_XL (ctx, Math . log10, length, 1, 5, extension, h4, 1, 0.5, 1);
     draw_XL (ctx, Math . log10, length, 1, 5, extension, h3, 0.5, 0.1, 0.5);
