@@ -29,7 +29,7 @@ r . scales . push (new scale_A (24));
 r = new Rule ({stator: 1}); s . rules . push (r);
 r . scales . push (new scale_B (24));
 r . scales . push (new scale_CI (24));
-r . scales . push (new scale_C (24));
+r . scales . push (new scale_C (24, {left_extension: 0.1, right_extension: 0.1}));
 r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_D (24));
 r . scales . push (new scale_S (24));
