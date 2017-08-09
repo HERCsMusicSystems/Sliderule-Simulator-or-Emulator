@@ -11,6 +11,17 @@ var changeMarkings = function (type, value) {
 	sliderules . requireRedraw = true;
 };
 
+var changeSide = function (side) {
+	switch (side) {
+	case 'front': sliderules . sliderules [0] . inactive = false; sliderules . sliderules [1] . inactive = true; break;
+	case 'back': sliderules . sliderules [0] . inactive = true; sliderules . sliderules [1] . inactive = false; break;
+	default: break;
+	}
+	sliderules . requireRedraw = true;
+};
+
+var changeSize = function (length) {for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . length = length; sliderules . requireRedraw = true;};
+
 var SlideruleApplication = React . createClass ({
   dragging: false,
   mousePosition: {x: 0, y: 0},
