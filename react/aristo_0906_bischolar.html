@@ -3,7 +3,13 @@
     <title>Aristo 0906 bischolar</title>
   </head>
 <body>
-
+<div>
+	<input type = checkbox onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<input type = checkbox onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+</div>
 <div id="root"></div>
 
 <!--
@@ -30,7 +36,9 @@ s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 60, 1));
 //s . braces . push (new Screw (0.04, 42, 12, 0.3, '#b5a642', '#605321'));
 s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 60, 1));
 s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 60, 1));
-s . cursorBraces . push (new CursorAngledBrace (0.08, 0.08, 16, 2, 'gray'));
+s . braces . push (new Engraving ("ARISTO", '24px arial', 'center', '#dddddd', 0.04, 147, Math . PI * 0.5));
+s . braces . push (new Engraving ("ARISTO", '24px arial', 'center', '#dddddd', 1.36, 147, Math . PI * 1.5));
+s . cursorBraces . push (new CursorAngledBrace (0.08, 0.08, 16, 4, 'gray'));
 s . cursorBraces . push (new Engraving ("ARISTO", '12px arial', 'right', 'black', 0.07, 276));//, '12px arial', 'black', 'right', 'middle'));
 s . cursors . push (CursorS (74, 146, 'red'));
 s . cursors . push (CursorPS (74, 122, 'red'));
@@ -44,7 +52,7 @@ sliderules . sliderules . push (s);
 var r = new Rule ();
 s . rules . push (r);
 r . scales . push (new spacer (6));
-r . scales . push (new spacer (30, {centre: "ARISTO-BISCHOLAR", cs: 0, ca: 'left', cc: 'red', right: "ARISTO 0906 GERMANY", rs: 0}));
+r . scales . push (new spacer (30, {centre: "ARISTO-BISCHOLAR", cs: 0, ca: 'left', cc: 'red', right: "ARISTO 0906 GERMANY", ra: 'right', rs: 0}));
 r . scales . push (new spacer (6));
 r . scales . push (new scale_K (24, {left: "K", right: "X\u00B3", rs: 0.08, ra: 'left'}));
 r . scales . push (new spacer (8));
@@ -66,7 +74,7 @@ r . scales . push (new scale_P_down (24, {marking_colour: 'red', left: "P", righ
 r . scales . push (new spacer (10));
 
 s = new Sliderule (1200,
-  {position: {x: 0, y: 40}, cursor_motion: 4, static_markings: false, markings_colour: 'gold', markings_background: 'black', cursor_markings_shift: -0.02, cursor_markings_align: 'right', cursor_rounding: 8, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
+  {inactive: true, static_markings: false, markings_colour: 'gold', markings_background: 'black', cursor_markings_shift: -0.02, cursor_markings_align: 'right', cursor_rounding: 8, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
 sliderules . sliderules . push (s);
 s . backBraces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 60, 1));
 s . backBraces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 60, 1));
@@ -81,7 +89,7 @@ r . scales . push (new scale_T (24, {left: "T1", right: "\u2222 tan", rs: 0.08, 
 r . scales . push (new spacer (2));
 r . scales . push (new scale_T1_down (24, {left: "T2", right: "\u2222 tan", rs: 0.08, ra: 'left', right_extension: 0.02}));
 r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.04, right_extension: 0.06, index: '>>1<<'}));
-r = new Rule ({stator: 1, rounding: 0, rule_motion: 4});
+r = new Rule ({stator: 1, rounding: 0});
 s . rules . push (r);
 r . scales . push (new scale_DF (24,
   {left: "CF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.04, right_extension: 0.06,

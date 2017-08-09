@@ -1,7 +1,7 @@
 
 var scale_A = function (height, options) {
   var s = new spacer (height, options);
-  if (! options . draw_c) s . draw_c = false;
+  if (options && ! options . draw_c) s . draw_c = false;
   s . value = function (location) {return Math . pow (10, location + location);};
   s . location = function (value) {return Math . log10 (value) * 0.5;};
   s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_log_log (ctx, length, height, s, s . left_extension, s . right_extension);};
@@ -16,7 +16,7 @@ var scale_B = function (height, options) {
 
 var scale_AI = function (height, options) {
   var s = new spacer (height, options);
-  if (! options . draw_c) s . draw_c = false;
+  if (options && ! options . draw_c) s . draw_c = false;
   s . value = function (location) {return Math . pow (10, 2 - location - location);};
   s . location = function (value) {return 1 - Math . log10 (value) * 0.5;};
   s . draw = function (ctx, length) {ctx . translate (length, s . height); draw_log_log (ctx, - length, height, s, s . right_extension, s . left_extension);};
@@ -115,7 +115,7 @@ var scale_DIF = function (height, options) {
 
 var scale_K = function (height, options) {
   var s = new spacer (height, options);
-  if (! options . draw_c) s . draw_c = false;
+  if (options && ! options . draw_c) s . draw_c = false;
   s . value = function (location) {return Math . pow (10, location * 3);};
   s . location = function (value) {return Math . log10 (value) / 3;};
   s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_log_log_log (ctx, length, s . height, s);};
@@ -157,11 +157,13 @@ var scale_S_down = function (height, options) {
 
 var scale_ST = function (height, options) {
   var s = new spacer (height, options);
-  if (! options . draw_halves) s . draw_halves = true;
-  if (! options . draw_st_corrections) s . draw_st_corrections = true;
-  if (! options . draw_c) s . draw_c = false;
-  if (! options . draw_pi) s . draw_pi = false;
-  if (! options . draw_e) s . draw_e = false;
+  if (options) {
+    if (! options . draw_halves) s . draw_halves = true;
+    if (! options . draw_st_corrections) s . draw_st_corrections = true;
+    if (! options . draw_c) s . draw_c = false;
+    if (! options . draw_pi) s . draw_pi = false;
+    if (! options . draw_e) s . draw_e = false;
+  }
   s . value = function (location) {return Math . pow (10, location) * 1.8 / Math . PI;};
   s . location = function (value) {return Math . log10 (value * Math . PI / 1.8);};
   s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_small_sine_deg (ctx, length, s . height, s);};

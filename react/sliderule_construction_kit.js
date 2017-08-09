@@ -179,9 +179,10 @@ var draw_MLSI = function (ctx, fn, length, to, from, step, limit, height) {
 
 var draw_log_1R = function (ctx, length, height, extension, scale) {
   var location;
+  var abs_length = Math . abs (length);
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   draw_MR (ctx, Math . log10, length, 2, 9, extension, h5);
-  if (Math . abs (length) >= 1024) draw_MRS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
+  if (abs_length >= 1024) draw_MRS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
   if (scale . draw_pi) {location = Math . log10 (Math . PI); if (location < extension) smark (ctx, '\u03c0', length * location, h2, h5);}
   if (scale . draw_e) {location = Math . log10 (Math . E); if (location < extension) smark (ctx, 'e', length * location, h2, h5);}
   if (scale . draw_c) {
@@ -190,7 +191,21 @@ var draw_log_1R = function (ctx, length, height, extension, scale) {
       if (location < extension) smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), h2, h5);
   }
   if (scale . draw_q) {location = Math . log10 (Math . PI / 1.8); if (location < extension) smark (ctx, 'q', length * location, h2, h5);}
-  if (Math . abs (length) < 1024) {
+  if (abs_length < 384) {
+    draw_XR (ctx, Math . log10, length, 1, 2, extension, h4, 1, 0.5, 1);
+    draw_XR (ctx, Math . log10, length, 1, 2, extension, h3, 0.5, 0.1, 0.5);
+    draw_XR (ctx, Math . log10, length, 1, 2, extension, h2, 0.1, 0.05, 0.1);
+    draw_XR (ctx, Math . log10, length, 2, 4, extension, h3, 1, 0.5, 1);
+    draw_XR (ctx, Math . log10, length, 2, 4, extension, h2, 0.5, 0.1, 0.5);
+    draw_XR (ctx, Math . log10, length, 4, 10, extension, h2, 1, 0.2, 1);
+  } else if (abs_length < 512) {
+    draw_XR (ctx, Math . log10, length, 1, 3, extension, h4, 1, 0.5, 1);
+    draw_XR (ctx, Math . log10, length, 1, 3, extension, h3, 0.5, 0.1, 0.5);
+    draw_XR (ctx, Math . log10, length, 1, 3, extension, h2, 0.1, 0.05, 0.1);
+    draw_XR (ctx, Math . log10, length, 3, 6, extension, h3, 1, 0.5, 1);
+    draw_XR (ctx, Math . log10, length, 3, 6, extension, h2, 0.5, 0.1, 0.5);
+    draw_XR (ctx, Math . log10, length, 6, 10, extension, h2, 1, 0.2, 1);
+  } else if (abs_length < 1024) {
     if (scale . draw_halves) draw_MR (ctx, Math . log10, length, 1.5, 9.5, extension, h5);
     else {
       draw_XR (ctx, Math . log10, length, 1, 5, extension, h4, 1, 0.5, 1);
