@@ -182,28 +182,43 @@ var draw_log_1R = function (ctx, length, height, extension, scale) {
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   draw_MR (ctx, Math . log10, length, 2, 9, extension, h5);
   if (Math . abs (length) >= 1024) draw_MRS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
-  location = Math . log10 (Math . PI); if (location < extension) smark (ctx, '\u03c0', length * location, h2, h5);
-  location = Math . log10 (Math . E); if (location < extension) smark (ctx, 'e', length * location, h2, h5);
+  if (scale . draw_pi) {location = Math . log10 (Math . PI); if (location < extension) smark (ctx, '\u03c0', length * location, h2, h5);}
+  if (scale . draw_e) {location = Math . log10 (Math . E); if (location < extension) smark (ctx, 'e', length * location, h2, h5);}
   if (scale . draw_c) {
     location = Math . log10 (Math . sqrt (4 / Math . PI)); if (location < extension) smark (ctx, 'c', length * location, h2, h5);
     location = (0.5 + Math . log10 (Math . sqrt (4 / Math . PI)));
       if (location < extension) smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), h2, h5);
   }
-  location = Math . log10 (Math . PI / 1.8); if (scale . draw_q && location < extension) smark (ctx, 'q', length * location, h2, h5);
+  if (scale . draw_q) {location = Math . log10 (Math . PI / 1.8); if (location < extension) smark (ctx, 'q', length * location, h2, h5);}
   if (Math . abs (length) < 1024) {
-    draw_XR (ctx, Math . log10, length, 1, 5, extension, h4, 1, 0.5, 1);
+    if (scale . draw_halves) draw_MR (ctx, Math . log10, length, 1.5, 9.5, extension, h5);
+    else {
+      draw_XR (ctx, Math . log10, length, 1, 5, extension, h4, 1, 0.5, 1);
+      draw_XR (ctx, Math . log10, length, 5, 10, extension, h3, 1, 0.5, 1);
+    }
     draw_XR (ctx, Math . log10, length, 1, 5, extension, h3, 0.5, 0.1, 0.5);
     draw_XR (ctx, Math . log10, length, 1, 2, extension, h2, 0.1, 0.02, 0.1);
     draw_XR (ctx, Math . log10, length, 2, 5, extension, h2, 0.1, 0.05, 0.1);
-    draw_XR (ctx, Math . log10, length, 5, 10, extension, h3, 1, 0.5, 1);
     draw_XR (ctx, Math . log10, length, 5, 10, extension, h2, 0.5, 0.1, 0.5);
   } else {
     draw_XR (ctx, Math . log10, length, 1, 2, extension, h3, 0.1, 0.05, 0.1);
     draw_XR (ctx, Math . log10, length, 1, 2, extension, h2, 0.05, 0.01, 0.05);
-    draw_XR (ctx, Math . log10, length, 2, 10, extension, h4, 1, 0.5, 1);
+    if (scale . draw_halves) draw_MR (ctx, Math . log10, length, 2.5, 9.5, extension, h5);
+    else draw_XR (ctx, Math . log10, length, 2, 10, extension, h4, 1, 0.5, 1);
     draw_XR (ctx, Math . log10, length, 2, 10, extension, h3, 0.5, 0.1, 0.5);
     draw_XR (ctx, Math . log10, length, 2, 4, extension, h2, 0.1, 0.02, 0.1);
     draw_XR (ctx, Math . log10, length, 4, 10, extension, h2, 0.1, 0.05, 0.1);
+  }
+  if (scale . draw_st_corrections) {
+    var esc = true;
+    var shift = 2 - Math . log10 (Math . PI / 1.8);
+    for (var ind = 4; esc && ind <= 9; ind++) {
+      var angle = ind * Math . PI / 180;
+      location = shift + Math . log10 (Math . sin (angle));
+      var sub_location = shift + Math . log10 (Math . tan (angle));
+      if (location > extension) esc = false;
+      else {stick (ctx, length * location, h2, h5); stick (ctx, length * sub_location, h2, h5);}
+    }
   }
 };
 var draw_log_1L = function (ctx, length, height, extension, scale) {
@@ -211,14 +226,14 @@ var draw_log_1L = function (ctx, length, height, extension, scale) {
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   draw_ML (ctx, Math . log10, length, 2, 9, extension, height * 0.5);
   if (Math . abs (length) >= 1024) draw_MLS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
-  location = Math . log10 (Math . PI); if (location > extension) smark (ctx, '\u03c0', length * location, height * 0.2, height * 0.5);
-  location = Math . log10 (Math . E); if (location > extension) smark (ctx, 'e', length * location, height * 0.2, height * 0.5);
+  if (scale . draw_pi) {location = Math . log10 (Math . PI); if (location > extension) smark (ctx, '\u03c0', length * location, height * 0.2, height * 0.5);}
+  if (scale . draw_e) {location = Math . log10 (Math . E); if (location > extension) smark (ctx, 'e', length * location, height * 0.2, height * 0.5);}
   if (scale . draw_c) {
     location = Math . log10 (Math . sqrt (4 / Math . PI)); if (location > extension) smark (ctx, 'c', length * location, height * 0.2, height * 0.5);
     location = (0.5 + Math . log10 (Math . sqrt (4 / Math . PI)));
       if (location > extension) smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), height * 0.2, height * 0.5);
   }
-  location = Math . log10 (Math . PI / 1.8); if (scale . draw_q && location > extension) smark (ctx, 'q', length * location, h2, h5);
+  if (scale . draw_q) {location = Math . log10 (Math . PI / 1.8); if (location > extension) smark (ctx, 'q', length * location, h2, h5);}
   if (Math . abs (length) < 1024) {
     draw_XL (ctx, Math . log10, length, 1, 5, extension, h4, 1, 0.5, 1);
     draw_XL (ctx, Math . log10, length, 1, 5, extension, h3, 0.5, 0.1, 0.5);
@@ -341,18 +356,13 @@ var draw_cosine_sine_deg = function (ctx, length, height, scale) {
   draw_05L (ctx, fn_sin_deg, length, 3, 15, - scale . left_extension, height * 0.3);
   draw_01L (ctx, fn_sin_deg, length, 3, 15, - scale . left_extension, height * 0.2);
 };
-var fn_small_sin_deg = function (value) {return Math . log10 (value * Math . PI / 1.8);};
-var draw_small_sine_deg = function (ctx, length, height, scale) {
-  draw_MLS (ctx, fn_small_sin_deg, length, 0.6, 0.9, 0.1, - scale . left_extension, height * 0.5);
-  draw_MLS (ctx, fn_small_sin_deg, length, 0.1, 0.55, 0.05, - scale . left_extension, height * 0.5);
-  draw_MRS (ctx, fn_small_sin_deg, length, 1, 3.5, 0.5, 1 + scale . right_extension, height * 0.5);
-  draw_MR (ctx, fn_small_sin_deg, length, 4, 10, 1 + scale . right_extension, height * 0.5);
-  draw_05R (ctx, fn_small_sin_deg, length, 4, 10, 1 + scale . right_extension, height * 0.4);
-  draw_01R (ctx, fn_small_sin_deg, length, 2, 10, 1 + scale . right_extension, height * 0.3);
-  draw_01L (ctx, fn_small_sin_deg, length, 1, 2, - scale . left_extension, height * 0.4);
-  draw_001L (ctx, fn_small_sin_deg, length, 0.1, 2, - scale . left_extension, height * 0.2);
-  draw_005L (ctx, fn_small_sin_deg, length, 0.1, 2, - scale . left_extension, height * 0.3);
-  draw_005R (ctx, fn_small_sin_deg, length, 2, 5, 1, height * 0.2);
+var draw_small_sine_deg = function (ctx, length, height, s) {
+  var shift = s . location (1);
+  ctx . translate (length * shift, 0);
+  mark (ctx, "1", 0, height * 0.5);
+  draw_log_1R (ctx, length, - s . height, 1 + s . right_extension - shift, s);
+  ctx . translate (- length, 0);
+  draw_log_1L (ctx, length, - s . height, 1 - shift - s . left_extension, s);
 };
 var fn_tan_deg = function (value) {return 1 + Math . log10 (Math . tan (value * Math . PI / 180));};
 var draw_tan_deg = function (ctx, length, height, scale) {
@@ -413,35 +423,44 @@ var draw_big_tan_cotan_deg = function (ctx, length, height, scale) {
 
 var fn_pe = function (value) {return Math . log10 (10 * Math . sqrt (1 - value * value));};
 var draw_pe = function (ctx, length, height, scale) {
-  mark (ctx, ".995", length * fn_pe (0.995), height * 0.5);
-  mark (ctx, ".99", length * fn_pe (0.99), height * 0.5);
-  mark (ctx, ".98", length * fn_pe (0.98), height * 0.5);
-  mark (ctx, ".97", length * fn_pe (0.97), height * 0.5);
-  mark (ctx, ".96", length * fn_pe (0.96), height * 0.5);
-  mark (ctx, ".95", length * fn_pe (0.95), height * 0.5);
-  mark (ctx, ".94", length * fn_pe (0.94), height * 0.5);
-  mark (ctx, ".93", length * fn_pe (0.93), height * 0.5);
-  mark (ctx, ".92", length * fn_pe (0.92), height * 0.5);
-  mark (ctx, ".91", length * fn_pe (0.91), height * 0.5);
-  mark (ctx, ".9", length * fn_pe (0.9), height * 0.5);
-  mark (ctx, ".8", length * fn_pe (0.8), height * 0.5);
-  mark (ctx, ".7", length * fn_pe (0.7), height * 0.5);
-  mark (ctx, ".6", length * fn_pe (0.6), height * 0.5);
-  mark (ctx, ".5", length * fn_pe (0.5), height * 0.5);
-  mark (ctx, ".4", length * fn_pe (0.4), height * 0.5);
-  mark (ctx, ".3", length * fn_pe (0.3), height * 0.5);
-  mark (ctx, ".2", length * fn_pe (0.2), height * 0.5);
-  mark (ctx, "", length * fn_pe (0.1), height * 0.5);
-  mark (ctx, 0, length, height * 0.5);
-  draw_XLI (ctx, fn_pe, length, 0.3, 0.2, - scale . left_extension, height * 0.4, 0.1, 0.05, 0.1);
-  draw_XLI (ctx, fn_pe, length, 0.4, 0.3, - scale . left_extension, height * 0.3, 0.1, 0.02, 0.1);
-  draw_XLI (ctx, fn_pe, length, 0.9, 0.4, - scale . left_extension, height * 0.4, 0.1, 0.05, 0.1);
-  draw_XLI (ctx, fn_pe, length, 0.9, 0.4, - scale . left_extension, height * 0.2, 0.05, 0.01, 0.05);
-  draw_XLI (ctx, fn_pe, length, 0.99, 0.9, - scale . left_extension, height * 0.2, 0.005, 0.001, 0.005);
-  draw_XLI (ctx, fn_pe, length, 0.99, 0.9, - scale . left_extension, height * 0.4, 0.01, 0.005, 0.01);
-  draw_XLI (ctx, fn_pe, length, 1, 0.99, - scale . left_extension, height * 0.4, 0.005, 0.001, 0.005);
-  draw_XLI (ctx, fn_pe, length, 1, 0.99, - scale . left_extension, height * 0.2, 0.0005, 0.0001, 0.0005);
-  draw_XLI (ctx, fn_pe, length, 1, 0.99, - scale . left_extension, height * 0.3, 0.001, 0.0005, 0.001);
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+  mark (ctx, ".995", length * fn_pe (0.995), h5);
+  mark (ctx, ".99", length * fn_pe (0.99), h5);
+  mark (ctx, ".98", length * fn_pe (0.98), h5);
+  mark (ctx, ".97", length * fn_pe (0.97), h5);
+  mark (ctx, ".96", length * fn_pe (0.96), h5);
+  mark (ctx, ".95", length * fn_pe (0.95), h5);
+  mark (ctx, ".94", length * fn_pe (0.94), h5);
+  mark (ctx, ".93", length * fn_pe (0.93), h5);
+  mark (ctx, ".92", length * fn_pe (0.92), h5);
+  mark (ctx, ".91", length * fn_pe (0.91), h5);
+  mark (ctx, ".9", length * fn_pe (0.9), h5);
+  mark (ctx, ".8", length * fn_pe (0.8), h5);
+  mark (ctx, ".7", length * fn_pe (0.7), h5);
+  mark (ctx, ".6", length * fn_pe (0.6), h5);
+  mark (ctx, ".5", length * fn_pe (0.5), h5);
+  mark (ctx, ".4", length * fn_pe (0.4), h5);
+  mark (ctx, ".3", length * fn_pe (0.3), h5);
+  mark (ctx, ".2", length * fn_pe (0.2), h5);
+  mark (ctx, "", length * fn_pe (0.1), h5);
+  mark (ctx, 0, length, h5);
+  draw_XLI (ctx, fn_pe, length, 0.3, 0.1, - scale . left_extension, h2, 0.1, 0.05, 0.1);
+  draw_XLI (ctx, fn_pe, length, 0.4, 0.3, - scale . left_extension, h2, 0.1, 0.02, 0.1);
+  draw_XLI (ctx, fn_pe, length, 0.6, 0.4, - scale . left_extension, h3, 0.1, 0.05, 0.1);
+  draw_XLI (ctx, fn_pe, length, 0.6, 0.4, - scale . left_extension, h2, 0.05, 0.01, 0.05);
+  draw_XLI (ctx, fn_pe, length, 0.9, 0.6, - scale . left_extension, h4, 0.1, 0.05, 0.1);
+  draw_XLI (ctx, fn_pe, length, 0.9, 0.6, - scale . left_extension, h3, 0.05, 0.01, 0.05);
+  draw_XLI (ctx, fn_pe, length, 0.8, 0.6, - scale . left_extension, h2, 0.01, 0.005, 0.01);
+  draw_XLI (ctx, fn_pe, length, 0.9, 0.8, - scale . left_extension, h2, 0.01, 0.002, 0.01);
+  draw_XLI (ctx, fn_pe, length, 0.95, 0.9, - scale . left_extension, h2, 0.005, 0.001, 0.005);
+  draw_XLI (ctx, fn_pe, length, 0.95, 0.9, - scale . left_extension, h4, 0.01, 0.005, 0.01);
+  draw_XLI (ctx, fn_pe, length, 0.99, 0.95, - scale . left_extension, h4, 0.01, 0.005, 0.01);
+  draw_XLI (ctx, fn_pe, length, 0.99, 0.95, - scale . left_extension, h3, 0.005, 0.001, 0.005);
+  draw_XLI (ctx, fn_pe, length, 0.98, 0.95, - scale . left_extension, h2, 0.001, 0.0005, 0.001);
+  draw_XLI (ctx, fn_pe, length, 0.99, 0.98, - scale . left_extension, h2, 0.001, 0.0002, 0.001);
+  draw_XLI (ctx, fn_pe, length, 1, 0.99, - scale . left_extension, h4, 0.005, 0.001, 0.005);
+  draw_XLI (ctx, fn_pe, length, 1, 0.99, - scale . left_extension, h2, 0.0005, 0.0001, 0.0005);
+  draw_XLI (ctx, fn_pe, length, 1, 0.99, - scale . left_extension, h3, 0.001, 0.0005, 0.001);
 };
 
 var draw_LL3 = function (ctx, length, height, s) {
@@ -617,6 +636,8 @@ var spacer = function (height, options) {
   this . height = height;
   this . indices = ['1', '10', '100', '1000', '10000', '100000'];
   this . draw_c = true;
+  this . draw_pi = true;
+  this . draw_e = true;
   this . ruleHeight = function () {return this . height;};
   this . hitTest = function (y) {return false;};
   this . la = 'left'; this . ra = 'left'; this . ca = 'center';
