@@ -360,9 +360,9 @@ var draw_small_sine_deg = function (ctx, length, height, s) {
   var shift = s . location (1);
   ctx . translate (length * shift, 0);
   mark (ctx, "1", 0, height * 0.5);
-  draw_log_1R (ctx, length, - s . height, 1 + s . right_extension - shift, s);
+  draw_log_1R (ctx, length, height, 1 + s . right_extension - shift, s);
   ctx . translate (- length, 0);
-  draw_log_1L (ctx, length, - s . height, 1 - shift - s . left_extension, s);
+  draw_log_1L (ctx, length, height, 1 - shift - s . left_extension, s);
 };
 var fn_tan_deg = function (value) {return 1 + Math . log10 (Math . tan (value * Math . PI / 180));};
 var draw_tan_deg = function (ctx, length, height, scale) {
