@@ -205,7 +205,7 @@ var draw_log_1R = function (ctx, length, height, extension, scale) {
     draw_XR (ctx, Math . log10, length, 3, 6, extension, h3, 1, 0.5, 1);
     draw_XR (ctx, Math . log10, length, 3, 6, extension, h2, 0.5, 0.1, 0.5);
     draw_XR (ctx, Math . log10, length, 6, 10, extension, h2, 1, 0.2, 1);
-  } else if (abs_length <= 800) { // 2 5
+  } else if (abs_length < 800) { // 2 5
     if (scale . draw_halves) draw_MR (ctx, Math . log10, length, 1.5, 9.5, extension, h5);
     else {
       draw_XR (ctx, Math . log10, length, 1, 5, extension, h4, 1, 0.5, 1);
@@ -264,7 +264,7 @@ var draw_log_1L = function (ctx, length, height, extension, scale) {
     draw_XL (ctx, Math . log10, length, 3, 6, extension, h3, 1, 0.5, 1);
     draw_XL (ctx, Math . log10, length, 3, 6, extension, h2, 0.5, 0.1, 0.5);
     draw_XL (ctx, Math . log10, length, 6, 10, extension, h2, 1, 0.2, 1);
-  } else if (abs_length <= 800) {
+  } else if (abs_length < 800) {
     draw_XL (ctx, Math . log10, length, 1, 5, extension, h4, 1, 0.5, 1);
     draw_XL (ctx, Math . log10, length, 1, 5, extension, h3, 0.5, 0.1, 0.5);
     draw_XL (ctx, Math . log10, length, 1, 2, extension, h2, 0.1, 0.02, 0.1);
