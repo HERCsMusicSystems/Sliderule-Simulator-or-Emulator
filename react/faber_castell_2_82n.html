@@ -215,14 +215,14 @@ r . scales . push (new spacer (2));
 r . scales . push (new scale_LL03 (24, {left_extension: 0.06, right_extension: 0.065, left: "LL\u2080\u2083", right: "e^-x", rs: 0.08, colour: 'red'}));
 r . scales . push (new scale_LL02 (24, {left_extension: 0.06, right_extension: 0.065, left: "LL\u2080\u2082", right: "e^-0.1x", rs: 0.08, colour: 'red'}));
 r . scales . push (new scale_LL01 (24, {left_extension: 0.06, right_extension: 0.065, left: "LL\u2080\u2081", right: "e^-0.01x", rs: 0.08, colour: 'red'}));
-r . scales . push (new scale_K (24, {left_extension: 0.065, right_extension: 0.06, left: "K", right: "X\u00b3", rs: 0.08, alt: 'black'}));
+r . scales . push (new scale_K (24, {left_extension: 0.064, right_extension: 0.06, left: "K", right: "X\u00b3", rs: 0.08, alt: 'black'}));
 r . scales . push (new scale_CF (24, {left_extension: 0.065, right_extension: 0.06, left: "DF", right: "\u03c0X", rs: 0.08, indices: ["\u21e61\u21e8"], draw_q: true}));
 
 r = new Rule ({stator: 1, left_margin: 0.26, right_margin: 0.26}); s . rules . push (r);
 r . markings . push (new RuleBars (-0.254, 1, 4, 116, 9, 6, 4, 'black'));
 r . markings . push (new RuleBars (1.254, -1, 4, 116, 9, 6, 4, 'black'));
 r . scales . push (new scale_DF (24, {left_extension: 0.065, right_extension: 0.06, left: "CF", right: "\u03c0X", rs: 0.08, alt: 'black', highlight: '#ccffcc', indices: ["\u21e61\u21e8"], draw_q: true}));
-r . scales . push (new scale_J (24, {left_extension: 0.06, right_extension: 0.065, left: "K'", right: "X\u00b3", rs: 0.08, alt: 'black'}));
+r . scales . push (new scale_J (24, {left_extension: 0.064, right_extension: 0.065, left: "K'", right: "X\u00b3", rs: 0.08, alt: 'black'}));
 r . scales . push (new scale_CIF (24, {left_extension: 0.064, right_extension: 0.065, left: "CIF", right: "10/\u03c0X", rs: 0.08, colour: 'red'}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_DI (24, {left_extension: 0.06, left: "CI'", right: "10/X", rs: 0.08, colour: 'red'}));

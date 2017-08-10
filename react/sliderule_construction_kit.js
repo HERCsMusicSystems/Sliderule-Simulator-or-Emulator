@@ -191,21 +191,21 @@ var draw_log_1R = function (ctx, length, height, extension, scale) {
       if (location < extension) smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), h2, h5);
   }
   if (scale . draw_q) {location = Math . log10 (Math . PI / 1.8); if (location < extension) smark (ctx, 'q', length * location, h2, h5);}
-  if (abs_length < 384) {
+  if (abs_length < 300) { // 2 4
     draw_XR (ctx, Math . log10, length, 1, 2, extension, h4, 1, 0.5, 1);
     draw_XR (ctx, Math . log10, length, 1, 2, extension, h3, 0.5, 0.1, 0.5);
     draw_XR (ctx, Math . log10, length, 1, 2, extension, h2, 0.1, 0.05, 0.1);
     draw_XR (ctx, Math . log10, length, 2, 4, extension, h3, 1, 0.5, 1);
     draw_XR (ctx, Math . log10, length, 2, 4, extension, h2, 0.5, 0.1, 0.5);
     draw_XR (ctx, Math . log10, length, 4, 10, extension, h2, 1, 0.2, 1);
-  } else if (abs_length < 512) {
+  } else if (abs_length < 400) { // 3 6
     draw_XR (ctx, Math . log10, length, 1, 3, extension, h4, 1, 0.5, 1);
     draw_XR (ctx, Math . log10, length, 1, 3, extension, h3, 0.5, 0.1, 0.5);
     draw_XR (ctx, Math . log10, length, 1, 3, extension, h2, 0.1, 0.05, 0.1);
     draw_XR (ctx, Math . log10, length, 3, 6, extension, h3, 1, 0.5, 1);
     draw_XR (ctx, Math . log10, length, 3, 6, extension, h2, 0.5, 0.1, 0.5);
     draw_XR (ctx, Math . log10, length, 6, 10, extension, h2, 1, 0.2, 1);
-  } else if (abs_length < 1024) {
+  } else if (abs_length <= 800) { // 2 5
     if (scale . draw_halves) draw_MR (ctx, Math . log10, length, 1.5, 9.5, extension, h5);
     else {
       draw_XR (ctx, Math . log10, length, 1, 5, extension, h4, 1, 0.5, 1);
@@ -215,7 +215,7 @@ var draw_log_1R = function (ctx, length, height, extension, scale) {
     draw_XR (ctx, Math . log10, length, 1, 2, extension, h2, 0.1, 0.02, 0.1);
     draw_XR (ctx, Math . log10, length, 2, 5, extension, h2, 0.1, 0.05, 0.1);
     draw_XR (ctx, Math . log10, length, 5, 10, extension, h2, 0.5, 0.1, 0.5);
-  } else {
+  } else { // 2 4
     draw_XR (ctx, Math . log10, length, 1, 2, extension, h3, 0.1, 0.05, 0.1);
     draw_XR (ctx, Math . log10, length, 1, 2, extension, h2, 0.05, 0.01, 0.05);
     if (scale . draw_halves) draw_MR (ctx, Math . log10, length, 2.5, 9.5, extension, h5);
@@ -250,21 +250,21 @@ var draw_log_1L = function (ctx, length, height, extension, scale) {
       if (location > extension) smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), height * 0.2, height * 0.5);
   }
   if (scale . draw_q) {location = Math . log10 (Math . PI / 1.8); if (location > extension) smark (ctx, 'q', length * location, h2, h5);}
-  if (abs_length < 384) {
+  if (abs_length < 300) {
     draw_XL (ctx, Math . log10, length, 1, 2, extension, h4, 1, 0.5, 1);
     draw_XL (ctx, Math . log10, length, 1, 2, extension, h3, 0.5, 0.1, 0.5);
     draw_XL (ctx, Math . log10, length, 1, 2, extension, h2, 0.1, 0.05, 0.1);
     draw_XL (ctx, Math . log10, length, 2, 4, extension, h3, 1, 0.5, 1);
     draw_XL (ctx, Math . log10, length, 2, 4, extension, h2, 0.5, 0.1, 0.5);
     draw_XL (ctx, Math . log10, length, 4, 10, extension, h2, 1, 0.2, 1);
-  } else if (abs_length < 512) {
+  } else if (abs_length < 400) {
     draw_XL (ctx, Math . log10, length, 1, 3, extension, h4, 1, 0.5, 1);
     draw_XL (ctx, Math . log10, length, 1, 3, extension, h3, 0.5, 0.1, 0.5);
     draw_XL (ctx, Math . log10, length, 1, 3, extension, h2, 0.1, 0.05, 0.1);
     draw_XL (ctx, Math . log10, length, 3, 6, extension, h3, 1, 0.5, 1);
     draw_XL (ctx, Math . log10, length, 3, 6, extension, h2, 0.5, 0.1, 0.5);
     draw_XL (ctx, Math . log10, length, 6, 10, extension, h2, 1, 0.2, 1);
-  } else if (abs_length < 1024) {
+  } else if (abs_length <= 800) {
     draw_XL (ctx, Math . log10, length, 1, 5, extension, h4, 1, 0.5, 1);
     draw_XL (ctx, Math . log10, length, 1, 5, extension, h3, 0.5, 0.1, 0.5);
     draw_XL (ctx, Math . log10, length, 1, 2, extension, h2, 0.1, 0.02, 0.1);
@@ -300,9 +300,9 @@ var draw_log_log = function (ctx, length, height, scale, left_extension, right_e
   ctx . translate (length, 0);
   mark (ctx, scale . indices [2], 0, height * 0.5);
   ctx . fillStyle = scale . alt; ctx . strokeStyle = scale . alt;
-  draw_log_1R (ctx, length, height, scale . right_extension, scale);
+  draw_log_1R (ctx, length, height, 2 * scale . right_extension, scale);
   ctx . translate (-3 * length, 0);
-  draw_log_1L (ctx, length, height, 1 - scale . left_extension, scale);
+  draw_log_1L (ctx, length, height, 1 - 2 * scale . left_extension, scale);
 };
 var draw_log_log_log = function (ctx, length, height, scale) {
   length /= 3;
@@ -317,9 +317,9 @@ var draw_log_log_log = function (ctx, length, height, scale) {
   ctx . translate (length, 0);
   mark (ctx, scale . indices [3], 0, height * 0.5);
   ctx . fillStyle = scale . alt; ctx . strokeStyle = scale . alt;
-  draw_log_1R (ctx, length, height, scale . right_extension, scale);
-  ctx . translate (-3 * length, 0);
-  draw_log_1L (ctx, length, height, 1 - scale . left_extension, scale);
+  draw_log_1R (ctx, length, height, 3 * scale . right_extension, scale);
+  ctx . translate (-4 * length, 0);
+  draw_log_1L (ctx, length, height, 1 - 3 * scale . left_extension, scale);
 };
 var fn_lin = function (value) {return value * 0.1;};
 var draw_lin = function (ctx, length, height, scale) {
@@ -458,6 +458,7 @@ var draw_big_tan_cotan_deg = function (ctx, length, height, scale) {
 var fn_pe = function (value) {return Math . log10 (10 * Math . sqrt (1 - value * value));};
 var draw_pe = function (ctx, length, height, scale) {
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+  var location = fn_pe (0.996); if (location > - scale . left_extension) mmark (ctx, ".996", length * location, h5);
   mark (ctx, ".995", length * fn_pe (0.995), h5);
   mark (ctx, ".99", length * fn_pe (0.99), h5);
   mark (ctx, ".98", length * fn_pe (0.98), h5);
