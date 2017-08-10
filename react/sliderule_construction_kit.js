@@ -286,9 +286,9 @@ var draw_log = function (ctx, length, height, scale, left_extension, right_exten
   draw_log_1R (ctx, length, height, 1, scale);
   ctx . fillStyle = scale . alt; ctx . strokeStyle = scale . alt;
   ctx . translate (length, 0);
-  draw_log_1R (ctx, length, height, scale . right_extension, scale);
+  draw_log_1R (ctx, length, height, right_extension, scale);
   ctx . translate (- length - length, 0);
-  draw_log_1L (ctx, length, height, 1 - scale . left_extension, scale);
+  draw_log_1L (ctx, length, height, 1 - left_extension, scale);
 };
 var draw_log_log = function (ctx, length, height, scale, left_extension, right_extension) {
   length *= 0.5;
@@ -300,11 +300,11 @@ var draw_log_log = function (ctx, length, height, scale, left_extension, right_e
   ctx . translate (length, 0);
   mark (ctx, scale . indices [2], 0, height * 0.5);
   ctx . fillStyle = scale . alt; ctx . strokeStyle = scale . alt;
-  draw_log_1R (ctx, length, height, 2 * scale . right_extension, scale);
+  draw_log_1R (ctx, length, height, 2 * right_extension, scale);
   ctx . translate (-3 * length, 0);
-  draw_log_1L (ctx, length, height, 1 - 2 * scale . left_extension, scale);
+  draw_log_1L (ctx, length, height, 1 - 2 * left_extension, scale);
 };
-var draw_log_log_log = function (ctx, length, height, scale) {
+var draw_log_log_log = function (ctx, length, height, scale, left_extension, right_extension) {
   length /= 3;
   mark (ctx, scale . indices [0], 0, height * 0.5);
   draw_log_1R (ctx, length, height, 1, scale);
@@ -317,9 +317,9 @@ var draw_log_log_log = function (ctx, length, height, scale) {
   ctx . translate (length, 0);
   mark (ctx, scale . indices [3], 0, height * 0.5);
   ctx . fillStyle = scale . alt; ctx . strokeStyle = scale . alt;
-  draw_log_1R (ctx, length, height, 3 * scale . right_extension, scale);
+  draw_log_1R (ctx, length, height, 3 * right_extension, scale);
   ctx . translate (-4 * length, 0);
-  draw_log_1L (ctx, length, height, 1 - 3 * scale . left_extension, scale);
+  draw_log_1L (ctx, length, height, 1 - 3 * left_extension, scale);
 };
 var fn_lin = function (value) {return value * 0.1;};
 var draw_lin = function (ctx, length, height, scale) {

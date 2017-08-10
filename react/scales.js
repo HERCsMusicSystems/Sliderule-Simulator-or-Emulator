@@ -118,13 +118,13 @@ var scale_K = function (height, options) {
   if (! options || ! options . draw_c) s . draw_c = false;
   s . value = function (location) {return Math . pow (10, location * 3);};
   s . location = function (value) {return Math . log10 (value) / 3;};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_log_log_log (ctx, length, s . height, s);};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_log_log_log (ctx, length, s . height, s, s . left_extension, s . right_extension);};
   return s;
 };
 
 var scale_J = function (height, options) {
   var s = new scale_K (height, options);
-  s . draw = function (ctx, length) {draw_log_log_log (ctx, length, - s . height, s);};
+  s . draw = function (ctx, length) {draw_log_log_log (ctx, length, - s . height, s, s . left_extension, s . right_extension);};
   return s;
 };
 
@@ -179,6 +179,7 @@ var scale_T = function (height, options) {
   s . value = function (location) {return Math . atan (Math . pow (10, location - 1)) * 180 / Math . PI;};
   s . location = function (value) {return 1 + Math . log10 (Math . tan (value * Math . PI / 180));};
   s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_tan_deg (ctx, length, s . height, s);};
+
   return s;
 };
 

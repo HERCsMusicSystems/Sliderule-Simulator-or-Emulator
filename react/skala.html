@@ -25,16 +25,16 @@ var r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_L (24));
 r . scales . push (new scale_P (24, {left_extension: 0.05}));
 r . scales . push (new scale_K (24));
-r . scales . push (new scale_A (24, {left_extension: 0.11, right_extension: 0.11}));
+r . scales . push (new scale_A (24, {left_extension: 0.055, right_extension: 0.055}));
 r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_B (24, {left_extension: 0.11, right_extension: 0.11}));
-r . scales . push (new scale_CI (24));
-r . scales . push (new scale_C (24, {left_extension: 0.06, right_extension: 0.1}));
+r . scales . push (new scale_B (24, {left_extension: 0.055, right_extension: 0.055}));
+r . scales . push (new scale_CI (24, {left_extension: 0.05, right_extension: 0.06, colour: 'red'}));
+r . scales . push (new scale_C (24, {left_extension: 0.055, right_extension: 0.055}));
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (24));
-r . scales . push (new scale_S (24));
-r . scales . push (new scale_T (24));
-r . scales . push (new scale_ST (24));
+r . scales . push (new scale_D (24, {left_extension: 0.055, right_extension: 0.055}));
+r . scales . push (new scale_S (24, {left_extension: 0.06}));
+r . scales . push (new scale_T (24, {left_extension: 0.06}));
+r . scales . push (new scale_ST (24, {left_extension: 0.06, right_extension: 0.025}));
 s . braces . push (new Logo (logo, 1.28, 48, 0.2));
 </script>
 
