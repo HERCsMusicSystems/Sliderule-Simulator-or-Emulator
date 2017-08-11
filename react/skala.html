@@ -20,7 +20,9 @@
 <script>
 var logo = new Image (); logo . src = "skala.png";
 var sliderules = new Sliderules ();
-var s = new Sliderule (720); sliderules . sliderules . push (s);
+var s = new Sliderule (720, {cursor_left_extension: 0.08, cursor_right_extension: 0.08}); sliderules . sliderules . push (s);
+s . cursors . push (new Cursor (HairlineD, 0, 264, 'black'));
+s . cursors . push (new Cursor (HairlineS, 0, 264, 'black'));
 var r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_L (24));
 r . scales . push (new scale_P (24, {left_extension: 0.05}));

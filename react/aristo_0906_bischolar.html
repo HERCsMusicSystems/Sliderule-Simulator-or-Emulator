@@ -62,7 +62,7 @@ s . rules . push (r);
 r . scales . push (new scale_B (24, {left: "B", right: "X\u00B2", rs: 0.08, ra: 'left', highlight: 'yellow', highlight_left: 0.199, highlight_right: 0.199}));
 r . scales . push (new scale_AI (24, {left: "BI", right: "1/X\u00B2", marking_colour: 'red', rs: 0.08, ra: 'left'}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_S_down (24, {left: "S", right: "\u2222 sin", rs: 0.08, ra: 'left', left_extension: 0.02}));
+r . scales . push (new scale_Sdec_down (24, {left: "S", right: "\u2222 sin", rs: 0.08, ra: 'left', left_extension: 0.02}));
 r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.08, ra: 'left', highlight: 'yellow', highlight_left: 0.199, highlight_right: 0.199}));
 r = new Rule ();
 s . rules . push (r);
@@ -84,10 +84,10 @@ s . cursor_left_extension = 0.074; s . cursor_right_extension = 0.074;
 s . cursors . push (Cursor360 (50, 146, 'red'));
 r = new Rule ();
 s . rules . push (r);
-r . scales . push (new scale_ST (24, {left: "ST", right: "\u2222 arc", rs: 0.08, ra: 'left', left_extension: 0.02, right_extension: 0.025}));
-r . scales . push (new scale_T (24, {left: "T1", right: "\u2222 tan", rs: 0.08, ra: 'left', left_extension: 0.02}));
+r . scales . push (new scale_STdec (24, {left: "ST", right: "\u2222 arc", rs: 0.08, ra: 'left', left_extension: 0.02, right_extension: 0.025}));
+r . scales . push (new scale_Tdec (24, {left: "T1", right: "\u2222 tan", rs: 0.08, ra: 'left', left_extension: 0.02}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_T1_down (24, {left: "T2", right: "\u2222 tan", rs: 0.08, ra: 'left', right_extension: 0.02}));
+r . scales . push (new scale_T1dec_down (24, {left: "T2", right: "\u2222 tan", rs: 0.08, ra: 'left', right_extension: 0.02}));
 r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.04, right_extension: 0.06, index: '>>1<<'}));
 r = new Rule ({stator: 1, rounding: 0});
 s . rules . push (r);
@@ -104,7 +104,7 @@ r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.08, ra: 'left'
 r . scales . push (new spacer (12));
 r . scales . push (new scale_CI (24, {left: "DI", marking_colour: 'red', right: "1/x", rs: 0.08, ra: 'left'}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_CS_down (24, {left: "S", left_extension: 0.02, right: "\u2222 sin", rs: 0.08, ra: 'left', centre: "\u2222 cos", cs: 1.076, ca: 'right', cc: 'red'}));
+r . scales . push (new scale_CSdec_down (24, {left: "S", left_extension: 0.02, right: "\u2222 sin", rs: 0.08, ra: 'left', centre: "\u2222 cos", cs: 1.076, ca: 'right', cc: 'red'}));
 r . scales . push (new spacer (12));
 
 </script>
