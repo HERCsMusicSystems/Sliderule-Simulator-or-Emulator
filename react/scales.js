@@ -251,24 +251,24 @@ var scale_SCdec = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return Math . asin (Math . pow (10, location - 1)) * 180 / Math . PI;};
   s . location = function (value) {return 1 + Math . log10 (Math . sin (value * Math . PI / 180));};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_sine_cosine_dec (ctx, length, s . height, s);};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_sine_cosine_dec (ctx, length, s . height, s, 'sc');};
   return s;
 };
 var scale_SCdec_down = function (height, options) {
   var s = new scale_SCdec (height, options);
-  s . draw = function (ctx, length) {draw_sine_cosine_dec (ctx, length, - s . height, s);};
+  s . draw = function (ctx, length) {draw_sine_cosine_dec (ctx, length, - s . height, s, 'sc');};
   return s;
 };
 var scale_CSdec = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return Math . asin (Math . pow (10, location - 1)) * 180 / Math . PI;};
   s . location = function (value) {return 1 + Math . log10 (Math . sin (value * Math . PI / 180));};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_cosine_sine_dec (ctx, length, s . height, s);};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_sine_cosine_dec (ctx, length, s . height, s, 'cs');};
   return s;
 };
 var scale_CSdec_down = function (height, options) {
   var s = new scale_CSdec (height, options);
-  s . draw = function (ctx, length) {draw_cosine_sine_dec (ctx, length, - s . height, s);};
+  s . draw = function (ctx, length) {draw_sine_cosine_dec (ctx, length, - s . height, s, 'cs');};
   return s;
 };
 var scale_P = function (height, options) {

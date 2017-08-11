@@ -348,18 +348,20 @@ var draw_sine_dec = function (ctx, length, height, scale) {
   draw_05L (ctx, fn_sin_dec, length, 3, 15, - scale . left_extension, height * 0.3);
   draw_01L (ctx, fn_sin_dec, length, 3, 15, - scale . left_extension, height * 0.2);
 };
-var draw_sine_cosine_dec = function (ctx, length, height, scale) {
+var draw_sine_cosine_dec = function (ctx, length, height, scale, type) {
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   draw_MLS (ctx, fn_sin_dec, length, 4, 9, 1, - scale . left_extension, h5);
   draw_MLS (ctx, fn_sin_dec, length, 11, 19, 1, - scale . left_extension, h5);
   draw_MRS (ctx, fn_sin_dec, length, 80, 90, 10, 1, h5);
   draw_MRS (ctx, fn_sin_dec, length, 25, 35, 10, 1, h5);
   for (var degree = 10; degree <= 70; degree += 10) tick (ctx, length * fn_sin_dec (degree), h5);
-  ctx . textAlign = 'right';
-  for (var degree = 10; degree <= 70; degree += 10) mmark (ctx, degree, length * fn_sin_dec (degree) - 1, h5);
-  ctx . textAlign = 'left';
+  ctx . textAlign = type == 'sc' ? 'right' : 'left';
+  var shifter = type == 'sc' ? -1 : 1;
+  for (var degree = 10; degree <= 70; degree += 10) mmark (ctx, degree, length * fn_sin_dec (degree) + shifter, h5);
+  ctx . textAlign = type == 'cs' ? 'right' : 'left';
+  shifter = - shifter;
   ctx . fillStyle = scale . alt;
-  for (var degree = 20; degree <= 80; degree += 10) mmark (ctx, degree, length * fn_sin_dec (90 - degree) + 1, h5);
+  for (var degree = 20; degree <= 80; degree += 10) mmark (ctx, degree, length * fn_sin_dec (90 - degree) + shifter, h5);
   mmark (ctx, 20, length * fn_sin_dec (70), h5);
   draw_XR (ctx, fn_sin_dec, length, 60, 80, 1, h3, 10, 5, 10);
   draw_XR (ctx, fn_sin_dec, length, 60, 80, 1, h2, 5, 1, 5);
@@ -369,23 +371,6 @@ var draw_sine_cosine_dec = function (ctx, length, height, scale) {
   draw_XR (ctx, fn_sin_dec, length, 20, 40, 1, h2, 1, 0.2, 1);
   draw_XL (ctx, fn_sin_dec, length, 3, 20, - scale . left_extension, h3, 1, 0.5, 1);
   draw_XL (ctx, fn_sin_dec, length, 3, 20, - scale . left_extension, h2, 0.5, 0.1, 0.5);
-};
-var draw_cosine_sine_dec = function (ctx, length, height, scale) {
-  draw_MLS (ctx, fn_sin_dec, length, 4, 9, 1, - scale . left_extension, height * 0.5);
-  draw_MRS (ctx, fn_sin_dec, length, 80, 90, 10, 1, height * 0.5);
-  draw_MRS (ctx, fn_sin_dec, length, 15, 35, 10, 1, height * 0.5);
-  for (var degree = 10; degree <= 70; degree += 10) tick (ctx, length * fn_sin_dec (degree), height * 0.5);
-  ctx . textAlign = 'left';
-  for (var degree = 10; degree <= 70; degree += 10) mmark (ctx, degree, length * fn_sin_dec (degree) + 1, height * 0.5);
-  ctx . textAlign = 'right';
-  ctx . fillStyle = scale . alt;
-  for (var degree = 20; degree <= 80; degree += 10) mmark (ctx, degree, length * fn_sin_dec (90 - degree) - 1, height * 0.5);
-  mmark (ctx, 20, length * fn_sin_dec (70), height * 0.5);
-  draw_10R (ctx, fn_sin_dec, length, 15, 80, 1, height * 0.4);
-  draw_10R (ctx, fn_sin_dec, length, 10, 15, 1, height * 0.5);
-  draw_50R (ctx, fn_sin_dec, length, 40, 90, 1, height * 0.5);
-  draw_05L (ctx, fn_sin_dec, length, 3, 15, - scale . left_extension, height * 0.3);
-  draw_01L (ctx, fn_sin_dec, length, 3, 15, - scale . left_extension, height * 0.2);
 };
 var draw_small_sine_dec = function (ctx, length, height, s) {
   var shift = s . location (1);

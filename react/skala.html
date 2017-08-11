@@ -20,23 +20,23 @@
 <script>
 var logo = new Image (); logo . src = "skala.png";
 var sliderules = new Sliderules ();
-var s = new Sliderule (720, {cursor_left_extension: 0.08, cursor_right_extension: 0.08}); sliderules . sliderules . push (s);
-s . cursors . push (new Cursor (HairlineD, 0, 264, 'black'));
-s . cursors . push (new Cursor (HairlineS, 0, 264, 'black'));
+var s = new Sliderule (720, {cursor_rounding: 10}); sliderules . sliderules . push (s);
+s . cursors . push (new Cursor (HairlineD, 108, 144, 'blue'));
+s . cursors . push (new Cursor (HairlineS, 54, 90, 'blue'));
 var r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_L (24));
-r . scales . push (new scale_P (24, {left_extension: 0.05}));
-r . scales . push (new scale_K (24));
-r . scales . push (new scale_A (24, {left_extension: 0.055, right_extension: 0.055}));
+r . scales . push (new scale_L (18, {left: "log"}));
+r . scales . push (new scale_P (18, {left_extension: 0.05, left: "\u221a(1-x\u00b2)"}));
+r . scales . push (new scale_K (18, {left: "x\u00b3"}));
+r . scales . push (new scale_A (18, {left_extension: 0.055, right_extension: 0.055, left: "x\u00b2"}));
 r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_B (24, {left_extension: 0.055, right_extension: 0.055}));
-r . scales . push (new scale_CI (24, {left_extension: 0.05, right_extension: 0.06, colour: 'red'}));
-r . scales . push (new scale_C (24, {left_extension: 0.055, right_extension: 0.055}));
+r . scales . push (new scale_B (18, {left_extension: 0.055, right_extension: 0.055, left: "x\u00b2"}));
+r . scales . push (new scale_CI (18, {left_extension: 0.05, right_extension: 0.06, left: "1/x", colour: 'red'}));
+r . scales . push (new scale_C (18, {left_extension: 0.055, right_extension: 0.055, left: "x"}));
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (24, {left_extension: 0.055, right_extension: 0.055}));
-r . scales . push (new scale_S (24, {left_extension: 0.06}));
-r . scales . push (new scale_T (24, {left_extension: 0.06}));
-r . scales . push (new scale_ST (24, {left_extension: 0.06, right_extension: 0.025}));
+r . scales . push (new scale_D (18, {left_extension: 0.055, right_extension: 0.055, left: "x"}));
+r . scales . push (new scale_S (18, {left_extension: 0.06, left: "sin"}));
+r . scales . push (new scale_T (18, {left_extension: 0.06, left: "tg", right: "SLKM", rs: 0.06}));
+r . scales . push (new scale_ST (18, {left_extension: 0.06, right_extension: 0.025, left: "s-t"}));
 s . braces . push (new Logo (logo, 1.28, 48, 0.2));
 </script>
 
