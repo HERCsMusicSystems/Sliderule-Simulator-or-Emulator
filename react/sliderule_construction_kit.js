@@ -406,9 +406,24 @@ var draw_tan_dec = function (ctx, length, height, scale) {
   draw_XL (ctx, fn_tan_dec, length, 1, 10, - scale . left_extension, height * 0.2, 0.5, 0.1, 0.5);
 };
 var draw_tan_cotan_dec = function (ctx, length, height, scale) {
-  draw_MLS (ctx, fn_tan_dec, length, 1, 5.5, 0.5, - scale . left_extension, height * 0.5);
-  draw_MR (ctx, fn_tan_dec, length, 6, 9, 1, height * 0.5);
-  draw_MRS (ctx, fn_tan_dec, length, 15, 90, 10, 1 + scale . right_extension, height * 0.5);
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+  draw_MLS (ctx, fn_tan_dec, length, 1, 5.5, 0.5, - scale . left_extension, h5);
+  draw_MR (ctx, fn_tan_dec, length, 6, 9, 1, h5);
+  if (length < 1000) {
+    draw_MRS (ctx, fn_tan_dec, length, 15, 90, 10, 1 + scale . right_extension, h5);
+    draw_XR (ctx, fn_tan_dec, length, 10, 90, 1 + scale . right_extension, h3, 5, 1, 5);
+    draw_XR (ctx, fn_tan_dec, length, 10, 90, 1 + scale . right_extension, h2, 1, 0.2, 1);
+    draw_XL (ctx, fn_tan_dec, length, 6, 10, - scale . left_extension, h3, 1, 0.5, 1);
+    draw_XL (ctx, fn_tan_dec, length, 1, 10, - scale . left_extension, h2, 0.5, 0.1, 0.5);
+  } else {
+    draw_MRS (ctx, fn_tan_dec, length, 25, 90, 10, 1 + scale . right_extension, h5);
+    draw_MR (ctx, fn_tan_dec, length, 11, 19, 1, h5);
+    draw_XR (ctx, fn_tan_dec, length, 20, 30, 1, h4, 5, 1, 5);
+    draw_XR (ctx, fn_tan_dec, length, 6, 30, 1, h3, 1, 0.5, 1);
+    draw_XL (ctx, fn_tan_dec, length, 1, 30, - scale . left_extension, h2, 0.5, 0.1, 0.5);
+    draw_XR (ctx, fn_tan_dec, length, 30, 90, 1 + scale . right_extension, h3, 5, 1, 5);
+    draw_XR (ctx, fn_tan_dec, length, 30, 90, 1 + scale . right_extension, h2, 1, 0.2, 1);
+  }
   var esc = true;
   for (var ind = 10; ind <= 90; ind += 10) {
     var location = fn_tan_dec (ind);
@@ -416,14 +431,10 @@ var draw_tan_cotan_dec = function (ctx, length, height, scale) {
     else {
       location *= length;
       tick (ctx, length * fn_tan_dec (ind), height * 0.5);
-      ctx . textAlign = 'right'; ctx . fillStyle = scale . colour; mmark (ctx, ind, location - 1, height * 0.5);
-      ctx . textAlign = 'left'; ctx . fillStyle = scale . alt; mmark (ctx, 90 - ind, location + 1, height * 0.5);
+      ctx . textAlign = 'right'; ctx . fillStyle = scale . colour; mmark (ctx, ind, location - 1, h5);
+      ctx . textAlign = 'left'; ctx . fillStyle = scale . alt; mmark (ctx, 90 - ind, location + 1, h5);
     }
   }
-  draw_XR (ctx, fn_tan_dec, length, 10, 90, 1 + scale . right_extension, height * 0.4, 5, 1, 5);
-  draw_XR (ctx, fn_tan_dec, length, 10, 90, 1 + scale . right_extension, height * 0.2, 1, 0.2, 1);
-  draw_XL (ctx, fn_tan_dec, length, 6, 10, - scale . left_extension, height * 0.4, 1, 0.5, 1);
-  draw_XL (ctx, fn_tan_dec, length, 1, 10, - scale . left_extension, height * 0.2, 0.5, 0.1, 0.5);
 };
 var fn_big_tan_dec = function (value) {return Math . log10 (Math . tan (value * Math . PI / 180));};
 var draw_big_tan_dec = function (ctx, length, height, scale) {
@@ -437,19 +448,28 @@ var draw_big_tan_dec = function (ctx, length, height, scale) {
 };
 
 var draw_big_tan_cotan_dec = function (ctx, length, height, scale) {
-  draw_MRS (ctx, fn_big_tan_dec, length, 55, 75, 10, 1 + scale . right_extension, height * 0.5);
-  draw_MR (ctx, fn_big_tan_dec, length, 81, 90, 1 + scale . right_extension, height * 0.5);
-  draw_MLS (ctx, fn_big_tan_dec, length, 10, 45, 5, - scale . left_extension, height * 0.5);
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+  draw_MRS (ctx, fn_big_tan_dec, length, 55, 75, 10, 1 + scale . right_extension, h5);
+  draw_MR (ctx, fn_big_tan_dec, length, 81, 90, 1 + scale . right_extension, h5);
+  draw_MLS (ctx, fn_big_tan_dec, length, 10, 45, 5, - scale . left_extension, h5);
+  if (length < 1000) {
+    draw_XL (ctx, fn_big_tan_dec, length, 10, 80, - scale . left_extension, h4, 5, 1, 5);
+    draw_01R (ctx, fn_big_tan_dec, length, 60, 90, 1 + scale . right_extension, h2);
+    draw_05R (ctx, fn_big_tan_dec, length, 60, 90, 1 + scale . right_extension, h3);
+    draw_02L (ctx, fn_big_tan_dec, length, 10, 60, - scale . left_extension, h2);
+  } else {
+    draw_XR (ctx, fn_big_tan_dec, length, 45, 80, 1 + scale . right_extension, h4, 5, 1, 5);
+    draw_XR (ctx, fn_big_tan_dec, length, 45, 90, 1 + scale . right_extension, h3, 1, 0.5, 1);
+    draw_XR (ctx, fn_big_tan_dec, length, 45, 90, 1 + scale . right_extension, h2, 0.5, 0.1, 0.5);
+    draw_XL (ctx, fn_big_tan_dec, length, 10, 45, - scale . left_extension, h3, 5, 1, 5);
+    draw_XL (ctx, fn_big_tan_dec, length, 10, 45, - scale . left_extension, h2, 1, 0.2, 1);
+  }
   for (var degree = 50; degree <= 80; degree += 10) {
     var location = length * fn_big_tan_dec (degree);
     tick (ctx, length * fn_big_tan_dec (degree), height * 0.5);
     ctx . textAlign = 'right'; ctx . fillStyle = scale . colour; mmark (ctx, degree, location - 1, height * 0.5);
     ctx . textAlign = 'left'; ctx . fillStyle = scale . alt; mmark (ctx, 90 - degree, location + 1, height * 0.5);
   }
-  draw_XL (ctx, fn_big_tan_dec, length, 10, 80, - scale . left_extension, height * 0.4, 5, 1, 5);
-  draw_01R (ctx, fn_big_tan_dec, length, 60, 90, 1 + scale . right_extension, height * 0.2);
-  draw_05R (ctx, fn_big_tan_dec, length, 60, 90, 1 + scale . right_extension, height * 0.3);
-  draw_02L (ctx, fn_big_tan_dec, length, 10, 60, - scale . left_extension, height * 0.2);
 };
 
 var fn_pe = function (value) {return Math . log10 (10 * Math . sqrt (1 - value * value));};
