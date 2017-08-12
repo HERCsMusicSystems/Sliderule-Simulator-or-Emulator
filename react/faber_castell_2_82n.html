@@ -36,9 +36,10 @@ var changeVersion = function (version) {
 	sliderules . requireRedraw = true;
 };
 
+var faber_castell = new Image (); faber_castell . src = "Faber-Castell.png";
 var logo = new Image (); logo . src = "Logo_1951.png";
 
-var sliderules = new Sliderules ();
+var sliderules = new Sliderules ({background: faber_castell, background_colour: 'green'});
 var s = new Sliderule (1200, {left_margin: 0.24, right_margin: 0.24, cursor_rounding: 16, hairline_top: -8, hairline_bottom: -8,
   cursor_left_extension: 0.093, cursor_right_extension: 0.093, markings_background: 'black', markings_colour: 'gold', markings_size: 15});
 sliderules . sliderules . push (s);

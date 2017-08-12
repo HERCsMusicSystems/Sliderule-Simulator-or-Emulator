@@ -1212,15 +1212,13 @@ var Sliderules = function (options) {
   this . draw = function (ctx, width, height) {
   	this . requireRedraw = false;
     ctx . setTransform (1, 0, 0, 1, 0, 0);
+    ctx . fillStyle = this . background_colour;
+    ctx . fillRect (0, 0, width, height);
     if (this . background) {
-      ctx . clearRect (0, 0, width, height);
       ctx . save ();
       if (this . background_scaling) ctx . scale (this . background_scaling . x, this . background_scaling . y);
       ctx . drawImage (this . background, this . background_translation . x, this . background_translation . y);
       ctx . restore ();
-    } else {
-      ctx . fillStyle = this . background_colour;
-      ctx . fillRect (0, 0, width, height);
     }
     ctx . translate (this . position . x, this . position . y);
     for (var ind in this . sliderules) {
