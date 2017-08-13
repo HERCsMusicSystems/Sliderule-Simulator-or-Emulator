@@ -134,10 +134,10 @@ var scale_R1 = function (height, options) {
 	s . location = function (value, length) {return Math . log10 (value) * 2;};
 	s . draw = function (ctx, length) {
 		ctx . translate (0, s . height);
-		mark (ctx, "1", 0, height * 0.5);
+		mark (ctx, s . indices [0], 0, height * 0.5);
 		draw_log_1R (ctx, length * 2, height, 0.5 + s . right_extension * 0.5, s);
 		ctx . translate (-2 * length, 0);
-		draw_log_1L (ctx, length * 2, height, 0, s);
+		draw_log_1L (ctx, length * 2, height, 1 - s . left_extension * 0.5, s);
 	};
 	return s;
 };
@@ -147,10 +147,10 @@ var scale_R2 = function (height, options) {
 	s . location = function (value, length) {return Math . log10 (value) * 2;};
 	s . draw = function (ctx, length) {
 		ctx . translate (- length, s . height);
-		mark (ctx, "1", 0, height * 0.5);
-		draw_log_1L (ctx, length * 2, height, 0, s);
-		//ctx . translate (-2 * length, 0);
-		//draw_log_1L (ctx, length * 2, height, 0, s);
+		draw_log_1L (ctx, length * 2, height, 0.5 - s . left_extension * 0.5, s);
+		ctx . translate (2 * length, 0);
+		mark (ctx, s . indices [1], 0, height * 0.5);
+		draw_log_1R (ctx, length * 2, height, s . right_extension * 0.5, s);
 	};
 	return s;
 };
