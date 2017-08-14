@@ -44,11 +44,12 @@ var SlideruleApplication = React . createClass ({
   CM: function (event) {changeMarkings ('hairline', event . target . checked);},
   EM: function (event) {changeMarkings ('hairlines', event . target . checked);},
   draw: function () {
-  	if (sliderules . noChange ()) return;
     var width = window . innerWidth; var height = window . innerHeight;
     var bound = this . refs . sliderule . getBoundingClientRect ();
-    this . setState ({width: width - bound . left * 4, height: height - bound . top * 4});
-    //this . setState ({width: width, height: height});
+    var newState = {width: width - bound . left * 4, height: height - bound . top * 4};
+    if (this . state . width !== newState . width || this . state . height !== newState . height) sliderules . requireRedraw = true;
+  	if (sliderules . noChange ()) return;
+    this . setState (newState);
     var ctx = this . refs . sliderule . getContext ('2d');
     sliderules . draw (ctx, width, height);
   },

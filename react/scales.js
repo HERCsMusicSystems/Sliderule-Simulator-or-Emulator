@@ -9,8 +9,8 @@
 // STdec(_down), ST(_down)
 // Tdec(_down), T(_down), T1dec(_down), TCTdec(_down), TCT1dec(_down)
 // P(_down)
-// LL3(_down), LL2(_down), LL1(_down)
-// LL03(_down), LL02(_down), LL01(_down)
+// LL3(_down), LL2(_down), LL1(_down), CLL0, DLL0
+// LL03(_down), LL02(_down), LL01(_down), LL00(_down)
 //////////////////////////////////////////////////////////////////////////////
 
 var scale_A = function (height, options) {
@@ -134,23 +134,44 @@ var scale_R1 = function (height, options) {
 	s . location = function (value, length) {return Math . log10 (value) * 2;};
 	s . draw = function (ctx, length) {
 		ctx . translate (0, s . height);
-		mark (ctx, s . indices [0], 0, height * 0.5);
-		draw_log_1R (ctx, length * 2, height, 0.5 + s . right_extension * 0.5, s);
+		mark (ctx, s . indices [0], 0, s . height * 0.5);
+		draw_log_1R (ctx, length * 2, s . height, 0.5 + s . right_extension * 0.5, s);
 		ctx . translate (-2 * length, 0);
-		draw_log_1L (ctx, length * 2, height, 1 - s . left_extension * 0.5, s);
+		draw_log_1L (ctx, length * 2, s . height, 1 - s . left_extension * 0.5, s);
 	};
 	return s;
 };
 var scale_R2 = function (height, options) {
 	var s = new spacer (height, options);
-	s . value = function (location) {return Math . pow (10, location * 0.5);};
-	s . location = function (value, length) {return Math . log10 (value) * 2;};
+	s . value = function (location) {return Math . pow (10, 0.5 + location * 0.5);};
+	s . location = function (value, length) {return Math . log10 (value) * 2 - 1;};
 	s . draw = function (ctx, length) {
 		ctx . translate (- length, s . height);
-		draw_log_1L (ctx, length * 2, height, 0.5 - s . left_extension * 0.5, s);
+		draw_log_1L (ctx, length * 2, s . height, 0.5 - s . left_extension * 0.5, s);
 		ctx . translate (2 * length, 0);
-		mark (ctx, s . indices [1], 0, height * 0.5);
-		draw_log_1R (ctx, length * 2, height, s . right_extension * 0.5, s);
+		mark (ctx, s . indices [1], 0, s . height * 0.5);
+		draw_log_1R (ctx, length * 2, s . height, s . right_extension * 0.5, s);
+	};
+	return s;
+};
+var scale_W1 = function (height, options) {
+	var s = new scale_R1 (height, options);
+	s . draw = function (ctx, length) {
+		mark (ctx, s . indices [0], 0, - s . height * 0.5);
+		draw_log_1R (ctx, length * 2, - s . height, 0.5 + s . right_extension * 0.5, s);
+		ctx . translate (-2 * length, 0);
+		draw_log_1L (ctx, length * 2, - s . height, 1 - s . left_extension * 0.5, s);
+	};
+	return s;
+};
+var scale_W2 = function (height, options) {
+	var s = new scale_R2 (height, options);
+	s . draw = function (ctx, length) {
+		ctx . translate (- length, 0);
+		draw_log_1L (ctx, length * 2, - s . height, 0.5 - s . left_extension * 0.5, s);
+		ctx . translate (2 * length, 0);
+		mark (ctx, s . indices [1], 0, - s . height * 0.5);
+		draw_log_1R (ctx, length * 2, - s . height, s . right_extension * 0.5, s);
 	};
 	return s;
 };
@@ -346,6 +367,16 @@ var scale_LL1_down = function (height, options) {
   s . draw = function (ctx, length) {draw_LL1 (ctx, length, - s . height, s);};
   return s;
 };
+var scale_CLL0 = function (height, options) {
+  var s = new scale_C (height, options);
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_log_ll0 (ctx, length, s . height, s);};
+  return s;
+};
+var scale_DLL0 = function (height, options) {
+  var s = new scale_D (height, options);
+  s . draw = function (ctx, length) {draw_log_ll0 (ctx, length, - s . height, s);};
+  return s;
+};
 var scale_LL03 = function (height, options) {
 	var s = new spacer (height, options);
 	s . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location));};
@@ -381,4 +412,16 @@ var scale_LL01_down = function (height, options) {
 	var s = new scale_LL01 (height, options);
 	s . draw = function (ctx, length) {draw_LL01 (ctx, length, - s . height, s);};
 	return s;
+};
+var scale_LL00 = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 3));};
+  s . location = function (value) {return 3 + Math . log10 (- Math . log (value));};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL00 (ctx, length, s . height, s);};
+  return s;
+};
+var scale_LL00_down = function (height, options) {
+  var s = new scale_LL00 (height, options);
+  s . draw = function (ctx, length) {draw_LL00 (ctx, length, - s . height, s);};
+  return s;
 };

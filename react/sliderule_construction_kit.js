@@ -617,6 +617,28 @@ var draw_LL1 = function (ctx, length, height, s) {
 	draw_XL (ctx, s . location, length, 1, 1.02, limit, h2, 0.0005, 0.0001, 0.0005);
 };
 
+var draw_log_ll0 = function (ctx, length, height, s) {
+  draw_log (ctx, length, height, s, s . left_extension, s . right_extension);
+  ctx . translate (length, 0);
+  var h5 = height > 0 ? - height * 0.5 - 2 : - height - 3;
+  var ind;
+  var measures = [];
+  measures . push (ctx . measureText (s . indices [0]) . width * 0.6);
+  for (ind = 2; ind < 10; ind++) measures . push (ctx . measureText (ind) . width * 0.6);
+  measures . push (ctx . measureText (s . indices [1]) . width * 0.6);
+  ctx . font = "italic " + Math . floor (Math . abs (height) * 0.3) + "px arial";
+  ctx . textAlign = 'right';
+  for (ind = 0; ind < 10; ind++) ctx . fillText ('1.00', length * Math . log10 (ind + 1) - measures [ind], h5);
+  ctx . textAlign = 'left';
+  ctx . fillText ('01', length * Math . log10 (4) + measures [3], h5);
+  ctx . fillText ('01', length * Math . log10 (5) + measures [4], h5);
+  ctx . fillText ('02', length * Math . log10 (6) + measures [5], h5);
+  ctx . fillText ('02', length * Math . log10 (7) + measures [6], h5);
+  ctx . fillText ('03', length * Math . log10 (8) + measures [7], h5);
+  ctx . fillText ('04', length * Math . log10 (9) + measures [8], h5);
+  ctx . fillText ('05', length * Math . log10 (10) + measures [9], h5);
+};
+
 var draw_LL03 = function (ctx, length, height, s) {
 	var limit = - s . left_extension;
 	var h5 = height * 0.5; var h2 = height * 0.2; var h3 = height * 0.3; var h4 = height * 0.4;
@@ -681,7 +703,6 @@ var draw_LL01 = function (ctx, length, height, s) {
   draw_XRI (ctx, s . location, length, 0.98, 0.95, limit, h2, 0.001, 0.0002, 0.001);
   limit = - s . left_extension;
   draw_MLSI (ctx, s . location, length, 0.99, 0.97, 0.005, limit, h5);
-  draw_MLSI (ctx, s . location, length, 0.999, 0.99, 0.001, limit, h5);
   draw_XLI (ctx, s . location, length, 0.99, 0.98, limit, h4, 0.005, 0.001, 0.005);
   draw_XLI (ctx, s . location, length, 0.99, 0.98, limit, h3, 0.001, 0.0005, 0.001);
   draw_XLI (ctx, s . location, length, 0.99, 0.98, limit, h2, 0.0005, 0.0001, 0.0005);
@@ -689,6 +710,23 @@ var draw_LL01 = function (ctx, length, height, s) {
   draw_XLI (ctx, s . location, length, 0.999, 0.99, limit, h4, 0.001, 0.0005, 0.001);
   draw_XLI (ctx, s . location, length, 0.999, 0.99, limit, h3, 0.0005, 0.0001, 0.0005);
   draw_XLI (ctx, s . location, length, 0.999, 0.99, limit, h2, 0.0001, 0.00005, 0.0001);
+};
+
+var draw_LL00 = function (ctx, length, height, s) {
+	var limit = 1 + s . right_extension;
+	var h5 = height * 0.5; var h2 = height * 0.2; var h3 = height * 0.3; var h4 = height * 0.4;
+  draw_MRSI (ctx, s . location, length, 0.999, 0.891, 0.001, limit, h5);
+  mark (ctx, 0.9985, length * s . location (0.9985), h5);
+  draw_MLSI (ctx, s . location, length, 0.9999, 0.9991, 0.0001, - s . left_extension, h5);
+  draw_XRI (ctx, s . location, length, 0.99, 0.98, limit, h3, 0.001, 0.0005, 0.001);
+  draw_XRI (ctx, s . location, length, 0.99, 0.98, limit, h2, 0.0005, 0.0001, 0.0005);
+  draw_XRI (ctx, s . location, length, 0.998, 0.99, limit, h4, 0.001, 0.0005, 0.001);
+  draw_XRI (ctx, s . location, length, 0.998, 0.99, limit, h3, 0.0005, 0.0001, 0.0005);
+  draw_XRI (ctx, s . location, length, 0.996, 0.99, limit, h2, 0.0001, 0.00005, 0.0001);
+  draw_XRI (ctx, s . location, length, 0.998, 0.996, limit, h2, 0.0001, 0.00002, 0.0001);
+  draw_XLI (ctx, s . location, length, 0.999, 0.998, - s . left_extension, h4, 0.0005, 0.0001, 0.0005);
+  draw_XLI (ctx, s . location, length, 1, 0.998, - s . left_extension, h3, 0.0001, 0.00005, 0.0001);
+  draw_XLI (ctx, s . location, length, 1, 0.998, - s . left_extension, h2, 0.00005, 0.00001, 0.00005);
 };
 
 var spacer = function (height, options) {
