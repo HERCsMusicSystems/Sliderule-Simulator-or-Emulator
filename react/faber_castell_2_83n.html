@@ -213,13 +213,13 @@ back_us_cursors . push (new Cursor (HairlineRight, 274, 358, 'red'));
 
 r = new Rule ({left_margin: 0.24, right_margin: 0.24});
 s . rules . push (r);
-r . scales . push (new scale_LL03 (24, {left_extension: 0.06, right_extension: 0.065, left: "LL\u2080\u2083", right: "e^-x", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_LL03 (24, {left_extension: 0.04, right_extension: 0.065, left: "LL\u2080\u2083", right: "e^-x", rs: 0.08, colour: 'red'}));
 r . scales . push (new spacer (1));
-r . scales . push (new scale_LL02_down (24, {left_extension: 0.06, right_extension: 0.065, left: "LL\u2080\u2082", right: "e^-0.1x", rs: 0.08, colour: 'red'}));
-r . scales . push (new scale_LL01 (24, {left_extension: 0.06, right_extension: 0.065, left: "LL\u2080\u2081", right: "e^-0.01x", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_LL02_down (24, {left_extension: 0.026, right_extension: 0.058, left: "LL\u2080\u2082", right: "e^-0.1x", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_LL01 (24, {left_extension: 0.06, right_extension: 0.048, left: "LL\u2080\u2081", right: "e^-0.01x", rs: 0.08, colour: 'red'}));
 r . scales . push (new spacer (1));
-r . scales . push (new scale_LL00_down (24, {left_extension: 0.064, right_extension: 0.06, left: "LL\u2080\u2080", right: "X\u00b3", rs: 0.08, colour: 'red'}));
-r . scales . push (new scale_R2 (24, {left_extension: 0.065, right_extension: 0.06, left: "DF", right: "\u03c0X", rs: 0.08, draw_q: true}));
+r . scales . push (new scale_LL00_down (24, {left_extension: 0.064, right_extension: 0.046, left: "LL\u2080\u2080", right: "e^-0.001x", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_R2 (24, {left_extension: 0.065, right_extension: 0.084, left: "LL\u2080\u2080", right: "X\u00b3", draw_q: true}));
 
 r = new Rule ({stator: 1, left_margin: 0.26, right_margin: 0.26}); s . rules . push (r);
 r . markings . push (new RuleBars (-0.254, 1, 4, 116, 9, 6, 4, 'black'));
