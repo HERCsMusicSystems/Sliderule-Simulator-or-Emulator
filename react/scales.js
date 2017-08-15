@@ -4,7 +4,7 @@
 // CF, DF, CIF, DIF
 // K, J
 // R1, R2, W1, W2
-// L, M
+// L, M, LR12, LW12
 // Sdec(_down), S(_down), SCdec(_down), CSdec(_down)
 // STdec(_down), ST(_down)
 // Tdec(_down), T(_down), T1dec(_down), TCTdec(_down), TCT1dec(_down)
@@ -186,6 +186,18 @@ var scale_M = function (height, options) {
   var s = new scale_L (height, options);
   s . draw = function (ctx, length) {draw_lin (ctx, length, - s . height, s);};
   return s;
+};
+var scale_LR12 = function (height, options) {
+	var s = new spacer (height, options);
+	s . value = function (location) {return location * 5;};
+	s . location = function (value) {return value * 0.2;};
+	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_lin_12 (ctx, length, s . height, s);};
+	return s;
+};
+var scale_LW12 = function (height, options) {
+	var s = new scale_LR12 (height, options);
+	s . draw = function (ctx, length) {draw_lin_12 (ctx, length, - s . height, s);};
+	return s;
 };
 var scale_Sdec = function (height, options) {
   var s = new spacer (height, options);

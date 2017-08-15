@@ -358,6 +358,26 @@ var draw_lin = function (ctx, length, height, scale) {
   draw_01L (ctx, fn_lin, length, 0, 10, limit, h3);
   if (length < 1000) draw_005L (ctx, fn_lin, length, 0, 10, limit, h2); else draw_002L (ctx, fn_lin, length, 0, 10, limit, h2);
 };
+var fn_lin_1 = function (value) {return value * 0.2;};
+var draw_lin_12 = function (ctx, length, height, scale) {
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+  var limit = 1 + scale . right_extension;
+  mark (ctx, ".0 .5", 0, h5);
+  mark (ctx, ".1 .6", length * fn_lin_1 (1), h5);
+  mark (ctx, ".2 .7", length * fn_lin_1 (2), h5);
+  mark (ctx, ".3 .8", length * fn_lin_1 (3), h5);
+  mark (ctx, ".4 .9", length * fn_lin_1 (4), h5);
+  mark (ctx, ".5 1.", length, h5);
+  draw_XR (ctx, fn_lin_1, length, 0, 10, limit, h5, 1, 0.5, 1);
+  draw_XR (ctx, fn_lin_1, length, 0, 10, limit, h4, 0.5, 0.1, 0.5);
+  draw_XR (ctx, fn_lin_1, length, 0, 10, limit, h3, 0.1, 0.05, 0.1);
+  draw_XR (ctx, fn_lin_1, length, 0, 10, limit, h2, 0.05, 0.01, 0.05);
+  limit = - scale . left_extension;
+  draw_XL (ctx, fn_lin_1, length, -10, 0, limit, h5, 1, 0.5, 1);
+  draw_XL (ctx, fn_lin_1, length, -10, 0, limit, h4, 0.5, 0.1, 0.5);
+  draw_XL (ctx, fn_lin_1, length, -10, 0, limit, h3, 0.1, 0.05, 0.1);
+  draw_XL (ctx, fn_lin_1, length, -10, 0, limit, h2, 0.05, 0.01, 0.05);
+};
 
 var fn_sin_dec = function (value) {return Math . log10 (10 * Math . sin (value * Math . PI / 180));};
 var draw_sine_dec = function (ctx, length, height, scale) {
@@ -801,8 +821,8 @@ var RuleBars = function (shift, direction, top, bottom, bars, step, width, colou
 var Rule = function (options) {
   this . stator = 0;
   this . left_margin = 0.2; this . right_margin = 0.2;
-  this . shift = 0; this . target = 0; this . animation_delta = 0.004;
-  this . rule_motion = 0.25;
+  this . shift = 0; this . target = 0; this . animation_delta = 0.01;
+  this . rule_motion = 0.5;
   this . rounding = 8;
   this . rule_colour = 'white';
   this . border_colour = 'black';
@@ -1040,9 +1060,9 @@ var Sliderule = function (length, options) {
   this . left_margin = 0.2; this . right_margin = 0.2;
   this . position = {x: 0, y: 0};
   this . rules = [];
-  this . animation_delta = 0.004;
+  this . animation_delta = 0.01;
   this . hairline_top = 0; this . hairline_bottom = 0;
-  this . cursor_position = 0; this . cursor_target = 0; this . cursorHairline = 'red'; this . cursor_motion = 0.25;
+  this . cursor_position = 0; this . cursor_target = 0; this . cursorHairline = 'red'; this . cursor_motion = 0.5;
   this . cursorGlass = "rgba(0, 0, 0, 0.1)";
   this . cursorFrame = "rgba(0, 0, 0, 0.1)";
   this . cursors = [];
@@ -1212,8 +1232,8 @@ var Sliderule = function (length, options) {
       if (value !== null) {
         if (is_cursor || this . rules [ind] . stator == 0) {
           target = value + this . rules [ind] . shift;
-          if (target < - this . left_margin) target = - this . left_margin;
-          if (target > 1 + this . right_margin) target = 1 + this . right_margin;
+          if (target < - this . cursor_limit_left) target = - this . cursor_limit_left;
+          if (target > 1 + this . cursor_limit_right) target = 1 + this . cursor_limit_right;
           delta = target - this . cursor_target;
           this . cursor_target = target;
           return {rule: this, target: target, delta: delta, tick: delta * this . length};
@@ -1272,7 +1292,7 @@ var Sliderules = function (options) {
     if (esc) this . synchronise (esc . rule, esc . delta);
   };
   this . synchroniseMove = function (delta, position) {
-    var esc = sliderules . move (delta, scalv (position, 1 / this . scale));
+    var esc = sliderules . move (scalv (delta, 1 / this . scale), scalv (position, 1 / this . scale));
     if (esc) sliderules . synchronise (esc . rule, esc . delta);
     else this . position = addv (this . position, scalv (delta, 1 / this . scale));
     this . requireRedraw = true;
