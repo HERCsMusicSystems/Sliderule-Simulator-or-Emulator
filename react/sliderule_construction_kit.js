@@ -763,6 +763,7 @@ var spacer = function (height, options) {
     if (this . left !== undefined) {ctx . textAlign = this . la; ctx . fillText (this . left, - length * this . ls, textBase);}
     if (this . right !== undefined) {ctx . textAlign = this . ra; ctx . fillText (this . right, length * (1 + this . rs), textBase);}
     if (this . cc !== undefined) ctx . fillStyle = this . cc;
+    if (this . cf !== undefined) ctx . font = this . cf;
     if (this . centre !== undefined) {ctx . textAlign = this . ca; ctx . fillText (this . centre, length * this . cs, textBase);}
   };
   this . examine = function (position) {
@@ -801,7 +802,7 @@ var Rule = function (options) {
   this . stator = 0;
   this . left_margin = 0.2; this . right_margin = 0.2;
   this . shift = 0; this . target = 0; this . animation_delta = 0.004;
-  this . rule_motion = 0.1;
+  this . rule_motion = 0.25;
   this . rounding = 8;
   this . rule_colour = 'white';
   this . border_colour = 'black';
@@ -1041,7 +1042,7 @@ var Sliderule = function (length, options) {
   this . rules = [];
   this . animation_delta = 0.004;
   this . hairline_top = 0; this . hairline_bottom = 0;
-  this . cursor_position = 0; this . cursor_target = 0; this . cursor_colour = 'red'; this . cursor_motion = 0.1;
+  this . cursor_position = 0; this . cursor_target = 0; this . cursorHairline = 'red'; this . cursor_motion = 0.25;
   this . cursorGlass = "rgba(0, 0, 0, 0.1)";
   this . cursorFrame = "rgba(0, 0, 0, 0.1)";
   this . cursors = [];
@@ -1075,6 +1076,8 @@ var Sliderule = function (length, options) {
       if (this . rules [ind] . hitTest (y)) {return {rule: this . rules [ind], delta: this . rules [ind] . move (delta . x, this . length)};}
       y -= this . rules [ind] . ruleHeight ();
     }
+    var offset = position . x / this . length - this . left_margin - this . cursor_position;
+    if (offset < - this . cursor_left_extension || offset > this . cursor_right_extension) return null;
     return {rule: this, delta: this . moveCursor (delta . x)};
   };
   this . draw = function (ctx) {
@@ -1117,10 +1120,12 @@ var Sliderule = function (length, options) {
       this . length * this . cursor_right_extension, this . height () + this . cursor_rounding, this . cursor_rounding);
     if (this . cursorGlass) {ctx . fillStyle = this . cursorGlass; ctx . fill ();}
     if (this . cursorFrame) {ctx . strokeStyle = this . cursorFrame; ctx . stroke ();}
-    ctx . beginPath ();
-    ctx . moveTo (0, - this . hairline_top); ctx . lineTo (0, this . height () + this . hairline_bottom);
-    ctx . strokeStyle = this . cursor_colour;
-    ctx . stroke ();
+    if (this . cursorHairline) {
+      ctx . beginPath ();
+      ctx . moveTo (0, - this . hairline_top); ctx . lineTo (0, this . height () + this . hairline_bottom);
+      ctx . strokeStyle = this . cursorHairline;
+      ctx . stroke ();
+    }
     // CURSORS
     for (ind in this . cursors) {this . cursors [ind] . draw (ctx, this . length);}
     // CURSOR BRACES
