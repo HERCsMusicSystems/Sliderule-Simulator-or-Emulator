@@ -1268,13 +1268,13 @@ var Sliderules = function (options) {
     }
   };
   this . synchroniseTarget = function (delta) {
-    var esc = this . examine (delta);
+    var esc = this . examine (scalv (delta, 1 / this . scale));
     if (esc) this . synchronise (esc . rule, esc . delta);
   };
   this . synchroniseMove = function (delta, position) {
-    var esc = sliderules . move (delta, position);
+    var esc = sliderules . move (delta, scalv (position, 1 / this . scale));
     if (esc) sliderules . synchronise (esc . rule, esc . delta);
-    else this . position = addv (this . position, delta);
+    else this . position = addv (this . position, scalv (delta, 1 / this . scale));
     this . requireRedraw = true;
   };
   this . draw = function (ctx, width, height) {
@@ -1288,8 +1288,8 @@ var Sliderules = function (options) {
       ctx . drawImage (this . background, this . background_translation . x, this . background_translation . y);
       ctx . restore ();
     }
-    ctx . translate (this . position . x, this . position . y);
     ctx . scale (this . scale, this . scale);
+    ctx . translate (this . position . x, this . position . y);
     for (var ind in this . sliderules) {
       this . sliderules [ind] . draw (ctx);
     }

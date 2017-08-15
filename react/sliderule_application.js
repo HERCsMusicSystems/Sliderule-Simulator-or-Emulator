@@ -46,7 +46,6 @@ var SlideruleApplication = React . createClass ({
     if (event . deltaY < 0) delta = sliderules . scale / sliderules . scaling_factor;
     var point = subvbc ({x: event . clientX, y: event . clientY}, this . refs . sliderule . getBoundingClientRect ());
     var offset = subv (point, delta - sliderules . scale);
-    console . log (point);
     sliderules . scale = delta;
     sliderules . requireRedraw = true;
   },
