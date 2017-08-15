@@ -40,6 +40,16 @@ var SlideruleApplication = React . createClass ({
     this . mousePosition = position;
   },
   onMouseUp: function (event) {this . dragging = false; this . setState ({});},
+  onWheel: function (event) {
+    var delta;
+    if (event . deltaY > 0) delta = sliderules . scale * sliderules . scaling_factor;
+    if (event . deltaY < 0) delta = sliderules . scale / sliderules . scaling_factor;
+    var point = subvbc ({x: event . clientX, y: event . clientY}, this . refs . sliderule . getBoundingClientRect ());
+    var offset = subv (point, delta - sliderules . scale);
+    console . log (point);
+    sliderules . scale = delta;
+    sliderules . requireRedraw = true;
+  },
   SM: function (event) {changeMarkings ('stator', event . target . checked);},
   CM: function (event) {changeMarkings ('hairline', event . target . checked);},
   EM: function (event) {changeMarkings ('hairlines', event . target . checked);},
@@ -64,7 +74,8 @@ var SlideruleApplication = React . createClass ({
         onMouseMove: this.onMouseMove,
         onMouseUp: this.onMouseUp,
         onMouseLeave: this.onMouseUp,
-        onContextMenu: this.onContext
+        onContextMenu: this.onContext,
+        onWheel: this.onWheel
       })/*,
       React . createElement (
       	'div',

@@ -1242,6 +1242,7 @@ var Sliderule = function (length, options) {
 var Sliderules = function (options) {
   this . requireRedraw = true;
   this . position = {x: 32.5, y: 32.5};
+  this . scale = 1; this . scaling_factor = Math . pow (2, 1 / 12);
   this . background_colour = '#99f';
   this . background_translation = {x: 0, y: 0};
   this . sliderules = [];
@@ -1288,6 +1289,7 @@ var Sliderules = function (options) {
       ctx . restore ();
     }
     ctx . translate (this . position . x, this . position . y);
+    ctx . scale (this . scale, this . scale);
     for (var ind in this . sliderules) {
       this . sliderules [ind] . draw (ctx);
     }
