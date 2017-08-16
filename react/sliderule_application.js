@@ -48,7 +48,6 @@ var SlideruleApplication = React . createClass ({
     point = scalv (point, 1 / sliderules . scale);
     var offset = scalv (point, delta - sliderules . scale);
     sliderules . position = subv (sliderules . position, scalv (offset, 1 / delta));
-    console . log (sliderules . position);
     sliderules . scale = delta;
     sliderules . requireRedraw = true;
   },
