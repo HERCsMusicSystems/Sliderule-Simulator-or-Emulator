@@ -213,12 +213,12 @@ var scale_Sdec_down = function (height, options) {
 };
 var scale_S = function (height, options) {
   var s = new scale_Sdec (height, options);
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_sine_dec (ctx, length, s . height, s);};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_sine_deg (ctx, length, s . height, s);};
   return s;
 };
 var scale_S_down = function (height, options) {
   var s = new scale_Sdec (height, options);
-  s . draw = function (ctx, length) {draw_sine_dec (ctx, length, - s . height, s);};
+  s . draw = function (ctx, length) {draw_sine_deg (ctx, length, - s . height, s);};
   return s;
 };
 var scale_STdec = function (height, options) {
@@ -263,12 +263,12 @@ var scale_Tdec_down = function (height, options) {
 };
 var scale_T = function (height, options) {
   var s = new scale_Tdec (height, options);
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_tan_dec (ctx, length, s . height, s);};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_tan_deg (ctx, length, s . height, s);};
   return s;
 };
 var scale_T_down = function (height, options) {
   var s = new scale_Tdec (height, options);
-  s . draw = function (ctx, length) {draw_tan_dec (ctx, length, - s . height, s);};
+  s . draw = function (ctx, length) {draw_tan_deg (ctx, length, - s . height, s);};
   return s;
 };
 var scale_TCTdec = function (height, options) {

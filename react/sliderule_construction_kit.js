@@ -390,6 +390,18 @@ var draw_sine_dec = function (ctx, length, height, scale) {
   draw_05L (ctx, fn_sin_dec, length, 3, 15, - scale . left_extension, height * 0.3);
   draw_01L (ctx, fn_sin_dec, length, 3, 15, - scale . left_extension, height * 0.2);
 };
+var draw_sine_deg = function (ctx, length, height, scale) {
+  draw_MRS (ctx, fn_sin_dec, length, 20, 35, 5, 1, height * 0.5);
+  draw_MRS (ctx, fn_sin_dec, length, 40, 90, 10, 1, height * 0.5);
+  draw_MLS (ctx, fn_sin_dec, length, 4, 15, 1, - scale . left_extension, height * 0.5);
+  draw_10R (ctx, fn_sin_dec, length, 40, 80, 1, height * 0.2);
+  draw_10R (ctx, fn_sin_dec, length, 15, 40, 1, height * 0.3);
+  draw_XR (ctx, fn_sin_dec, length, 15, 40, 1, height * 0.2, 1, 1 / 3, 1);
+  draw_10R (ctx, fn_sin_dec, length, 10, 15, 1, height * 0.5);
+  draw_50R (ctx, fn_sin_dec, length, 40, 90, 1, height * 0.5);
+  draw_05L (ctx, fn_sin_dec, length, 3, 15, - scale . left_extension, height * 0.3);
+  draw_XL (ctx, fn_sin_dec, length, 3, 15, - scale . left_extension, height * 0.2, 0.5, 1 / 6, 0.5);
+};
 var draw_sine_cosine_dec = function (ctx, length, height, scale, type) {
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   draw_MLS (ctx, fn_sin_dec, length, 4, 9, 1, - scale . left_extension, h5);
@@ -431,6 +443,18 @@ var draw_tan_dec = function (ctx, length, height, scale) {
   draw_XR (ctx, fn_tan_dec, length, 10, 90, 1 + scale . right_extension, height * 0.2, 1, 0.2, 1);
   draw_XL (ctx, fn_tan_dec, length, 6, 10, - scale . left_extension, height * 0.4, 1, 0.5, 1);
   draw_XL (ctx, fn_tan_dec, length, 1, 10, - scale . left_extension, height * 0.2, 0.5, 0.1, 0.5);
+};
+var draw_tan_deg = function (ctx, length, height, scale) {
+  draw_MLS (ctx, fn_tan_dec, length, 1, 5.5, 0.5, - scale . left_extension, height * 0.5);
+  draw_MR (ctx, fn_tan_dec, length, 6, 10, 1, height * 0.5);
+  draw_MRS (ctx, fn_tan_dec, length, 12, 18, 2, 1, height * 0.5);
+  draw_XR (ctx, fn_tan_dec, length, 10, 20, 1, height * 0.4, 2, 1, 2);
+  draw_XR (ctx, fn_tan_dec, length, 10, 20, 1, height * 0.3, 1, 0.5, 1);
+  draw_MRS (ctx, fn_tan_dec, length, 20, 90, 5, 1 + scale . right_extension, height * 0.5);
+  draw_XR (ctx, fn_tan_dec, length, 20, 90, 1 + scale . right_extension, height * 0.3, 5, 1, 5);
+  draw_XR (ctx, fn_tan_dec, length, 20, 90, 1 + scale . right_extension, height * 0.2, 1, 1 / 3, 1);
+  draw_XL (ctx, fn_tan_dec, length, 6, 10, - scale . left_extension, height * 0.3, 1, 0.5, 1);
+  draw_XL (ctx, fn_tan_dec, length, 1, 20, - scale . left_extension, height * 0.2, 0.5, 1 / 6, 0.5);
 };
 var draw_tan_cotan_dec = function (ctx, length, height, scale) {
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
