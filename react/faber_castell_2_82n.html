@@ -135,12 +135,12 @@ r . markings . push (new Engraving ("MADE IN GERMANY", '10px arial', 'center', '
 r . scales . push (new scale_B (24, {left_extension: 0.065, right_extension: 0.06, left: "B", right: "X\u00b2", rs: 0.08, alt: 'black'}));
 r . scales . push (new scale_AI (24, {left_extension: 0.06, right_extension: 0.065, left: "BI", right: "100/X\u00b2", rs: 0.08, colour: 'red'}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_DI (24, {left_extension: 0.064, right_extension: 0.065, left: "CI", right: "10/X\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_DI (24, {left_extension: 0.064, right_extension: 0.062, left: "CI", right: "10/X\u00b2", rs: 0.08, colour: 'red'}));
 r . scales . push (new scale_SCdec (24, {left_extension: 0.06, left: "S'", right: "\u2222 sin 0.1X", rs: 0.08, centre: "cos", ca: 'left', cs: 1.13, cc: 'red'}));
-r . scales . push (new scale_C (24, {left_extension: 0.065, right_extension: 0.06, left: "C", right: "X", rs: 0.08, alt: 'black', highlight: '#aaffaa', draw_q: true}));
+r . scales . push (new scale_C (24, {left_extension: 0.062, right_extension: 0.062, left: "C", right: "X", rs: 0.08, alt: 'black', highlight: '#ccffcc', draw_q: true}));
 
 r = new Rule ({left_margin: 0.24, right_margin: 0.24}); s . rules . push (r);
-r . scales . push (new scale_D (24, {left_extension: 0.065, right_extension: 0.06, left: "D", right: "X", rs: 0.08, alt: 'black', highlight: '#aaffaa', draw_q: true}));
+r . scales . push (new scale_D (24, {left_extension: 0.062, right_extension: 0.062, left: "D", right: "X", rs: 0.08, alt: 'black', highlight: '#ccffcc', draw_q: true}));
 r . scales . push (new spacer (6));
 r . scales . push (new scale_SCdec (24, {left_extension: 0.065, left: "S", right: "\u2222 sin 0.1X", rs: 0.08, centre: "cos", ca: 'left', cs: 1.13, cc: 'red'}));
 r . scales . push (new spacer (6));
@@ -213,31 +213,31 @@ back_us_cursors . push (new Cursor (HairlineRight, 274, 358, 'red'));
 r = new Rule ({left_margin: 0.24, right_margin: 0.24});
 s . rules . push (r);
 r . scales . push (new spacer (2));
-r . scales . push (new scale_LL03 (24, {left_extension: 0.06, right_extension: 0.065, left: "LL\u2080\u2083", right: "e^-x", rs: 0.08, colour: 'red'}));
-r . scales . push (new scale_LL02 (24, {left_extension: 0.06, right_extension: 0.065, left: "LL\u2080\u2082", right: "e^-0.1x", rs: 0.08, colour: 'red'}));
-r . scales . push (new scale_LL01 (24, {left_extension: 0.06, right_extension: 0.065, left: "LL\u2080\u2081", right: "e^-0.01x", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_LL03 (24, {left_extension: 0.04, right_extension: 0.065, left: "LL\u2080\u2083", right: "e^-x", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_LL02 (24, {left_extension: 0.026, right_extension: 0.058, left: "LL\u2080\u2082", right: "e^-0.1x", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_LL01 (24, {left_extension: 0.044, right_extension: 0.048, left: "LL\u2080\u2081", right: "e^-0.01x", rs: 0.08, colour: 'red'}));
 r . scales . push (new scale_K (24, {left_extension: 0.064, right_extension: 0.06, left: "K", right: "X\u00b3", rs: 0.08, alt: 'black'}));
-r . scales . push (new scale_CF (24, {left_extension: 0.065, right_extension: 0.06, left: "DF", right: "\u03c0X", rs: 0.08, indices: ["\u21e61\u21e8"], draw_q: true}));
+r . scales . push (new scale_CF (24, {left_extension: 0.0685, right_extension: 0.06, left: "DF", right: "\u03c0X", rs: 0.08, indices: ["\u21e61\u21e8"], draw_q: true}));
 
 r = new Rule ({stator: 1, left_margin: 0.26, right_margin: 0.26}); s . rules . push (r);
 r . markings . push (new RuleBars (-0.254, 1, 4, 116, 9, 6, 4, 'black'));
 r . markings . push (new RuleBars (1.254, -1, 4, 116, 9, 6, 4, 'black'));
-r . scales . push (new scale_DF (24, {left_extension: 0.065, right_extension: 0.06, left: "CF", right: "\u03c0X", rs: 0.08, alt: 'black', highlight: '#ccffcc', indices: ["\u21e61\u21e8"], draw_q: true}));
-r . scales . push (new scale_J (24, {left_extension: 0.064, right_extension: 0.065, left: "K'", right: "X\u00b3", rs: 0.08, alt: 'black'}));
-r . scales . push (new scale_CIF (24, {left_extension: 0.064, right_extension: 0.065, left: "CIF", right: "10/\u03c0X", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_DF (24, {left_extension: 0.0685, right_extension: 0.06, left: "CF", right: "\u03c0X", rs: 0.08, alt: 'black', highlight: '#ccffcc', indices: ["\u21e61\u21e8"], draw_q: true}));
+r . scales . push (new scale_J (24, {left_extension: 0.064, right_extension: 0.06, left: "K'", right: "X\u00b3", rs: 0.08, alt: 'black'}));
+r . scales . push (new scale_CIF (24, {left_extension: 0.068, right_extension: 0.058, left: "CIF", right: "10/\u03c0X", rs: 0.08, colour: 'red'}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_DI (24, {left_extension: 0.06, left: "CI'", right: "10/X", rs: 0.08, colour: 'red'}));
-r . scales . push (new scale_C (24, {left_extension: 0.065, right_extension: 0.06, left: "C", right: "X", rs: 0.08, alt: 'black', highlight: '#ccffcc', draw_q: true}));
+r . scales . push (new scale_DI (24, {left_extension: 0.064, right_extension: 0.062, left: "CI'", right: "10/X", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_C (24, {left_extension: 0.062, right_extension: 0.062, left: "C", right: "X", rs: 0.08, alt: 'black', highlight: '#ccffcc', draw_q: true}));
 
 r = new Rule ({left_margin: 0.24, right_margin: 0.24}); s . rules . push (r);
-r . scales . push (new scale_D (24, {left_extension: 0.065, right_extension: 0.06, left: "D", right: "X", rs: 0.08, alt: 'black', draw_q: true}));
+r . scales . push (new scale_D (24, {left_extension: 0.062, right_extension: 0.062, left: "D", right: "X", rs: 0.08, alt: 'black', draw_q: true}));
 r . scales . push (new spacer (6));
-r . scales . push (new scale_LL1_down (24, {left_extension: 0.07, right_extension: 0.07, left: "LL\u2081", right: "e^0.01x", rs: 0.08}));
+r . scales . push (new scale_LL1_down (24, {left_extension: 0.028, right_extension: 0.056, left: "LL\u2081", right: "e^0.01x", rs: 0.08}));
 r . scales . push (new spacer (6));
 
-r . scales . push (new scale_LL2_down (24, {left_extension: 0.07, right_extension: 0.07, left: "LL\u2082", right: "e^0.1x", rs: 0.08}));
+r . scales . push (new scale_LL2_down (24, {left_extension: 0.046, right_extension: 0.042, left: "LL\u2082", right: "e^0.1x", rs: 0.08}));
 r . scales . push (new spacer (6));
-r . scales . push (new scale_LL3_down (24, {left_extension: 0.07, right_extension: 0.07, left: "LL\u2083", right: "e^x", rs: 0.08}));
+r . scales . push (new scale_LL3_down (24, {left_extension: 0.04, right_extension: 0.07, left: "LL\u2083", right: "e^x", rs: 0.08}));
 r . scales . push (new spacer (8));
 
 changeVersion ('german');
