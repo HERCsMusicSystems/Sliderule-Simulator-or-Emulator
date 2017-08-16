@@ -36,8 +36,8 @@ r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_D (18, {left_extension: 0.055, right_extension: 0.055, left: "x"}));
 r . scales . push (new scale_S_down (18, {left_extension: 0.06, left: "sin"}));
 r . scales . push (new scale_T_down (18, {left_extension: 0.06, left: "tg", right: "SLKM", rs: 0.06}));
-r . scales . push (new scale_ST_down (18, {left_extension: 0.06, right_extension: 0.025, left: "s-t"}));
-s . braces . push (new Logo (logo, 1.28, 48, 0.2));
+r . scales . push (new scale_ST_down (18, {left_extension: 0.06, right_extension: 0.025, left: "s-t", draw_st_corrections: false}));
+s . braces . push (new Logo (logo, 1.28, 36, 0.2));
 </script>
 
 <script src="sliderule_application.js"></script>
