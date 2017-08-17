@@ -20,7 +20,9 @@
 <script>
 var logo = new Image (); logo . src = "skala.png";
 var sliderules = new Sliderules ();
-var s = new Sliderule (720, {cursor_rounding: 10, markings_background: 'yellow'}); sliderules . sliderules . push (s);
+var s = new Sliderule (720, {cursor_rounding: 10}); sliderules . sliderules . push (s);
+s . backBraces . push (new LeftBrace (2, 0.076, 8, 'white', 'black', 45, 0.8));
+s . backBraces . push (new RightBrace (2, 0.076, 8, 'white', 'black', 45, 0.8));
 s . cursors . push (new Cursor (HairlineD, 108, 144, 'blue'));
 s . cursors . push (new Cursor (HairlineS, 54, 90, 'blue'));
 var r = new Rule (); s . rules . push (r);
