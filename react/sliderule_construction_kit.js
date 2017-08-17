@@ -1,8 +1,8 @@
 
-var roundRect = function (ctx, left, top, right, bottom, radius) {
-  var step = Math . PI * 0.5; ctx . moveTo (left + radius, top); ctx . lineTo (right - radius, top); ctx . arc (right - radius, top + radius, radius, -step, 0);
-  ctx . lineTo (right, bottom - radius); ctx . arc (right - radius, bottom - radius, radius, 0, step); ctx . lineTo (left + radius, bottom);
-  ctx . arc (left + radius, bottom - radius, radius, step, step + step); ctx . lineTo (left, top + radius); ctx . arc (left + radius, top + radius, radius, step + step, - step);
+var roundRect = function (ctx, left1, left2, top, right1, right2, bottom, radius) {
+  var step = Math . PI * 0.5; ctx . moveTo (left1 + radius, top); ctx . lineTo (right1 - radius, top); ctx . arc (right1 - radius, top + radius, radius, -step, 0);
+  ctx . lineTo (right1, bottom - radius); ctx . arc (right1 - radius, bottom - radius, radius, 0, step); ctx . lineTo (left1 + radius, bottom);
+  ctx . arc (left1 + radius, bottom - radius, radius, step, step + step); ctx . lineTo (left1, top + radius); ctx . arc (left1 + radius, top + radius, radius, step + step, - step);
 };
 
 var leftBrace = function (ctx, left, top, right, bottom, radius, braceRadius, angle) {
@@ -910,7 +910,7 @@ var Rule = function (options) {
     ctx . lineWidth = 1;
     ctx . translate (length * (this . shift - this . left_margin), 0);
     ctx . beginPath ();
-    	roundRect (ctx, 0, 0, (1 + this . left_margin + this . right_margin) * length, this . ruleHeight (), this . rounding);
+    	roundRect (ctx, 0, 0, 0, (1 + this . left_margin + this . right_margin) * length, (1 + this . left_margin + this . right_margin) * length, this . ruleHeight (), this . rounding);
     	ctx . fill (); ctx . strokeStyle = this . border_colour; ctx . stroke ();
     ctx . fillStyle = 'black';
     ctx . translate (this . left_margin * length, 0);
@@ -1214,8 +1214,8 @@ var Sliderule = function (length, options) {
     for (ind in this . cursorGlassBraces) {ctx . save (); this . cursorGlassBraces [ind] . draw (ctx, this); ctx . restore ();}
     // CURSOR
     ctx . beginPath ();
-    roundRect (ctx, - this . length * this . cursor_left_extension, - this . cursor_rounding,
-      this . length * this . cursor_right_extension, this . height () + this . cursor_rounding, this . cursor_rounding);
+    var le = - this . length * this . cursor_left_extension; var re = this . length * this . cursor_right_extension;
+    roundRect (ctx, le, le, - this . cursor_rounding, re, re, this . height () + this . cursor_rounding, this . cursor_rounding);
     if (this . cursorGlass) {ctx . fillStyle = this . cursorGlass; ctx . fill ();}
     if (this . cursorFrame) {ctx . strokeStyle = this . cursorFrame; ctx . stroke ();}
     if (this . cursorHairline) {
