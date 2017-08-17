@@ -436,11 +436,20 @@ var draw_small_sine_dec = function (ctx, length, height, s) {
 };
 var draw_small_sine_deg = function (ctx, length, height, s) {
   var shift = s . location (1);
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   ctx . translate (length * shift, 0);
-  mark (ctx, "1", 0, height * 0.5);
-  draw_log_1R (ctx, length, height, 1 + s . right_extension - shift, s);
-  ctx . translate (- length, 0);
-  draw_log_1L (ctx, length, height, 1 - shift - s . left_extension, s);
+  var limit = 1 + s . right_extension - shift;
+  draw_MR (ctx, Math . log10, length, 1, 10, limit, h5);
+  var ind = 1;
+  var location = Math . log10 (ind + 0.5);
+  while (location < limit) {mark (ctx, ind + "\u00b3\u2070", length * location, h5); ind += 1; location = Math . log10 (ind + 0.5);}
+  draw_XR (ctx, Math . log10, length, 3, 10, limit, h3, 0.5, 1 / 4, 0.5);
+  draw_XR (ctx, Math . log10, length, 3, 10, limit, h2, 0.25, 1 / 12, 0.25);
+  limit = - s . left_extension - shift;
+  draw_XL (ctx, Math . log10, length, 0, 3, limit, h4, 0.5, 0.25, 0.5);
+  draw_XL (ctx, Math . log10, length, 0, 3, limit, h3, 0.25, 1 / 12, 0.25);
+  draw_XL (ctx, Math . log10, length, 0, 3, limit, h2, 1 / 12, 1 / 60, 1 / 12);
+  location = Math . log10 (0.5); if (location >= limit) mark (ctx, "0\u00b3\u2070", length * location, h5);
 };
 var fn_tan_dec = function (value) {return 1 + Math . log10 (Math . tan (value * Math . PI / 180));};
 var draw_tan_dec = function (ctx, length, height, scale) {

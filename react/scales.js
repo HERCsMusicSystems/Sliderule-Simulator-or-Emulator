@@ -18,7 +18,12 @@ var toDeg = function (value) {
   var frac = Math . abs (value - deg);
   var min = (frac * 60) | 0;
   var sec = Math . round (frac * 3600 - min * 60);
-  return deg  + ":" + min + ":" + (sec | 0);
+  if (sec == 60) {sec = 0; min += 1;}
+  if (min == 60) {min = 0; deg += 1;}
+  sec = sec | 0;
+  if (min < 10) min = "0" + min;
+  if (sec < 10) sec = "0" + sec;
+  return deg  + ":" + min + ":" + sec;
 };
 var scale_A = function (height, options) {
   var s = new spacer (height, options);
