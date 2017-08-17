@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>Staedtler 554</title>
+  </head>
+<body>
+<div>
+	<input type = checkbox onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+</div>
+<div id="root"></div>
+
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+
+<script>
+var sliderules = new Sliderules ();
+var s = new Sliderule (1200); sliderules . sliderules . push (s);
+var r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_P (18));
+r . scales . push (new scale_S (18));
+r . scales . push (new scale_T (18));
+r . scales . push (new scale_T1dec (18));
+r . scales . push (new scale_A (18));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_B (18));
+r . scales . push (new scale_K (18));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DI (18));
+r . scales . push (new scale_C (18));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (18));
+r . scales . push (new scale_W1 (18));
+r . scales . push (new scale_W2 (18));
+r . scales . push (new scale_M (18));
+r . scales . push (new scale_ST_down (18));
+</script>
+
+<script src="sliderule_application.js"></script>
+<script>
+'use strict';
+
+ReactDOM.render(React.createElement(SlideruleApplication, null), document.getElementById('root'));
+</script>
+
+</body></html>
