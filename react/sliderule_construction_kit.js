@@ -1006,15 +1006,17 @@ var StaedtlerLeftBrace = function (radius, width, dent, left1, left2, top, botto
   this . draw = function (ctx, s) {
     ctx . translate (s . length * s . left_margin, 0);
     ctx . strokeStyle = colour;
+    var atan = Math . atan2 (s . length * (left2 - left1), bottom - top);
+    var btan = Math . atan2 (s . length * (left2 - dent), dbottom - bottom);
     ctx . beginPath ();
     ctx . arc (- s . length * width, top, radius, Math . PI * 1.5, 0);
     ctx . arc (- s . length * width, s . height () - top, radius, 0, Math . PI * 0.5);
-    ctx . arc (- s . length * left1, s . height () - top, radius, Math . PI * 0.5, Math . PI);
-    ctx . arc (- s . length * left2, s . height () - bottom, radius, Math . PI, Math . PI * 1.5);
-    ctx . arc (- s . length * dent, s . height () - dbottom, radius, Math . PI * 0.5, 0, true);
-    ctx . arc (- s . length * dent, dbottom, radius, 0, Math . PI * 1.5, true);
-    ctx . arc (- s . length * left2, bottom, radius, Math . PI * 0.5, Math . PI);
-    ctx . arc (- s . length * left1, top, radius, Math . PI, Math . PI * 1.5);
+    ctx . arc (- s . length * left1, s . height () - top, radius, Math . PI * 0.5, Math . PI - atan);
+    ctx . arc (- s . length * left2, s . height () - bottom, radius, Math . PI - atan, Math . PI * 1.5 - btan);
+    ctx . arc (- s . length * dent, s . height () - dbottom, radius, Math . PI * 0.5 - btan, 0, true);
+    ctx . arc (- s . length * dent, dbottom, radius, 0, Math . PI * 1.5 + btan, true);
+    ctx . arc (- s . length * left2, bottom, radius, Math . PI * 0.5 + btan, Math . PI + atan);
+    ctx . arc (- s . length * left1, top, radius, Math . PI + atan, Math . PI * 1.5);
     ctx . closePath ();
     ctx . stroke ();
     ctx . fillStyle = background;
