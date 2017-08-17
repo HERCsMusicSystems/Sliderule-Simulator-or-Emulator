@@ -434,6 +434,14 @@ var draw_small_sine_dec = function (ctx, length, height, s) {
   ctx . translate (- length, 0);
   draw_log_1L (ctx, length, height, 1 - shift - s . left_extension, s);
 };
+var draw_small_sine_deg = function (ctx, length, height, s) {
+  var shift = s . location (1);
+  ctx . translate (length * shift, 0);
+  mark (ctx, "1", 0, height * 0.5);
+  draw_log_1R (ctx, length, height, 1 + s . right_extension - shift, s);
+  ctx . translate (- length, 0);
+  draw_log_1L (ctx, length, height, 1 - shift - s . left_extension, s);
+};
 var fn_tan_dec = function (value) {return 1 + Math . log10 (Math . tan (value * Math . PI / 180));};
 var draw_tan_dec = function (ctx, length, height, scale) {
   draw_MLS (ctx, fn_tan_dec, length, 1, 5.5, 0.5, - scale . left_extension, height * 0.5);
@@ -789,6 +797,11 @@ var spacer = function (height, options) {
   this . left_extension = 0; this . right_extension = 0;
   this . highlight_left = 0; this . highlight_right = 0;
   this . draw = function (ctx, length) {};
+  this . display = function (location, precision) {
+    var v = this . value (location);
+    if (v == null) return null;
+    return v . toFixed (precision);
+  };
   this . value = function (location) {return null;};
   this . location = function (value) {return NaN;};
   this . sub_draw = function (ctx, length) {
@@ -822,7 +835,12 @@ var spacer = function (height, options) {
       case 'c': p = Math . sqrt (4 / Math . PI); break;
       case 'c1': p = Math . sqrt (40 / Math . PI); break;
       case 'q': p = Math . PI / 1.8; break;
-      default: p = Number (p); break;
+      default:
+        var pp = p . split (":");
+        var divisor = 1;
+        p = 0;
+        for (var ind in pp) {p += Number (pp [ind]) / divisor; divisor *= 60;}
+        break;
     }
     p = this . location (p);
     if (isNaN (p)) return null;
@@ -1153,6 +1171,7 @@ var Sliderule = function (length, options) {
     // BRACES
     for (ind in this . braces) {ctx . save (); this . braces [ind] . draw (ctx, this); ctx . restore ();}
     ctx . save ();
+    // STATIC MARKINGS
     if (this . static_markings) this . drawMarkings (ctx, this . length * this . static_markings_shift, this . static_markings_align);
     ctx . restore ();
     ctx . translate (this . length * (this . left_margin + this . cursor_position), 0);
@@ -1185,26 +1204,29 @@ var Sliderule = function (length, options) {
     var y = 0;
     ctx . textBaseline = 'middle';
     ctx . font = this . markings_size + 'px arial';
-    var h; var hh; var description; var measure;
+    var h; var hh; var description; var measure; var rs;
     for (var ind in this . rules) {
       for (var sub in this . rules [ind] . scales) {
         h = this . rules [ind] . scales [sub] . height;
         hh = h * 0.5;
-        description = this . rules [ind] . scales [sub] . value (this . cursor_position - this . rules [ind] . shift);
+        description = this . rules [ind] . scales [sub] . display (this . cursor_position - this . rules [ind] . shift, this . precision);
         if (description !== null) {
-          description = description . toFixed (this . precision);
           ctx . fillStyle = this . markings_background;
           measure = ctx . measureText (description);
           ctx . textAlign = align;
+          rs = this . length * this . rules [ind] . shift + shift;
           if (align === 'left') {
-            ctx . fillRect (shift, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
+            ctx . fillRect (rs, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
             ctx . fillStyle = this . markings_colour;
-            ctx . fillText (description, shift + 4, y + hh);
-          }
-          else {
-            ctx . fillRect (shift - measure . width - 8, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
+            ctx . fillText (description, rs + 4, y + hh);
+          } else if (align === 'center') {
+            ctx . fillRect (rs - measure . width * 0.5 - 4, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
             ctx . fillStyle = this . markings_colour;
-            ctx . fillText (description, shift - 4, y + hh);
+            ctx . fillText (description, rs, y + hh);
+          } else {
+            ctx . fillRect (rs - measure . width - 8, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
+            ctx . fillStyle = this . markings_colour;
+            ctx . fillText (description, rs - 4, y + hh);
           }
         }
         y += h;

@@ -13,6 +13,13 @@
 // LL03(_down), LL02(_down), LL01(_down), LL00(_down)
 //////////////////////////////////////////////////////////////////////////////
 
+var toDeg = function (value) {
+  var deg = value | 0;
+  var frac = Math . abs (value - deg);
+  var min = (frac * 60) | 0;
+  var sec = Math . round (frac * 3600 - min * 60);
+  return deg  + ":" + min + ":" + (sec | 0);
+};
 var scale_A = function (height, options) {
   var s = new spacer (height, options);
   if (! options || options . draw_c == undefined) s . draw_c = false;
@@ -213,11 +220,12 @@ var scale_Sdec_down = function (height, options) {
 };
 var scale_S = function (height, options) {
   var s = new scale_Sdec (height, options);
+  s . display = function (location, precision) {return toDeg (this . value (location));};
   s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_sine_deg (ctx, length, s . height, s);};
   return s;
 };
 var scale_S_down = function (height, options) {
-  var s = new scale_Sdec (height, options);
+  var s = new scale_S (height, options);
   s . draw = function (ctx, length) {draw_sine_deg (ctx, length, - s . height, s);};
   return s;
 };
@@ -240,12 +248,13 @@ var scale_STdec_down = function (height, options) {
 };
 var scale_ST = function (height, options) {
   var s = new scale_STdec (height, options);
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_small_sine_dec (ctx, length, s . height, s);};
+  s . display = function (location, precision) {return toDeg (this . value (location));};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_small_sine_deg (ctx, length, s . height, s);};
   return s;
 };
 var scale_ST_down = function (height, options) {
-  var s = new scale_STdec (height, options);
-  s . draw = function (ctx, length) {draw_small_sine_dec (ctx, length, - s . height, s);};
+  var s = new scale_ST (height, options);
+  s . draw = function (ctx, length) {draw_small_sine_deg (ctx, length, - s . height, s);};
   return s;
 };
 var scale_Tdec = function (height, options) {
@@ -263,11 +272,12 @@ var scale_Tdec_down = function (height, options) {
 };
 var scale_T = function (height, options) {
   var s = new scale_Tdec (height, options);
+  s . display = function (location, precision) {return toDeg (this . value (location));};
   s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_tan_deg (ctx, length, s . height, s);};
   return s;
 };
 var scale_T_down = function (height, options) {
-  var s = new scale_Tdec (height, options);
+  var s = new scale_T (height, options);
   s . draw = function (ctx, length) {draw_tan_deg (ctx, length, - s . height, s);};
   return s;
 };
