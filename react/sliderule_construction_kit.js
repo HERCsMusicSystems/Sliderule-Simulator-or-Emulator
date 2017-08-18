@@ -1,5 +1,14 @@
 
 var roundRect = function (ctx, left1, left2, top, right1, right2, bottom, radius) {
+  var atan = Math . atan2 (left1 - left2, bottom - top - radius - radius);
+  var btan = Math . atan2 (right1 - right2, bottom - top - radius - radius);
+  ctx . arc (left1 + radius, top + radius, radius, Math . PI + atan, Math . PI * 1.5);
+  ctx . arc (right1 - radius, top + radius, radius, Math . PI * 1.5, 0 + btan);
+  ctx . arc (right2 - radius, bottom - radius, radius, btan, Math . PI * 0.5);
+  ctx . arc (left2 + radius, bottom - radius, radius, Math . PI * 0.5, Math . PI + atan);
+  ctx . closePath ();
+};
+var roundRectt = function (ctx, left1, left2, top, right1, right2, bottom, radius) {
   var step = Math . PI * 0.5; ctx . moveTo (left1 + radius, top); ctx . lineTo (right1 - radius, top); ctx . arc (right1 - radius, top + radius, radius, -step, 0);
   ctx . lineTo (right1, bottom - radius); ctx . arc (right1 - radius, bottom - radius, radius, 0, step); ctx . lineTo (left1 + radius, bottom);
   ctx . arc (left1 + radius, bottom - radius, radius, step, step + step); ctx . lineTo (left1, top + radius); ctx . arc (left1 + radius, top + radius, radius, step + step, - step);
@@ -910,7 +919,7 @@ var Rule = function (options) {
     ctx . lineWidth = 1;
     ctx . translate (length * (this . shift - this . left_margin), 0);
     ctx . beginPath ();
-    	roundRect (ctx, 0, 0, 0, (1 + this . left_margin + this . right_margin) * length, (1 + this . left_margin + this . right_margin) * length, this . ruleHeight (), this . rounding);
+    	roundRect (ctx, 0, length * (this . left_margin - this . alt_left_margin), 0, (1 + this . left_margin + this . right_margin) * length, (1 + this . left_margin + this . alt_right_margin) * length, this . ruleHeight (), this . rounding);
     	ctx . fill (); ctx . strokeStyle = this . border_colour; ctx . stroke ();
     ctx . fillStyle = 'black';
     ctx . translate (this . left_margin * length, 0);
@@ -937,6 +946,8 @@ var Rule = function (options) {
   };
   this . changed = function () {return this . target != this . shift;};
   for (var key in options) this [key] = options [key];
+  if (this . alt_left_margin == undefined) this . alt_left_margin = this . left_margin;
+  if (this . alt_right_margin == undefined) this . alt_right_margin = this . right_margin;
 };
 
 var Cursor = function (shift, from, to, colour, options) {
@@ -1002,12 +1013,10 @@ var RightBrace = function (margin, width, radius, background, colour, braceRadiu
   };
 };
 
-var StaedtlerLeftBrace = function (radius, width, dent, left1, left2, top, bottom, dbottom, background, colour) {
-  this . draw = function (ctx, s) {
-    ctx . translate (s . length * s . left_margin, 0);
+var drawStaedtlerBrace = function (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour) {
     ctx . strokeStyle = colour;
     var atan = Math . atan2 (s . length * (left2 - left1), bottom - top);
-    var btan = Math . atan2 (s . length * (left2 - dent), dbottom - bottom);
+    var btan = Math . atan2 (dbottom - bottom, s . length * (left2 - dent));
     ctx . beginPath ();
     ctx . arc (- s . length * width, top, radius, Math . PI * 1.5, 0);
     ctx . arc (- s . length * width, s . height () - top, radius, 0, Math . PI * 0.5);
@@ -1021,7 +1030,21 @@ var StaedtlerLeftBrace = function (radius, width, dent, left1, left2, top, botto
     ctx . stroke ();
     ctx . fillStyle = background;
     ctx . fill ();
+};
+
+var StaedtlerLeftBrace = function (radius, width, dent, left1, left2, top, bottom, dbottom, background, colour) {
+  this . draw = function (ctx, s) {
+    ctx . translate (s . length * s . left_margin, 0);
+    drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour);
   };
+};
+
+var StaedtlerRightBrace = function (radius, width, dent, left1, left2, top, bottom, dbottom, background, colour) {
+  this . draw = function (ctx, s) {
+    ctx . translate (s . length * (1 + s . left_margin), 0);
+    ctx . scale (-1, 1);
+    drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour);
+  }
 };
 
 var LeftBraceBar = function (location, top, bottom, radius, background, colour) {
