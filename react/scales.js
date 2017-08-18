@@ -7,7 +7,7 @@
 // L, M, LR12, LW12
 // Sdec(_down), S(_down), SCdec(_down), CSdec(_down)
 // STdec(_down), ST(_down)
-// Tdec(_down), T(_down), T1dec(_down), TCTdec(_down), TCT1dec(_down)
+// Tdec(_down), T(_down), T1dec(_down), T1(_down), TCTdec(_down), TCT1dec(_down)
 // P(_down)
 // LL3(_down), LL2(_down), LL1(_down), CLL0, DLL0
 // LL03(_down), LL02(_down), LL01(_down), LL00(_down)
@@ -308,6 +308,16 @@ var scale_T1dec = function (height, options) {
 var scale_T1dec_down = function (height, options) {
   var s = new scale_T1dec (height, options);
   s . draw = function (ctx, length) {draw_big_tan_dec (ctx, length, - s . height, s);};
+  return s;
+};
+var scale_T1 = function (height, options) {
+  var s = new scale_T1dec (height, options);
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_big_tan_deg (ctx, length, s . height, s);};
+  return s;
+};
+var scale_T1_down = function (height, options) {
+  var s = new scale_T1 (height, options);
+  s . draw = function (ctx, length) {draw_big_tan_deg (ctx, length, - s . height, s);};
   return s;
 };
 var scale_TCT1dec = function (height, options) {
