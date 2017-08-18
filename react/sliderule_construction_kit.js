@@ -759,6 +759,25 @@ var draw_LL1 = function (ctx, length, height, s) {
 	draw_XL (ctx, s . location, length, 1, 1.02, limit, h2, 0.0005, 0.0001, 0.0005);
 };
 
+var draw_LL0 = function (ctx, length, height, s) {
+	var limit = 1 + s . right_extension;
+	var h5 = height * 0.5; var h2 = height * 0.2; var h3 = height * 0.3; var h4 = height * 0.4;
+	draw_MRSF (ctx, s . location, length, 1.001, 1.002, 0.001, 3, limit, h5);
+	//draw_XR (ctx, s . location, length, 1.1, 1.2, limit, h3, 0.01, 0.005, 0.01);
+	//draw_XR (ctx, s . location, length, 1.1, 1.2, limit, h2, 0.005, 0.001, 0.005);
+	draw_MRSF (ctx, s . location, length, 1.0025, 1.005, 0.0005, 4, limit, h5);
+	draw_MRS (ctx, s . location, length, 1.006, 1.009, 0.001, limit, h5);
+	//draw_XR (ctx, s . location, length, 1.02, 1.1, limit, h3, 0.005, 0.001, 0.005);
+	//draw_XR (ctx, s . location, length, 1.05, 1.1, limit, h4, 0.01, 0.005, 0.01);
+	//draw_XR (ctx, s . location, length, 1.05, 1.1, limit, h2, 0.001, 0.0005, 0.001);
+	//draw_XR (ctx, s . location, length, 1.02, 1.05, limit, h2, 0.001, 0.0002, 0.001);
+	//limit = - s . left_extension;
+	//draw_MLSF (ctx, s . location, length, 1.01, 1.018, 0.002, 3, limit, h5);
+	//draw_XL (ctx, s . location, length, 1, 1.02, limit, h4, 0.002, 0.001, 0.002);
+	//draw_XL (ctx, s . location, length, 1, 1.02, limit, h3, 0.001, 0.0005, 0.001);
+	//draw_XL (ctx, s . location, length, 1, 1.02, limit, h2, 0.0005, 0.0001, 0.0005);
+};
+
 var draw_log_ll0 = function (ctx, length, height, s) {
   draw_log (ctx, length, height, s, s . left_extension, s . right_extension);
   ctx . translate (length, 0);
@@ -1081,7 +1100,7 @@ var RightBrace = function (margin, width, radius, background, colour, braceRadiu
   };
 };
 
-var drawStaedtlerBrace = function (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour) {
+var drawStaedtlerBrace = function (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s) {
     ctx . strokeStyle = colour;
     var atan = Math . atan2 (s . length * (left2 - left1), bottom - top);
     var btan = Math . atan2 (dbottom - bottom, s . length * (left2 - dent));
@@ -1103,7 +1122,7 @@ var drawStaedtlerBrace = function (ctx, radius, width, dent, left1, left2, top, 
 var StaedtlerLeftBrace = function (radius, width, dent, left1, left2, top, bottom, dbottom, background, colour) {
   this . draw = function (ctx, s) {
     ctx . translate (s . length * s . left_margin, 0);
-    drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour);
+    drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s);
   };
 };
 
@@ -1111,7 +1130,7 @@ var StaedtlerRightBrace = function (radius, width, dent, left1, left2, top, bott
   this . draw = function (ctx, s) {
     ctx . translate (s . length * (1 + s . left_margin), 0);
     ctx . scale (-1, 1);
-    drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour);
+    drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s);
   }
 };
 
