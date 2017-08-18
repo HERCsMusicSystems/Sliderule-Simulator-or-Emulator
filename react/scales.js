@@ -300,8 +300,8 @@ var scale_TCTdec_down = function (height, options) {
 };
 var scale_T1dec = function (height, options) {
   var s = new spacer (height, options);
-  s . value = function (location) {return Math . atan (Math . pow (10, location - 2)) * 180 / Math . PI;};
-  s . location = function (value) {return 2 + Math . log10 (Math . tan (value * Math . PI / 180));};
+  s . value = function (location) {return Math . atan (Math . pow (10, location)) * 180 / Math . PI;};
+  s . location = function (value) {return Math . log10 (Math . tan (value * Math . PI / 180));};
   s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_big_tan_dec (ctx, length, s . height, s);};
   return s;
 };
@@ -312,6 +312,7 @@ var scale_T1dec_down = function (height, options) {
 };
 var scale_T1 = function (height, options) {
   var s = new scale_T1dec (height, options);
+  s . display = function (location, precision) {return toDeg (this . value (location));};
   s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_big_tan_deg (ctx, length, s . height, s);};
   return s;
 };
@@ -322,9 +323,9 @@ var scale_T1_down = function (height, options) {
 };
 var scale_TCT1dec = function (height, options) {
   var s = new spacer (height, options);
-  s . value = function (location) {return Math . atan (Math . pow (10, location - 2)) * 180 / Math . PI;};
-  s . location = function (value) {return 2 + Math . log10 (Math . tan (value * Math . PI / 180));};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_big_tan_dec (ctx, length, s . height, s);};
+  s . value = function (location) {return Math . atan (Math . pow (10, location)) * 180 / Math . PI;};
+  s . location = function (value) {return Math . log10 (Math . tan (value * Math . PI / 180));};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_big_tan_cotan_dec (ctx, length, s . height, s);};
   return s;
 };
 var scale_TCT1dec_down = function (height, options) {
