@@ -763,19 +763,20 @@ var draw_LL0 = function (ctx, length, height, s) {
 	var limit = 1 + s . right_extension;
 	var h5 = height * 0.5; var h2 = height * 0.2; var h3 = height * 0.3; var h4 = height * 0.4;
 	draw_MRSF (ctx, s . location, length, 1.001, 1.002, 0.001, 3, limit, h5);
-	//draw_XR (ctx, s . location, length, 1.1, 1.2, limit, h3, 0.01, 0.005, 0.01);
-	//draw_XR (ctx, s . location, length, 1.1, 1.2, limit, h2, 0.005, 0.001, 0.005);
+	draw_XR (ctx, s . location, length, 1.01, 1.02, limit, h3, 0.001, 0.0005, 0.001);
+	draw_XR (ctx, s . location, length, 1.01, 1.02, limit, h2, 0.0005, 0.0001, 0.0005);
 	draw_MRSF (ctx, s . location, length, 1.0025, 1.005, 0.0005, 4, limit, h5);
-	draw_MRS (ctx, s . location, length, 1.006, 1.009, 0.001, limit, h5);
-	//draw_XR (ctx, s . location, length, 1.02, 1.1, limit, h3, 0.005, 0.001, 0.005);
-	//draw_XR (ctx, s . location, length, 1.05, 1.1, limit, h4, 0.01, 0.005, 0.01);
-	//draw_XR (ctx, s . location, length, 1.05, 1.1, limit, h2, 0.001, 0.0005, 0.001);
-	//draw_XR (ctx, s . location, length, 1.02, 1.05, limit, h2, 0.001, 0.0002, 0.001);
-	//limit = - s . left_extension;
-	//draw_MLSF (ctx, s . location, length, 1.01, 1.018, 0.002, 3, limit, h5);
-	//draw_XL (ctx, s . location, length, 1, 1.02, limit, h4, 0.002, 0.001, 0.002);
-	//draw_XL (ctx, s . location, length, 1, 1.02, limit, h3, 0.001, 0.0005, 0.001);
-	//draw_XL (ctx, s . location, length, 1, 1.02, limit, h2, 0.0005, 0.0001, 0.0005);
+	draw_MRS (ctx, s . location, length, 1.006, 1.1, 0.001, limit, h5);
+	draw_XR (ctx, s . location, length, 1.002, 1.01, limit, h3, 0.0005, 0.0001, 0.0005);
+	draw_XR (ctx, s . location, length, 1.005, 1.01, limit, h4, 0.001, 0.0005, 0.001);
+	draw_XR (ctx, s . location, length, 1.005, 1.01, limit, h2, 0.0001, 0.00005, 0.0001);
+	draw_XR (ctx, s . location, length, 1.002, 1.005, limit, h2, 0.0001, 0.00002, 0.0001);
+	limit = - s . left_extension;
+	draw_MLSF (ctx, s . location, length, 1.0012, 1.0018, 0.0002, 4, limit, h5);
+  draw_XL (ctx, s . location, length, 1, 1.001, limit, h5, 0.001, 0.0001, 0.001);
+	draw_XL (ctx, s . location, length, 1, 1.002, limit, h4, 0.0002, 0.0001, 0.0002);
+	draw_XL (ctx, s . location, length, 1, 1.002, limit, h3, 0.0001, 0.00005, 0.0001);
+	draw_XL (ctx, s . location, length, 1, 1.002, limit, h2, 0.00005, 0.00001, 0.00005);
 };
 
 var draw_log_ll0 = function (ctx, length, height, s) {
