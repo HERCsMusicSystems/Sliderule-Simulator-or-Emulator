@@ -7,7 +7,7 @@
 // L, M, LR12, LW12
 // Sdec(_down), S(_down), SCdec(_down), CSdec(_down)
 // STdec(_down), ST(_down)
-// Tdec(_down), T(_down), T1dec(_down), T1(_down), TCTdec(_down), TCT1dec(_down)
+// Tdec(_down), T(_down), T1dec(_down), T1(_down), TCTdec(_down), CTTdec(_down), TCT1dec(_down), CTT1dec(_down)
 // P(_down)
 // LL3(_down), LL2(_down), LL1(_down), CLL0, DLL0
 // LL03(_down), LL02(_down), LL01(_down), LL00(_down)
@@ -298,6 +298,18 @@ var scale_TCTdec_down = function (height, options) {
   s . draw = function (ctx, length) {draw_tan_cotan_dec (ctx, length, - s . height, s);};
   return s;
 };
+var scale_CTTdec = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . atan (Math . pow (10, location - 1)) * 180 / Math . PI;};
+  s . location = function (value) {return 1 + Math . log10 (Math . tan (value * Math . PI / 180));};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_cotan_tan_dec (ctx, length, s . height, s);};
+  return s;
+};
+var scale_CTTdec_down = function (height, options) {
+  var s = new scale_CTTdec (height, options);
+  s . draw = function (ctx, length) {draw_cotan_tan_dec (ctx, length, - s . height, s);};
+  return s;
+};
 var scale_T1dec = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return Math . atan (Math . pow (10, location)) * 180 / Math . PI;};
@@ -331,6 +343,18 @@ var scale_TCT1dec = function (height, options) {
 var scale_TCT1dec_down = function (height, options) {
   var s = new scale_TCT1dec (height, options);
   s . draw = function (ctx, length) {draw_big_tan_cotan_dec (ctx, length, - s . height, s);};
+  return s;
+};
+var scale_CTT1dec = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . atan (Math . pow (10, location)) * 180 / Math . PI;};
+  s . location = function (value) {return Math . log10 (Math . tan (value * Math . PI / 180));};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_big_cotan_tan_dec (ctx, length, s . height, s);};
+  return s;
+};
+var scale_CTT1dec_down = function (height, options) {
+  var s = new scale_CTT1dec (height, options);
+  s . draw = function (ctx, length) {draw_big_cotan_tan_dec (ctx, length, - s . height, s);};
   return s;
 };
 var scale_SCdec = function (height, options) {

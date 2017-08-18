@@ -7,6 +7,7 @@
 	<input type = checkbox onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
 	<input type = checkbox onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
 </div>
 <div id="root"></div>
@@ -35,8 +36,8 @@ s . braces . push (new Screw (1.344, 186, 6, 0.5, '#b5a642', '#605321'));
 var r = new Rule ({left_margin: 0.18, alt_left_margin: 0.2, right_margin: 0.18, alt_right_margin: 0.2}); s . rules . push (r);
 r . scales . push (new scale_P (18));
 r . scales . push (new scale_CSdec (18));
-r . scales . push (new scale_TCTdec (18));
-r . scales . push (new scale_TCT1dec (18));
+r . scales . push (new scale_CTTdec (18));
+r . scales . push (new scale_CTT1dec (18));
 r . scales . push (new scale_A (18));
 r = new Rule ({stator: 1}); s . rules . push (r);
 r . scales . push (new scale_B (18));
