@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>Skala</title>
+  </head>
+<body>
+<div>
+	<input type = checkbox onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+</div>
+<div id="root"></div>
+
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+
+<script>
+var logo = new Image (); logo . src = "skala.png";
+var sliderules = new Sliderules ();
+var s = new Sliderule (720, {cursor_rounding: 10}); sliderules . sliderules . push (s);
+s . cursors . push (new Cursor (HairlineD, 108, 144, 'blue'));
+s . cursors . push (new Cursor (HairlineS, 54, 90, 'blue'));
+var r = new Rule ({rule_colour: '#3c2005'}); s . rules . push (r);
+r . scales . push (new scale_L (18, {left: "log", colour: 'gold'}));
+r . scales . push (new scale_P (18, {left_extension: 0.05, left: "\u221a(1-x\u00b2)"}));
+r . scales . push (new scale_K (18, {left: "x\u00b3"}));
+r . scales . push (new scale_A (18, {left_extension: 0.055, right_extension: 0.055, left: "x\u00b2"}));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_B (18, {left_extension: 0.055, right_extension: 0.055, left: "x\u00b2"}));
+r . scales . push (new scale_CI (18, {left_extension: 0.05, right_extension: 0.06, left: "1/x", colour: 'red'}));
+r . scales . push (new scale_C (18, {left_extension: 0.055, right_extension: 0.055, left: "x"}));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (18, {left_extension: 0.055, right_extension: 0.055, left: "x"}));
+r . scales . push (new scale_S (18, {left_extension: 0.06, left: "sin"}));
+r . scales . push (new scale_T (18, {left_extension: 0.06, left: "tg", right: "SLKM", rs: 0.06}));
+r . scales . push (new scale_ST (18, {left_extension: 0.06, right_extension: 0.025, left: "s-t"}));
+s . braces . push (new Logo (logo, 1.28, 48, 0.2));
+</script>
+
+<script src="sliderule_application.js"></script>
+<script>
+'use strict';
+
+ReactDOM.render(React.createElement(SlideruleApplication, null), document.getElementById('root'));
+</script>
+
+</body></html>

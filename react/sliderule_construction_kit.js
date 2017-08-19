@@ -1277,16 +1277,25 @@ var Sliderule = function (length, options) {
     this . cursor_position = this . cursor_target;
     return delta;
   };
+  this . mover = null;
   this . moveRule = function (delta, position) {
+  	if (this . mover == 'cursor') return {rule: this, delta: this . moveCursor (delta . x)};
+  	if (this . mover != null) return {rule: this . mover, delta: this . mover . move (delta . x, this . length)};
     if (position . y < 0 || position . y > this . height ()) return null;
+    var offset = position . x / this . length - this . left_margin - this . cursor_position;
+    if (offset >= - this . cursor_left_extension && offset <= this . cursor_right_extension) {
+    	this . mover = 'cursor';
+    	return {rule: this, delta: this . moveCursor (delta . x)};
+    }
     var y = position . y;
     for (var ind in this . rules) {
-      if (this . rules [ind] . hitTest (y)) {return {rule: this . rules [ind], delta: this . rules [ind] . move (delta . x, this . length)};}
+      if (this . rules [ind] . hitTest (y)) {
+      	this . mover = this . rules [ind];
+      	return {rule: this . rules [ind], delta: this . rules [ind] . move (delta . x, this . length)};
+      }
       y -= this . rules [ind] . ruleHeight ();
     }
-    var offset = position . x / this . length - this . left_margin - this . cursor_position;
-    if (offset < - this . cursor_left_extension || offset > this . cursor_right_extension) return null;
-    return {rule: this, delta: this . moveCursor (delta . x)};
+    return null;
   };
   this . draw = function (ctx) {
     if (this . cursor_target < this . cursor_position) {
@@ -1484,8 +1493,8 @@ var Sliderules = function (options) {
     if (esc) this . synchronise (esc . rule, esc . delta);
   };
   this . synchroniseMove = function (delta, position) {
-    var esc = sliderules . move (scalv (delta, 1 / this . scale), scalv (position, 1 / this . scale));
-    if (esc) sliderules . synchronise (esc . rule, esc . delta);
+    var esc = this . move (scalv (delta, 1 / this . scale), scalv (position, 1 / this . scale));
+    if (esc) this . synchronise (esc . rule, esc . delta);
     else this . position = addv (this . position, scalv (delta, 1 / this . scale));
     this . requireRedraw = true;
   };
@@ -1520,6 +1529,7 @@ var Sliderules = function (options) {
     }
     return null;
   };
+  this . resetMovers = function () {for (var ind in this . sliderules) this . sliderules [ind] . mover = null;};
   this . examine = function (position) {
     position = subv (position, this . position);
     var esc;

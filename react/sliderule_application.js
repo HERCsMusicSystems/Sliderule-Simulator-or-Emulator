@@ -27,6 +27,7 @@ var SlideruleApplication = React . createClass ({
   mousePosition: {x: 0, y: 0},
   onContext: function (event) {event . preventDefault ();},
   onMouseDown: function (event) {
+  	sliderules . resetMovers ();
     var position = subvbc ({x: event . clientX, y: event . clientY}, this . refs . sliderule . getBoundingClientRect ());
     if (event . button === 2) return sliderules . synchroniseTarget (addv (position, {x: 0.5, y: 0}));
     this . dragging = true;
