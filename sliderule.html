@@ -1,0 +1,751 @@
+<!DOCTYPE doctype PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                        
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+                        
+  <meta name="Author" content="Robert Wolf">
+                        
+  <meta name="Keywords" content="embedded, embedded system, microcontroller, expert, expert system, HERCs Prolog, Prolog, interpreter, music, midi, ruby gem, ruby, gem, HERCs, Abakos, synthesizer, synthesiser, vst, plugin, sliderule, slide-rule, slide rule">
+                        
+  <meta name="GENERATOR"
+ content="Mozilla/4.78 [en] (X11; U; Linux 2.4.9-34 i686) [Netscape]">
+  <title>Slide rule... an elegant instrument for a more civilized time.</title>
+    
+  <meta name="robots" content="all">
+<link rel="shortcut icon" type="image/x-icon" href="h.ico"/>
+
+</head>
+<body text="#000000" bgcolor="#ffffff" link="#0000ef" vlink="#51188e" alink="#ff0000">
+
+<font face="arial">
+
+<center>      
+<h1>The Slide Rule Simulator</h1>
+<h1>The Slide Rule Emulator</h1>
+     </center>
+
+<center><i><font size="+2">
+... an elegant instrument<br/>
+for a more civilized time ...<br/>
+
+</font></i>
+<br/>
+(last update: 20th Auguts 2017)
+</center>
+
+<h1>Collection of Slide Rule replicas</h1>
+<ul>
+	<li><a href="react/faber_castell_2_82n.html" >Faber-Castell 2/82N</a></li>
+	<li><a href="react/faber_castell_2_83n.html" >Faber-Castell 2/83N</a></li>
+	<li><a href="react/aristo_0906_bischolar.html" >Aristo 0906 Bischolar</a></li>
+	<li><a href="react/staedtler_554_28.html" >Staedtler 554 28</a></li>
+</ul>
+
+The slide rules above are very close replicas of existing models.
+<ul>
+	<li>Drag rule or cursor with mouse.</li>
+	<li>Use mouse wheel to zoom-in or zoom-out.</li>
+	<li>Click on checkboxes for appropriate actions.</li>
+	<li>Right-click on cursor or on scale to enter digital values. You can use:
+		<ul>
+			<li>Enter integer or floating-point value, i.e.: <b>3.14</b></li>
+			<li>Enter degrees using ":", i.e.: <b>2:30:26</b></li>
+			<li>Enter pre-defined constants: <b>pi</b>, <b>pi1</b>, <b>e</b>, <b>e1</b>, <b>c</b>, <b>c1</b>, <b>q</b></li>
+		</ul>
+	</li>
+	<li>You can <a href="react.zip">download</a> the entire collection to your computer and run locally (without internet connection).</li>
+	<li>Once you download the entire collection you can start building your own models.
+		Simply, open one of the models in text editor, see how it works and enjoy coding.</li>
+</ul>
+
+
+
+
+<h1><a name="TOC"><font size="+2">Table of contents</font></a></h1>
+
+            
+<ul>
+    <li><a href="#Screenshot">Screenshot</a></li>
+	<li><a href="#Features">Features</a></li>
+	<li><a href="#Source">Source code</a></li>
+	<li><a href="#Downloads">Downloads</a></li>
+	<li><a href="#Installation">Installation</a></li>
+	<li><a href="#QuickStart">Quick start manual</a></li>
+	<li><a href="#Sides">Both sides of the slide rule</a></li>
+	<li><a href="#Readouts">Readouts menu</a></li>
+	<li><a href="#Length">Length menu</a></li>
+	<li><a href="#Motion">Motion menu</a></li>
+	<li><a href="#Animation">Animation menu</a></li>
+	<li><a href="#Config">Advanced configuration</a></li>
+	<li><a href="#MakingYourOwn">Making your own slide rule</a></li>
+	<li><a href="#ListOfCommands">List of commands</a></li>
+	<li><a href="#ListOfScales">List of scales</a></li>
+	<li><a href="#Donation">Buy Me a Beer</a></li>
+	<li><a href="#Links">Links</a></li>
+	<li><a href="#Wishlist">Wish List</a></li>
+	<li><a href="#RemoveRequest">How to remove the dontaion reminder?</a></li>
+	<li><a href="#Contract">Contact</a></li>
+</ul>
+            
+<hr width="100%">
+
+<h1><a name="Screenshot"></a><font size="+2">Screenshot: see before you download</font></h1>
+<blockquote>
+<img src="sliderule_screenshot.png" />
+</blockquote>
+
+<h1><a name="Features"></a><font size="+2">Features</font></h1>
+
+            
+<blockquote>
+
+<ul>
+	<li>Digital read-outs (display numbers under the cursors).</li>
+	<li>Digital entry (right-click, enter number and cursor slides automatically).</li>
+	<li>The scales are drawn programmatically (they are not sliding pictures).</li>
+	<li>The scales can slide by fraction of a pixel.</li>
+	<li>Lanczos-3 anti-aliasing algorithm makes it possible to draw markings in-between pixels.</li>
+	<li>Entirely customisable (scales, rules, colours, digital readouts, motion speed and animations).</li>
+	<li>Variable number of slides (they can move together or free).</li>
+	<li>Multi-platform implementation based on wxWidgets technology (Windows, OS X, Source code for Linux).</li>
+	<li>Free licence.</li>
+	<li>Buy Me a Beer if you like the program.</li>
+</ul>
+
+
+</blockquote>
+
+<h1><a name="Source"/><font size="+2">Source code</font></h1>
+<blockquote>
+<ul>
+<li>The Slide Rule Emulator is written in C++.</li>
+<li>It consists of a single source file (over 5,000 lines of code).</li>
+<li>It needs wxWidgets library to compile. It will compile on any platform, which is supported by wxWidgets.</li>
+<li>The source code is available on request. Write me an email and I will send the source code back to you.</li>
+<li>To find my email address, click Help->About on the emulator.</li>
+<li>Consider making a donation, click <a href="#Donation">Buy Me a Beer</a>.</li>
+</ul>
+</blockquote>
+
+<h1><a name="Downloads"/><font size="+2">Downloads</font></h1>
+<blockquote>
+<ul>
+    <li>Download <a href="http://www.hercsmusicsystems.com/sliderule_2011_04_19.zip">19th April 2011</a> version.</li>
+    <li>Download <a href="http://www.hercsmusicsystems.com/sliderule_2012_05_01.zip">1st May 2012</a> version (latest).</li>
+    <li>Download <a href="http://www.hercsmusicsystems.com/sliderule_2013_02_11_mountain_lion.zip">Version for Apple Mountain Lion OS X.</li>
+</ul>
+</blockquote>
+
+<h1><a name="Installation"></a><font size="+2">Installation</font></h1>
+<blockquote>
+
+No installation necessary.
+Just un-zip the downloaded package.
+The applications for Windows, Apple OS X and Linux (Ubuntu) are inside.
+On Linux you may wish to re-compile the code from the source directory.
+</blockquote>
+
+
+<h1><a name="QuickStart"></a><font size="+2">Quick start</font></h1>
+<blockquote>
+<ul>
+<li>Double click the application to start. The default (or previously loaded) side rule will appear.</li>
+<li>Click on the sliding rule and drag it to make it move.</li>
+<li>Click on the cursor (or on the stator rule) to move the cursor.</li>
+<li>Right-click on any hairline (or on any of the scales) to enter numeric value. The cursor will automatically move to the specified spot.</li>
+<li>Left-click on any hairline to enter numeric value. The sliding rule will automatically move to the specified spot under the hairline.</li>
+<li>Use the Readouts menu to control where the numeric values are going to appear.</li>
+<li>Use the File -> Load menu to load specific slide rule.</li>
+<li>... or simply drag-and-drop a text file (containing slide rule definition) onto the emulator.</li>
+<li>On some trigonometrical scales values are given in degrees, minutes and fractions of minutes.
+Thus, 2.3 will mean: two degrees and thirty minutes (2.5 degree).</li>
+</ul>
+</blockquote>
+
+<h1><a name="Sides"></a><font size="+2">Both sides of the slide rule</font></h1>
+<blockquote>
+Slide rules often have scales on both sides (front and back).
+Sometime scales appear on both sides of the slide only.
+This slide rule emulator allows for switching between two sides.
+In fact, it makes it possible to have more than just two sides.
+<ul>
+<li>Every file contining slide rule can have, in fact, several slide rules inside, one after another.</li>
+<li>You can switch between each sliderule by pressing function keys (from F1 to F12).</li>
+<li>The maximum number of slide rule sides is stored in the "config.txt" file.
+Look for the <b>number_of_slide_rules [...]</b> command.</li>
+<li>The default maximum number of slide rules is 3. First for the front, second for the back and third for both sides.
+The corresponding keys are F1, F2 and F3.</li>
+<li>You can make as many side as you like, but you have only 12 function keys. Therefore you won't be able to use more than 12 sides.</li>
+</ul>
+</blockquote>
+
+<h1><a name="Readouts"><font size="+2">Readouts menu</font></a></h1>
+<blockquote>
+The Readouts menu determines where the numeric values appear.
+<ul>
+<li>The values can appear on both sides of slides and stators.</li>
+<li>The values can appear on the main hairline as well.</li>
+<li>The values can also appear on other hairlines.</li>
+</ul>
+</blockquote>
+
+
+<h1><a name="Length"/><font size="+2">Length menu</font></h1>
+<blockquote>
+This menu allows you to customise the length of a slide rule.<br/><br/>
+Every file with slide rule may in fact specify its own length.
+Some of them may be shorter, others can be longer.
+However, if you check the "length override" option, then every slide rule will have the same length, which you specify in the menu.<br/><br/>
+If you wish to specify the length, which is not available as an option, then you can edit the "config.txt" file directly.
+This is highly recommended.
+</blockquote>
+
+
+<h1><a name="Motion"/><font size="+2">Motion menu</font></h1>
+
+<blockquote>
+This menu allows you to adjust how slides and cursor respond to the mouse dragging.
+Slides and cursor may move slower (settings lower than 1.0), faster (settings higher than 1.0) or at the same speed (setting equal to 1.0).<br/><br/>
+Every slide rule can have its own motion multiplier.
+Some of them may respond with high resistance, some others may move much faster.
+In fact, every single slide on a multi-slide slide rule can have its own multiplier as well.
+However, if you check the "motion override" option, then every slide on every slide rule will slide at the same speed.<br/><br/>
+If you wish to specify motion multiplier, which is not available as an option, then you can edit the "config.txt" file directly.
+This is highly recommended.
+</blockquote>
+
+<h1><a name="Animation"/><font size="+2">Animation menu</font></h1>
+<blockquote>
+<ul>
+<li>You can switch the animation ON or OFF.</li>
+<li>You can change the number of animation steps.</li>
+<li>You can change the delay between animation steps.</li>
+<li>You can choose LINEAR animation. By default, slides and cursor accelerate and decelerate. In linear mode, the motion is continuous.</li>
+<li>You can also choose VARIABLE SPEED option. By default slides and cursor move at roughly the same speed.
+It means that it take longer to go over greater distance.
+Variable speed option allows slides and cursor to preserve the amount of time necessary for different distances.</li>
+<li>Every slide rule may have its own animation settings.
+However, if you check the "animation override" option, then your choices will take precedence.</li>
+<li>If you wish to specify animation steps and/or delay frames, which are not available as an option, then you can edit the "config.txt" file directly.
+This is highly recommended.</li>
+</ul>
+</blockquote>
+
+<h1><a name="Config"/><font size="+2">Advanced configuration</font></h1>
+<blockquote>
+<ul>
+<li>The "config.txt" file can be edited manually.</li>
+<li>You can adjust numeric values, such as length, motion speed, animation steps and animation frames.</li>
+<li><b>number_of_slide_rules [ number ]</b> specifies the maximum number of sides of a slide rule.
+Default value is <b>3</b>. Practical maximum value is 12 as there are only 12 function keys available (for switching between sides).</li>
+<li><b>no_automatic_save []</b> will prevent Slide Rule Emulator from overwriting it. The changes, which you will make using menus will not be permanent.</li>
+<li><b>I_made_my_donation []</b> will suppress donation reminder.</li>
+</ul>
+</blockquote>
+
+<h1><a name="MakingYourOwn"/><font size="+2">Making your own slide rule</font></h1>
+<blockquote>
+<li>Every slide rule is stored in each separate text file.</li>
+<li>You can create your own text files containing your own arrangements of scales, colours, sizes, hairlines and so on.</li>
+<li>Text files with slide rules contain simple commands.</li>
+<li>Perhaps the best idea is to start with an existing slide rule, modify it slightly and save.</li>
+<li>Of course, you can build your slide rule starting with an empty file.</li>
+<li>Read through the list of commands and list of scales (below).</li>
+</blockquote>
+
+<h1><a name="ListOfCommands" /><font size="+2">List of commands</font></h1>
+<blockquote>
+Below is the list of all commands, which you can use to create your own slide rule:
+<ul>
+<li><b>name [ "text" ]</b>: name of the slide rule, which appears as the window title.</li>
+<li><b>length [ number ]</b>: specified the length of your slide rule in pixels.</li>
+<li><b>margin [ fraction ]</b>: specifies the relative (to the scale length) width of the empty spaces on the left and right sides of the slide rule.
+The default value is <b>0.2</b>.</li>
+<li><b>cursor_width [ fraction ]</b>: specifies the relative (to the scale length) width of the cursor. The default value is <b>0.2</b>.</li>
+<li><b>metric [ number ]</b>: specifies the length of your slide rule in millimetres.</li>
+<li><b>corner [ number ]</b>: the radius of the rounded corner of the rules (in pixels).</li>
+<li><b>spacer [ number ]</b>: creates a vertical gap between scales of the specified height (in pixels)</li>
+<li><b>channel []</b>: creates a channel (or well) below the last declared rule.</li>
+<li><b>channel [ n ]</b>: creates a channel (or well) below the n-th last declared rule.</li>
+<li><b>stator []</b>: creates a static non-moving rule.
+You can put scales and/or spacers on it by writing necessary commands immediately after.</li>
+<li><b>empty_space []</b>: creates a stator without any visible rule.
+You can put scales and/or spacers on it by writing necessary commands immediately after.
+If you intend to put just an empty space the it must be followed by a <b>spacer [ size ]</b>.</li>
+
+<li><b>slide []</b>: creates a movable rule.
+You can put scales and/or spacers on it by writing necessary commands immediately after.
+You can have as many slides on your slide rule as you wish. All of them move together.</li>
+<li><b>nesting_level [ level ]</b>: sets the level of nesting of paired free slides, which moves together.</li>
+<li><b>free_slide []</b>: same as <b>slide []</b> but your free slides are not connected together. You can move them separately.</li>
+<li><b>free_slide [ number ]</b>: similar to the above but the free slide with the same number move together. The number must be greater than zero to take effect.</li>
+<li><b>rule_colour [ red green blue ]</b>: specified the background colour of your rules (stators, slides and free slides).</li>
+<li><b>marker_colour [ red green blue ]</b>: specifies the colour of your markings on the scales.</li>
+<li><b>hairline_colour [ red green blue ]</b>: specifies the colour of your main hairline and reversed scales (i.e. CI, DI, CIF, DIF).</li>
+
+<li><b>multi_hairline_colour [ red green blue ]</b>: specifies the colour of other hairlines on your cursor.</li>
+<li><b>background_colour [ red green blue ]</b>: specifies the colour of the background and empty spaces.</li>
+<li><b>background_marker_colour [red green blue ]</b>: specifies the colour of the markers on empty spaces.</li>
+<li><b>cursor_colour [ red green blue ]</b>: specifies the colour of the cursor's window and cursor's frame.</li>
+<li><b>cursor_transparency [ alpha ]</b>: specifies the transparency of the cursor's window (0 = transparent .. 255 = opaque). Currently it works on OS X only.</li>
+<li><b>no_borderline []</b>: suppresses drawing borderline around a rule.</li>
+
+<li><b>borderline []</b>: draws borderline around a rule (default option). You need to use it if you wish to have some rules with borderline and some other without.</li>
+<li><b>motion [ fraction ]</b>: specifies the motion multiplier for a rule. Each rule can have its own motion multiplier. Cursor moves with the motion multiplier of a rule, which you click over (when dragging).</li>
+<li><b>location [ x y ]</b>: specifies the top left corner of your slide rule within the window.</li>
+<li><b>animation_steps [ steps ]</b>: specifies the number of steps for animation.</li>
+<li><b>animation_delays [ delays ]</b>: specifies the number of milliseconds between animation steps.</li>
+<li><b>animation_linear []</b>: makes the animation movements linear.</li>
+
+<li><b>animation_variable_speed []</b>: animation takes exactly the same time to move across different distances.</li>
+<li><b>hairline_s []</b>: first appearance specifies the beginning of the S hairline, while second specifies its end.</li>
+<li><b>hairline_d []</b>: first appearance specifies the beginning of the D hairline, while second specifies its end.</li>
+<li><b>hairline_360 []</b>: first appearance specifies the beginning of the 360 hairline, while second specifies its end.
+The location is specific to scale C folded at PI.</li>
+<li><b>hairline_36010 []</b>: first appearance specifies the beginning of the 36010 hairline, while second specifies its end.
+the location is specific to scale C folded at sqrt (10.0).</li>
+<li><b>hairline_360st []</b>: same as hairline_360, but positioned on the left side of the main hairline. Usefull for ST scale.</li>
+<li><b>hairline_kw []</b>: first appearance specifies the beginning of the kW hairline, while second specifies its end.</li>
+<li><b>hairline_hp []</b>: first appearance specifies the beginning of the HP hairline, while second specifies its end.</li>
+
+<li><b>mechanical_hp []</b>: causes the HP and kW hairlines to be drawn at 0.7459...</li>
+<li><b>metric_hp []</b>: causes the HP and kW hairlines to be drawn at 0.7354... You can specify both to have both hairlines on your cursor.</li>
+<li><b>extra_hairlines [ number ]</b>: specifies how many extra hairlines are present.</li>
+<li><b>hairline [ number location ]</b>: specifies horizontal shift from the main hairline. It is used for the first appearance of the hairline identified by the number.</li>
+<li><b>hairline [ number ]</b>: specifies the end of the hairline identified by number. This is the second appearance form.</li>
+<li><b>rule_visible_margins [ left_fraction right_fraction ]</b>: very good in situation where rules are of non-equal length. Allows to make visible margins shorter.</li>
+<li><b>left_description [ "text" x ]</b>: draws scale description shifted x pixels to the left from the scale.
+If x is a fractional number (with decimal point) then the shift will be fraction of the entire scale length.</li>
+<li><b>left_description [ x "text" ]</b>: same as above but right-justified.</li>
+<li><b>right_description [ "text" x ]</b>: draws scale description shifted x pixels to the right from the scale.
+If x is a fractional number (with decimal point) then the shift will be fraction of the entire scale length.</li>
+<li><b>right_description [ x "text" ]</b>: same as above but right-justified.</li>
+<li><b>middle_description [ "text" ]</b>: draws the specified text in the middle of the scale. Useful for spacers (mostly).</li>
+<li><b>highlight [ red gree blue ]</b>: specifies the highlight colour for a scale.
+It is necessary to precisely control the left and right end of the highlight (described below) as the scale may cause some anti-aliasing artifacts to appear.</li>
+<li><b>highlight_extensions [ left right ]</b>: specifies the left and right extent of the highlight. Default value is <b>0.0</b>.</li>
+<li><b>highlight_left [ fraction ]</b>: specifies the left extent of the highlight. Default value is <b>0.0</b>.</li>
+<li><b>highlight_right [ fraction ]</b>: specifies the right extent of the highlight. Default value is <b>0.0</b>.</li>
+<li><b>scale_marker_colour [ red green blue ]</b>: changes the colour of the markers for particular scale.</li>
+<li><b>scale_reverse_marker_colour [ red green blue ]</b>: changes the alternative colour of the markers for particular scale (typically used for reversed scales).</li>
+<li><b>no_pi []</b>: prevents the slide rule from showing the <b>PI = 3.1415...</b> marker.</li>
+<li><b>no_e []</b>: prevents the slide rule from showing the <b>E = 2.7182...</b> marker.</li>
+<li><b>no_c []</b>: prevents the slide rule from showing the <b>C = 1.1283...</b> marker.</li>
+<li><b>no_c1 []</b>: prevents the slide rule from showing the <b>C1 = 3.5682...</b> marker.</li>
+<li><b>no_degree []</b>: prevents the slide rule from showing the <b>q = 0.01745...</b> marker.</li>
+<li><b>no_m []</b>: prevents the slide rule from showing the <b>M = 31,8310...</b> marker (on A, B, AI and BI scales).</li>
+<li><b>no_mm []</b>: prevents the slide rule from showing the <b>78,5398...</b> marker (on A, B, AI and BI scales).</li>
+<li><b>draw_pi []</b>: causes the slide rule to show the <b>PI = 3.1415...</b> marker (if it was previously switched-off).</li>
+<li><b>draw_e []</b>: causes the slide rule to show the <b>E = 2.7182...</b> marker (if it was previously switched-off).</li>
+<li><b>draw_c []</b>: causes the slide rule to show the <b>C = 1.1283...</b> marker (if it was previously switched-off).</li>
+<li><b>draw_c1 []</b>: causes the slide rule to show the <b>C1 = 3.5682...</b> marker (if it was previously switched-off).</li>
+<li><b>draw_degree []</b>: causes the slide rule to show the <b>q = 0.01745...</b> marker (if it was previously switched-off).</li>
+<li><b>draw_m []</b>: causes the slide rule to show the <b>M = 31,8310...</b> marker (on A, B, AI and BI scales).</li>
+<li><b>draw_mm []</b>: causes the slide rule to show the <b>78,5398...</b> marker (on A, B, AI and BI scales).</li>
+<li><b>marker_height [ index fraction ]</b>: adjusts the height of markers on the scales. The default heights are: [0 0.5] [1 0.4] [2 0.3] [3 0.2] [4 1.0].</li>
+<li><b>horizontal_line [ index ]</b>: turns-on drawing of the horizontal lines on scales at the height of the specified marker (as specified above).</li>
+<li><b>no_horizontal_line [ indedx ]</b>: turns-off drawing of the horizontal lines on scales at the height of the specified marker.</li>
+<li><b>horizontal_extensions [ left right ]</b>: the left and right extent of horizontal lines.</li>
+<li><b>scale_extensions [ left_fraction right_fraction ]</b>: causes scales to spill over the left and right index by specified amount relative to the scale length.
+Default values are <b>0.0</b>. Practical values are usually no higher than <b>0.1</b>.</li>
+</ul>
+</blockquote>
+
+
+<h1><a name="ListOfScales" /><font size="+2">List of scales</font></h1>
+<blockquote>
+Below is the list of all available scales, which you can use to create your own slide rule:
+<ul>
+<li><b>scale_A [ height ]</b>: draws the A scale (x ^ 2).</li>
+<li><b>scale_B [ height ]</b>: draws the B scale (x ^ 2).</li>
+<li><b>scale_C [ height ]</b>: draws the C scale (x).</li>
+<li><b>scale_D [ height ]</b>: draws the D scale (x).</li>
+
+<li><b>scale_K [ height ]</b>: draws the K scale (x ^ 3).</li>
+<li><b>scale_J [ height ]</b>: same as K scale but upside down.</li>
+<li><b>scale_F [ height ]</b>: draws the F scale (x ^ 4).</li>
+<li><b>scale_G [ height ]</b>: same as F scale but upside down.</li>
+
+<li><b>scale_AI [ height ]</b>: reversed A scale (1 / x ^ 2).</li>
+<li><b>scale_BI [ height ]</b>: reversed B scale (1 / x ^ 2).</li>
+<li><b>scale_CI [ height ]</b>: reversed C scale (1 / x).</li>
+<li><b>scale_DI [ height ]</b>: reversed D scale (1 / x).</li>
+
+<li><b>scale_KI [ height ]</b>: reversed K scale (1 / x ^ 3).</li>
+<li><b>scale_JI [ height ]</b>: reversed J scale (1 / x ^ 3).</li>
+<li><b>scale_FI [ height ]</b>: reversed F scale (1 / x ^ 4).</li>
+<li><b>scale_GI [ height ]</b>: reversed G scale (1 / x ^ 4).</li>
+
+<li><b>scale_CF [ height ]</b>: folded C scale (x * PI).</li>
+<li><b>scale_DF [ height ]</b>: folded D scale (x * PI).</li>
+<li><b>scale_CIF [ height ]</b>: reversed then folded C scale (PI / x).</li>
+<li><b>scale_DIF [ height ]</b>: reversed then folded D scale (PI / x).</li>
+<li><b>scale_CFI [ height ]</b>: folded then reversed C scale (1 / (x * PI)).</li>
+<li><b>scale_DFI [ height ]</b>: folded then reversed D scale (1 / (x * PI)).</li>
+
+<li><b>scale_CF10 [ height ]</b>: folded C scale (x * sqrt (10.0)).</li>
+<li><b>scale_DF10 [ height ]</b>: folded D scale (x * sqrt (10.0)).</li>
+<li><b>scale_CIF10 [ height ]</b>: reversed and folded C scale (sqrt (10.0) / x).</li>
+<li><b>scale_DIF10 [ height ]</b>: reversed and folded D scale (sqrt (10.0) / x).</li>
+
+<li><b>scale_CF36 [ height ]</b>: folded C scale (x * 3.6).</li>
+<li><b>scale_DF36 [ height ]</b>: folded D scale (x * 3.6).</li>
+<li><b>scale_CIF36 [ height ]</b>: reversed and folded C scale (3.6 / x).</li>
+<li><b>scale_DIF36 [ height ]</b>: reversed and folded D scale (3.6 / x).</li>
+
+<li><b>scale_CFM [ height ]</b>: folded C scale (x / log (e)).</li>
+<li><b>scale_DFM [ height ]</b>: folded D scale (x / log (e)).</li>
+<li><b>scale_CIFM [ height ]</b>: reversed and folded C scale (log (e) * x).</li>
+<li><b>scale_DIFM [ height ]</b>: reversed and folded D scale (log (e) * x).</li>
+
+<li><b>scale_CF1M [ height ]</b>: folded C scale (x * log (e)).</li>
+<li><b>scale_DF1M [ height ]</b>: folded D scale (x * log (e)).</li>
+<li><b>scale_CIF1M [ height ]</b>: reversed and folded C scale (log (e) / x).</li>
+<li><b>scale_DIF1M [ height ]</b>: reversed and folded D scale (log (e) / x).</li>
+
+<li><b>scale_R1 [ height ]</b>: scale R1 (x ^ 0.5).</li>
+<li><b>scale_R2 [ height ]</b>: scale R2 (10.0 ^ 0.5 + x ^ 0.5).</li>
+<li><b>scale_W1 [ height ]</b>: scale W1 or R1 upside down (x ^ 0.5).</li>
+<li><b>scale_W2 [ height ]</b>: scale W2 or R2 upside down (10.0 ^ 0.5 + x ^ 0.5).</li>
+
+<li><b>scale_3R1 [ height ]</b>: scale R1 (x ^ 0.333...).</li>
+<li><b>scale_3R2 [ height ]</b>: scale R2 (10.0 ^ 0.333... + x ^ 0.333...).</li>
+<li><b>scale_3R3 [ height ]</b>: scale R3 (2.0 * 10.0 ^ 0.333... + x ^ 0.333...).</li>
+<li><b>scale_3W1 [ height ]</b>: scale W1 or R1 upside down (x ^ 0.333...).</li>
+<li><b>scale_3W2 [ height ]</b>: scale W2 or R2 upside down (10.0 ^ 0.333... + x ^ 0.333...).</li>
+<li><b>scale_3W3 [ height ]</b>: scale W3 or R3 upside down (2.0 * 10.0 ^ 0.333... + x ^ 0.333...).</li>
+
+<li><b>scale_3R1 [ height scale shift ]</b>: scale R1 (x ^ (x + shift) / scale) left side.</li>
+<li><b>scale_3R2 [ height scale shift ]</b>: scale R2 (x ^ (x + shift) / scale) middle part.</li>
+<li><b>scale_3R3 [ height scale shift ]</b>: scale R3 (x ^ (x + shift) / scale) right side.</li>
+<li><b>scale_3W1 [ height scale shift ]</b>: scale W1 or R1 upside down (x ^ (x + shift) / scale) left side.</li>
+<li><b>scale_3W2 [ height scale shift ]</b>: scale W2 or R2 upside down (x ^ (x + shift) / scale) middle part.</li>
+<li><b>scale_3W3 [ height scale shift ]</b>: scale W3 or R3 upside down (x ^ (x + shift) / scale) right side.</li>
+
+<li><b>scale_Cdk [ height ]</b>: decimal tracking scale (range -5 .. +5).</li>
+<li><b>scale_Ddk [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_Adk [ height ]</b>: decimal tracking scale (range -10 .. +10).</li>
+<li><b>scale_Bdk [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_Kdk [ height ]</b>: decimal tracking scale (range -15 .. +15).</li>
+<li><b>scale_Jdk [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_CK [ range height ]</b>: decimal tracking scale (range -range .. +range).</li>
+<li><b>scale_DK [ range height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_SCK [ range height ]</b>: decimal tracking sine scale (range -range .. +range) marked in degrees and minutes.</li>
+<li><b>scale_SDK [ range height ]</b>: same as above but upside down.</li>
+<li><b>scale_SCKdec [ range height ]</b>: decimal tracking sine scale (range -range .. +range) marked in degrees and thenths of a degree.</li>
+<li><b>scale_SDKdec [ range height ]</b>: same as above but uspide down.</li>
+
+<li><b>scale_TCK [ range height ]</b>: decimal tracking tangent scale (range -range .. +range) marked in degrees and minutes.</li>
+<li><b>scale_TDK [ range height ]</b>: same as above but upside down.</li>
+<li><b>scale_TCKdec [ range height ]</b>: decimal tracking tangent scale (range -range .. +range) marked in degrees and thenths of a degree.</li>
+<li><b>scale_TDKdec [ range height ]</b>: same as above but uspide down.</li>
+
+<li><b>scale_L [ height ]</b>: Logarithmic scale (log10 (x)).</li>
+<li><b>scale_L_down [height ]</b>: same as above but upside down.</li>
+<li><b>scale_Ln [ height ]</b>: Logarithmic scale (ln (x)).</li>
+<li><b>scale_Ln_down [height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_LR1 [ height ]</b>: lower half of the L scale (log10 (x) * 0.5).</li>
+<li><b>scale_LR2 [ height ]</b>: upper half of the L scale (0.5 + log10 (x) * 0.5).</li>
+<li><b>scale_LR12 [ height ]</b>: both halves of the L scale.</li>
+<li><b>scale_LW1 [ height ]</b>: same as LR1 but upside down (log10 (x) * 0.5).</li>
+<li><b>scale_LW2 [ height ]</b>: same as LR2 but upside down (0.5 + log10 (x) * 0.5).</li>
+<li><b>scale_LW12 [ height ]</b>: same as LR12 but upside down.</li>
+
+<li><b>scale_metric [ height ]</b>: centimetres and millimetres.</li>
+<li><b>scale_metric_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_metric [ height begin_point ]</b>: centimetres and millimetres started at the begin point.</li>
+<li><b>scale_metric_down [ height  begin_point ]</b>: same as above but upside down.</li>
+<li><b>scale_metric_1_25 [ height ]</b>: centimetres and millimetres in 1/25 scale.</li>
+<li><b>scale_metric_down_1_25 [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_metric_1_50 [ height ]</b>: centimetres and millimetres in 1/5 scale.</li>
+<li><b>scale_metric_down_50 [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_imperial [ height ]</b>: inches.</li>
+<li><b>scale_imperial_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_S [ height ]</b>: sine scale (sin (x)) marked in degrees and minutes for range 5 deg 40 mins to 90 deg.</li>
+<li><b>scale_S_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_S1 [ height ]</b>: sine scale (sin (x)) marked in degrees and minutes for range 35 mins to 5 deg 40 mins.</li>
+<li><b>scale_S1_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_SA [ height ]</b>: sine scale aligned with A scale (sin (x)) marked in degrees and minutes.</li>
+<li><b>scale_SB [ height ]</b> or <b>scale_SA_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_T [ height ]</b>: tangent scale (tan (x)) marked in degrees and minutes for range 5 deg 40 mins to 45 deg.</li>
+<li><b>scale_T_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_T1 [ height ]</b>: tangent scale (tan (x)) marked in degrees and minutes for range 35 mins to 5 deg 40 mins.</li>
+<li><b>scale_T1_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_TA [ height ]</b>: tangent scale aligned with A scale (tan (x)) marked in degrees and minutes.</li>
+<li><b>scale_TB [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_T2 [ height ]</b>: tangent scale (tan (x)) for angles 45 degrees and above, marekd in degrees and minutes.</li>
+<li><b>scale_T2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_ST [ height ]</b>: sine and tangent scale for angles below 6 degrees, marked in degrees and minutes (less accurate than S1/T1).</li>
+<li><b>scale_ST_down [ height ]</b>: same as above but upside down (less accurate than S1_down/T1_down).</li>
+
+<li><b>scale_Sdec [ height ]</b>: sine scale (sin (x)) marked in degrees and tenths of a degree for range 5.7 to 90 deg.</li>
+<li><b>scale_Sdec_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_S1dec [ height ]</b>: sine scale (sin (x)) marked in degrees and tenths of a degree for range .57 to 5.7 deg.</li>
+<li><b>scale_S1dec_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_SAdec [ height ]</b>: sine scale aligned with A scale (sin (x)) marked in degrees and tenths of a degree.</li>
+<li><b>scale_SBdec [ height ]</b> or <b>scale_SAdec_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_Tdec [ height ]</b>: tangent scale (tan (x)) marked in degrees and tenths of a degree for range 5.7 to 45 deg.</li>
+<li><b>scale_Tdec_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_T1dec [ height ]</b>: tangent scale (tan (x)) marked in degrees and tenths of a degree for range .57 to 5.7 deg.</li>
+<li><b>scale_T1dec_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_TAdec [ height ]</b>: tangent scale aligned with A scale (tan (x)) marked in degrees and tenths of a degree.</li>
+<li><b>scale_TBdec [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_T2dec [ height ]</b>: tangent scale (tan (x)) for angles 45 degrees and above, marked in degrees and tenths of a degree.</li>
+<li><b>scale_T2dec_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_STdec [ height ]</b>: sine and tangent scale for angles below 6 degrees, marked in degrees and tenths of a degree.</li>
+<li><b>scale_STdec_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_Sg [ height ]</b>: sine scale marked in grads.</li>
+<li><b>scale_Sg_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_Tg [ height ]</b>: tangent scale marked in grads.</li>
+<li><b>scale_Tg_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_Sr [ height ]</b>: sine scale marked in radians.</li>
+<li><b>scale_Sr_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_Tr [ height ]</b>: tangent scale marked in radians.</li>
+<li><b>scale_Tr_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_T2r [ height ]</b>: tangent scale marked in radians for angles 45 degrees and above.</li>
+<li><b>scale_T2r_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_ISTd [ height ]</b>: scale ISTd.
+This scale is composed from 4 sections.
+The input values are divided into 4 ranges: 0.0 .. 1.0, 0.0 .. -1.999, -2.0 .. -90.0 and 2.0 .. 90.0
+The cursor will slide to the section indicated by the range.
+The read-outs do not provide output value for this scale.
+</li>
+<li><b>scale_ISTd_down [ height]</b>: same as above but upside down.</li>
+
+<li><b>scale_P [ height ]</b>: pythagorean scale (sqrt (1.0 - x ^ 2)) for range from .995 to 0.</li>
+<li><b>scale_P_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_P2 [ height ]</b>: pythagorean scale (sqrt (1.0 - x ^ 2)) for range from .99995 to .995.</li>
+<li><b>scale_P2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_PH [ height ]</b>: pythagorean scale (sqrt (x ^ 2 + 1.0) for range from 1.005 to 1.5).</li>
+<li><b>scale_PH_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_PH2 [ height ]</b>: pythagorean scale (sqrt (x ^ 2 + 1.0) for range from 1.4 to 10.0).</li>
+<li><b>scale_PH2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_PT [ height ]</b>: pythagorean scale (sqrt (x ^ 2 - 1.0)).</li>
+<li><b>scale_PT_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_LL [ height ]</b>: log-log scale (ln (x)) aligned with K scale for range from 1.01 to 10000.</li>
+<li><b>scale_LL_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLR [ height ]</b>: log-log scale (ln (x)) aligned with K scale for range from 0.99 to 0.0001.</li>
+<li><b>scale_LLR_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_LL0 [ height ]</b>: log-log scale (ln (x)) for range from 1.001 to 1.01.</li>
+<li><b>scale_LL0_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LL1 [ height ]</b>: log-log scale (ln (x)) for range from 1.01 to 1.1.</li>
+<li><b>scale_LL1_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LL2 [ height ]</b>: log-log scale (ln (x)) for range from 1.1 to 3.0.</li>
+<li><b>scale_LL2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LL3 [ height ]</b>: log-log scale (ln (x)) for range from 2.5 to 10,000.</li>
+<li><b>scale_LL3_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_LL00 [ height ]</b>: log-log scale (ln (x)) for range from 0.999 to 0.99.</li>
+<li><b>scale_LL00_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LL01 [ height ]</b>: log-log scale (ln (x)) for range from 0.99 to 0.9.</li>
+<li><b>scale_LL01_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LL02 [ height ]</b>: log-log scale (ln (x)) for range from 0.9 to 0.35.</li>
+<li><b>scale_LL02_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LL03 [ height ]</b>: log-log scale (ln (x)) for range from 0.4 to 0.0001.</li>
+<li><b>scale_LL03_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_LLD0 [ height ]</b>: log-log scale (log (x)) for range from 1.0003 to 1.003.</li>
+<li><b>scale_LLD0_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD1 [ height ]</b>: log-log scale (log (x)) for range from 1.003 to 1.03.</li>
+<li><b>scale_LLD1_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD2 [ height ]</b>: log-log scale (log (x)) for range from 1.03 to 1.26.</li>
+<li><b>scale_LLD2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD3 [ height ]</b>: log-log scale (log (x)) for range from 1.26 to 10.0</li>
+<li><b>scale_LLD3_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD4 [ height ]</b>: log-log scale (log (x)) for range from 10.0 to 10,000,000,000.</li>
+<li><b>scale_LLD4_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_LLD00 [ height ]</b>: log-log scale (log (x)) for range from 0.99977 to 0.9977.</li>
+<li><b>scale_LLD00_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD01 [ height ]</b>: log-log scale (log (x)) for range from 0.9977 to 0.977.</li>
+<li><b>scale_LLD01_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD02 [ height ]</b>: log-log scale (log (x)) for range from 0.977 to 0.76.</li>
+<li><b>scale_LLD02_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD03 [ height ]</b>: log-log scale (log (x)) for range from 0.76 to 0.1.</li>
+<li><b>scale_LLD03_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_LLD04 [ height ]</b>: log-log scale (log (x)) for range from 0.1 to 0.0000000001.</li>
+<li><b>scale_LLD04_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_SINH1 [ height ]</b>: lower part of the hyperbolic sine.</li>
+<li><b>scale_SINH1_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_SINH2 [ height ]</b>: upper part of the hyperbolic sine.</li>
+<li><b>scale_SINH2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_COSH [ height ]</b>: hyperbolic cosine.</li>
+<li><b>scale_COSH_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_TANH [ height ]</b>: hyperbolic tangent.</li>
+<li><b>scale_TANH_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_SINH1g [ height ]</b>: lower part of the hyperbolic sine expressed in grads.</li>
+<li><b>scale_SINH1g_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_SINH2g [ height ]</b>: upper part of the hyperbolic sine expressed in grads.</li>
+<li><b>scale_SINH2g_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_COSHg [ height ]</b>: hyperbolic cosine expressed in grads.</li>
+<li><b>scale_COSHg_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_TANHg [ height ]</b>: hyperbolic tangent expressed in grads.</li>
+<li><b>scale_TANHg_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_SINH1d [ height ]</b>: lower part of the hyperbolic sine marked in degrees and minutes.</li>
+<li><b>scale_SINH1d_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_SINH2d [ height ]</b>: upper part of the hyperbolic sine expressed in degrees and minutes.</li>
+<li><b>scale_SINH2d_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_COSHd [ height ]</b>: hyperbolic cosine expressed in degrees and minutes.</li>
+<li><b>scale_COSHd_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_TANHd [ height ]</b>: hyperbolic tangent expressed in degrees and minutes.</li>
+<li><b>scale_TANHd_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_SINH1dec [ height ]</b>: lower part of the hyperbolic sine marked in degrees and tenths of a degree.</li>
+<li><b>scale_SINH1dec_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_SINH2dec [ height ]</b>: upper part of the hyperbolic sine expressed in degrees and tenths of a degree.</li>
+<li><b>scale_SINH2dec_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_COSHdec [ height ]</b>: hyperbolic cosine expressed in degrees and tenths of a degree.</li>
+<li><b>scale_COSHdec_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_TANHdec [ height ]</b>: hyperbolic tangent expressed in degrees and tenths of a degree.</li>
+<li><b>scale_TANHdec_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_SQRT [ height ]</b>: square root scale.</li>
+<li><b>scale_SQRT_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_SQRT2 [ height ]</b>: square root scale for range 10.0 and above.</li>
+<li><b>scale_SQRT2_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_SQRT_S [ height ]</b>: sine scale alligned with square root scale (in degrees and minutes).</li>
+<li><b>scale_SQRT_S_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_SQRT_Sdec [ height ]</b>: sine scale alligned with square root scale (in degrees and tenths of a degree).</li>
+<li><b>scale_SQRT_Sdec_down [ height ]</b>: same as above but upside down.</li>
+<li><b>scale_SQRT_Sr [ height ]</b>: sine scale alligned with square root scale (in radians).</li>
+<li><b>scale_SQRT_Sr_down [ height ]</b>: same as above but upside down.</li>
+
+<li><b>scale_OCT [ octaves height ]</b>: musical scale for calculating harmonics.</li>
+<li><b>scale_OCT_down [ octaves height ]</b>: same as above but upside down.</li>
+
+</ul>
+</blockquote>
+
+<h1><a name="Donation"/><font size="+2">Buy Me a Beer</font></h1>
+<blockquote>
+Please, proceed directly to the section <a href="#RemoveRequest">how to remove the donation reminder</a>.
+The sliderule emulator is now completely free for use.
+<!--If you like this Slide Rule Emulator, then please, buy me a beer.
+Of course, all other gifts are welcome (chocolate, coffee, pizza, etc.) at various prices.
+Please, use the Pay-Pal button below.<br/>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+
+<input type="hidden" name="hosted_button_id" value="Q6QPRXYEM9A6Y">
+<input type="image" src="https://www.paypal.com/en_AU/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
+<img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1">
+</form>-->
+
+<br/>
+</blockquote>
+
+<h1><a name="Links" /><font size="+2">Links</font></h1>
+<blockquote>
+<table><tr><td>
+<a href="http://groups.yahoo.com/group/sliderule/join">
+  <img src="http://us.i1.yimg.com/us.yimg.com/i/yg/img/i/us/ui/join.gif"
+       style="border: 0px;"
+       alt="Click to join sliderule"/>
+  <p>Click to join sliderule</p>
+</a>
+</td><td>
+<form method="get"
+      action="http://groups.yahoo.com/subscribe/sliderule"
+      style="background-color: #ffc; width: 254px; padding: 2px 4px">
+  <h6 style="font-weight: bold; margin-bottom: 5px; text-align: center">
+      Subscribe to sliderule</h6>
+  <input style="vertical-align: top"
+      type="text"
+      name="user"
+      value="enter email address"
+      size="20" />
+  <input type="image" alt="Click to join sliderule"
+      name="Click to join sliderule"
+      src="http://us.i1.yimg.com/us.yimg.com/i/yg/img/i/us/ui/join.gif" />
+  <p style="text-align: center;">
+  Powered by <a href="http://us.groups.yahoo.com/">us.groups.yahoo.com</a></p>
+</form>
+</td></tr></table>
+
+
+<a href="http://sliderulemuseum.com/">
+<img src="SRM_Banner600.jpg" /><br />
+INTERNATIONAL SLIDE RULE MUSEUM
+</a><br />
+... an excellent source of slide rule rela related informations
+<br /><br /><br />
+
+<a href="http://www.oughtred.org/">
+<img src="oughtred-header-graphic7.gif" />
+</a>
+
+
+</blockquote>
+
+<h1><a name="Wishlist"/><font size="+2">Wish list</font></h1>
+<blockquote>
+<ul>
+<li>Please, <a href="#Donation">Buy Me a Beer</a> first.</li>
+<li>Then contact me, state your wish or request and I will see what I can do.</li>
+<li>You can find my email from Help->About menu on the Slide Rule Emulator.</li>
+</ul>
+</blockquote>
+
+<h1><a name="RemoveRequest"/><font size="+2">How to remove the donation reminder?</font></h1>
+<blockquote>
+<ul>
+<li>Please, <a href="#Donation">Buy Me a Beer</a> first.</li>
+<li>You can hack and re-compile the code, of course, but there is a better way.</li>
+<li>Find the "config.txt" file. The Slide Rule Emulator creates this file automatically in its main folder.</li>
+<li>Edit the "config.txt" file with a simple text editor. Notepad or gedit will do perfectly well.</li>
+<li>Insert an extra line somewhere in the middle. The line should be as follows: "I_made_my_donation []".</li>
+<li>Save and close.</li>
+<li>Check an example below.</li>
+</ul>
+<font face="fixedsys" color="blue">
+config [<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;	...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;	...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;	readouts_on_stator_left []<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;	readouts_on_slide_left []<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;	readouts_on_multi_hairlines []<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;	length [900]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;	last_loaded ["/home/rama/sliderule.app/regle_des_ecoles.txt"]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;	d_config [19]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;	I_made_my_donation []<br/>
+]<br/>
+</font>
+</blockquote>
+
+
+<h1><a name="Contract"/><font size="+2">Contact</font></h1>
+<blockquote>
+<ul>
+<li>The easiest way to find the address is to click the Help->About menu in the Slide Rule Emulator.</li>
+
+<li>You may actually figure-out for yourself how to write to me.
+My name Robert Wolf.
+Put the dot in-between name and surname.
+The domain is the same as this page (look into the address bar), without the "sliderule" part.
+</li>
+<li>
+Due to the high number of spam, which I receive daily, please use the methods described previously.
+</li>
+</ul>
+</blockquote>
+
+
+
+</font>
+</body></html>
