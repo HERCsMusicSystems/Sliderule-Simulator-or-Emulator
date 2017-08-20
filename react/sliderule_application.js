@@ -43,8 +43,8 @@ var SlideruleApplication = React . createClass ({
   onMouseUp: function (event) {this . dragging = false; this . setState ({});},
   onWheel: function (event) {
     var delta;
-    if (event . deltaY > 0) delta = sliderules . scale * sliderules . scaling_factor;
-    if (event . deltaY < 0) delta = sliderules . scale / sliderules . scaling_factor;
+    if (event . deltaY < 0) delta = sliderules . scale * sliderules . scaling_factor;
+    if (event . deltaY > 0) delta = sliderules . scale / sliderules . scaling_factor;
     var point = subvbc ({x: event . clientX, y: event . clientY}, this . refs . sliderule . getBoundingClientRect ());
     point = scalv (point, 1 / sliderules . scale);
     var offset = scalv (point, delta - sliderules . scale);

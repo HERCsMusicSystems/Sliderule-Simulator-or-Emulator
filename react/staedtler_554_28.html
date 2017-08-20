@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Staedtler 554</title>
+    <title>Staedtler 554 28</title>
   </head>
 <body>
 <div>
@@ -8,6 +8,7 @@
 	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
 	<input type = checkbox onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<input type = checkbox onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
 	<input type = checkbox onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
 </div>
 <div id="root"></div>
@@ -19,9 +20,43 @@
 <script src="scales.js"></script>
 
 <script>
+var changeVersion = function (version) {
+	switch (version) {
+	case 'us':
+    sliderules . sliderules [0] . cursorBraces = front_us_braces; sliderules . sliderules [0] . cursors = front_us_cursors;
+    sliderules . sliderules [1] . cursorBraces = back_us_braces; sliderules . sliderules [1] . cursors = back_us_cursors;
+    break;
+	case 'german':
+    sliderules . sliderules [0] . cursorBraces = front_german_braces; sliderules . sliderules [0] . cursors = front_german_cursors;
+    sliderules . sliderules [1] . cursorBraces = back_german_braces; sliderules . sliderules [1] . cursors = back_german_cursors;
+    break;
+	default: break;
+	}
+	sliderules . requireRedraw = true;
+};
+
+var front_german_braces = [], front_german_cursors = [], back_german_braces = [], back_german_cursors = [];
+var front_us_braces = [], front_us_cursors = [], back_us_braces = [], back_us_cursors = [];
+front_german_braces . push (new Engraving ("s", '10px arial', 'right', 'red', -0.006, 82));
+front_german_braces . push (new Engraving ("kW", '10px arial', 'left', 'red', 0.006, 82));
+front_german_braces . push (new Engraving ("PS", '10px arial', 'right', 'red', HairlinePS - 0.006, 82));
+front_german_braces . push (new Engraving ("d", '10px arial', 'left', 'red', HairlineD + 0.006, 180));
+front_german_cursors . push (new Cursor (HairlinePS, 72, 108, 'red'));
+front_german_cursors . push (new Cursor (HairlineS, 72, 108, 'red'));
+front_german_cursors . push (new Cursor (HairlineD, 146, 182, 'red'));
+front_us_braces . push (new Engraving ("s", '10px arial', 'right', 'red', -0.006, 106));
+front_us_braces . push (new Engraving ("kW", '10px arial', 'left', 'red', 0.006, 106));
+front_us_braces . push (new Engraving ("HP", '10px arial', 'right', 'red', HairlineHPUS - 0.006, 106));
+front_us_braces . push (new Engraving ("d", '10px arial', 'left', 'red', HairlineD + 0.006, 156));
+front_us_cursors . push (new Cursor (HairlineHPUS, 72, 108, 'red'));
+front_us_cursors . push (new Cursor (HairlineS, 72, 108, 'red'));
+front_us_cursors . push (new Cursor (HairlineD, 146, 182, 'red'));
+back_german_cursors . push (new Cursor (Hairline360, 72, 108, 'red'));
+back_us_cursors . push (new Cursor (Hairline360, 72, 108, 'red'));
+
 var logo = new Image (); logo . src = "staedtler_logo.png";
 var sliderules = new Sliderules ({background: logo, background_colour: '#004082'});
-var s = new Sliderule (1200, {inactive: false}); sliderules . sliderules . push (s);
+var s = new Sliderule (1200, {cursor_left_extension: 0.065, cursor_right_extension: 0.075, cursor_rounding: 6, cursor_limit_left: 0.06, cursor_limit_right: 0.05, static_markings_shift: 0.044}); sliderules . sliderules . push (s);
 s . braces . push (new StaedtlerLeftBrace (4, 0.13, 0.17, 0.17, 0.19, 10, 80, 90, '#aaaaff', 'red'));
 s . braces . push (new StaedtlerLeftBrace (4, 0.133, 0.16, 0.168, 0.188, 12, 78, 90, '#ddddff', 'red'));
 s . braces . push (new Screw (0.04, 28, 10, 0.5, '#b5a642', '#605321'));
@@ -34,28 +69,29 @@ s . braces . push (new Screw (1.36, 28, 10, 0.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.344, 68, 6, 0.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.36, 229, 10, 0.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.344, 186, 6, 0.5, '#b5a642', '#605321'));
+s . cursorGlassBraces . push (new CursorAngledBrace (0.075, 0.085, 16, 0, '#deb887'));
 var r = new Rule ({left_margin: 0.18, alt_left_margin: 0.2, right_margin: 0.18, alt_right_margin: 0.2}); s . rules . push (r);
 r . scales . push (new scale_P (18, {left: "P", right: "\u221a1-(0.1X)\u00b2", rs: 0.07, marking_colour: 'red'}));
-r . scales . push (new scale_CSdec (18, {left: "S", left_extension: 0.024}));
-r . scales . push (new scale_CTTdec (18, {left: "T\u2081", left_extension: 0.024}));
-r . scales . push (new scale_CTT1dec (18, {left: "T\u2082"}));
+r . scales . push (new scale_CSdec (18, {left: "S", left_extension: 0.024, right: "\u2222 sin x", rs: 0.095, centre: "\u2222 cos", cs: 1.07, ca: 'left', cc: 'red'}));
+r . scales . push (new scale_CTTdec (18, {left: "T\u2081", left_extension: 0.024, right: "\u2222 tan x", rs: 0.095, centre: "\u2222 cot", cs: 1.07, ca: 'left', cc: 'red'}));
+r . scales . push (new scale_CTT1dec (18, {left: "T\u2082", right: "\u2222 tan x", rs: 0.095, centre: "\u2222 cot", cs: 1.07, ca: 'left', cc: 'red'}));
 r . scales . push (new scale_A (18, {left: "A", right: "X\u00b2", rs: 0.07, left_extension: 0.065, right_extension: 0.06, indices: [1, 1, 1], alt: 'black'}));
 r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_B (18));
-r . scales . push (new scale_K (18));
-r . scales . push (new spacer (2));
-r . scales . push (new scale_DI (18));
-r . scales . push (new scale_C (18));
+r . scales . push (new scale_B (18, {left: "B", right: "X\u00b2", rs: 0.07, left_extension: 0.065, right_extension: 0.06, indices: [1, 1, 1], alt: 'black', highlight: '#88ffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new scale_K (18, {left: "K", right: "X\u00b3", rs: 0.07, indices: [1, 1, 1, 1], alt: 'black', highlight: '#88ffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new spacer (2, {highlight: '#88ffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new scale_DI (18, {left: "CI", right: "1/X", rs: 0.07, left_extension: 0.064, right_extension: 0.048, indices: [1, 1], colour: 'red', highlight: '#88ffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new scale_C (18, {left: "C", right: "X", rs: 0.07, left_extension: 0.073, right_extension: 0.064, alt: 'black', highlight: '#88ffff', highlight_left: 0.16, highlight_right: 0.16}));
 r = new Rule ({alt_left_margin: 0.18, alt_right_margin: 0.18}); s . rules . push (r);
-r . scales . push (new scale_D (18));
-r . scales . push (new scale_W1 (18));
-r . scales . push (new scale_W2 (18));
-r . scales . push (new scale_M (18));
-r . scales . push (new scale_ST_down (18));
+r . scales . push (new scale_D (18, {left: "D", right: "X", rs: 0.07, left_extension: 0.073, right_extension: 0.064, alt: 'black'}));
+r . scales . push (new scale_W1 (18, {left: "R\u2081", right: "\u221aX", rs: 0.07, right_extension: 0.012}));
+r . scales . push (new scale_W2 (18, {left: "R\u2082", right: "\u221a(10 X)", rs: 0.07, left_extension: 0.048}));
+r . scales . push (new scale_LW12 (18, {left: "L", right: "0.5 lg X", rs: 0.07}));
+r . scales . push (new scale_STdec_down (18, {left: "ST", right: "\u2222arc X", rs: 0.07,left_extension: 0.02, right_extension: 0.022, draw_st_corrections: false}));
 
 //=============================
 
-s = new Sliderule (1200, {inactive: true}); sliderules . sliderules . push (s);
+s = new Sliderule (1200, {cursor_left_extension: 0.065, cursor_right_extension: 0.075, cursor_rounding: 6, cursor_limit_left: 0.06, cursor_limit_right: 0.05, static_markings_shift: 0.044}); sliderules . sliderules . push (s);
 s . braces . push (new StaedtlerLeftBrace (4, 0.13, 0.17, 0.17, 0.19, 10, 80, 90, '#aaaaff', 'red'));
 s . braces . push (new StaedtlerLeftBrace (4, 0.133, 0.16, 0.168, 0.188, 12, 78, 90, '#ddddff', 'red'));
 s . braces . push (new Screw (0.04, 28, 10, 0.5, '#b5a642', '#605321'));
@@ -68,28 +104,34 @@ s . braces . push (new Screw (1.36, 28, 10, 0.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.344, 68, 6, 0.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.36, 229, 10, 0.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.344, 186, 6, 0.5, '#b5a642', '#605321'));
+s . cursorGlassBraces . push (new CursorAngledBrace (0.075, 0.085, 16, 0, '#deb887'));
 r = new Rule ({left_margin: 0.18, alt_left_margin: 0.2, right_margin: 0.18, alt_right_margin: 0.2}); s . rules . push (r);
-r . scales . push (new scale_LL00 (18));
-r . scales . push (new scale_LL01 (18));
-r . scales . push (new scale_LL02 (18));
-r . scales . push (new scale_LL03 (18));
-r . scales . push (new scale_CF (18));
+r . scales . push (new scale_LL00 (18, {left: "LL\u2080\u2080", right: "e^-0.001x", rs: 0.07, marking_colour: 'red', right_extension: 0.005}));
+r . scales . push (new scale_LL01 (18, {left: "LL\u2080\u2081", right: "e^-0.01x", rs: 0.07, marking_colour: 'red', right_extension: 0.024}));
+r . scales . push (new scale_LL02 (18, {left: "LL\u2080\u2082", right: "e^-0.1x", rs: 0.07, marking_colour: 'red', left_extension: 0.026, right_extension: 0.022}));
+r . scales . push (new scale_LL03 (18, {left: "LL\u2080\u2083", right: "e^-x", rs: 0.07, marking_colour: 'red', left_extension: 0.04, right_extension: 0.064}));
+r . scales . push (new scale_CF (18, {left: "DF", right: "\u03c0\u22c5X", rs: 0.07, left_extension: 0.072, right_extension: 0.06}));
 r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_DF (18));
-r . scales . push (new scale_CIF (18));
-r . scales . push (new spacer (2));
-r . scales . push (new scale_DI (18));
-r . scales . push (new scale_C (18));
+r . markings . push (new Engraving ("STAEDTLER", '11px arial', 'center', 'black', 1.115, 37, Math . PI * 0.5));
+r . markings . push (new Engraving ("No. 544 28", '10px arial', 'center', 'black', 1.105, 37, Math . PI * 0.5));
+r . markings . push (new Engraving ("GERMANY", '8px arial', 'center', 'black', 1.095, 37, Math . PI * 0.5));
+r . scales . push (new scale_DF (18, {left: "CF", right: "\u03c0\u22c5X", rs: 0.07, left_extension: 0.072, right_extension: 0.06, highlight: '#88ffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new scale_CIF (18, {left: "CIF", right: "1/\u03c0\u22c5X", rs: 0.07, colour: 'red', left_extension: 0.06, right_extension: 0.058, highlight: '#88ffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new spacer (2, {highlight: '#88ffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new scale_DI (18, {left: "CI", right: "1/X", rs: 0.07, colour: 'red', left_extension: 0.064, right_extension: 0.048, highlight: '#88ffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new scale_C (18, {left: "C", right: "X", rs: 0.07, left_extension: 0.072, right_extension: 0.062, alt: 'black', highlight: '#88ffff', highlight_left: 0.16, highlight_right: 0.16}));
 r = new Rule ({alt_left_margin: 0.18, alt_right_margin: 0.18}); s . rules . push (r);
-r . scales . push (new scale_D (18));
-r . scales . push (new scale_LL3_down (18));
-r . scales . push (new scale_LL2_down (18));
-r . scales . push (new scale_LL1_down (18));
-r . scales . push (new scale_LL0_down (18, {left_extension: 0.1, right_extension: 0.1}));
+r . scales . push (new scale_D (18, {left: "D", right: "X", rs: 0.07, left_extension: 0.072, right_extension: 0.062, alt: 'black'}));
+r . scales . push (new scale_LL3_down (18, {left: "LL\u2083", right: "e^x", rs: 0.07, left_extension: 0.04, right_extension: 0.066}));
+r . scales . push (new scale_LL2_down (18, {left: "LL\u2082", right: "e^0.1x", rs: 0.07, left_extension: 0.025, right_extension: 0.042}));
+r . scales . push (new scale_LL1_down (18, {left: "LL\u2081", right: "e^0.01x", rs: 0.07, left_extension: 0.005, right_extension: 0.02}));
+r . scales . push (new scale_LL0_down (18, {left: "LL\u2080", right: "e^0.001x", rs: 0.07}));
+
+changeVersion ('german');
 
 </script>
 
-<script src="sliderule_application.js"></script>
+<script src="sliderule_application.js"></script><script> changeSide ('back'); </script>
 <script>
 'use strict';
 

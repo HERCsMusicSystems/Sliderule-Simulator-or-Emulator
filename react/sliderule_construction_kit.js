@@ -1327,7 +1327,7 @@ var Sliderule = function (length, options) {
     for (ind in this . braces) {ctx . save (); this . braces [ind] . draw (ctx, this); ctx . restore ();}
     ctx . save ();
     // STATIC MARKINGS
-    if (this . static_markings) this . drawMarkings (ctx, this . length * this . static_markings_shift, this . static_markings_align);
+    if (this . static_markings) this . drawMarkings (ctx, this . length * this . static_markings_shift, this . static_markings_align, true);
     ctx . restore ();
     ctx . translate (this . length * (this . left_margin + this . cursor_position), 0);
     // CURSOR GLASS BRACES
@@ -1349,13 +1349,13 @@ var Sliderule = function (length, options) {
     // CURSOR BRACES
     for (ind in this . cursorBraces) {ctx . save (); this . cursorBraces [ind] . draw (ctx, this); ctx . restore ();}
     // CURSOR MARKINGS
-    if (this . cursor_markings) this . drawMarkings (ctx, this . length * this . cursor_markings_shift, this . cursor_markings_align);
+    if (this . cursor_markings) this . drawMarkings (ctx, this . length * this . cursor_markings_shift, this . cursor_markings_align, false);
     // CURSOR EXTRA MARKINGS
     if (this . extra_cursor_markings) this . drawExtraMarkings (ctx);
     ctx . restore ();
     ctx . translate (0, this . height ());
   };
-  this . drawMarkings = function (ctx, shift, align) {
+  this . drawMarkings = function (ctx, shift, align, rule_shift) {
     var y = 0;
     ctx . textBaseline = 'middle';
     ctx . font = this . markings_size + 'px arial';
@@ -1369,7 +1369,7 @@ var Sliderule = function (length, options) {
           ctx . fillStyle = this . markings_background;
           measure = ctx . measureText (description);
           ctx . textAlign = align;
-          rs = this . length * this . rules [ind] . shift + shift;
+          rs = shift + (rule_shift ? this . length * this . rules [ind] . shift : 0);
           if (align === 'left') {
             ctx . fillRect (rs, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
             ctx . fillStyle = this . markings_colour;
