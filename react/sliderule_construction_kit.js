@@ -1123,8 +1123,11 @@ var RightBrace = function (margin, width, radius, background, colour, braceRadiu
 
 var drawStaedtlerBrace = function (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s) {
     ctx . strokeStyle = colour;
+    var delta = {x: s . length * (left2 - dent), y: dbottom - bottom};
     var atan = Math . atan2 (s . length * (left2 - left1), bottom - top);
-    var btan = Math . atan2 (dbottom - bottom, s . length * (left2 - dent));
+    var btan = Math . atan2 (delta . y, delta . x);
+    var r = 0.5 * Math . sqrt (delta . x * delta . x + delta . y * delta . y);
+    btan -= Math . asin (radius / r);
     ctx . beginPath ();
     ctx . arc (- s . length * width, top, radius, Math . PI * 1.5, 0);
     ctx . arc (- s . length * width, s . height () - top, radius, 0, Math . PI * 0.5);
