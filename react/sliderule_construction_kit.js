@@ -373,6 +373,15 @@ var draw_log_log_log = function (ctx, length, height, scale, left_extension, rig
   ctx . translate (-4 * length, 0);
   draw_log_1L (ctx, length, height, 1 - 3 * left_extension, scale);
 };
+var draw_metric = function (ctx, length, height, scale) {
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+  var limit = 1 + scale . right_extension;
+  var high_value = scale . step * 20;
+  draw_MRS (ctx, scale . location, length, 0, high_value, scale . step, limit, h5);
+  draw_XR (ctx, scale . location, length, 0, high_value, limit, h4, scale . step, scale . step * 0.5, scale . step);
+  draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, scale . step * 0.5, scale . step * 0.1, scale . step * 0.5);
+  draw_XR (ctx, scale . location, length, 0, high_value, limit, h2, scale . step * 0.1, scale . step * 0.05, scale . step * 0.1);
+};
 var fn_lin = function (value) {return value * 0.1;};
 var draw_lin = function (ctx, length, height, scale) {
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;

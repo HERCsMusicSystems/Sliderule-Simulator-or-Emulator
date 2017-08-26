@@ -209,6 +209,16 @@ var scale_W2 = function (height, options) {
 	};
 	return s;
 };
+var scale_Metric = function (height, options) {
+	var s = new spacer (height, options);
+	if (! options || options . step == undefined) s . step = 1;
+	if (! options || options . scale == undefined) s . scale = 10;
+	if (! options || options . shift == undefined) s . shift = 0;
+	s . value = function (location) {return location * s . scale - s . shift;};
+	s . location = function (value) {return value / s . scale + s . shift / s . scale;};
+	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_metric (ctx, length, s . height, s);};
+	return s;
+};
 var scale_L = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return location * 10;};
