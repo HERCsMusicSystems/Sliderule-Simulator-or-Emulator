@@ -212,7 +212,7 @@ var draw_log_1R = function (ctx, length, height, extension, scale) {
   var abs_length = Math . abs (length);
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   draw_MR (ctx, Math . log10, length, 2, 9, extension, h5);
-  if (abs_length >= 1024) draw_MRS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
+  if (abs_length >= 800) draw_MRS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
   if (scale . draw_pi) {location = Math . log10 (Math . PI); if (location < extension) smark (ctx, '\u03c0', length * location, h2, h5);}
   if (scale . draw_e) {location = Math . log10 (Math . E); if (location < extension) smark (ctx, 'e', length * location, h2, h5);}
   if (scale . draw_c) {
@@ -282,7 +282,7 @@ var draw_log_1L = function (ctx, length, height, extension, scale) {
   var abs_length = Math . abs (length);
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   draw_ML (ctx, Math . log10, length, 2, 9, extension, height * 0.5);
-  if (abs_length >= 1024) draw_MLS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
+  if (abs_length >= 800) draw_MLS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
   if (scale . draw_pi) {location = Math . log10 (Math . PI); if (location > extension) smark (ctx, '\u03c0', length * location, height * 0.2, height * 0.5);}
   if (scale . draw_e) {location = Math . log10 (Math . E); if (location > extension) smark (ctx, 'e', length * location, height * 0.2, height * 0.5);}
   if (scale . draw_c) {
