@@ -219,6 +219,11 @@ var scale_Metric = function (height, options) {
 	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_metric (ctx, length, s . height, s);};
 	return s;
 };
+var scale_Metric_down = function (height, options) {
+	var s = new scale_Metric (height, options);
+	s . draw = function (ctx, length) {draw_metric (ctx, length, - s . height, s);};
+	return s;
+};
 var scale_L = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return location * 10;};

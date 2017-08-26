@@ -46,7 +46,8 @@
 <script>
 
 var sliderules = new Sliderules ();
-var s = new Sliderule (800); sliderules . sliderules . push (s);
+var s = new Sliderule (800, {cursorHairline: false}); sliderules . sliderules . push (s);
+s . cursors . push (new Cursor (0, 28, 266, 'red', {main: true}));
 var r = new Rule (); s . rules . push (r);
 r . scales . push (new spacer (2));
 r . scales . push (new scale_Metric (24, {step: 20, scale: 200, shift: -20}));
@@ -59,10 +60,41 @@ r . scales . push (new scale_AI (24, {colour: 'red'}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_DI (24, {colour: 'red'}));
 r . scales . push (new scale_C (24));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (24));
+r . scales . push (new scale_P_down (24));
+r . scales . push (new scale_Sdec_down (24));
+r . scales . push (new scale_Metric_down (24, {step: 0.1, scale: Math . log (10), shift: (Math . log (10) - 2.2) * -3.5}));
+r . scales . push (new spacer (2));
+
+s = new Sliderule (800, {cursorFrame: null, cursorGlass: null, cursorHairline: false}); sliderules . sliderules . push (s);
+s . glasses . push (new Glass ({bottom: -220}));
+s . glasses . push (new Glass ({top: -220}));
+s . cursors . push (new Cursor (0, 0, 74, 'red', {main: true}));
+s . cursors . push (new Cursor (0, 98, 196, 'blue', {main: true, static: true}));
+s . cursors . push (new Cursor (0, 220, 294, 'red', {main: true}));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL03 (24, {colour: 'red'}));
+r . scales . push (new scale_LL02 (24, {colour: 'red'}));
+r . scales . push (new scale_LL01 (24, {colour: 'red'}));
+r . scales . push (new spacer (24));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_Sdec_down (24));
+r . scales . push (new scale_Tdec (24));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_STdec_down (24));
+r . scales . push (new scale_T1dec (24));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (24));
+r . scales . push (new scale_LL1_down (24));
+r . scales . push (new scale_LL2_down (24));
+r . scales . push (new scale_LL3_down (24));
+r . scales . push (new spacer (2));
 </script>
 
 <script src="sliderule_application.js"></script>
-<script></script>
+<script>changeSide ('back');</script>
 <script>
 'use strict';
 

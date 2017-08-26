@@ -376,11 +376,16 @@ var draw_log_log_log = function (ctx, length, height, scale, left_extension, rig
 var draw_metric = function (ctx, length, height, scale) {
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   var limit = 1 + scale . right_extension;
-  var high_value = scale . step * 20;
+  var high_value = scale . step * 100;
   draw_MRS (ctx, scale . location, length, 0, high_value, scale . step, limit, h5);
-  draw_XR (ctx, scale . location, length, 0, high_value, limit, h4, scale . step, scale . step * 0.5, scale . step);
-  draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, scale . step * 0.5, scale . step * 0.1, scale . step * 0.5);
-  draw_XR (ctx, scale . location, length, 0, high_value, limit, h2, scale . step * 0.1, scale . step * 0.05, scale . step * 0.1);
+  if (length * (scale . location (scale . step) - scale . location (0)) > 55) {
+		draw_XR (ctx, scale . location, length, 0, high_value, limit, h4, scale . step, scale . step * 0.5, scale . step);
+		draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, scale . step * 0.5, scale . step * 0.1, scale . step * 0.5);
+		draw_XR (ctx, scale . location, length, 0, high_value, limit, h2, scale . step * 0.1, scale . step * 0.05, scale . step * 0.1);
+  } else {
+		draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, scale . step, scale . step * 0.5, scale . step);
+		draw_XR (ctx, scale . location, length, 0, high_value, limit, h2, scale . step * 0.5, scale . step * 0.1, scale . step * 0.5);
+  }
 };
 var fn_lin = function (value) {return value * 0.1;};
 var draw_lin = function (ctx, length, height, scale) {
@@ -1072,8 +1077,8 @@ var Cursor = function (shift, from, to, colour, options) {
   this . from = from;
   this . to = to;
   this . marking_shift = 0.01; this . marking_align = 'left';
-  this . draw = function (ctx, length) {
-    length *= shift;
+  this . draw = function (ctx, length, static_offset) {
+    length *= this . shift - (this . static ? static_offset : 0);
     ctx . save ();
     ctx . strokeStyle = colour;
     ctx . beginPath (); ctx . moveTo (length, from); ctx . lineTo (length, to); ctx . stroke ();
@@ -1241,7 +1246,7 @@ var CursorBrace = function (left, right, top, bottom, colour) {
     ctx . lineTo (r, - bottom);
     ctx . fill ();
   };
-}
+};
 
 var CursorAngledBrace = function (left, right, top, bottom, colour) {
   this . draw = function (ctx, s) {
@@ -1259,7 +1264,7 @@ var CursorAngledBrace = function (left, right, top, bottom, colour) {
     ctx . lineTo (r, - bottom);
     ctx . fill ();
   };
-}
+};
 
 var Screw = function (shift, top, radius, angle, background, colour) {
 	this . draw = function (ctx, s) {
@@ -1272,7 +1277,25 @@ var Screw = function (shift, top, radius, angle, background, colour) {
 		ctx . fill (); ctx . stroke ();
 		ctx . beginPath (); ctx . moveTo (location + c, top + s); ctx . lineTo (location - c, top - s); ctx . stroke ();
 	};
-}
+};
+
+var Glass = function (options) {
+	this . glass = "rgba(0, 0, 0, 0.1)";
+	this . frame = "rgba(0, 0, 0, 0.1)";
+	this . left = 0.1;
+	this . right = 0.1;
+	this . top = 0;
+	this . bottom = 0;
+	this . rounding = 4;
+	this . draw = function (ctx, s) {
+		ctx . beginPath ();
+		var le = - s . length * this . left; var re = s . length * this . right;
+		roundRect (ctx, le, le, - this . rounding - this . top, re, re, s . height () + this . rounding + this . bottom, this . rounding);
+		if (this . glass) {ctx . fillStyle = this . glass; ctx . fill ();}
+		if (this . frame) {ctx . strokeStyle = this . frame; ctx . stroke ();}
+	};
+	for (var key in options) this [key] = options [key];
+};
 
 var Sliderule = function (length, options) {
   this . inactive = false;
@@ -1285,13 +1308,14 @@ var Sliderule = function (length, options) {
   this . cursor_position = 0; this . cursor_target = 0; this . cursorHairline = 'red'; this . cursor_motion = 0.5;
   this . cursorGlass = "rgba(0, 0, 0, 0.1)";
   this . cursorFrame = "rgba(0, 0, 0, 0.1)";
+  this . cursor_left_extension = 0.1; this . cursor_right_extension = 0.1;
+  this . cursor_rounding = 4;
+  this . glasses = [];
   this . cursors = [];
   this . braces = [];
   this . backBraces = [];
   this . cursorBraces = [];
   this . cursorGlassBraces = [];
-  this . cursor_left_extension = 0.1; this . cursor_right_extension = 0.1;
-  this . cursor_rounding = 4;
   this . precision = 5;
   this . static_markings = false;
   this . cursor_markings = false;
@@ -1376,14 +1400,16 @@ var Sliderule = function (length, options) {
       ctx . strokeStyle = this . cursorHairline;
       ctx . stroke ();
     }
+    // GLASSES
+    for (ind in this . glasses) this . glasses [ind] . draw (ctx, this);
     // CURSORS
-    for (ind in this . cursors) {this . cursors [ind] . draw (ctx, this . length);}
+    for (ind in this . cursors) {this . cursors [ind] . draw (ctx, this . length, this . cursor_position);}
     // CURSOR BRACES
     for (ind in this . cursorBraces) {ctx . save (); this . cursorBraces [ind] . draw (ctx, this); ctx . restore ();}
     // CURSOR MARKINGS
-    if (this . cursor_markings) this . drawMarkings (ctx, this . length * this . cursor_markings_shift, this . cursor_markings_align, false);
+    if (this . cursor_markings && this . cursorHairline) this . drawMarkings (ctx, this . length * this . cursor_markings_shift, this . cursor_markings_align, false);
     // CURSOR EXTRA MARKINGS
-    if (this . extra_cursor_markings) this . drawExtraMarkings (ctx);
+    if (this . extra_cursor_markings || this . cursor_markings) this . drawExtraMarkings (ctx);
     ctx . restore ();
     ctx . translate (0, this . height ());
   };
@@ -1430,8 +1456,9 @@ var Sliderule = function (length, options) {
         h = this . rules [ind] . scales [sub] . height;
         hh = h * 0.5;
         for (var esc in this . cursors) {
-          var offset = this . cursors [esc] . shift;
-          if (y + hh >= this . cursors [esc] . from && (y + hh) <= this . cursors [esc] . to) {
+          var offset = this . cursors [esc] . shift - (this . cursors [esc] . static ? this . cursor_position : 0);
+          if (y + hh >= this . cursors [esc] . from && y <= this . cursors [esc] . to &&
+          	((this . extra_cursor_markings && ! this . cursors [esc] . main) || (this . cursor_markings && this . cursors [esc] . main))) {
             ctx . fillStyle = this . markings_background;
             description = this . rules [ind] . scales [sub] . value (this . cursor_position - this . rules [ind] . shift + offset);
             if (description !== null) {
