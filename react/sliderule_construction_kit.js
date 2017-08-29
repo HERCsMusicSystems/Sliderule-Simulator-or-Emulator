@@ -425,14 +425,14 @@ var draw_lin_12 = function (ctx, length, height, scale) {
 
 var fn_sin_dec = function (value) {return Math . log10 (10 * Math . sin (value * Math . PI / 180));};
 var draw_sine_dec = function (ctx, length, height, scale) {
-  draw_MRS (ctx, fn_sin_dec, length, 10, 35, 5, 1, height * 0.5);
-  draw_MRS (ctx, fn_sin_dec, length, 40, 90, 10, 1, height * 0.5);
-  draw_MLS (ctx, fn_sin_dec, length, 4, 9, 1, - scale . left_extension, height * 0.5);
-  draw_10R (ctx, fn_sin_dec, length, 15, 80, 1, height * 0.4);
-  draw_10R (ctx, fn_sin_dec, length, 10, 15, 1, height * 0.5);
-  draw_50R (ctx, fn_sin_dec, length, 40, 90, 1, height * 0.5);
-  draw_05L (ctx, fn_sin_dec, length, 3, 15, - scale . left_extension, height * 0.3);
-  draw_01L (ctx, fn_sin_dec, length, 3, 15, - scale . left_extension, height * 0.2);
+  draw_MRS (ctx, scale . location, length, 10, 35, 5, 1, height * 0.5);
+  draw_MRS (ctx, scale . location, length, 40, 90, 10, 1, height * 0.5);
+  draw_MLS (ctx, scale . location, length, 4, 9, 1, - scale . left_extension, height * 0.5);
+  draw_10R (ctx, scale . location, length, 15, 80, 1, height * 0.4);
+  draw_10R (ctx, scale . location, length, 10, 15, 1, height * 0.5);
+  draw_50R (ctx, scale . location, length, 40, 90, 1, height * 0.5);
+  draw_05L (ctx, scale . location, length, 3, 15, - scale . left_extension, height * 0.3);
+  draw_01L (ctx, scale . location, length, 3, 15, - scale . left_extension, height * 0.2);
 };
 var draw_sine_deg = function (ctx, length, height, scale) {
   draw_MRS (ctx, fn_sin_dec, length, 20, 35, 5, 1, height * 0.5);
@@ -451,6 +451,7 @@ var draw_sine_cosine_dec = function (ctx, length, height, scale, type) {
   draw_MLS (ctx, fn_sin_dec, length, 4, 9, 1, - scale . left_extension, h5);
   draw_MLS (ctx, fn_sin_dec, length, 11, 19, 1, - scale . left_extension, h5);
   draw_MRS (ctx, fn_sin_dec, length, 80, 90, 10, 1, h5);
+  tick (ctx, length * fn_sin_dec (85), h3);
   draw_MRS (ctx, fn_sin_dec, length, 25, 35, 10, 1, h5);
   for (var degree = 10; degree <= 70; degree += 10) tick (ctx, length * fn_sin_dec (degree), h5);
   ctx . textAlign = type == 'sc' ? 'right' : 'left';
@@ -500,13 +501,13 @@ var draw_small_sine_deg = function (ctx, length, height, s) {
 };
 var fn_tan_dec = function (value) {return 1 + Math . log10 (Math . tan (value * Math . PI / 180));};
 var draw_tan_dec = function (ctx, length, height, scale) {
-  draw_MLS (ctx, fn_tan_dec, length, 1, 5.5, 0.5, - scale . left_extension, height * 0.5);
-  draw_MR (ctx, fn_tan_dec, length, 6, 10, 1, height * 0.5);
-  draw_MRS (ctx, fn_tan_dec, length, 15, 90, 5, 1 + scale . right_extension, height * 0.5);
-  draw_XR (ctx, fn_tan_dec, length, 10, 90, 1 + scale . right_extension, height * 0.4, 5, 1, 5);
-  draw_XR (ctx, fn_tan_dec, length, 10, 90, 1 + scale . right_extension, height * 0.2, 1, 0.2, 1);
-  draw_XL (ctx, fn_tan_dec, length, 6, 10, - scale . left_extension, height * 0.4, 1, 0.5, 1);
-  draw_XL (ctx, fn_tan_dec, length, 1, 10, - scale . left_extension, height * 0.2, 0.5, 0.1, 0.5);
+  draw_MLS (ctx, scale . location, length, 1, 6, 0.5, - scale . left_extension, height * 0.5);
+  draw_MR (ctx, scale . location, length, 7, 10, 1, height * 0.5);
+  draw_MRS (ctx, scale . location, length, 15, 90, 5, 1 + scale . right_extension, height * 0.5);
+  draw_XR (ctx, scale . location, length, 10, 90, 1 + scale . right_extension, height * 0.4, 5, 1, 5);
+  draw_XR (ctx, scale . location, length, 10, 90, 1 + scale . right_extension, height * 0.2, 1, 0.2, 1);
+  draw_XL (ctx, scale . location, length, 6, 10, - scale . left_extension, height * 0.4, 1, 0.5, 1);
+  draw_XL (ctx, scale . location, length, 1, 10, - scale . left_extension, height * 0.2, 0.5, 0.1, 0.5);
 };
 var draw_tan_deg = function (ctx, length, height, scale) {
   draw_MLS (ctx, fn_tan_dec, length, 1, 5.5, 0.5, - scale . left_extension, height * 0.5);
@@ -1264,6 +1265,39 @@ var CursorAngledBrace = function (left, right, top, bottom, colour) {
     ctx . lineTo (r, - bottom);
     ctx . fill ();
   };
+};
+
+var Floor = function (left, right, top, bottom, rounding, radius, holes, colour, background) {
+	this . draw = function (ctx, s) {
+		var le = s . length * (s . left_margin - left); var re = s . length * (s . left_margin + 1 + right);
+		var bt = s . height () - bottom;
+		var mid = (top + bt) * 0.5;
+		ctx . beginPath ();
+		ctx . arc (le + rounding, top + rounding, rounding, Math . PI, Math . PI * 1.5);
+		ctx . arc (re - rounding, top + rounding, rounding, Math . PI * 1.5, 0);
+		ctx . arc (re - rounding, mid - radius - rounding, rounding, 0, Math . PI * 0.5);
+		ctx . arc (re - rounding, mid, radius, Math . PI * 1.5, Math . PI * 0.5, true);
+		ctx . arc (re - rounding, mid + radius + rounding, rounding, Math . PI * 1.5, 0);
+		ctx . arc (re - rounding, bt - rounding, rounding, 0, Math . PI * 0.5);
+		ctx . arc (le + rounding, bt - rounding, rounding, Math . PI * 0.5, Math . PI);
+		ctx . arc (le + rounding, mid + radius + rounding, rounding, Math . PI, Math . PI * 1.5);
+		ctx . arc (le + rounding, mid, radius, Math . PI * 0.5, Math . PI * 1.5, true);
+		ctx . arc (le + rounding, mid - radius - rounding, rounding, Math . PI * 0.5, Math . PI);
+		ctx . closePath ();
+		for (var ind in holes) {
+			ctx . moveTo (s . length * (s . left_margin + holes [ind] . left), mid - radius);
+			ctx . arc (s . length * (s . left_margin + holes [ind] . left), mid, radius, Math . PI * 1.5, Math . PI * 0.5, true);
+			ctx . arc (s . length * (s . left_margin + holes [ind] . right), mid, radius, Math . PI * 0.5, Math . PI * 1.5, true);
+			ctx . closePath ();
+		}
+//		ctx . moveTo ((le + re) * 0.5 + rounding, mid);
+//		ctx . arc ((le + re) * 0.5, mid, rounding, Math . PI * 2, 0, true);
+//		ctx . closePath ();
+		ctx . fillStyle = background;
+		ctx . fill ();
+		ctx . strokeStyle = colour;
+		ctx . stroke ();
+	};
 };
 
 var Screw = function (shift, top, radius, angle, background, colour) {

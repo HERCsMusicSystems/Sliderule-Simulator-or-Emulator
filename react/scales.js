@@ -27,12 +27,15 @@
 // K, J
 // R1, R2, W1, W2
 // L, M, LR12, LW12
-// Sdec(_down), S(_down), SCdec(_down), CSdec(_down)
+// Sdec(_down), S(_down), SCdec(_down), CSdec(_down), Sgrad(_down)
 // STdec(_down), ST(_down)
-// Tdec(_down), T(_down), T1dec(_down), T1(_down), TCTdec(_down), CTTdec(_down), TCT1dec(_down), CTT1dec(_down)
+// Tdec(_down), T1dec(_down), TCTdec(_down), CTTdec(_down), TCT1dec(_down), CTT1dec(_down)
+// T(_down), T1(_down)
+// Tgrad(_down)
 // P(_down)
 // LL3(_down), LL2(_down), LL1(_down), LL0(_down), CLL0, DLL0
 // LL03(_down), LL02(_down), LL01(_down), LL00(_down)
+// Metric(_down) => step, scale, shift
 //////////////////////////////////////////////////////////////////////////////
 
 var toDeg = function (value) {
@@ -271,6 +274,17 @@ var scale_S_down = function (height, options) {
   s . draw = function (ctx, length) {draw_sine_deg (ctx, length, - s . height, s);};
   return s;
 };
+var scale_Sgrad = function (height, options) {
+	var s = new scale_Sdec (height, options);
+	s . value = function (location) {return Math . asin (Math . pow (10, location - 1)) * 200 / Math . PI;};
+	s . location = function (value) {return 1 + Math . log10 (Math . sin (value * Math . PI / 200));};
+	return s;
+};
+var scale_Sgrad_down = function (height, options) {
+	var s = new scale_Sgrad (height, options);
+	s . draw = function (ctx, length) {draw_sine_dec (ctx, length, - s . height, s);};
+	return s;
+};
 var scale_STdec = function (height, options) {
   var s = new spacer (height, options);
   if (! options || options . draw_halves == undefined) s . draw_halves = true;
@@ -304,7 +318,6 @@ var scale_Tdec = function (height, options) {
   s . value = function (location) {return Math . atan (Math . pow (10, location - 1)) * 180 / Math . PI;};
   s . location = function (value) {return 1 + Math . log10 (Math . tan (value * Math . PI / 180));};
   s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_tan_dec (ctx, length, s . height, s);};
-
   return s;
 };
 var scale_Tdec_down = function (height, options) {
@@ -322,6 +335,17 @@ var scale_T_down = function (height, options) {
   var s = new scale_T (height, options);
   s . draw = function (ctx, length) {draw_tan_deg (ctx, length, - s . height, s);};
   return s;
+};
+var scale_Tgrad = function (height, options) {
+	var s = new scale_Tdec (height, options);
+	s . value = function (location) {return Math . atan (Math . pow (10, location - 1)) * 200 / Math . PI;};
+	s . location = function (value) {return 1 + Math . log10 (Math . tan (value * Math . PI / 200));};
+	return s;
+};
+var scale_Tgrad_down = function (height, options) {
+	var s = new scale_Tgrad (height, options);
+	s . draw = function (ctx, length) {draw_tan_dec (ctx, length, - s . height, s);};
+	return s;
 };
 var scale_TCTdec = function (height, options) {
   var s = new spacer (height, options);

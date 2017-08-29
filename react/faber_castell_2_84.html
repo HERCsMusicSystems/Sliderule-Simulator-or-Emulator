@@ -48,10 +48,12 @@
 var sliderules = new Sliderules ();
 var s = new Sliderule (800, {cursorHairline: false}); sliderules . sliderules . push (s);
 s . cursors . push (new Cursor (0, 28, 266, 'red', {main: true}));
+s . cursors . push (new Cursor (Math . log10 (Math . pow (Math . E, (Math . log (10) - 2.2))) * -3.5, 266, 294, 'blue'));
 var r = new Rule (); s . rules . push (r);
 r . scales . push (new spacer (2));
-r . scales . push (new scale_Metric (24, {step: 20, scale: 200, shift: -20}));
-r . scales . push (new scale_Tdec (24));
+r . scales . push (new scale_Metric (24, {step: 10, scale: 200 / Math . PI * Math . log (10), shift: (200 / Math . PI * Math . log (10) - 140) * -3.5,
+right_extension: 0.11}));
+r . scales . push (new scale_Tgrad (24));
 r . scales . push (new scale_P (24));
 r . scales . push (new scale_A (24));
 r = new Rule ({stator: 1}); s . rules . push (r);
@@ -64,6 +66,7 @@ r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_D (24));
 r . scales . push (new scale_P_down (24));
 r . scales . push (new scale_Sdec_down (24));
+r . scales . push (new scale_Sgrad_down (24));
 r . scales . push (new scale_Metric_down (24, {step: 0.1, scale: Math . log (10), shift: (Math . log (10) - 2.2) * -3.5}));
 r . scales . push (new spacer (2));
 
@@ -72,7 +75,10 @@ s . glasses . push (new Glass ({bottom: -220}));
 s . glasses . push (new Glass ({top: -220}));
 s . cursors . push (new Cursor (0, 0, 74, 'red', {main: true}));
 s . cursors . push (new Cursor (0, 98, 196, 'blue', {main: true, static: true}));
+s . cursors . push (new Cursor (1, 98, 196, 'blue', {main: true, static: true}));
 s . cursors . push (new Cursor (0, 220, 294, 'red', {main: true}));
+s . braces . push (new Floor (0.2, 0.2, 74, 74, 6, 48, [{left: -0.04, right: 0.04}, {left: 0.96, right: 1.04}], 'red', '#ffffdd'));
+s . braces . push (new Floor (0.195, 0.195, 78, 78, 6, 52, [{left: -0.04, right: 0.04}, {left: 0.96, right: 1.04}], 'red', 'white'));
 r = new Rule (); s . rules . push (r);
 r . scales . push (new spacer (2));
 r . scales . push (new scale_LL03 (24, {colour: 'red'}));
@@ -94,7 +100,7 @@ r . scales . push (new spacer (2));
 </script>
 
 <script src="sliderule_application.js"></script>
-<script>changeSide ('back');</script>
+<script>changeSide ('front');</script>
 <script>
 'use strict';
 
