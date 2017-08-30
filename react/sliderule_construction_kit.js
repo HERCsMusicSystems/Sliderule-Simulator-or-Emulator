@@ -425,14 +425,25 @@ var draw_lin_12 = function (ctx, length, height, scale) {
 
 var fn_sin_dec = function (value) {return Math . log10 (10 * Math . sin (value * Math . PI / 180));};
 var draw_sine_dec = function (ctx, length, height, scale) {
-  draw_MRS (ctx, scale . location, length, 10, 35, 5, 1, height * 0.5);
-  draw_MRS (ctx, scale . location, length, 40, 90, 10, 1, height * 0.5);
-  draw_MLS (ctx, scale . location, length, 4, 9, 1, - scale . left_extension, height * 0.5);
-  draw_10R (ctx, scale . location, length, 15, 80, 1, height * 0.4);
-  draw_10R (ctx, scale . location, length, 10, 15, 1, height * 0.5);
-  draw_50R (ctx, scale . location, length, 40, 90, 1, height * 0.5);
-  draw_05L (ctx, scale . location, length, 3, 15, - scale . left_extension, height * 0.3);
-  draw_01L (ctx, scale . location, length, 3, 15, - scale . left_extension, height * 0.2);
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+  var grad = scale . location (100) > scale . location (90);
+  draw_MLS (ctx, scale . location, length, 4, 9, 1, - scale . left_extension, h5);
+  draw_MLS (ctx, scale . location, length, 10, 19, 1, - scale . left_extension, h5);
+  draw_MRS (ctx, scale . location, length, 20, 35, 5, 1, h5);
+  draw_MRS (ctx, scale . location, length, 40, grad ? 80 : 90, 10, 1, h5);
+  draw_XR (ctx, scale . location, length, 60, 80, 1, h3, 10, 5, 10);
+  draw_XR (ctx, scale . location, length, 60, 80, 1, h2, 5, 1, 5);
+  draw_XR (ctx, scale . location, length, 40, 60, 1, h4, 10, 5, 10);
+  draw_XR (ctx, scale . location, length, 20, 60, 1, h3, 5, 1, 5);
+  draw_XR (ctx, scale . location, length, 40, 60, 1, h2, 1, 0.5, 1);
+  draw_XR (ctx, scale . location, length, 20, 40, 1, h2, 1, 0.2, 1);
+  draw_XL (ctx, scale . location, length, 3, 20, - scale . left_extension, h3, 1, 0.5, 1);
+  draw_XL (ctx, scale . location, length, 3, 20, - scale . left_extension, h2, 0.5, 0.1, 0.5);
+  if (grad) {
+  	mark (ctx, "100", length, h5);
+  	draw_XR (ctx, scale . location, length, 80, 90, 1, h2, 10, 2, 10);
+  	tick (ctx, scale . location (90) * length, h3);
+  } else tick (ctx, scale . location (85) * length, h3);
 };
 var draw_sine_deg = function (ctx, length, height, scale) {
   draw_MRS (ctx, fn_sin_dec, length, 20, 35, 5, 1, height * 0.5);
@@ -1491,7 +1502,7 @@ var Sliderule = function (length, options) {
         hh = h * 0.5;
         for (var esc in this . cursors) {
           var offset = this . cursors [esc] . shift - (this . cursors [esc] . static ? this . cursor_position : 0);
-          if (y + hh >= this . cursors [esc] . from && y <= this . cursors [esc] . to &&
+          if (y + hh >= this . cursors [esc] . from && y + hh <= this . cursors [esc] . to &&
           	((this . extra_cursor_markings && ! this . cursors [esc] . main) || (this . cursor_markings && this . cursors [esc] . main))) {
             ctx . fillStyle = this . markings_background;
             description = this . rules [ind] . scales [sub] . value (this . cursor_position - this . rules [ind] . shift + offset);
