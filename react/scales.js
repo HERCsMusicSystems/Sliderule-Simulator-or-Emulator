@@ -32,7 +32,7 @@
 // Tdec(_down), T1dec(_down), TCTdec(_down), CTTdec(_down), TCT1dec(_down), CTT1dec(_down)
 // T(_down), T1(_down)
 // Tgrad(_down)
-// P(_down)
+// P(_down), PH(_down)
 // LL3(_down), LL2(_down), LL1(_down), LL0(_down), CLL0, DLL0
 // LL03(_down), LL02(_down), LL01(_down), LL00(_down)
 // Metric(_down) => step, scale, shift
@@ -453,6 +453,18 @@ var scale_P_down = function (height, options) {
   var s = new scale_P (height, options);
   s . draw = function (ctx, length) {draw_pe (ctx, length, - s. height, s);};
   return s;
+};
+var scale_PH = function (height, options) {
+	var s = new spacer (height, options);
+	s . value = function (location) {var ret = Math . pow (10, location - 1); return Math . sqrt (ret * ret + 1);};
+	s . location = function (value) {return 1 + Math . log10 (Math . sqrt (value * value - 1));};
+	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_ph (ctx, length, s . height, s);};
+	return s;
+};
+var scale_PH_down = function (height, options) {
+	var s = new scale_PH (height, options);
+	s . draw = function (ctx, length) {draw_ph (ctx, length, - s . height, s);};
+	return s;
 };
 var scale_LL3 = function (height, options) {
   var s = new spacer (height, options);

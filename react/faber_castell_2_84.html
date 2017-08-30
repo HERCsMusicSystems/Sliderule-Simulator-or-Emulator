@@ -45,17 +45,27 @@
 
 <script>
 
+var v1 = Math . log10 (Math . pow (Math . E, Math . log (10) - 140 * Math . PI / 200));
 var sliderules = new Sliderules ();
-var s = new Sliderule (800, {cursorHairline: false}); sliderules . sliderules . push (s);
+var s = new Sliderule (800, {cursorHairline: false, cursor_left_extension: 0.22, cursor_right_extension: 0.22}); sliderules . sliderules . push (s);
 s . cursors . push (new Cursor (0, 28, 266, 'red', {main: true}));
-s . cursors . push (new Cursor (Math . log10 (Math . pow (Math . E, (Math . log (10) - 140 * Math . PI / 200))) * -3.5, 0, 26, 'blue'));
+s . cursors . push (new Cursor (v1 * -4.5, 4, 26, 'blue'));
+s . cursors . push (new Cursor (v1 * -3.5, 0, 26, 'blue'));
+s . cursors . push (new Cursor (v1 * -2.5, 4, 26, 'blue'));
+s . cursors . push (new Cursor (v1 * -1.5, 4, 26, 'blue'));
+s . cursors . push (new Cursor (v1 * -0.5, 4, 26, 'blue'));
+s . cursors . push (new Cursor (v1 * 0.5, 4, 26, 'blue'));
+s . cursors . push (new Cursor (v1 * 1.5, 4, 26, 'blue'));
+s . cursors . push (new Cursor (v1 * 2.5, 4, 26, 'blue'));
+s . cursors . push (new Cursor (v1 * 3.5, 4, 26, 'blue'));
+s . cursors . push (new Cursor (v1 * 4.5, 4, 26, 'blue'));
 s . cursors . push (new Cursor (Math . log10 (Math . pow (Math . E, (Math . log (10) - 2.2))) * -3.5, 266, 294, 'blue'));
 var r = new Rule (); s . rules . push (r);
 r . scales . push (new spacer (2));
 r . scales . push (new scale_Metric (24, {step: 10, scale: 200 / Math . PI * Math . log (10), shift: (200 / Math . PI * Math . log (10) - 140) * -3.5,
 right_extension: 0.11}));
 r . scales . push (new scale_Tgrad (24));
-r . scales . push (new scale_P (24));
+r . scales . push (new scale_PH (24, {left_extension: 0.18, right_extension: 0.18}));
 r . scales . push (new scale_A (24));
 r = new Rule ({stator: 1}); s . rules . push (r);
 r . scales . push (new scale_B (24));

@@ -710,6 +710,37 @@ var draw_pe = function (ctx, length, height, scale) {
   draw_XLI (ctx, fn_pe, length, 1, 0.99, - scale . left_extension, h3, 0.001, 0.0005, 0.001);
 };
 
+var fn_ph = function (x) {return 1 + Math . log10 (Math . sqrt (x * x - 1));};
+var draw_ph = function (ctx, length, height, s) {
+	var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+	draw_MRS (ctx, fn_ph, length, 1.01, 1.05, 0.01, 1, h5);
+	draw_MRS (ctx, fn_ph, length, 1.1, 1.2, 0.05, 1, h5);
+	var limit = 1 + s . right_extension;
+	draw_MRS (ctx, fn_ph, length, 1.3, 4, 0.1, limit, h5);
+	draw_XR (ctx, fn_ph, length, 1.6, 4, limit, h3, 0.1, 0.05, 0.1);
+	draw_XR (ctx, fn_ph, length, 1.6, 4, limit, h2, 0.05, 0.01, 0.05);
+	draw_XR (ctx, fn_ph, length, 1.2, 1.6, limit, h4, 0.1, 0.05, 0.1);
+	draw_XR (ctx, fn_ph, length, 1.2, 1.6, limit, h3, 0.05, 0.01, 0.05);
+	draw_XR (ctx, fn_ph, length, 1.2, 1.6, limit, h2, 0.01, 0.005, 0.01);
+	draw_XR (ctx, fn_ph, length, 1.1, 1.2, limit, h3, 0.05, 0.01, 0.05);
+	draw_XR (ctx, fn_ph, length, 1.1, 1.2, limit, h2, 0.01, 0.002, 0.01);
+	draw_XR (ctx, fn_ph, length, 1.05, 1.1, limit, h4, 0.05, 0.01, 0.05);
+	draw_XR (ctx, fn_ph, length, 1.05, 1.1, limit, h3, 0.01, 0.005, 0.01);
+	draw_XR (ctx, fn_ph, length, 1.05, 1.1, limit, h2, 0.005, 0.001, 0.005);
+	draw_XR (ctx, fn_ph, length, 1.01, 1.05, limit, h4, 0.01, 0.005, 0.01);
+	draw_XR (ctx, fn_ph, length, 1.01, 1.05, limit, h3, 0.005, 0.001, 0.005);
+	draw_XR (ctx, fn_ph, length, 1.02, 1.05, limit, h2, 0.001, 0.0005, 0.001);
+	draw_XR (ctx, fn_ph, length, 1.01, 1.02, limit, h2, 0.001, 0.0002, 0.001);
+	limit = - s . left_extension;
+	draw_MLS (ctx, fn_ph, length, 1.001, 1.005, 0.001, limit, h5);
+	draw_XL (ctx, fn_ph, length, 1.005, 1.01, limit, h4, 0.005, 0.001, 0.005);
+	draw_XL (ctx, fn_ph, length, 1.005, 1.01, limit, h3, 0.001, 0.0005, 0.001);
+	draw_XL (ctx, fn_ph, length, 1.005, 1.01, limit, h2, 0.0005, 0.0001, 0.0005);
+	draw_XL (ctx, fn_ph, length, 1, 1.005, limit, h4, 0.001, 0.0005, 0.001);
+	draw_XL (ctx, fn_ph, length, 1, 1.005, limit, h3, 0.0005, 0.0001, 0.0005);
+	draw_XL (ctx, fn_ph, length, 1, 1.005, limit, h2, 0.0001, 0.00005, 0.0001);
+};
+
 var draw_LL3 = function (ctx, length, height, s) {
 	var esc; var limit = 1 + s . right_extension;
 	draw_ML (ctx, s . location, length, 1, 9, - s . left_extension, height * 0.5);
