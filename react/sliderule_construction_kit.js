@@ -671,6 +671,7 @@ var fn_pe = function (value) {return Math . log10 (10 * Math . sqrt (1 - value *
 var draw_pe = function (ctx, length, height, scale) {
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   var location = fn_pe (0.996); if (location > - scale . left_extension) mmark (ctx, ".996", length * location, h5);
+  location = fn_pe (0.997); if (location > - scale . left_extension) mark (ctx, ".997", length * location, h5);
   mark (ctx, ".995", length * fn_pe (0.995), h5);
   mark (ctx, ".99", length * fn_pe (0.99), h5);
   mark (ctx, ".98", length * fn_pe (0.98), h5);
@@ -811,7 +812,7 @@ var draw_LL2 = function (ctx, length, height, s) {
 	draw_MRS (ctx, s . location, length, 1.5, 1.9, 0.1, limit, h5);
 	smark (ctx, "e", length, h3, h5);
 	limit = - s . left_extension;
-	draw_MLSF (ctx, s . location, length, 1.10, 1.18, 0.02, 2, limit, h5);
+	draw_MLSF (ctx, s . location, length, 1.002, 1.18, 0.02, 2, limit, h5);
 	draw_XL (ctx, s . location, length, 1, 1.2, limit, h4, 0.02, 0.01, 0.02);
 	draw_XL (ctx, s . location, length, 1, 1.2, limit, h3, 0.01, 0.005, 0.01);
 	draw_XL (ctx, s . location, length, 1, 1.2, limit, h2, 0.005, 0.001, 0.005);
@@ -830,7 +831,7 @@ var draw_LL1 = function (ctx, length, height, s) {
 	draw_XR (ctx, s . location, length, 1.05, 1.1, limit, h2, 0.001, 0.0005, 0.001);
 	draw_XR (ctx, s . location, length, 1.02, 1.05, limit, h2, 0.001, 0.0002, 0.001);
 	limit = - s . left_extension;
-	draw_MLSF (ctx, s . location, length, 1.01, 1.018, 0.002, 3, limit, h5);
+	draw_MLSF (ctx, s . location, length, 1.002, 1.018, 0.002, 3, limit, h5);
 	draw_XL (ctx, s . location, length, 1, 1.02, limit, h4, 0.002, 0.001, 0.002);
 	draw_XL (ctx, s . location, length, 1, 1.02, limit, h3, 0.001, 0.0005, 0.001);
 	draw_XL (ctx, s . location, length, 1, 1.02, limit, h2, 0.0005, 0.0001, 0.0005);

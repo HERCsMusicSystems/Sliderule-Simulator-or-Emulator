@@ -28,12 +28,12 @@
   </head>
 <body>
 <div>
-	<input type = checkbox onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
-	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
-	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
-	<input type = checkbox onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
-	<input type = checkbox onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
-	<input type = checkbox onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
 </div>
 <div id="root"></div>
 <script src="react.js"></script>
@@ -46,8 +46,9 @@
 <script>
 
 var v1 = Math . log10 (Math . pow (Math . E, Math . log (10) - 140 * Math . PI / 200));
+var v2 = Math . log10 (Math . pow (Math . E, (Math . log (10) - 2.2)));
 var sliderules = new Sliderules ();
-var s = new Sliderule (800, {cursorHairline: false, cursor_left_extension: 0.22, cursor_right_extension: 0.22}); sliderules . sliderules . push (s);
+var s = new Sliderule (800, {cursorHairline: false, cursor_left_extension: 0.22, cursor_right_extension: 0.22, left_margin: 0.3, right_margin: 0.3}); sliderules . sliderules . push (s);
 s . cursors . push (new Cursor (0, 28, 266, 'red', {main: true}));
 s . cursors . push (new Cursor (v1 * -4.5, 4, 26, 'blue'));
 s . cursors . push (new Cursor (v1 * -3.5, 0, 26, 'blue'));
@@ -59,58 +60,90 @@ s . cursors . push (new Cursor (v1 * 1.5, 4, 26, 'blue'));
 s . cursors . push (new Cursor (v1 * 2.5, 4, 26, 'blue'));
 s . cursors . push (new Cursor (v1 * 3.5, 4, 26, 'blue'));
 s . cursors . push (new Cursor (v1 * 4.5, 4, 26, 'blue'));
-s . cursors . push (new Cursor (Math . log10 (Math . pow (Math . E, (Math . log (10) - 2.2))) * -3.5, 266, 294, 'blue'));
-var r = new Rule (); s . rules . push (r);
+s . cursors . push (new Cursor (v2 * -4.5, 268, 292, 'blue'));
+s . cursors . push (new Cursor (v2 * -3.5, 266, 292, 'blue'));
+s . cursors . push (new Cursor (v2 * -2.5, 268, 292, 'blue'));
+s . cursors . push (new Cursor (v2 * -1.5, 268, 292, 'blue'));
+s . cursors . push (new Cursor (v2 * -0.5, 268, 292, 'blue'));
+s . cursors . push (new Cursor (v2 * 0.5, 268, 292, 'blue'));
+s . cursors . push (new Cursor (v2 * 1.5, 268, 292, 'blue'));
+s . cursors . push (new Cursor (v2 * 2.5, 268, 292, 'blue'));
+s . cursors . push (new Cursor (v2 * 3.5, 268, 292, 'blue'));
+s . cursors . push (new Cursor (v2 * 4.5, 268, 292, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (2 * Math . PI / 10), 32, 262, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (4 * Math . PI / 10), 148, 220, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (Math . PI / 2), 32, 262, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (Math . PI / 4), 148, 220, 'blue'));
+s . cursors . push (new Cursor (HairlineS, 74, 146, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (2 * Math . PI / 10) / 2, 74, 146, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (4 * Math . PI / 10) / 2, 74, 146, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (Math . PI / 2) / 2, 74, 146, 'blue'));
+var r = new Rule ({left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
 r . scales . push (new spacer (2));
 r . scales . push (new scale_Metric (24, {step: 10, scale: 200 / Math . PI * Math . log (10), shift: (200 / Math . PI * Math . log (10) - 140) * -3.5,
 right_extension: 0.11}));
-r . scales . push (new scale_Tgrad (24));
-r . scales . push (new scale_PH (24, {left_extension: 0.18, right_extension: 0.18}));
-r . scales . push (new scale_A (24));
-r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_B (24));
-r . scales . push (new scale_AI (24, {colour: 'red'}));
+r . scales . push (new scale_Tgrad (24, {left_extension: 0.19, right_extension: 0.17}));
+r . scales . push (new scale_PH (24, {left_extension: 0.18, right_extension: 0.178}));
+r . scales . push (new scale_A (24, {left_extension: 0.18, right_extension: 0.185, alt: 'black'}));
+r = new Rule ({stator: 1, left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
+r . scales . push (new scale_B (24, {left_extension: 0.18, right_extension: 0.185, alt: 'black'}));
+r . scales . push (new scale_AI (24, {left_extension: 0.185, right_extension: 0.18, colour: 'red'}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_DI (24, {colour: 'red'}));
-r . scales . push (new scale_C (24));
-r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (24));
-r . scales . push (new scale_P_down (24));
-r . scales . push (new scale_Sgrad_down (24));
-r . scales . push (new scale_Metric_down (24, {step: 0.1, scale: Math . log (10), shift: (Math . log (10) - 2.2) * -3.5}));
+r . scales . push (new scale_DI (24, {left_extension: 0.178, right_extension: 0.19, colour: 'red'}));
+r . scales . push (new scale_C (24, {left_extension: 0.19, right_extension: 0.178, alt: 'black'}));
+r = new Rule ({left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
+r . scales . push (new scale_D (24, {left_extension: 0.19, right_extension: 0.178, alt: 'black'}));
+r . scales . push (new scale_P_down (24, {left_extension: 0.18, colour: 'red'}));
+r . scales . push (new scale_Sgrad_down (24, {left_extension: 0.19}));
+r . scales . push (new scale_Metric_down (24, {step: 0.1, scale: Math . log (10), shift: (Math . log (10) - 2.2) * -3.5, right_extension: 0.105}));
 r . scales . push (new spacer (2));
 
-s = new Sliderule (800, {cursorFrame: null, cursorGlass: null, cursorHairline: false}); sliderules . sliderules . push (s);
-s . glasses . push (new Glass ({bottom: -220}));
-s . glasses . push (new Glass ({top: -220}));
+s = new Sliderule (800, {cursor_left_extension: 0.22, cursor_right_extension: 0.22, cursorFrame: null, cursorGlass: null, cursorHairline: false, left_margin: 0.3, right_margin: 0.3}); sliderules . sliderules . push (s);
+s . glasses . push (new Glass ({bottom: -220, left: 0.22, right: 0.22}));
+s . glasses . push (new Glass ({top: -220, left: 0.22, right: 0.22}));
 s . cursors . push (new Cursor (0, 0, 74, 'red', {main: true}));
 s . cursors . push (new Cursor (0, 98, 196, 'blue', {main: true, static: true}));
 s . cursors . push (new Cursor (1, 98, 196, 'blue', {main: true, static: true}));
 s . cursors . push (new Cursor (0, 220, 294, 'red', {main: true}));
-s . braces . push (new Floor (0.2, 0.2, 74, 74, 6, 48, [{left: -0.04, right: 0.04}, {left: 0.96, right: 1.04}], 'red', '#ffffdd'));
-s . braces . push (new Floor (0.195, 0.195, 78, 78, 6, 52, [{left: -0.04, right: 0.04}, {left: 0.96, right: 1.04}], 'red', 'white'));
-r = new Rule (); s . rules . push (r);
+s . cursors . push (new Cursor (Math . log10 (2 * Math . PI / 10), 0, 74, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (4 * Math . PI / 10), 0, 74, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (Math . PI / 2), 0, 74, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (Math . PI / 4), 0, 74, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (2 * Math . PI / 10), 220, 294, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (4 * Math . PI / 10), 220, 294, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (Math . PI / 2), 220, 294, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (Math . PI / 4), 220, 294, 'blue'));
+s . braces . push (new Floor (0.3, 0.3, 74, 74, 6, 48, [{left: -0.04, right: 0.04}, {left: 0.96, right: 1.04}], 'red', '#ffffdd'));
+s . braces . push (new Floor (0.295, 0.295, 78, 78, 6, 52, [{left: -0.04, right: 0.04}, {left: 0.96, right: 1.04}], 'red', 'white'));
+r = new Rule ({left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
 r . scales . push (new spacer (2));
-r . scales . push (new scale_LL03 (24, {colour: 'red'}));
-r . scales . push (new scale_LL02 (24, {colour: 'red'}));
-r . scales . push (new scale_LL01 (24, {colour: 'red'}));
+r . scales . push (new scale_LL03_down (24, {left_extension: 0.178, colour: 'red'}));
+r . scales . push (new scale_LL02_down (24, {left_extension: 0.175, colour: 'red'}));
+r . scales . push (new scale_LL01_down (24, {left_extension: 0.178, colour: 'red'}));
 r . scales . push (new spacer (24));
-r = new Rule ({stator: 1}); s . rules . push (r);
+r = new Rule ({stator: 1, left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
 r . scales . push (new scale_Sdec_down (24));
 r . scales . push (new scale_Tdec (24));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_STdec_down (24));
 r . scales . push (new scale_T1dec (24));
-r = new Rule (); s . rules . push (r);
+r = new Rule ({left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
 r . scales . push (new spacer (24));
-r . scales . push (new scale_LL1_down (24));
-r . scales . push (new scale_LL2_down (24));
-r . scales . push (new scale_LL3_down (24));
+r . scales . push (new scale_LL1 (24, {left_extension: 0.18}));
+r . scales . push (new scale_LL2 (24, {left_extension: 0.18}));
+r . scales . push (new scale_LL3 (24, {left_extension: 0.18}));
 r . scales . push (new spacer (2));
 </script>
 
 <script src="sliderule_application.js"></script>
-<script>changeSide ('front');</script>
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+//changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+//changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+</script>
 <script>
 'use strict';
 
