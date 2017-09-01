@@ -1203,7 +1203,7 @@ var Cursor = function (shift, from, to, colour, options) {
   this . shift = shift;
   this . from = from;
   this . to = to;
-  this . marking_shift = 0.01; this . marking_align = 'left';
+  this . marking_shift = 0.01; this . marking_y_shift = 0; this . marking_align = 'left';
   this . draw = function (ctx, length, static_offset) {
     length *= this . shift - (this . static ? static_offset : 0);
     ctx . save ();
@@ -1353,7 +1353,6 @@ var Engraving = function (text, font, align, colour, location, top, rotation) {
     ctx . translate (location * s . length, top);
     if (rotation !== undefined) ctx . rotate (rotation);
 		ctx . fillText (text, 0, 0);
-    //ctx . fillRect (0, 0, 100, 100);
 	};
 };
 
@@ -1626,13 +1625,13 @@ var Sliderule = function (length, options) {
               measure = ctx . measureText (description);
               ctx . textAlign = this . cursors [esc] . marking_align;
               if (this . cursors [esc] . marking_align === 'left') {
-                ctx . fillRect ((offset + this . cursors [esc] . marking_shift) * this . length, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
+                ctx . fillRect ((offset + this . cursors [esc] . marking_shift) * this . length, y + hh - 2 - this . markings_size * 0.5 + this . cursors [esc] . marking_y_shift, measure . width + 8, this . markings_size + 2);
                 ctx . fillStyle = this . markings_colour;
-                ctx . fillText (description, (offset + this . cursors [esc] . marking_shift) * this . length + 4, y + hh);
+                ctx . fillText (description, (offset + this . cursors [esc] . marking_shift) * this . length + 4, y + hh + this . cursors [esc] . marking_y_shift);
               } else {
-                ctx . fillRect ((offset + this . cursors [esc] . marking_shift) * this . length - measure . width - 8, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
+                ctx . fillRect ((offset + this . cursors [esc] . marking_shift) * this . length - measure . width - 8, y + hh - 2 - this . markings_size * 0.5 + this . cursors [esc] . marking_y_shift, measure . width + 8, this . markings_size + 2);
                 ctx . fillStyle = this . markings_colour;
-                ctx . fillText (description, (offset + this . cursors [esc] . marking_shift) * this . length - 4, y + hh);
+                ctx . fillText (description, (offset + this . cursors [esc] . marking_shift) * this . length - 4, y + hh + this . cursors [esc] . marking_y_shift);
               }
             }
           }
