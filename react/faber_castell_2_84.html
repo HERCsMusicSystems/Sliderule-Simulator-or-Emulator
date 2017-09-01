@@ -122,11 +122,11 @@ r . scales . push (new scale_LL02_down (24, {left_extension: 0.175, colour: 'red
 r . scales . push (new scale_LL01_down (24, {left_extension: 0.178, colour: 'red'}));
 r . scales . push (new spacer (24));
 r = new Rule ({stator: 1, left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
-r . scales . push (new scale_Sdec_down (24));
-r . scales . push (new scale_Tdec (24));
+r . scales . push (new scale_TANHgrad_down (24, {left_extension: 1, right_extension: 1}));
+r . scales . push (new scale_COSHgrad (24, {left_extension: 1, right_extension: 1}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_STdec_down (24));
-r . scales . push (new scale_T1dec (24));
+r . scales . push (new scale_SINH2grad_down (24, {left_extension: 1, right_extension: 1}));
+r . scales . push (new scale_SINH1grad (24, {left_extension: 1, right_extension: 1}));
 r = new Rule ({left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
 r . scales . push (new spacer (24));
 r . scales . push (new scale_LL1 (24, {left_extension: 0.18}));
