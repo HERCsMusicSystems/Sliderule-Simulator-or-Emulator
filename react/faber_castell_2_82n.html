@@ -28,12 +28,12 @@
   </head>
 <body>
 <div>
-	<input type = checkbox onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
-	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
-	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
-	<input type = checkbox onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
-	<input type = checkbox onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
-	<input type = checkbox onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
 </div>
 <div id="root"></div>
 
@@ -86,7 +86,7 @@ s . braces . push (new Screw (1.444, 330, 8, 3.1, '#b5a642', '#605321'));
 s . braces . push (new Logo (logo, 0.105, 48, 0.125));
 s . braces . push (new Engraving ("CASTELL", 'italic 16px arial', 'center', 'black', 0.1, 296));
 s . braces . push (new Engraving ("DUPLEX", '16px arial', 'center', 'black', 0.1, 316));
-s . cursorGlassBraces . push (new CursorBrace (0.098, 0.098, 20, 0, '#deb887'));
+s . cursorGlassBraces . push (new CursorBrace (0.098, 0.098, 20, 0, 20, '#deb887'));
 var front_german_braces = [];
 var front_german_cursors = [];
 var front_us_braces = [];
@@ -194,7 +194,7 @@ s . braces . push (new Screw (0.036, 36, 8, 0.8, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.45, 318, 12, 1.4, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.464, 90, 8, 2.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.444, 36, 8, 3.1, '#b5a642', '#605321'));
-s . cursorGlassBraces . push (new CursorBrace (0.098, 0.098, 20, 0, '#deb887'));
+s . cursorGlassBraces . push (new CursorBrace (0.098, 0.098, 20, 0, 20, '#deb887'));
 var back_german_braces = [];
 var back_german_cursors = [];
 var back_us_braces = [];
@@ -261,13 +261,21 @@ r . scales . push (new spacer (6));
 
 r . scales . push (new scale_LL2_down (24, {left_extension: 0.046, right_extension: 0.042, left: "LL\u2082", right: "e^0.1x", rs: 0.08}));
 r . scales . push (new spacer (6));
-r . scales . push (new scale_LL3_down (24, {left_extension: 0.04, right_extension: 0.07, left: "LL\u2083", right: "e^x", rs: 0.08}));
+r . scales . push (new scale_LL3_down (24, {left_extension: 0.04, right_extension: 0.064, left: "LL\u2083", right: "e^x", rs: 0.08}));
 r . scales . push (new spacer (8));
 
 changeVersion ('german');
 </script>
 
 <script src="sliderule_application.js"></script>
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+//changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+//changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+</script>
 <script>
 'use strict';
 

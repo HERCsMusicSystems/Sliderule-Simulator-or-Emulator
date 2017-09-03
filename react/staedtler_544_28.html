@@ -28,12 +28,12 @@
   </head>
 <body>
 <div>
-	<input type = checkbox onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
-	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
-	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
-	<input type = checkbox onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
-	<input type = checkbox onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
-	<input type = checkbox onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
 </div>
 <div id="root"></div>
 
@@ -146,7 +146,7 @@ r . scales . push (new scale_DI (18, {left: "CI", right: "1/X", rs: 0.07, colour
 r . scales . push (new scale_C (18, {left: "C", right: "X", rs: 0.07, left_extension: 0.072, right_extension: 0.062, alt: 'black', highlight: '#88ffff', highlight_left: 0.16, highlight_right: 0.16}));
 r = new Rule ({alt_left_margin: 0.18, alt_right_margin: 0.18}); s . rules . push (r);
 r . scales . push (new scale_D (18, {left: "D", right: "X", rs: 0.07, left_extension: 0.072, right_extension: 0.062, alt: 'black'}));
-r . scales . push (new scale_LL3_down (18, {left: "LL\u2083", right: "e^x", rs: 0.07, left_extension: 0.04, right_extension: 0.066}));
+r . scales . push (new scale_LL3_down (18, {left: "LL\u2083", right: "e^x", rs: 0.07, left_extension: 0.04, right_extension: 0.064}));
 r . scales . push (new scale_LL2_down (18, {left: "LL\u2082", right: "e^0.1x", rs: 0.07, left_extension: 0.025, right_extension: 0.042}));
 r . scales . push (new scale_LL1_down (18, {left: "LL\u2081", right: "e^0.01x", rs: 0.07, left_extension: 0.005, right_extension: 0.02}));
 r . scales . push (new scale_LL0_down (18, {left: "LL\u2080", right: "e^0.001x", rs: 0.07}));
@@ -156,6 +156,14 @@ changeVersion ('german');
 </script>
 
 <script src="sliderule_application.js"></script><script> changeSide ('front'); </script>
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+//changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+//changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+</script>
 <script>
 'use strict';
 
