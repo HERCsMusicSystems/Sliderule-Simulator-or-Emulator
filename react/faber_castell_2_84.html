@@ -32,8 +32,8 @@
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
-	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
-	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+<!--	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.-->
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 800 : 1200);" />Short/Long
 </div>
 <div id="root"></div>
 <script src="react.js"></script>
@@ -45,10 +45,12 @@
 
 <script>
 
+var faber_castell = new Image (); faber_castell . src = "Faber-Castell.png";
+
 var v1 = Math . log10 (Math . pow (Math . E, Math . log (10) - 140 * Math . PI / 200));
 var v2 = Math . log10 (Math . pow (Math . E, (Math . log (10) - 2.2)));
-var sliderules = new Sliderules ({position: {x: 32.5, y: 46.5}});
-var s = new Sliderule (800, {cursorHairline: false, cursor_left_extension: 0.22, cursor_right_extension: 0.22, left_margin: 0.3, right_margin: 0.3, cursor_top_margin: 10, cursor_bottom_margin: 10}); sliderules . sliderules . push (s);
+var sliderules = new Sliderules ({background: faber_castell, background_colour: 'green', position: {x: 32.5, y: 46.5}});
+var s = new Sliderule (1200, {cursorHairline: false, cursor_left_extension: 0.22, cursor_right_extension: 0.22, left_margin: 0.3, right_margin: 0.3, cursor_top_margin: 10, cursor_bottom_margin: 10, cursor_limit_left: 0.08, cursor_limit_right: 0.08}); sliderules . sliderules . push (s);
 s . cursorGlassBraces . push (new CursorBrace (0.222, 0.222, 16, 0, 4, '#ffe8b7'));
 s . cursorBraces . push (new Engraving ("2\u03c0", '12px arial', 'center', 'red', Math . log10 (2 * Math . PI / 10) / 2, -4));
 s . cursorBraces . push (new Engraving ("\u03c0/4", '12px arial', 'center', 'red', HairlineS, -4));
@@ -155,8 +157,20 @@ r . scales . push (new scale_Sgrad_down (24, {left_extension: 0.19, left: "sin X
 r . scales . push (new scale_Metric_down (24, {step: 0.1, scale: Math . log (10), shift: (Math . log (10) - 2.2) * -3.5, right_extension: 0.105, left: "(e^X)", ls: 0.2, la: 'right', right: "(ln Y)", rs: 0.22, centre: "ln 10=2,302585", cs: 1.12, ca: 'left', cf: '10px arial'}));
 r . scales . push (new spacer (2));
 
-s = new Sliderule (800, {cursor_left_extension: 0.22, cursor_right_extension: 0.22, cursorFrame: null, cursorGlass: null, cursorHairline: false, left_margin: 0.3, right_margin: 0.3}); sliderules . sliderules . push (s);
+s = new Sliderule (1200, {cursor_left_extension: 0.22, cursor_right_extension: 0.22, cursorFrame: null, cursorGlass: null, cursorHairline: false, left_margin: 0.3, right_margin: 0.3, cursor_limit_left: 0.08, cursor_limit_right: 0.08}); sliderules . sliderules . push (s);
 s . cursorGlassBraces . push (new CursorBrace (0.222, 0.222, 16, 0, 4, '#ffe8b7'));
+s . cursorBraces . push (new Engraving ("2\u03c0", '12px arial', 'center', 'red', Math . log10 (2 * Math . PI / 10), -4));
+s . cursorBraces . push (new Engraving ("\u27f5", '12px arial', 'center', 'green', -0.16, -4));
+s . cursorBraces . push (new Engraving ("\u03c0/4", '12px arial', 'center', 'red', Math . log10 (Math . PI / 4), -4));
+s . cursorBraces . push (new Engraving ("1", '12px arial', 'center', 'red', 0, -4));
+s . cursorBraces . push (new Engraving ("4\u03c0", '12px arial', 'center', 'red', Math . log10 (4 * Math . PI / 10), -4));
+s . cursorBraces . push (new Engraving ("\u27f6", '12px arial', 'center', 'green', 0.16, -4));
+s . cursorBraces . push (new Engraving ("\u03c0/2", '12px arial', 'center', 'red', Math . log10 (Math . PI / 2), -4));
+s . cursorBraces . push (new Engraving ("2\u03c0", '12px arial', 'center', 'red', Math . log10 (2 * Math . PI / 10), 306));
+s . cursorBraces . push (new Engraving ("\u03c0/4", '12px arial', 'center', 'red', Math . log10 (Math . PI / 4), 306));
+s . cursorBraces . push (new Engraving ("1", '12px arial', 'center', 'red', 0, 306));
+s . cursorBraces . push (new Engraving ("4\u03c0", '12px arial', 'center', 'red', Math . log10 (4 * Math . PI / 10), 306));
+s . cursorBraces . push (new Engraving ("\u03c0/2", '12px arial', 'center', 'red', Math . log10 (Math . PI / 2), 306));
 s . glasses . push (new Glass ({top: 10, bottom: -220, left: 0.22, right: 0.22}));
 s . glasses . push (new Glass ({top: -220, bottom: 10, left: 0.22, right: 0.22}));
 s . cursors . push (new Cursor (0, 0, 74, 'red', {main: true}));
@@ -208,7 +222,7 @@ changeMarkings ('hairline', document . getElementById ('on_hairline') . checked)
 changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 //changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
-//changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
 </script>
 <script>
 'use strict';

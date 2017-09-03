@@ -151,8 +151,6 @@ r . scales . push (new scale_LL2_down (18, {left: "LL\u2082", right: "e^0.1x", r
 r . scales . push (new scale_LL1_down (18, {left: "LL\u2081", right: "e^0.01x", rs: 0.07, left_extension: 0.005, right_extension: 0.02}));
 r . scales . push (new scale_LL0_down (18, {left: "LL\u2080", right: "e^0.001x", rs: 0.07}));
 
-changeVersion ('german');
-
 </script>
 
 <script src="sliderule_application.js"></script><script> changeSide ('front'); </script>
@@ -161,8 +159,8 @@ changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
-//changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
-//changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
 </script>
 <script>
 'use strict';

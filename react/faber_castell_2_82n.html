@@ -65,7 +65,7 @@ var logo = new Image (); logo . src = "Logo_1951.png";
 
 var sliderules = new Sliderules ({background: faber_castell, background_colour: 'green'});
 var s = new Sliderule (1200, {left_margin: 0.24, right_margin: 0.24, cursor_rounding: 16, hairline_top: -8, hairline_bottom: -8,
-  cursor_left_extension: 0.093, cursor_right_extension: 0.093, markings_background: 'black', markings_colour: 'gold', markings_size: 15});
+  cursor_left_extension: 0.093, cursor_right_extension: 0.093, markings_background: 'black', markings_colour: 'gold', markings_size: 15, cursor_limit_left: 0.074, cursor_limit_right: 0.074});
 sliderules . sliderules . push (s);
 s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 84, 1));
 s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 86, 1));
@@ -176,7 +176,7 @@ r . scales . push (new spacer (8));
 
 
 s = new Sliderule (1200, {left_margin: 0.24, right_margin: 0.24, cursor_rounding: 16, hairline_top: -8, hairline_bottom: -8,
-  cursor_left_extension: 0.093, cursor_right_extension: 0.093, markings_background: 'black', markings_colour: 'gold', markings_size: 15, inactive: true});
+  cursor_left_extension: 0.093, cursor_right_extension: 0.093, markings_background: 'black', markings_colour: 'gold', markings_size: 15, inactive: true, cursor_limit_left: 0.074, cursor_limit_right: 0.074});
 sliderules . sliderules . push (s);
 s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 84, 1));
 s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 86, 1));
@@ -264,7 +264,6 @@ r . scales . push (new spacer (6));
 r . scales . push (new scale_LL3_down (24, {left_extension: 0.04, right_extension: 0.064, left: "LL\u2083", right: "e^x", rs: 0.08}));
 r . scales . push (new spacer (8));
 
-changeVersion ('german');
 </script>
 
 <script src="sliderule_application.js"></script>
@@ -273,8 +272,8 @@ changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
-//changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
-//changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
 </script>
 <script>
 'use strict';
