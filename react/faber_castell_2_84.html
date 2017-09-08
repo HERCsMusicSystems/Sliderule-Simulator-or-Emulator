@@ -119,16 +119,16 @@ s . cursors . push (new Cursor (v1 * 1.5, 4, 26, 'blue', {marking_shift: 0, mark
 s . cursors . push (new Cursor (v1 * 2.5, 4, 26, 'blue', {marking_shift: 0, marking_y_shift: -15}));
 s . cursors . push (new Cursor (v1 * 3.5, 4, 26, 'blue', {marking_shift: 0, marking_y_shift: 11}));
 s . cursors . push (new Cursor (v1 * 4.5, 4, 26, 'blue', {marking_shift: 0, marking_y_shift: -15}));
-s . cursors . push (new Cursor (v2 * -4.5, 268, 292, 'blue', {marking_shift: 0, marking_y_shift: 15, marking_align: 'right'}));
-s . cursors . push (new Cursor (v2 * -3.5, 266, 292, 'blue', {marking_shift: 0, marking_y_shift: -11, marking_align: 'right'}));
-s . cursors . push (new Cursor (v2 * -2.5, 268, 292, 'blue', {marking_shift: 0, marking_y_shift: 15, marking_align: 'right'}));
-s . cursors . push (new Cursor (v2 * -1.5, 268, 292, 'blue', {marking_shift: 0, marking_y_shift: -15, marking_align: 'right'}));
-s . cursors . push (new Cursor (v2 * -0.5, 268, 292, 'blue', {marking_shift: 0, marking_y_shift: 15, marking_align: 'right'}));
-s . cursors . push (new Cursor (v2 * 0.5, 268, 292, 'blue', {marking_shift: 0, marking_y_shift: 15}));
-s . cursors . push (new Cursor (v2 * 1.5, 268, 292, 'blue', {marking_shift: 0, marking_y_shift: -15}));
-s . cursors . push (new Cursor (v2 * 2.5, 268, 292, 'blue', {marking_shift: 0, marking_y_shift: 15}));
-s . cursors . push (new Cursor (v2 * 3.5, 268, 292, 'blue', {marking_shift: 0, marking_y_shift: -11}));
-s . cursors . push (new Cursor (v2 * 4.5, 268, 292, 'blue', {marking_shift: 0, marking_y_shift: 15}));
+s . cursors . push (new Cursor (v2 * -4.5, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: 15, marking_align: 'right'}));
+s . cursors . push (new Cursor (v2 * -3.5, 264, 290, 'blue', {marking_shift: 0, marking_y_shift: -11, marking_align: 'right'}));
+s . cursors . push (new Cursor (v2 * -2.5, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: 15, marking_align: 'right'}));
+s . cursors . push (new Cursor (v2 * -1.5, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: -15, marking_align: 'right'}));
+s . cursors . push (new Cursor (v2 * -0.5, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: 15, marking_align: 'right'}));
+s . cursors . push (new Cursor (v2 * 0.5, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: 15}));
+s . cursors . push (new Cursor (v2 * 1.5, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: -15}));
+s . cursors . push (new Cursor (v2 * 2.5, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: 15}));
+s . cursors . push (new Cursor (v2 * 3.5, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: -11}));
+s . cursors . push (new Cursor (v2 * 4.5, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: 15}));
 s . cursors . push (new Cursor (Math . log10 (2 * Math . PI / 10), 32, 262, 'blue', {marking_align: 'right', marking_shift: -0.01}));
 s . cursors . push (new Cursor (Math . log10 (4 * Math . PI / 10), 148, 220, 'blue'));
 s . cursors . push (new Cursor (Math . log10 (Math . PI / 2), 32, 262, 'blue'));
@@ -140,7 +140,7 @@ s . cursors . push (new Cursor (Math . log10 (Math . PI / 2) / 2, 74, 146, 'blue
 var r = new Rule ({left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
 r . scales . push (new spacer (2));
 r . scales . push (new scale_Metric (24, {step: 10, scale: 200 / Math . PI * Math . log (10), shift: (200 / Math . PI * Math . log (10) - 140) * -3.5,
-right_extension: 0.11, left: "(e^xg)", ls: 0.2, la: 'right', right: "(g ln Y)", rs: 0.22}));
+right_extension: 0.11, left: "(e^xg)", ls: 0.2, la: 'right', right: "(g ln Y)", rs: 0.22, centre: "ln 10=146,587g", cs: 1.12, ca: 'left', cf: '10px arial'}));
 r . scales . push (new scale_Tgrad (24, {left_extension: 0.19, right_extension: 0.17, left: "tan Xg", ls: 0.2, la: 'right', right: "g tan Y", rs: 0.22}));
 r . scales . push (new scale_PH (24, {left_extension: 0.18, right_extension: 0.178, left: "\u221a(X\u00b2-1)", ls: 0.2, la: 'right', right: "\u221a(1+Y\u00b2)", rs: 0.22}));
 r . scales . push (new scale_A (24, {left_extension: 0.18, right_extension: 0.185, left: "\u221aX", ls: 0.2, la: 'right', right: "Y\u00b2", rs: 0.22, alt: 'black'}));
@@ -152,8 +152,8 @@ r . scales . push (new scale_DI (24, {left_extension: 0.178, right_extension: 0.
 r . scales . push (new scale_C (24, {left_extension: 0.19, right_extension: 0.178, left: "y", ls: 0.2, la: 'right', right: "y", rs: 0.22, alt: 'black'}));
 r = new Rule ({left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
 r . scales . push (new scale_D (24, {left_extension: 0.19, right_extension: 0.178, left: "Y", ls: 0.2, la: 'right', right: "Y", rs: 0.22, alt: 'black'}));
-r . scales . push (new scale_P_down (24, {left_extension: 0.18, left: "\u221a(1-X\u00b2)", ls: 0.2, la: 'right', right: "\u221a(1-Y\u00b2)", rs: 0.22, colour: 'red'}));
-r . scales . push (new scale_Sgrad_down (24, {left_extension: 0.19, left: "sin Xg", ls: 0.2, la: 'right', right: "g sin Y", rs: 0.22}));
+r . scales . push (new scale_P_down (24, {left_extension: 0.18, left: "\u221a(1-X\u00b2)", ls: 0.2, la: 'right', right: "\u221a(1-Y\u00b2)", rs: 0.22, colour: 'red', centre: '100g=1L=\u03c0/2=', ca: 'left', cs: 1.016, cc: 'black', cf: '16px arial'}));
+r . scales . push (new scale_Sgrad_down (24, {left_extension: 0.19, left: "sin Xg", ls: 0.2, la: 'right', right: "g sin Y", rs: 0.22, centre: '1,570796=1/0,6366198', ca: 'left', cs: 1.016, cf: '16px arial'}));
 r . scales . push (new scale_Metric_down (24, {step: 0.1, scale: Math . log (10), shift: (Math . log (10) - 2.2) * -3.5, right_extension: 0.105, left: "(e^X)", ls: 0.2, la: 'right', right: "(ln Y)", rs: 0.22, centre: "ln 10=2,302585", cs: 1.12, ca: 'left', cf: '10px arial'}));
 r . scales . push (new spacer (2));
 
