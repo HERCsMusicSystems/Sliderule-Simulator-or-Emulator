@@ -1,0 +1,206 @@
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Faber Castell 2/84N Mathema</title>
+  </head>
+<body>
+<div>
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 800 : 1200);" />Short/Long
+</div>
+<div id="root"></div>
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+
+
+<script>
+
+var faber_castell = new Image (); faber_castell . src = "Faber-Castell.png";
+
+var v1 = Math . log10 (Math . pow (Math . E, Math . log (10) - 140 * Math . PI / 200));
+var v2 = Math . log10 (Math . pow (Math . E, (Math . log (10) - 2.2)));
+var sliderules = new Sliderules ({background: faber_castell, background_colour: 'green', position: {x: 32.5, y: 46.5}});
+var s = new Sliderule (1200, {hairline_top: -4, hairline_bottom: -4, cursor_left_extension: 0.105, cursor_right_extension: 0.105, left_margin: 0.32, right_margin: 0.32, cursor_rounding: 22, cursor_limit_left: 0.08, cursor_limit_right: 0.08}); sliderules . sliderules . push (s);
+s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 67, 1));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 69, 1));
+s . braces . push (new LeftBraceBar (0.054, 20, 20, 4, 'red', 'black'));
+s . braces . push (new LeftBraceBar (0.054, 20, 240, 4, 'gray', 'black'));
+s . braces . push (new LeftBraceBar (0.054, 240, 20, 4, 'gray', 'black'));
+s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 67, 1));
+s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 69, 1));
+s . braces . push (new RightBraceBar (0.054, 20, 20, 4, 'red', 'black'));
+s . braces . push (new RightBraceBar (0.054, 20, 240, 4, 'gray', 'black'));
+s . braces . push (new RightBraceBar (0.054, 240, 20, 4, 'gray', 'black'));
+s . braces . push (new Screw (0.03, 48, 12, 0.5, '#b5a642', '#605321'));
+s . braces . push (new Screw (0.016, 220, 8, 0.1, '#b5a642', '#605321'));
+s . braces . push (new Screw (0.036, 270, 8, 0.8, '#b5a642', '#605321'));
+s . braces . push (new Screw (1.61, 48, 12, 1.4, '#b5a642', '#605321'));
+s . braces . push (new Screw (1.624, 220, 8, 2.5, '#b5a642', '#605321'));
+s . braces . push (new Screw (1.604, 270, 8, 3.1, '#b5a642', '#605321'));
+s . cursorGlassBraces . push (new CursorBrace (0.106, 0.106, 23, 0, 23, '#deb887'));
+//s . cursorBraces . push (new Engraving ("\u27f5 CASTELL \u27f6", 'italic 12px arial', 'center', 'green', 0, 306));
+s . cursorBraces . push (new Engraving ("X", '12px arial', 'center', 'red', v1 * -2, -1));
+s . cursorBraces . push (new Engraving ("+", '12px arial', 'center', 'red', v1 * -1.5, -1));
+s . cursorBraces . push (new Engraving ("140", '12px arial', 'center', 'red', v1 * -1, -1));
+s . cursorBraces . push (new Engraving ("280", '12px arial', 'center', 'red', v1 * 0, -1));
+s . cursorBraces . push (new Engraving ("420", '12px arial', 'center', 'red', v1 * 1, -1));
+s . cursorBraces . push (new Engraving ("560", '12px arial', 'center', 'red', v1 * 2, -1));
+s . cursorBraces . push (new Engraving ("10", '12px arial', 'center', 'red', v1 * -2, -11));
+s . cursorBraces . push (new Engraving ("y", '12px arial', 'center', 'red', v1 * -1.5, -11));
+s . cursorBraces . push (new Engraving ("10\u00b2", '12px arial', 'center', 'red', v1 * -1, -11));
+s . cursorBraces . push (new Engraving ("10\u00b3", '12px arial', 'center', 'red', v1 * 0, -11));
+s . cursorBraces . push (new Engraving ("10\u2074", '12px arial', 'center', 'red', v1 * 1, -11));
+s . cursorBraces . push (new Engraving ("10\u2075", '12px arial', 'center', 'red', v1 * 2, -11));
+s . cursorBraces . push (new Engraving ("X", '12px arial', 'center', 'red', v2 * -2, 304));
+s . cursorBraces . push (new Engraving ("+", '12px arial', 'center', 'red', v2 * -1.5, 304));
+s . cursorBraces . push (new Engraving ("2.2", '12px arial', 'center', 'red', v2 * -1, 304));
+s . cursorBraces . push (new Engraving ("4.4", '12px arial', 'center', 'red', v2 * 0, 304));
+s . cursorBraces . push (new Engraving ("6.6", '12px arial', 'center', 'red', v2 * 1, 304));
+s . cursorBraces . push (new Engraving ("8.8", '12px arial', 'center', 'red', v2 * 2, 304));
+s . cursorBraces . push (new Engraving ("10", '12px arial', 'center', 'red', v2 * -2, 314));
+s . cursorBraces . push (new Engraving ("y", '12px arial', 'center', 'red', v2 * -1.5, 314));
+s . cursorBraces . push (new Engraving ("10\u00b2", '12px arial', 'center', 'red', v2 * -1, 314));
+s . cursorBraces . push (new Engraving ("10\u00b3", '12px arial', 'center', 'red', v2 * 0, 314));
+s . cursorBraces . push (new Engraving ("10\u2074", '12px arial', 'center', 'red', v2 * 1, 314));
+s . cursorBraces . push (new Engraving ("10\u2075", '12px arial', 'center', 'red', v2 * 2, 314));
+s . cursorBraces . push (new Engraving ("\u03c0/4", '12px arial', 'center', 'red', HairlineS, 68));
+s . cursorBraces . push (new Engraving ("1", '12px arial', 'right', 'red', -0.004, 68));
+s . cursorBraces . push (new Engraving ("\u03c0/2", '12px arial', 'right', 'red', Math . log10 (Math . PI / 2) / 2 - 0.004, 68));
+s . cursorBraces . push (new Engraving ("\u03c0/2", '12px arial', 'right', 'red', Math . log10 (Math . PI / 2) / 2 - 0.004, 214));
+s . cursorBraces . push (new Engraving ("1", '12px arial', 'left', 'red', - Math . log10 (Math . PI / 2) / 2 + 0.004, 214));
+s . cursors . push (new Cursor (v1 * -2, 4, 26, 'blue', {marking_align: 'right', marking_shift: 0, marking_y_shift: 15}));
+s . cursors . push (new Cursor (v1 * -1, 4, 26, 'blue', {marking_align: 'right', marking_shift: 0, marking_y_shift: -15}));
+s . cursors . push (new Cursor (v1 * 1, 4, 26, 'blue', {marking_shift: 0, marking_y_shift: -15}));
+s . cursors . push (new Cursor (v1 * 2, 4, 26, 'blue', {marking_shift: 0, marking_y_shift: 15}));
+s . cursors . push (new Cursor (v2 * -2, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: 15, marking_align: 'right'}));
+s . cursors . push (new Cursor (v2 * -1, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: -15, marking_align: 'right'}));
+s . cursors . push (new Cursor (v2 * 1, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: -15}));
+s . cursors . push (new Cursor (v2 * 2, 268, 290, 'blue', {marking_shift: 0, marking_y_shift: 15}));
+s . cursors . push (new Cursor (HairlineS, 74, 122, 'blue', {marking_align: 'right', marking_shift: 0.04}));
+s . cursors . push (new Cursor (- Math . log10 (Math . PI / 2) / 2, 38, 256, 'blue', {marking_align: 'right', marking_shift: -0.01}));
+s . cursors . push (new Cursor (Math . log10 (Math . PI / 2) / 2, 38, 256, 'blue'));
+var r = new Rule ({left_margin: 0.32, right_margin: 0.32}); s . rules . push (r);
+r . scales . push (new spacer (2));
+r . scales . push (new scale_Metric (24, {step: 10, scale: 200 / Math . PI * Math . log (10), shift: (200 / Math . PI * Math . log (10) - 140) * -2,
+right_extension: 0.11, left: "(e^xg)", ls: 0.2, la: 'right', right: "(g ln Y)", rs: 0.21, centre: "ln 10=146,587g", cs: -0.11, ca: 'right', cf: '10px arial'}));
+r . scales . push (new scale_Tgrad (24, {left_extension: 0.19, right_extension: 0.17, left: "tan Xg", ls: 0.2, la: 'right', right: "g tan Y", rs: 0.21}));
+r . scales . push (new scale_PH (24, {left_extension: 0.18, right_extension: 0.178, left: "\u221a(X\u00b2-1)", ls: 0.2, la: 'right', right: "\u221a(1+Y\u00b2)", rs: 0.21}));
+r . scales . push (new scale_A (24, {left_extension: 0.18, right_extension: 0.185, left: "\u221aX", ls: 0.2, la: 'right', right: "Y\u00b2", rs: 0.21, alt: 'black'}));
+r = new Rule ({stator: 1, left_margin: 0.33, right_margin: 0.33}); s . rules . push (r);
+r . markings . push (new Engraving ("CASTELL", 'italic 16px arial', 'center', 'black', -0.23, 49, Math . PI * -0.5));
+r . scales . push (new scale_B (24, {left_extension: 0.18, right_extension: 0.185, left: "\u221ax", ls: 0.2, la: 'right', right: "y\u00b2", rs: 0.21, alt: 'black'}));
+r . scales . push (new scale_AI (24, {left_extension: 0.185, right_extension: 0.18, left: "1/\u221ax", ls: 0.2, la: 'right', right: "1/y\u00b2", rs: 0.21, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DI (24, {left_extension: 0.178, right_extension: 0.19, left: "1/y", ls: 0.2, la: 'right', right: "1/y", rs: 0.21, colour: 'red'}));
+r . scales . push (new scale_C (24, {left_extension: 0.19, right_extension: 0.178, left: "y", ls: 0.2, la: 'right', right: "y", rs: 0.21, alt: 'black'}));
+r = new Rule ({left_margin: 0.32, right_margin: 0.32}); s . rules . push (r);
+r . scales . push (new scale_D (24, {left_extension: 0.19, right_extension: 0.178, left: "Y", ls: 0.2, la: 'right', right: "Y", rs: 0.21, alt: 'black'}));
+r . scales . push (new scale_P_down (24, {left_extension: 0.18, left: "\u221a(1-X\u00b2)", ls: 0.2, la: 'right', right: "\u221a(1-Y\u00b2)", rs: 0.21, colour: 'red'}));
+r . scales . push (new scale_Sgrad_down (24, {left_extension: 0.19, left: "sin Xg", ls: 0.2, la: 'right', right: "g sin Y", rs: 0.21}));
+r . scales . push (new scale_Metric_down (24, {step: 0.1, scale: Math . log (10), shift: (Math . log (10) - 2.2) * -2, right_extension: 0.105, left: "(e^X)", ls: 0.2, la: 'right', right: "(ln Y)", rs: 0.21, centre: "ln 10=2,302585", cs: -0.11, ca: 'right', cf: '10px arial'}));
+r . scales . push (new spacer (2));
+
+s = new Sliderule (1200, {cursor_left_extension: 0.22, cursor_right_extension: 0.22, cursorFrame: null, cursorGlass: null, cursorHairline: false, left_margin: 0.3, right_margin: 0.3, cursor_limit_left: 0.08, cursor_limit_right: 0.08}); sliderules . sliderules . push (s);
+s . cursorGlassBraces . push (new CursorBrace (0.222, 0.222, 16, 0, 4, '#ffe8b7'));
+s . cursorBraces . push (new Engraving ("2\u03c0", '12px arial', 'center', 'red', Math . log10 (2 * Math . PI / 10), -4));
+s . cursorBraces . push (new Engraving ("\u27f5", '12px arial', 'center', 'green', -0.16, -4));
+s . cursorBraces . push (new Engraving ("\u03c0/4", '12px arial', 'center', 'red', Math . log10 (Math . PI / 4), -4));
+s . cursorBraces . push (new Engraving ("1", '12px arial', 'center', 'red', 0, -4));
+s . cursorBraces . push (new Engraving ("4\u03c0", '12px arial', 'center', 'red', Math . log10 (4 * Math . PI / 10), -4));
+s . cursorBraces . push (new Engraving ("\u27f6", '12px arial', 'center', 'green', 0.16, -4));
+s . cursorBraces . push (new Engraving ("\u03c0/2", '12px arial', 'center', 'red', Math . log10 (Math . PI / 2), -4));
+s . cursorBraces . push (new Engraving ("2\u03c0", '12px arial', 'center', 'red', Math . log10 (2 * Math . PI / 10), 306));
+s . cursorBraces . push (new Engraving ("\u03c0/4", '12px arial', 'center', 'red', Math . log10 (Math . PI / 4), 306));
+s . cursorBraces . push (new Engraving ("1", '12px arial', 'center', 'red', 0, 306));
+s . cursorBraces . push (new Engraving ("4\u03c0", '12px arial', 'center', 'red', Math . log10 (4 * Math . PI / 10), 306));
+s . cursorBraces . push (new Engraving ("\u03c0/2", '12px arial', 'center', 'red', Math . log10 (Math . PI / 2), 306));
+s . glasses . push (new Glass ({top: 10, bottom: -220, left: 0.22, right: 0.22}));
+s . glasses . push (new Glass ({top: -220, bottom: 10, left: 0.22, right: 0.22}));
+s . cursors . push (new Cursor (0, 0, 74, 'red', {main: true}));
+s . cursors . push (new Cursor (0, 98, 196, 'blue', {main: true, static: true}));
+s . cursors . push (new Cursor (1, 98, 196, 'blue', {main: true, static: true}));
+s . cursors . push (new Cursor (0, 220, 294, 'red', {main: true}));
+s . cursors . push (new Cursor (Math . log10 (2 * Math . PI / 10), 0, 74, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (4 * Math . PI / 10), 0, 74, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (Math . PI / 2), 0, 74, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (Math . PI / 4), 0, 74, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (2 * Math . PI / 10), 220, 294, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (4 * Math . PI / 10), 220, 294, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (Math . PI / 2), 220, 294, 'blue'));
+s . cursors . push (new Cursor (Math . log10 (Math . PI / 4), 220, 294, 'blue'));
+s . braces . push (new Floor (0.3, 0.3, 74, 74, 6, 48, [{left: -0.03, right: 0.03}, {left: 0.96, right: 1.04}], 'red', '#ffffdd'));
+s . braces . push (new Floor (0.295, 0.295, 78, 78, 6, 52, [{left: -0.03, right: 0.03}, {left: 0.96, right: 1.04}], 'red', 'white'));
+s . braces . push (new Engraving ("tanh xg", '12px arial', 'right', 'black', 0.18, 112, 0));
+s . braces . push (new Engraving ("0,1 cosh xg", '12px arial', 'right', 'black', 0.18, 136, 0));
+s . braces . push (new Engraving ("0,1 sinh xg", '12px arial', 'right', 'black', 0.18, 162, 0));
+s . braces . push (new Engraving ("sinh xg", '12px arial', 'right', 'black', 0.18, 186, 0));
+s . braces . push (new Engraving ("g tanh y", '12px arial', 'left', 'black', 1.42, 112, 0));
+s . braces . push (new Engraving ("g cosh 10 y", '12px arial', 'left', 'black', 1.42, 136, 0));
+s . braces . push (new Engraving ("g sinh 10 y", '12px arial', 'left', 'black', 1.42, 162, 0));
+s . braces . push (new Engraving ("9 sinh y", '12px arial', 'left', 'black', 1.42, 186, 0));
+r = new Rule ({left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL03_down (24, {left_extension: 0.178, right_extension: 0.18, left: "-0,1 ln X", ls: 0.21, la: 'right', right: "e^10 Y", rs: 0.21, colour: 'red'}));
+r . scales . push (new scale_LL02_down (24, {left_extension: 0.175, right_extension: 0.182, left: "-ln X", ls: 0.21, la: 'right', right: "e^-Y", rs: 0.21, colour: 'red'}));
+r . scales . push (new scale_LL01_down (24, {left_extension: 0.178, right_extension: 0.18, left: "-10 ln X", ls: 0.21, la: 'right', right: "e^-0,1 Y", rs: 0.21, colour: 'red'}));
+r . scales . push (new spacer (24));
+r = new Rule ({stator: 1, left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
+r . scales . push (new scale_TANHgrad_down (24, {left_extension: 0.205}));
+r . scales . push (new scale_COSHgrad (24, {right_extension: 0.202}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_SINH2grad_down (24, {left_extension: 0.176, right_extension: 0.202}));
+r . scales . push (new scale_SINH1grad (24, {left_extension: 0.205, right_extension: 0.21}));
+r = new Rule ({left_margin: 0.3, right_margin: 0.3}); s . rules . push (r);
+r . scales . push (new spacer (24));
+r . scales . push (new scale_LL1 (24, {left_extension: 0.18, right_extension: 0.178, left: "10 ln X", ls: 0.21, la: 'right', right: "e^0,1 Y", rs: 0.21}));
+r . scales . push (new scale_LL2 (24, {left_extension: 0.18, right_extension: 0.178, left: "ln X", ls: 0.21, la: 'right', right: "e^Y", rs: 0.21}));
+r . scales . push (new scale_LL3 (24, {left_extension: 0.18, right_extension: 0.182, left: "0,1 ln X", ls: 0.21, la: 'right', right: "e^10 Y", rs: 0.21}));
+r . scales . push (new spacer (2));
+</script>
+
+<script src="sliderule_application.js"></script>
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+//changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
+</script>
+<script>
+'use strict';
+
+ReactDOM.render(React.createElement(SlideruleApplication, null), document.getElementById('root'));
+</script>
+
+</body></html>
+
