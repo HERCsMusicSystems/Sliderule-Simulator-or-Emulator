@@ -53,21 +53,44 @@ s . braces . push (new DecilonBottomLeftBrace (4, 0.1, 0.143, 0.173, 0.194, 6, 2
 s . braces . push (new DecilonBottomLeftBrace (4, 0.106, 0.139, 0.169, 0.19, 10, 240, 252, '#9498a1', 'black'));
 s . braces . push (new DecilonBottomRightBrace (4, 0.1, 0.143, 0.173, 0.194, 6, 236, 248, '#c4c7ce', 'red'));
 s . braces . push (new DecilonBottomRightBrace (4, 0.106, 0.139, 0.169, 0.19, 10, 240, 252, '#9498a1', 'black'));
+s . braces . push (new Bolt (0.078, 288, 10, 'blue', 'red'));
+s . braces . push (new Bolt (0.078, 288, 4, '#9498a1', '#9498a1'));
+s . braces . push (new Bolt (0.076, 216, 10, 'blue', 'red'));
+s . braces . push (new Bolt (0.076, 216, 4, '#9498a1', '#9498a1'));
+s . braces . push (new Screw (0.078, 52, 10, 0.8, 'blue', 'red'));
+s . braces . push (new Screw (0.022, 26, 10, 2.2, 'blue', 'red'));
+s . braces . push (new Bolt (1.322, 288, 10, 'blue', 'red'));
+s . braces . push (new Bolt (1.322, 288, 4, '#9498a1', '#9498a1'));
+s . braces . push (new Bolt (1.324, 216, 10, 'blue', 'red'));
+s . braces . push (new Bolt (1.324, 216, 4, '#9498a1', '#9498a1'));
+s . braces . push (new Screw (1.322, 52, 10, 1.2, 'blue', 'red'));
+s . braces . push (new Screw (1.378, 26, 10, 3, 'blue', 'red'));
 
 var r = new Rule (); s . rules . push (r);
 
 r . scales . push (new spacer (2));
-r . scales . push (new scale_R1 (24));
-r . scales . push (new scale_R2 (24));
-r . scales . push (new scale_CF (24, {left_extension: 0.01}));
+r . scales . push (new scale_R1 (24, {left: "Sq1", la: 'right', ls: 0.05}));
+r . scales . push (new scale_R2 (24, {left_extension: 0.02, left: "Sq2", la: 'right', ls: 0.05}));
+r . scales . push (new scale_CF (24, {left: "DF", la: 'right', ls: 0.05, left_extension: 0.028}));
 
 r = new Rule ({stator: 1, left_margin: 0.2, alt_left_margin: 0.19, right_margin: 0.2, alt_right_margin: 0.19, rounding: 2}); s . rules . push (r);
 r . markings . push (new RuleBars (-0.182, 1, 1, 119, 9, 6, 4, 'black'));
 r . markings . push (new RuleBars (1.182, -1, 1, 119, 9, 6, 4, 'black'));
-r . scales . push (new spacer (120));
+
+r . scales . push (new scale_DF (24, {left_extension: 0.028, left: "CF", la: 'right', ls: 0.05}));
+r . scales . push (new scale_DIF (24, {left_extension: 0.01, left: "CIF", la: 'right', ls: 0.05, marking_colour: 'red'}));
+r . scales . push (new scale_L (24, {left: "L", la: 'right', ls: 0.05}));
+r . scales . push (new scale_CI (24, {left: "CI", la: 'right', ls: 0.05}));
+r . scales . push (new scale_C (24, {left: "C", la: 'right', ls: 0.05}));
 
 r = new Rule ({left_margin: 0.16, alt_left_margin: 0.15, right_margin: 0.16, alt_right_margin: 0.15}); s . rules . push (r);
-r . scales . push (new spacer (122));
+
+r . scales . push (new scale_D (24, {left: "D", la: 'right', ls: 0.05}));
+r . scales . push (new scale_LL0_down (24, {left: "Ln0", la: 'right', ls: 0.05}));
+r . scales . push (new scale_LL1_down (24, {left_extension: 0.006, left: "Ln1", la: 'right', ls: 0.05}));
+r . scales . push (new scale_LL2_down (24, {left_extension: 0.022, left: "Ln2", la: 'right', ls: 0.05}));
+r . scales . push (new scale_LL3_down (24, {left_extension: 0.02, left: "Ln3", la: 'right', ls: 0.05}));
+r . scales . push (new spacer (2));
 
 s = new Sliderule (1200); sliderules . sliderules . push (s);
 
@@ -75,6 +98,14 @@ s . braces . push (new DecilonTopLeftBrace (4, 0.1, 0.143, 0.173, 0.194, 6, 236,
 s . braces . push (new DecilonTopLeftBrace (4, 0.106, 0.139, 0.169, 0.19, 10, 240, 252, '#9498a1', 'black'));
 s . braces . push (new DecilonTopRightBrace (4, 0.1, 0.143, 0.173, 0.194, 6, 236, 248, '#c4c7ce', 'red'));
 s . braces . push (new DecilonTopRightBrace (4, 0.106, 0.139, 0.169, 0.19, 10, 240, 252, '#9498a1', 'black'));
+s . braces . push (new Bolt (0.078, 28, 6, 'blue', 'red'));
+s . braces . push (new Bolt (0.076, 100, 6, 'blue', 'red'));
+s . braces . push (new Bolt (0.078, 264, 6, 'blue', 'red'));
+s . braces . push (new Bolt (0.022, 290, 6, 'blue', 'red'));
+s . braces . push (new Bolt (1.322, 28, 6, 'blue', 'red'));
+s . braces . push (new Bolt (1.324, 100, 6, 'blue', 'red'));
+s . braces . push (new Bolt (1.322, 264, 6, 'blue', 'red'));
+s . braces . push (new Bolt (1.378, 290, 6, 'blue', 'red'));
 
 
 r = new Rule ({left_margin: 0.15, alt_left_margin: 0.16, right_margin: 0.15, alt_right_margin: 0.16}); s . rules . push (r);

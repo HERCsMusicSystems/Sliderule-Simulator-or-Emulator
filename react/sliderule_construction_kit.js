@@ -1545,6 +1545,15 @@ var Screw = function (shift, top, radius, angle, background, colour) {
 	};
 };
 
+var Bolt = function (shift, top, radius, background, colour) {
+	this . draw = function (ctx, s) {
+		ctx . fillStyle = background; ctx . strokeStyle = colour;
+		ctx . beginPath ();
+		ctx . arc (shift * s . length, top, radius, 0, Math . PI * 2);
+		ctx . fill (); ctx . stroke ();
+	};
+};
+
 var Glass = function (options) {
 	this . glass = "rgba(0, 0, 0, 0.1)";
 	this . frame = "rgba(0, 0, 0, 0.1)";
