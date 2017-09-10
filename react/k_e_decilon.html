@@ -1,0 +1,126 @@
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Aristo 0906 bischolar</title>
+  </head>
+<body>
+
+<div>
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+</div>
+<div id="root"></div>
+
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+
+<script>
+
+var sliderules = new Sliderules ();//{position: {x: -500.5, y: 32.5}});
+
+var s = new Sliderule (1200); sliderules . sliderules . push (s);
+
+s . braces . push (new DecilonBottomLeftBrace (4, 0.1, 0.143, 0.173, 0.194, 6, 236, 248, '#c4c7ce', 'red'));
+s . braces . push (new DecilonBottomLeftBrace (4, 0.106, 0.139, 0.169, 0.19, 10, 240, 252, '#9498a1', 'black'));
+s . braces . push (new DecilonBottomRightBrace (4, 0.1, 0.143, 0.173, 0.194, 6, 236, 248, '#c4c7ce', 'red'));
+s . braces . push (new DecilonBottomRightBrace (4, 0.106, 0.139, 0.169, 0.19, 10, 240, 252, '#9498a1', 'black'));
+
+var r = new Rule (); s . rules . push (r);
+
+r . scales . push (new spacer (2));
+r . scales . push (new scale_R1 (24));
+r . scales . push (new scale_R2 (24));
+r . scales . push (new scale_CF (24, {left_extension: 0.01}));
+
+r = new Rule ({stator: 1, left_margin: 0.2, alt_left_margin: 0.19, right_margin: 0.2, alt_right_margin: 0.19, rounding: 2}); s . rules . push (r);
+r . markings . push (new RuleBars (-0.182, 1, 1, 119, 9, 6, 4, 'black'));
+r . markings . push (new RuleBars (1.182, -1, 1, 119, 9, 6, 4, 'black'));
+r . scales . push (new spacer (120));
+
+r = new Rule ({left_margin: 0.16, alt_left_margin: 0.15, right_margin: 0.16, alt_right_margin: 0.15}); s . rules . push (r);
+r . scales . push (new spacer (122));
+
+s = new Sliderule (1200); sliderules . sliderules . push (s);
+
+s . braces . push (new DecilonTopLeftBrace (4, 0.1, 0.143, 0.173, 0.194, 6, 236, 248, '#c4c7ce', 'red'));
+s . braces . push (new DecilonTopLeftBrace (4, 0.106, 0.139, 0.169, 0.19, 10, 240, 252, '#9498a1', 'black'));
+s . braces . push (new DecilonTopRightBrace (4, 0.1, 0.143, 0.173, 0.194, 6, 236, 248, '#c4c7ce', 'red'));
+s . braces . push (new DecilonTopRightBrace (4, 0.106, 0.139, 0.169, 0.19, 10, 240, 252, '#9498a1', 'black'));
+
+
+r = new Rule ({left_margin: 0.15, alt_left_margin: 0.16, right_margin: 0.15, alt_right_margin: 0.16}); s . rules . push (r);
+r . markings . push (new Engraving ("134", '10px arial', 'left', 'black', -0.084, 110, Math . PI * -0.5));
+
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL03 (24, {left: "Ln-3", la: 'right', ls: 0.05, left_extension: 0.016, marking_colour: 'red'}));
+r . scales . push (new scale_LL02 (24, {left: "Ln-2", la: 'right', ls: 0.05, left_extension: 0.026, marking_colour: 'red'}));
+r . scales . push (new scale_LL01 (24, {left: "Ln-1", la: 'right', ls: 0.05, marking_colour: 'red'}));
+r . scales . push (new scale_LL00 (24, {left: "Ln-0", la: 'right', ls: 0.05, marking_colour: 'red'}));
+r . scales . push (new scale_A (24, {left: "A", la: 'right', ls: 0.05}));
+
+r = new Rule ({stator: 1, left_margin: 0.19, alt_left_margin: 0.2, right_margin: 0.19, alt_right_margin: 0.2, rounding: 2}); s . rules . push (r);
+r . markings . push (new RuleBars (-0.182, 1, 1, 119, 9, 6, 4, 'red'));
+r . markings . push (new RuleBars (1.182, -1, 1, 119, 9, 6, 4, 'red'));
+r . markings . push (new Engraving ("\u22c5015134", '10px arial', 'center', 'black', -0.084, 66, Math . PI * -0.5));
+
+r . scales . push (new scale_B (24, {left: "B", la: 'right', ls: 0.05}));
+r . scales . push (new scale_CTTdec (24, {left: "T", la: 'right', ls: 0.05}));
+r . scales . push (new scale_STdec (24, {left: "SRT", la: 'right', ls: 0.05}));
+r . scales . push (new scale_CSdec (24, {left: "S", la: 'right', ls: 0.05}));
+r . scales . push (new scale_C (24, {left: "C", la: 'right', ls: 0.05}));
+
+r = new Rule (); s . rules . push (r);
+r . markings . push (new Engraving ("134", '10px arial', 'center', 'black', -0.084, 37, Math . PI * -0.5));
+
+r . scales . push (new scale_D (24, {left: "D", la: 'right', ls: 0.05}));
+r . scales . push (new scale_DI (24, {left: "DI", la: 'right', ls: 0.05, marking_colour: 'red'}));
+r . scales . push (new scale_J (24, {left: "K", la: 'right', ls: 0.05}));
+r . scales . push (new spacer (2));
+
+</script>
+
+<script src="sliderule_application.js"></script>
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+</script>
+<script>
+'use strict';
+
+ReactDOM.render(React.createElement(SlideruleApplication, null), document.getElementById('root'));
+</script>
+
+
+</body></html>

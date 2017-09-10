@@ -1297,6 +1297,29 @@ var RightBrace = function (margin, width, radius, background, colour, braceRadiu
   };
 };
 
+var drawDecilonBrace = function (ctx, radius, one, two, three, four, margin, l1, l2, background, colour, s) {
+	var delta = {x: s . length * (four - three), y: l2 - l1};
+	var atan = Math . atan2 (delta . y, delta . x);
+	var r = 0.5 * Math . sqrt (delta . x * delta . x + delta . y * delta . y);
+	atan -= Math . asin (radius / r);
+	delta = {x: s . length * (three - two), y: l1 - margin};
+	var btan = Math . atan2 (delta . x, delta . y);
+	r = 0.5 * Math . sqrt (delta . x * delta . x + delta . y * delta . y);
+	btan -= Math . asin (radius / r);
+	ctx . beginPath ();
+	ctx . arc (- s . length * one, margin, radius, Math . PI * 1.5, Math . PI * 2);
+	ctx . arc (- s . length * one, s . height () - margin, radius, 0, Math . PI * 0.5);
+	ctx . arc (- s . length * four, s . height () - margin, radius, Math . PI * 0.5, Math . PI);
+	ctx . arc (- s . length * four, l2, radius, Math . PI, Math . PI * 1.5 - atan);
+	ctx . arc (- s . length * three, l1, radius, Math . PI * 0.5 - atan, btan, true);
+	ctx . arc (- s . length * two, margin, radius, Math . PI + btan, Math . PI * 1.5);
+	ctx . closePath ();
+	ctx . strokeStyle = colour;
+	ctx . stroke ();
+	ctx . fillStyle = background;
+	ctx . fill ();
+};
+
 var drawStaedtlerBrace = function (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s) {
     ctx . strokeStyle = colour;
     var delta = {x: s . length * (left2 - dent), y: dbottom - bottom};
@@ -1331,7 +1354,38 @@ var StaedtlerRightBrace = function (radius, width, dent, left1, left2, top, bott
     ctx . translate (s . length * (1 + s . left_margin), 0);
     ctx . scale (-1, 1);
     drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s);
-  }
+  };
+};
+
+var DecilonTopLeftBrace = function (radius, one, two, three, four, margin, l1, l2, background, colour) {
+	this . draw = function (ctx, s) {
+		ctx . translate (s . length * s . left_margin, 0);
+		drawDecilonBrace (ctx, radius, one, two, three, four, margin, l1, l2, background, colour, s);
+	};
+};
+
+var DecilonTopRightBrace = function (radius, one, two, three, four, margin, l1, l2, background, colour) {
+	this . draw = function (ctx, s) {
+		ctx . translate (s . length * (1 + s . left_margin), 0);
+		ctx . scale (-1, 1);
+		drawDecilonBrace (ctx, radius, one, two, three, four, margin, l1, l2, background, colour, s);
+	};
+};
+
+var DecilonBottomLeftBrace = function (radius, one, two, three, four, margin, l1, l2, background, colour) {
+	this . draw = function (ctx, s) {
+		ctx . translate (s . length * s . left_margin, s . height ());
+		ctx . scale (1, -1);
+		drawDecilonBrace (ctx, radius, one, two, three, four, margin, l1, l2, background, colour, s);
+	};
+};
+
+var DecilonBottomRightBrace = function (radius, one, two, three, four, margin, l1, l2, background, colour) {
+	this . draw = function (ctx, s) {
+		ctx . translate (s . length * (1 + s . left_margin), s . height ());
+		ctx . scale (-1, -1);
+		drawDecilonBrace (ctx, radius, one, two, three, four, margin, l1, l2, background, colour, s);
+	};
 };
 
 var LeftBraceBar = function (location, top, bottom, radius, background, colour) {
