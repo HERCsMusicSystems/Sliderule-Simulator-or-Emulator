@@ -1095,6 +1095,7 @@ var spacer = function (height, options) {
   this . draw_c = true;
   this . draw_pi = true;
   this . draw_e = true;
+  this . lines = [];
   this . ruleHeight = function () {return this . height;};
   this . hitTest = function (y) {return false;};
   this . la = 'left'; this . ra = 'left'; this . ca = 'center';
@@ -1114,11 +1115,17 @@ var spacer = function (height, options) {
     if (this . highlight) {ctx . fillStyle = this . highlight; ctx . fillRect (length * - this . highlight_left, 0, length * (1 + this . highlight_left + this . highlight_right), this . height);}
     ctx . fillStyle = this . marking_colour ? this . marking_colour : this . colour;
     ctx . strokeStyle = this . colour;
-    ctx . font = (height * 0.5) + 'px arial';
+    ctx . font = (this . height * 0.5) + 'px arial';
     ctx . textAlign = 'center';
     ctx . save ();
     this . draw (ctx, length);
     ctx . restore ();
+    for (var line in this . lines) {
+    	ctx . beginPath ();
+    	ctx . moveTo (this . lines [line] . left * length, this . height * this . lines [line] . height);
+    	ctx . lineTo (this . lines [line] . right * length, this . height * this . lines [line] . height);
+    	ctx . stroke ();
+    }
     if (this . font) ctx . font = this . font;
     var textBase = this . height * 0.75;
     if (this . baseline !== undefined) textBase = this . baseline;

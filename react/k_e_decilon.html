@@ -45,10 +45,14 @@
 
 <script>
 
-var sliderules = new Sliderules ();//{position: {x: -500.5, y: 32.5}});
+var decilon_logo = new Image (); decilon_logo . src = "decilon.png";
+var keuffel_and_esser_logo = new Image (); keuffel_and_esser_logo . src = "keuffel_and_esser.png";
 
-var s = new Sliderule (1200); sliderules . sliderules . push (s);
+var sliderules = new Sliderules ({position: {x: -500.5, y: 32.5}});
 
+var s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_top_margin: 10, cursor_bottom_margin: 10, hairline_top: 10, hairline_bottom: 10, cursor_limit_left: 0.024, cursor_limit_right: 0.024}); sliderules . sliderules . push (s);
+
+s . cursorGlassBraces . push (new CursorBrace (0.072, 0.072, 16, 0, 4, 'white'));
 s . braces . push (new DecilonBottomLeftBrace (4, 0.1, 0.143, 0.173, 0.194, 6, 236, 248, '#c4c7ce', 'red'));
 s . braces . push (new DecilonBottomLeftBrace (4, 0.106, 0.139, 0.169, 0.19, 10, 240, 252, '#9498a1', 'black'));
 s . braces . push (new DecilonBottomRightBrace (4, 0.1, 0.143, 0.173, 0.194, 6, 236, 248, '#c4c7ce', 'red'));
@@ -65,35 +69,46 @@ s . braces . push (new Bolt (1.324, 216, 10, 'blue', 'red'));
 s . braces . push (new Bolt (1.324, 216, 4, '#9498a1', '#9498a1'));
 s . braces . push (new Screw (1.322, 52, 10, 1.2, 'blue', 'red'));
 s . braces . push (new Screw (1.378, 26, 10, 3, 'blue', 'red'));
+s . braces . push (new Logo (decilon_logo, 1.255, 30, 0.8));
+s . braces . push (new Engraving ("68 1100", '10px arial', 'center', 'black', 1.255, 60));
 
 var r = new Rule (); s . rules . push (r);
 
 r . scales . push (new spacer (2));
-r . scales . push (new scale_R1 (24, {left: "Sq1", la: 'right', ls: 0.05}));
-r . scales . push (new scale_R2 (24, {left_extension: 0.02, left: "Sq2", la: 'right', ls: 0.05}));
-r . scales . push (new scale_CF (24, {left: "DF", la: 'right', ls: 0.05, left_extension: 0.028}));
+r . scales . push (new scale_R1 (24, {right_extension: 0.012, left: "Sq1", la: 'right', ls: 0.05}));
+r . scales . push (new scale_R2 (24, {left_extension: 0.02, left: "Sq2", la: 'right', ls: 0.05, indices: [1, 1]}));
+r . scales . push (new scale_CF (24, {left: "DF", la: 'right', ls: 0.05, left_extension: 0.028, right_extension: 0.01}));
 
 r = new Rule ({stator: 1, left_margin: 0.2, alt_left_margin: 0.19, right_margin: 0.2, alt_right_margin: 0.19, rounding: 2}); s . rules . push (r);
-r . markings . push (new RuleBars (-0.182, 1, 1, 119, 9, 6, 4, 'black'));
-r . markings . push (new RuleBars (1.182, -1, 1, 119, 9, 6, 4, 'black'));
+r . markings . push (new RuleBars (-0.182, 1, 1, 119, 8, 6, 4, 'black'));
+r . markings . push (new RuleBars (1.182, -1, 1, 119, 8, 6, 4, 'black'));
+r . markings . push (new Logo (keuffel_and_esser_logo, 1.055, 82, 0.8));
+r . markings . push (new Engraving ("KEUFFEL & ESSER CO.", '10px arial', 'center', 'black', -0.08, 60, Math . PI * 1.5));
+r . markings . push (new Engraving ("\u00a9  1947, 1961 By", '10px arial', 'center', 'black', -0.089, 60, Math . PI * 1.5));
+r . markings . push (new Engraving ("A1::", '10px arial', 'center', 'black', -0.13, 60, Math . PI * 1.5));
+r . markings . push (new Engraving ("2,422,649", '10px arial', 'center', 'black', 1.13, 30, Math . PI * 1.5));
+r . markings . push (new Engraving ("2,534,695", '10px arial', 'center', 'black', 1.139, 30, Math . PI * 1.5));
+r . markings . push (new Engraving ("U.S.PAT'S", '10px arial', 'center', 'black', 1.13, 90, Math . PI * 1.5));
+r . markings . push (new Engraving ("2,500,460", '10px arial', 'center', 'black', 1.139, 90, Math . PI * 1.5));
 
-r . scales . push (new scale_DF (24, {left_extension: 0.028, left: "CF", la: 'right', ls: 0.05}));
-r . scales . push (new scale_DIF (24, {left_extension: 0.01, left: "CIF", la: 'right', ls: 0.05, marking_colour: 'red'}));
+r . scales . push (new scale_DF (24, {left_extension: 0.028, right_extension: 0.01, left: "CF", la: 'right', ls: 0.05}));
+r . scales . push (new scale_DIF (24, {left_extension: 0.01, right_extension: 0.028, left: "CIF", la: 'right', ls: 0.05, marking_colour: 'red', lines: [{left: 0, right: 1, height: 1}]}));
 r . scales . push (new scale_L (24, {left: "L", la: 'right', ls: 0.05}));
-r . scales . push (new scale_CI (24, {left: "CI", la: 'right', ls: 0.05}));
-r . scales . push (new scale_C (24, {left: "C", la: 'right', ls: 0.05}));
+r . scales . push (new scale_CI (24, {left: "CI", la: 'right', ls: 0.05, marking_colour: 'red', indices: [1, 1]}));
+r . scales . push (new scale_C (24, {left: "C", la: 'right', ls: 0.05, indices: [1, 1]}));
 
 r = new Rule ({left_margin: 0.16, alt_left_margin: 0.15, right_margin: 0.16, alt_right_margin: 0.15}); s . rules . push (r);
 
-r . scales . push (new scale_D (24, {left: "D", la: 'right', ls: 0.05}));
-r . scales . push (new scale_LL0_down (24, {left: "Ln0", la: 'right', ls: 0.05}));
-r . scales . push (new scale_LL1_down (24, {left_extension: 0.006, left: "Ln1", la: 'right', ls: 0.05}));
-r . scales . push (new scale_LL2_down (24, {left_extension: 0.022, left: "Ln2", la: 'right', ls: 0.05}));
-r . scales . push (new scale_LL3_down (24, {left_extension: 0.02, left: "Ln3", la: 'right', ls: 0.05}));
+r . scales . push (new scale_D (24, {left: "D", la: 'right', ls: 0.05, indices: [1, 1]}));
+r . scales . push (new scale_LL0_down (24, {left: "Ln0", la: 'right', ls: 0.05, centre: "0.001  to    0.01", cs: 1.03, ca: 'left', cf: '10px arial'}));
+r . scales . push (new scale_LL1_down (24, {left_extension: 0.006, right_extension: 0.02, left: "Ln1", la: 'right', ls: 0.05, centre: "0.01    to    0.10", cs: 1.03, ca: 'left', cf: '10px arial'}));
+r . scales . push (new scale_LL2_down (24, {left_extension: 0.022, right_extension: 0.015, left: "Ln2", la: 'right', ls: 0.05, centre: "0.1      to    1.0", cs: 1.03, ca: 'left', cf: '10px arial'}));
+r . scales . push (new scale_LL3_down (24, {left_extension: 0.02, right_extension: 0.015, left: "Ln3", la: 'right', ls: 0.05, centre: "1.0      to  10.0", cs: 1.03, ca: 'left', cf: '10px arial'}));
 r . scales . push (new spacer (2));
 
-s = new Sliderule (1200); sliderules . sliderules . push (s);
+s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_top_margin: 10, cursor_bottom_margin: 10, hairline_top: 10, hairline_bottom: 10, cursor_limit_left: 0.024, cursor_limit_right: 0.024}); sliderules . sliderules . push (s);
 
+s . cursorGlassBraces . push (new CursorBrace (0.072, 0.072, 16, 0, 4, 'white'));
 s . braces . push (new DecilonTopLeftBrace (4, 0.1, 0.143, 0.173, 0.194, 6, 236, 248, '#c4c7ce', 'red'));
 s . braces . push (new DecilonTopLeftBrace (4, 0.106, 0.139, 0.169, 0.19, 10, 240, 252, '#9498a1', 'black'));
 s . braces . push (new DecilonTopRightBrace (4, 0.1, 0.143, 0.173, 0.194, 6, 236, 248, '#c4c7ce', 'red'));
@@ -106,35 +121,40 @@ s . braces . push (new Bolt (1.322, 28, 6, 'blue', 'red'));
 s . braces . push (new Bolt (1.324, 100, 6, 'blue', 'red'));
 s . braces . push (new Bolt (1.322, 264, 6, 'blue', 'red'));
 s . braces . push (new Bolt (1.378, 290, 6, 'blue', 'red'));
+s . braces . push (new Logo (decilon_logo, 1.255, 276, 0.8));
+s . braces . push (new Engraving ("MADE IN U.S.A", '10px arial', 'center', 'black', 1.255, 308));
 
 
 r = new Rule ({left_margin: 0.15, alt_left_margin: 0.16, right_margin: 0.15, alt_right_margin: 0.16}); s . rules . push (r);
 r . markings . push (new Engraving ("134", '10px arial', 'left', 'black', -0.084, 110, Math . PI * -0.5));
 
 r . scales . push (new spacer (2));
-r . scales . push (new scale_LL03 (24, {left: "Ln-3", la: 'right', ls: 0.05, left_extension: 0.016, marking_colour: 'red'}));
-r . scales . push (new scale_LL02 (24, {left: "Ln-2", la: 'right', ls: 0.05, left_extension: 0.026, marking_colour: 'red'}));
-r . scales . push (new scale_LL01 (24, {left: "Ln-1", la: 'right', ls: 0.05, marking_colour: 'red'}));
-r . scales . push (new scale_LL00 (24, {left: "Ln-0", la: 'right', ls: 0.05, marking_colour: 'red'}));
-r . scales . push (new scale_A (24, {left: "A", la: 'right', ls: 0.05}));
+r . scales . push (new scale_LL03 (24, {left: "Ln-3", la: 'right', ls: 0.05, left_extension: 0.016, right_extension: 0.02, marking_colour: 'red', centre: "-1.0     to -10.0", cs: 1.032, ca: 'left', cf: '10px arial', cc: 'black'}));
+r . scales . push (new scale_LL02 (24, {left: "Ln-2", la: 'right', ls: 0.05, left_extension: 0.026, right_extension: 0.023, marking_colour: 'red', centre: "-0.1     to   -1.0", cs: 1.032, ca: 'left', cf: '10px arial', cc: 'black'}));
+r . scales . push (new scale_LL01 (24, {left: "Ln-1", la: 'right', ls: 0.05, right_extension: 0.024, marking_colour: 'red', centre: "-0.01   to   -0.10", cs: 1.032, ca: 'left', cf: '10px arial', cc: 'black'}));
+r . scales . push (new scale_LL00 (24, {left: "Ln-0", la: 'right', ls: 0.05, right_extension: 0.006, marking_colour: 'red', centre: "-0.001 to   -0.01", cs: 1.032, ca: 'left', cf: '10px arial', cc: 'black'}));
+r . scales . push (new scale_A (24, {left: "A", la: 'right', ls: 0.05, indices: [1, 1, 1]}));
 
 r = new Rule ({stator: 1, left_margin: 0.19, alt_left_margin: 0.2, right_margin: 0.19, alt_right_margin: 0.2, rounding: 2}); s . rules . push (r);
-r . markings . push (new RuleBars (-0.182, 1, 1, 119, 9, 6, 4, 'red'));
-r . markings . push (new RuleBars (1.182, -1, 1, 119, 9, 6, 4, 'red'));
+r . markings . push (new RuleBars (-0.182, 1, 1, 119, 8, 6, 4, 'red'));
+r . markings . push (new RuleBars (1.182, -1, 1, 119, 8, 6, 4, 'red'));
+r . markings . push (new Engraving ("B1::", '10px arial', 'center', 'black', -0.13, 60, Math . PI * 1.5));
 r . markings . push (new Engraving ("\u22c5015134", '10px arial', 'center', 'black', -0.084, 66, Math . PI * -0.5));
+r . markings . push (new Engraving ("10.0    to   1.0", '10px arial', 'left', 'red', 1.027, 36));
+r . markings . push (new Engraving ("0.1    to   1.0", '10px arial', 'left', 'black', 1.032, 48));
 
-r . scales . push (new scale_B (24, {left: "B", la: 'right', ls: 0.05}));
-r . scales . push (new scale_CTTdec (24, {left: "T", la: 'right', ls: 0.05}));
-r . scales . push (new scale_STdec (24, {left: "SRT", la: 'right', ls: 0.05}));
-r . scales . push (new scale_CSdec (24, {left: "S", la: 'right', ls: 0.05}));
-r . scales . push (new scale_C (24, {left: "C", la: 'right', ls: 0.05}));
+r . scales . push (new scale_B (24, {left: "B", la: 'right', ls: 0.05, indices: [1, 1, 1], lines: [{left: 0, right: 1, height: 1}]}));
+r . scales . push (new scale_CTTdec (24, {left_extension: 0.02, left: "T", la: 'right', ls: 0.05}));
+r . scales . push (new scale_STdec (24, {left_extension: 0.02, right_extension: 0.022, draw_st_corrections: false, left: "SRT", la: 'right', ls: 0.05, centre: "0.01  to   0.10", cs: 1.032, ca: 'left', cf: '10px arial'}));
+r . scales . push (new scale_CSdec (24, {left_extension: 0.02, left: "S", la: 'right', ls: 0.05, centre: "0.1    to   1.0", cs: 1.032, ca: 'left', cf: '10px arial'}));
+r . scales . push (new scale_C (24, {left: "C", la: 'right', ls: 0.05, indices: [1, 1]}));
 
 r = new Rule (); s . rules . push (r);
 r . markings . push (new Engraving ("134", '10px arial', 'center', 'black', -0.084, 37, Math . PI * -0.5));
 
-r . scales . push (new scale_D (24, {left: "D", la: 'right', ls: 0.05}));
-r . scales . push (new scale_DI (24, {left: "DI", la: 'right', ls: 0.05, marking_colour: 'red'}));
-r . scales . push (new scale_J (24, {left: "K", la: 'right', ls: 0.05}));
+r . scales . push (new scale_D (24, {left: "D", la: 'right', ls: 0.05, indices: [1, 1]}));
+r . scales . push (new scale_DI (24, {left: "DI", la: 'right', ls: 0.05, marking_colour: 'red', indices: [1, 1]}));
+r . scales . push (new scale_J (24, {left: "K", la: 'right', ls: 0.05, indices: [1, 1, 1, 1]}));
 r . scales . push (new spacer (2));
 
 </script>
