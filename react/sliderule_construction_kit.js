@@ -1529,13 +1529,70 @@ var Floor = function (left, right, top, bottom, rounding, radius, holes, colour,
 			ctx . arc (s . length * (s . left_margin + holes [ind] . right), mid, radius, Math . PI * 0.5, Math . PI * 1.5, true);
 			ctx . closePath ();
 		}
-//		ctx . moveTo ((le + re) * 0.5 + rounding, mid);
-//		ctx . arc ((le + re) * 0.5, mid, rounding, Math . PI * 2, 0, true);
-//		ctx . closePath ();
 		ctx . fillStyle = background;
 		ctx . fill ();
 		ctx . strokeStyle = colour;
 		ctx . stroke ();
+	};
+};
+
+var DecilonWindow = function (radius, l1, l2, l3, t1, t2, t3, background, colour) {
+	this . draw = function (ctx, s) {
+		var le1 = s . length * l1 - radius, le2 = s . length * l2 - radius, le3 = s . length * l3 - radius;
+		var te1 = radius - t1, te2 = radius - t2, te3 = radius - t3;
+		var ht = s . height ();
+		var tb1 = ht - te1, tb2 = ht - te2, tb3 = ht - te3;
+		ctx . beginPath ();
+		ctx . arc (le1, te1, radius, Math . PI * 1.5, 0);
+		ctx . arc (le1, tb1, radius, 0, Math . PI * 0.5);
+		ctx . arc (- le1, tb1, radius, Math . PI * 0.5, Math . PI);
+		ctx . arc (- le1, te1, radius, Math . PI, Math . PI * 1.5);
+		ctx . closePath ();
+		ctx . moveTo (le2 + radius, te3);
+		ctx . arc (le2, te3, radius, 0, Math . PI * 1.5, true);
+		ctx . arc (le3 + radius + radius, te3 - radius - radius, radius, Math . PI * 0.5, Math . PI);
+		ctx . arc (le3, te2, radius, 0, Math . PI * 1.5, true);
+		ctx . arc (- le3, te2, radius, Math . PI * 1.5, Math . PI, true);
+		ctx . arc (- le3 - radius - radius, te3 - radius - radius, radius, 0, Math . PI * 0.5);
+		ctx . arc (- le2, te3, radius, Math . PI * 1.5, Math . PI, true);
+		ctx . arc (- le2, tb3, radius, Math . PI, Math . PI * 0.5, true);
+		ctx . arc (- le3 - radius - radius, tb3 + radius + radius, radius, Math . PI * 1.5, 0);
+		ctx . arc (- le3, tb2, radius, Math . PI, Math . PI * 0.5, true);
+		ctx . arc (le3, tb2, radius, Math . PI * 0.5, 0, true);
+		ctx . arc (le3 + radius + radius, tb3 + radius + radius, radius, Math . PI, Math . PI * 1.5);
+		ctx . arc (le2, tb3, radius, Math . PI * 0.5, 0, true);
+		ctx . closePath ();
+		ctx . fillStyle = background;
+		ctx . fill ();
+		ctx . strokeStyle = colour;
+		ctx . stroke ();
+	};
+};
+
+var DecilonCursorBrace = function (shift, l1, t1, r1, l2, t2, r2, background, colour) {
+	this . draw = function (ctx, s) {
+		var le1 = s . length * l1, le2 = s . length * l2;
+		var ht = s . height ();
+		var atan = Math . atan2 (t2 - t1, le1 - le2);
+		ctx . fillStyle = background; ctx . strokeStyle = colour;
+		ctx . beginPath ();
+		ctx . arc (- le1, - t1, r1, Math . PI, Math . PI * 1.5 - atan);
+		ctx . arc (- le2, - t2, r2, Math . PI * 1.5 - atan, 0);
+		ctx . arc (le2, - t2, r2, Math . PI, Math . PI * 1.5 + atan);
+		ctx . arc (le1, - t1, r1, Math . PI * 1.5 + atan, 0);
+		ctx . lineTo (le1 + r1, - shift);
+		ctx . lineTo (- le1 - r1, - shift);
+		ctx . closePath ();
+		ctx . fill (); ctx . stroke ();
+		ctx . beginPath ();
+		ctx . arc (le1, ht + t1, r1, 0, Math . PI * 0.5 - atan);
+		ctx . arc (le2, ht + t2, r2, Math . PI * 0.5 - atan, Math . PI);
+		ctx . arc (- le2, ht + t2, r2, 0, Math . PI * 0.5 + atan);
+		ctx . arc (- le1, ht + t1, r1, Math . PI * 0.5 + atan, Math . PI);
+		ctx . lineTo (- le1 - r1, ht + shift);
+		ctx . lineTo (le1 + r1, ht + shift);
+		ctx . closePath ();
+		ctx . fill (); ctx . stroke ();
 	};
 };
 
