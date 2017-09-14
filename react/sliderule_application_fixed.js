@@ -63,6 +63,7 @@ var SlideruleApplication = React . createClass ({
   },
   onMouseUp: function (event) {this . dragging = false; this . setState ({});},
   onWheel: function (event) {
+  	event . preventDefault ();
     var delta;
     if (event . deltaY < 0) delta = sliderules . scale * sliderules . scaling_factor;
     if (event . deltaY > 0) delta = sliderules . scale / sliderules . scaling_factor;
