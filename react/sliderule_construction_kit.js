@@ -1574,6 +1574,9 @@ var DecilonCursorBrace = function (shift, l1, t1, r1, l2, t2, r2, background, co
 		var le1 = s . length * l1, le2 = s . length * l2;
 		var ht = s . height ();
 		var atan = Math . atan2 (t2 - t1, le1 - le2);
+		var delta = {x: le1 - le2, y: t2 - t1};
+		var distance = Math . sqrt (delta . x * delta . x + delta . y * delta . y);
+		atan -= Math . asin ((r1 - r2) / distance);
 		ctx . fillStyle = background; ctx . strokeStyle = colour;
 		ctx . beginPath ();
 		ctx . arc (- le1, - t1, r1, Math . PI, Math . PI * 1.5 - atan);
