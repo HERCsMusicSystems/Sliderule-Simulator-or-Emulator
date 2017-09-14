@@ -74,6 +74,14 @@ var SlideruleApplication = React . createClass ({
     sliderules . scale = delta;
     sliderules . requireRedraw = true;
   },
+  onTouchStart: function (event) {
+  	event . preventDefault ();
+  	if (event . targetTouches . length == 1) return this . onMouseDown (event . targetTouches [0]);
+  },
+  onTouchMove: function (event) {
+  	event . preventDefault ();
+  	if (event . targetTouches . length == 1) return this . onMouseMove (event . targetTouches [0]);
+  },
   SM: function (event) {changeMarkings ('stator', event . target . checked);},
   CM: function (event) {changeMarkings ('hairline', event . target . checked);},
   EM: function (event) {changeMarkings ('hairlines', event . target . checked);},
@@ -99,7 +107,11 @@ var SlideruleApplication = React . createClass ({
         onMouseUp: this.onMouseUp,
         onMouseLeave: this.onMouseUp,
         onContextMenu: this.onContext,
-        onWheel: this.onWheel
+        onWheel: this.onWheel,
+        onTouchStart: this.onTouchStart,
+        onTouchMove: this.onTouchMove,
+        onTouchEnd: this.onMouseUp,
+        onTouchCancel: this.onMouseUp
       })/*,
       React . createElement (
       	'div',
