@@ -43,6 +43,10 @@ var changeSide = function (side) {
 
 var changeSize = function (length) {for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . length = length; sliderules . requireRedraw = true;};
 
+var note = "Emulator / Simulator Copyright \u00a9 2017 - " + new Date () . getFullYear () + " Dr Robert Wolf @ http://www.hercsmusicsystems.com.au";
+var note_colours = ['blue', 'gray', 'yellow', 'lavender', 'green', 'olive', 'silver', 'tan', 'wheat', 'khaki'];
+var note_colour = note_colours [Math . floor (Math . random () * note_colours . length)];
+
 var SlideruleApplication = React . createClass ({
   dragging: false,
   mousePosition: {x: 0, y: 0},
@@ -75,12 +79,35 @@ var SlideruleApplication = React . createClass ({
     sliderules . requireRedraw = true;
   },
   onTouchStart: function (event) {
-  	event . preventDefault ();
+  	//event . preventDefault ();
   	if (event . targetTouches . length == 1) return this . onMouseDown (event . targetTouches [0]);
+  	if (event . targetTouches . length == 2) {
+  		this . left_touch = {x: event . targetTouches [0] . clientX, y: event . targetTouches [0] . clientY};
+  		this . right_touch = {x: event . targetTouches [1] . clientX, y: event . targetTouches [1] . clientY};
+  	}
   },
   onTouchMove: function (event) {
   	event . preventDefault ();
   	if (event . targetTouches . length == 1) return this . onMouseMove (event . targetTouches [0]);
+  	if (event . targetTouches . length == 2) {
+  		var left_touch = {x: event . targetTouches [0] . clientX, y: event . targetTouches [0] . clientY};
+  		var right_touch = {x: event . targetTouches [1] . clientX, y: event . targetTouches [1] . clientY};
+  		var x = this . right_touch . x - this . left_touch . x;
+  		var y = this . right_touch . y - this . left_touch . y;
+  		var d1 = Math . sqrt (x * x + y * y);
+  		x = right_touch . x - this . left_touch . x;
+  		y = right_touch . y - this . left_touch . y;
+  		var d2 = Math . sqrt (x * x + y * y);
+  		var delta = sliderules . scale * d2 / d1;
+  		var point = subvbc (this . left_touch, this . refs . sliderules . getBoundingClientRect ());
+  		point = scalv (point, 1 / sliderules . scale);
+  		var offset = scalv (point, delta - sliderules . scale);
+  		sliderules . position = subv (sliderules . position, scalv (offset, 1 / delta));
+  		sliderules . scale = delta;
+  		this . right_touch = right_touch;
+  		this . left_touch = left_touch;
+  		sliderules . requireRedraw = true;
+  	}
   },
   SM: function (event) {changeMarkings ('stator', event . target . checked);},
   CM: function (event) {changeMarkings ('hairline', event . target . checked);},
@@ -93,7 +120,12 @@ var SlideruleApplication = React . createClass ({
   	if (sliderules . noChange ()) return;
     this . setState (newState);
     var ctx = this . refs . sliderule . getContext ('2d');
+    ctx . save ();
     sliderules . draw (ctx, width, height);
+    ctx . restore ();
+    ctx . fillStyle = note_colour;
+    ctx . textAlign = 'right';
+    ctx . fillText (note, newState . width - 4, newState . height - 4);
   },
   componentDidMount: function () {setInterval (this . draw, 20);},
   getInitialState: function () {return {width: 200, height: 100, dragging: false};},
