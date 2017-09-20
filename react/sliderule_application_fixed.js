@@ -159,3 +159,8 @@ var SlideruleApplication = React . createClass ({
     );
   }
 });
+
+'use strict';
+
+ReactDOM.render(React.createElement(SlideruleApplication, null), document.getElementById('root'));
+
