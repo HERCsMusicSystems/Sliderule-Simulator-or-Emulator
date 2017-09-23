@@ -32,12 +32,13 @@
 // Tdec(_down), T1dec(_down), TCTdec(_down), CTTdec(_down), TCT1dec(_down), CTT1dec(_down)
 // T(_down), T1(_down)
 // Tgrad(_down)
-// P(_down), PH(_down)
+// P(_down), PH(_down), PH2(_down)
 // LL3(_down), LL2(_down), LL1(_down), LL0(_down), CLL0, DLL0
 // LL03(_down), LL02(_down), LL01(_down), LL00(_down)
 // Metric(_down) => step, scale, shift
-// SINH1dec(_down), SINH2dec(_down), SINH1grad(_down), SINH2grad(_down)
+// SINH1dec(_down), SINH2dec(_down), SINH1grad(_down), SINH2grad(_down), SINH1rad(_down), SINH2rad(_down);
 // COSHdec(_down), COSHgrad(_down)
+// TANHdec(_down), TANHgrad(_down)
 //////////////////////////////////////////////////////////////////////////////
 
 var toDeg = function (value) {
@@ -468,6 +469,18 @@ var scale_PH_down = function (height, options) {
 	s . draw = function (ctx, length) {draw_ph (ctx, length, - s . height, s);};
 	return s;
 };
+var scale_PH2 = function (height, options) {
+	var s = new spacer (height, options);
+	s . value = function (location) {var ret = Math . pow (10, location); return Math . sqrt (ret * ret + 1);};
+	s . location = function (value) {return Math . log10 (Math . sqrt (value * value - 1));};
+	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_ph2 (ctx, length, s . height, s);};
+	return s;
+};
+var scale_PH2_down = function (height, options) {
+	var s = new scale_PH2 (height, options);
+	s . draw = function (ctx, length) {draw_ph2 (ctx, length, - s . height, s);};
+	return s;
+};
 var scale_LL3 = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location));};
@@ -573,6 +586,30 @@ var scale_LL00_down = function (height, options) {
   var s = new scale_LL00 (height, options);
   s . draw = function (ctx, length) {draw_LL00 (ctx, length, - s . height, s);};
   return s;
+};
+var scale_SINH2rad = function (height, options) {
+	var s = new spacer (height, options);
+	s . value = function (location) {location = Math . pow (10, location); return Math . log (location + Math . sqrt (location * location + 1));};
+	s . location = function (value) {return Math . log10 (0.5 * (Math . pow (Math . E, value) - Math . pow (Math . E, - value)));};
+	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_sinh2_rad (ctx, length, s . height, s);};
+	return s;
+};
+var scale_SINH2rad_down = function (height, options) {
+	var s = new scale_SINH2rad (height, options);
+	s . draw = function (ctx, length) {draw_sinh2_rad (ctx, length, - s . height, s);};
+	return s;
+};
+var scale_SINH1rad = function (height, options) {
+	var s = new spacer (height, options);
+	s . value = function (location) {location = Math . pow (10, location - 1); return Math . log (location + Math . sqrt (location * location + 1));};
+	s . location = function (value) {return 1 + Math . log10 (0.5 * (Math . pow (Math . E, value) - Math . pow (Math . E, - value)));};
+	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_sinh1_rad (ctx, length, s . height, s);};
+	return s;
+};
+var scale_SINH1rad_down = function (height, options) {
+	var s = new scale_SINH2rad (height, options);
+	s . draw = function (ctx, length) {draw_sinh1_rad (ctx, length, - s . height, s);};
+	return s;
 };
 var scale_SINH1grad = function (height, options) {
 	var s = new spacer (height, options);
