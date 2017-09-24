@@ -58,14 +58,17 @@ r . scales . push (new scale_LL01_down (24, {marking_colour: 'red'}));
 r . scales . push (new scale_LL02 (24, {marking_colour: 'red'}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_LL03_down (24, {marking_colour: 'red'}));
-r . scales . push (new scale_CF (24, {indices: ['>>1<<']}));
+r . scales . push (new scale_CF (24, {left_extension: 0.05, indices: ['>>1<<']}));
 
 r = new Rule ({stator: 1}); s . rules . push (r);
 r . scales . push (new scale_DF (24, {indices: ['>>1<<']}));
-r . scales . push (new scale_CIF (24, {marking_colour: 'red'}));
-r . scales . push (new scale_L (24));
 r . scales . push (new spacer (6));
+r . scales . push (new scale_CIF (24, {marking_colour: 'red'}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_L (24));
+r . scales . push (new spacer (12));
 r . scales . push (new scale_DI (24, {marking_colour: 'red'}));
+r . scales . push (new spacer (6));
 r . scales . push (new scale_C (24));
 
 r = new Rule (); s . rules . push (r);
@@ -88,8 +91,26 @@ r . scales . push (new spacer (2));
 r . scales . push (new scale_PH2 (24));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_SINH2rad_down (24));
+r . scales . push (new scale_TANHrad (24));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_J (24));
+r . scales . push (new scale_A (24, {left_extension: 0.1, alt: 'black', marking_alt: 'red'}));
+
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_B (24));
+r . scales . push (new scale_Tdec (24));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_STdec_down (24));
+r . scales . push (new scale_S (24));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_P_down (24, {marking_colour: 'red'}));
+r . scales . push (new scale_C (24));
 
 r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (24));
+r . scales . push (new scale_CI (24));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_COSHrad_down (24));
 r . scales . push (new scale_SINH1rad (24));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_PH_down (24));

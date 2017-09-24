@@ -37,8 +37,8 @@
 // LL03(_down), LL02(_down), LL01(_down), LL00(_down)
 // Metric(_down) => step, scale, shift
 // SINH1dec(_down), SINH2dec(_down), SINH1grad(_down), SINH2grad(_down), SINH1rad(_down), SINH2rad(_down);
-// COSHdec(_down), COSHgrad(_down)
-// TANHdec(_down), TANHgrad(_down)
+// COSHdec(_down), COSHgrad(_down), COSHrad(_down)
+// TANHdec(_down), TANHgrad(_down), TANHrad(_down)
 //////////////////////////////////////////////////////////////////////////////
 
 var toDeg = function (value) {
@@ -635,6 +635,18 @@ var scale_SINH2grad_down = function (height, options) {
 	s . draw = function (ctx, length) {draw_sinh2 (ctx, length, - s . height, s);};
 	return s;
 };
+var scale_COSHrad = function (height, options) {
+	var s = new spacer (height, options);
+	s . value = function (location) {location = Math . pow (10, location); return Math . log (location + Math . sqrt (location - 1) * Math . sqrt (location + 1));};
+	s . location = function (value) {return Math . log10 (0.5 * (Math . pow (Math . E, value) + Math . pow (Math . E, - value)));};
+	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_cosh_rad (ctx, length, s . height, s);};
+	return s;
+};
+var scale_COSHrad_down = function (height, options) {
+	var s = new scale_COSHrad (height, options);
+	s . draw = function (ctx, length) {draw_cosh_rad (ctx, length, - s . height, s);};
+	return s;
+};
 var scale_COSHgrad = function (height, options) {
 	var s = new spacer (height, options);
 	s . value = function (location) {location = Math . pow (10, location); return Math . log (location + Math . sqrt (location - 1) * Math . sqrt (location + 1)) * 200 / Math . PI;};
@@ -645,6 +657,18 @@ var scale_COSHgrad = function (height, options) {
 var scale_COSHgrad_down = function (height, options) {
 	var s = new scale_COSHgrad (height, options);
 	s . draw = function (ctx, length) {draw_cosh (ctx, length, - s . height, s);};
+	return s;
+};
+var scale_TANHrad = function (height, options) {
+	var s = new spacer (height, options);
+	s . value = function (location) {location = Math . pow (10, location - 1); if (location >= 1) location = 2; return 0.5 * Math . log ((1 + location) / (1 - location));};
+	s . location = function (value) {value *= 2; value = Math . pow (Math . E, value); return 1 + Math . log10 ((value - 1) / (value + 1));};
+	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_tanh_rad (ctx, length, s . height, s);};
+	return s;
+};
+var scale_TANHrad_down = function (height, options) {
+	var s = new scale_TANHrad (height, options);
+	s . draw = function (ctx, length) {draw_tanh_rad (ctx, length, - s . height, s);};
 	return s;
 };
 var scale_TANHgrad = function (height, options) {
