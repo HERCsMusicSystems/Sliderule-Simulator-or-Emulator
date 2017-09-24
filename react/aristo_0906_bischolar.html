@@ -113,13 +113,13 @@ r . scales . push (new scale_STdec (24, {left: "ST", right: "\u2222 arc", rs: 0.
 r . scales . push (new scale_Tdec (24, {left: "T1", right: "\u2222 tan", rs: 0.08, ra: 'left', left_extension: 0.02}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_T1dec_down (24, {left: "T2", right: "\u2222 tan", rs: 0.08, ra: 'left', right_extension: 0.02}));
-r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.04, right_extension: 0.06, indices: ['>>1<<']}));
+r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.022, right_extension: 0.06, indices: ['>>1<<']}));
 r = new Rule ({stator: 1, rounding: 0});
 s . rules . push (r);
 r . scales . push (new scale_DF (24,
-  {left: "CF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.04, right_extension: 0.06,
+  {left: "CF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.022, right_extension: 0.06,
   highlight: 'yellow', highlight_left: 0.199, highlight_right: 0.199, indices: ['>>1<<']}));
-r . scales . push (new scale_CIF (24, {left: "CIF", right: "1/(\u03c0X)", rs: 0.08, ra: 'left', marking_colour: 'red', left_extension: 0.03, right_extension: 0.03}));
+r . scales . push (new scale_CIF (24, {left: "CIF", right: "1/(\u03c0X)", rs: 0.08, ra: 'left', marking_colour: 'red', left_extension: 0.018, right_extension: 0.026}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_DI (24, {left: "DI", right: "1/x", rs: 0.08, ra: 'left', marking_colour: 'red'}));
 r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.08, ra: 'left', highlight: 'yellow', highlight_left: 0.199, highlight_right: 0.199}));

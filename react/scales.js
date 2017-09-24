@@ -136,10 +136,10 @@ var scale_CIF = function (height, options) {
   s . draw = function (ctx, length) {
     var shift = Math . log10 (10 / Math . PI);
     ctx . translate (length * shift, s . height);
-    draw_log_1R (ctx, - length, s . height, 1 - shift + s . left_extension, s);
+    draw_log_1R (ctx, - length, s . height, shift + s . left_extension, s);
     mark (ctx, s . indices [0], 0, s . height * 0.5);
     ctx . translate (length, 0);
-    draw_log_1L (ctx, - length, s . height, 1 - shift - s . right_extension, s);
+    draw_log_1L (ctx, - length, s . height, shift - s . right_extension, s);
   };
   return s;
 };
@@ -148,10 +148,10 @@ var scale_DIF = function (height, options) {
   s . draw = function (ctx, length) {
     var shift = Math . log10 (10 / Math . PI);
     ctx . translate (length * shift, 0);
-    draw_log_1R (ctx, - length, - s . height, 1 - shift + s . left_extension, s);
+    draw_log_1R (ctx, - length, - s . height, shift + s . left_extension, s);
     mark (ctx, s . indices [0], 0, - s . height * 0.5);
     ctx . translate (length, 0);
-    draw_log_1L (ctx, - length, - s . height, 1 - shift - s . right_extension, s);
+    draw_log_1L (ctx, - length, - s . height, shift - s . right_extension, s);
   };
   return s;
 };
