@@ -83,7 +83,7 @@ var r = new Rule (); s . rules . push (r);
 r . scales . push (new spacer (2));
 r . scales . push (new scale_R1 (24, {right_extension: 0.012, left: "Sq1", la: 'right', ls: 0.05}));
 r . scales . push (new scale_R2 (24, {left_extension: 0.02, left: "Sq2", la: 'right', ls: 0.05, indices: [1, 1]}));
-r . scales . push (new scale_CF (24, {left: "DF", la: 'right', ls: 0.05, left_extension: 0.028, right_extension: 0.01}));
+r . scales . push (new scale_CF (24, {left: "DF", la: 'right', ls: 0.05, left_extension: 0.0223, right_extension: 0.01}));
 
 r = new Rule ({stator: 1, left_margin: 0.2, alt_left_margin: 0.19, right_margin: 0.2, alt_right_margin: 0.19, rounding: 2}); s . rules . push (r);
 r . markings . push (new RuleBars (-0.182, 1, 1, 119, 8, 6, 4, 'black'));
@@ -97,8 +97,8 @@ r . markings . push (new Engraving ("2,534,695", '10px arial', 'center', 'black'
 r . markings . push (new Engraving ("U.S.PAT'S", '10px arial', 'center', 'black', 1.13, 90, Math . PI * 1.5));
 r . markings . push (new Engraving ("2,500,460", '10px arial', 'center', 'black', 1.139, 90, Math . PI * 1.5));
 
-r . scales . push (new scale_DF (24, {left_extension: 0.028, right_extension: 0.01, left: "CF", la: 'right', ls: 0.05}));
-r . scales . push (new scale_DIF (24, {left_extension: 0.01, right_extension: 0.028, left: "CIF", la: 'right', ls: 0.05, marking_colour: 'red', lines: [{left: 0, right: 1, height: 1}]}));
+r . scales . push (new scale_DF (24, {left_extension: 0.0223, right_extension: 0.01, left: "CF", la: 'right', ls: 0.05}));
+r . scales . push (new scale_DIF (24, {left_extension: 0.0043, right_extension: 0.028, left: "CIF", la: 'right', ls: 0.05, marking_colour: 'red', lines: [{left: 0, right: 1, height: 1}]}));
 r . scales . push (new scale_L (24, {left: "L", la: 'right', ls: 0.05}));
 r . scales . push (new scale_CI (24, {left: "CI", la: 'right', ls: 0.05, marking_colour: 'red', indices: [1, 1]}));
 r . scales . push (new scale_C (24, {left: "C", la: 'right', ls: 0.05, indices: [1, 1]}));

@@ -109,7 +109,7 @@ s . cursor_left_extension = 0.074; s . cursor_right_extension = 0.074;
 s . cursors . push (Cursor360 (50, 146, 'red'));
 r = new Rule ();
 s . rules . push (r);
-r . scales . push (new scale_STdec (24, {left: "ST", right: "\u2222 arc", rs: 0.08, ra: 'left', left_extension: 0.02, right_extension: 0.025}));
+r . scales . push (new scale_STdec (24, {left: "ST", right: "\u2222 arc", rs: 0.08, ra: 'left', left_extension: 0.02, right_extension: 0.022, draw_st_corrections: false}));
 r . scales . push (new scale_Tdec (24, {left: "T1", right: "\u2222 tan", rs: 0.08, ra: 'left', left_extension: 0.02}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_T1dec_down (24, {left: "T2", right: "\u2222 tan", rs: 0.08, ra: 'left', right_extension: 0.02}));
