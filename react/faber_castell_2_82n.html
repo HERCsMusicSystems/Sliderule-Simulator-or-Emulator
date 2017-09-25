@@ -45,21 +45,6 @@
 
 <script>
 
-var changeVersion = function (version) {
-	switch (version) {
-	case 'us':
-    sliderules . sliderules [0] . cursorBraces = front_us_braces; sliderules . sliderules [0] . cursors = front_us_cursors;
-    sliderules . sliderules [1] . cursorBraces = back_us_braces; sliderules . sliderules [1] . cursors = back_us_cursors;
-    break;
-	case 'german':
-    sliderules . sliderules [0] . cursorBraces = front_german_braces; sliderules . sliderules [0] . cursors = front_german_cursors;
-    sliderules . sliderules [1] . cursorBraces = back_german_braces; sliderules . sliderules [1] . cursors = back_german_cursors;
-    break;
-	default: break;
-	}
-	sliderules . requireRedraw = true;
-};
-
 var faber_castell = new Image (); faber_castell . src = "Faber-Castell.png";
 var logo = new Image (); logo . src = "Logo_1951.png";
 
@@ -87,10 +72,6 @@ s . braces . push (new Logo (logo, 0.105, 48, 0.125));
 s . braces . push (new Engraving ("CASTELL", 'italic 16px arial', 'center', 'black', 0.1, 296));
 s . braces . push (new Engraving ("DUPLEX", '16px arial', 'center', 'black', 0.1, 316));
 s . cursorGlassBraces . push (new CursorBrace (0.098, 0.098, 20, 0, 20, '#deb887'));
-var front_german_braces = [];
-var front_german_cursors = [];
-var front_us_braces = [];
-var front_us_cursors = [];
 var HairlineLeft = HairlineD - HairlinePS - HairlinePS;
 var HairlineRight = HairlineLeft - Math . log10 (Math . log (2));
 front_german_braces . push (new Screw (-0.075, -8, 6, 0.5, '#b5a642', '#605321'));
@@ -195,10 +176,6 @@ s . braces . push (new Screw (1.45, 318, 12, 1.4, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.464, 90, 8, 2.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.444, 36, 8, 3.1, '#b5a642', '#605321'));
 s . cursorGlassBraces . push (new CursorBrace (0.098, 0.098, 20, 0, 20, '#deb887'));
-var back_german_braces = [];
-var back_german_cursors = [];
-var back_us_braces = [];
-var back_us_cursors = [];
 HairlineLeft = HairlineD - HairlinePS - HairlinePS;
 HairlineRight = HairlineLeft - Math . log10 (Math . log (2));
 back_german_braces . push (new Screw (-0.06, -8, 6, 0.5, '#b5a642', '#605321'));

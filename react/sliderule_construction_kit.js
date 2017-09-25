@@ -2039,3 +2039,5 @@ var Sliderules = function (options) {
   };
 };
 
+var front_german_braces = [], front_german_cursors = [], back_german_braces = [], back_german_cursors = [];
+var front_us_braces = [], front_us_cursors = [], back_us_braces = [], back_us_cursors = [];

@@ -43,6 +43,21 @@ var changeSide = function (side) {
 
 var changeSize = function (length) {for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . length = length; sliderules . requireRedraw = true;};
 
+var changeVersion = function (version) {
+	switch (version) {
+	case 'us':
+    sliderules . sliderules [0] . cursorBraces = front_us_braces; sliderules . sliderules [0] . cursors = front_us_cursors;
+    sliderules . sliderules [1] . cursorBraces = back_us_braces; sliderules . sliderules [1] . cursors = back_us_cursors;
+    break;
+	case 'german':
+    sliderules . sliderules [0] . cursorBraces = front_german_braces; sliderules . sliderules [0] . cursors = front_german_cursors;
+    sliderules . sliderules [1] . cursorBraces = back_german_braces; sliderules . sliderules [1] . cursors = back_german_cursors;
+    break;
+	default: break;
+	}
+	sliderules . requireRedraw = true;
+};
+
 var note = "Emulator / Simulator Copyright \u00a9 2017 - " + new Date () . getFullYear () + " Dr Robert Wolf @ http://www.hercsmusicsystems.com.au";
 var note_colours = ['blue', 'gray', 'yellow', 'lavender', 'green', 'olive', 'silver', 'tan', 'wheat', 'khaki'];
 var note_colour = note_colours [Math . floor (Math . random () * note_colours . length)];

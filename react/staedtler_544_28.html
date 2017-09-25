@@ -44,23 +44,7 @@
 <script src="scales.js"></script>
 
 <script>
-var changeVersion = function (version) {
-	switch (version) {
-	case 'us':
-    sliderules . sliderules [0] . cursorBraces = front_us_braces; sliderules . sliderules [0] . cursors = front_us_cursors;
-    sliderules . sliderules [1] . cursorBraces = back_us_braces; sliderules . sliderules [1] . cursors = back_us_cursors;
-    break;
-	case 'german':
-    sliderules . sliderules [0] . cursorBraces = front_german_braces; sliderules . sliderules [0] . cursors = front_german_cursors;
-    sliderules . sliderules [1] . cursorBraces = back_german_braces; sliderules . sliderules [1] . cursors = back_german_cursors;
-    break;
-	default: break;
-	}
-	sliderules . requireRedraw = true;
-};
 
-var front_german_braces = [], front_german_cursors = [], back_german_braces = [], back_german_cursors = [];
-var front_us_braces = [], front_us_cursors = [], back_us_braces = [], back_us_cursors = [];
 front_german_braces . push (new Engraving ("s", '10px arial', 'right', 'red', -0.006, 82));
 front_german_braces . push (new Engraving ("kW", '10px arial', 'left', 'red', 0.006, 82));
 front_german_braces . push (new Engraving ("PS", '10px arial', 'right', 'red', HairlinePS - 0.006, 82));
