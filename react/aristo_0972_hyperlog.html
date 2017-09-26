@@ -46,39 +46,50 @@
 <script>
 var sliderules = new Sliderules ();
 var s = new Sliderule (1200,
-  {static_markings: false, cursor_markings: false, cursor_markings_shift: -0.02, cursor_markings_align: 'right', markings_colour: 'gold', markings_background: 'black',
-  cursor_rounding: 8, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
+  {cursor_markings_shift: -0.02, cursor_markings_align: 'right', markings_colour: 'gold', markings_background: 'black',
+  cursor_rounding: 8, cursor_left_extension: 0.11, cursor_right_extension: 0.11, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
 sliderules . sliderules . push (s);
+
+var HairlineLeft = HairlineD - HairlinePS - HairlinePS;
+var HairlineRight = HairlineLeft - Math . log10 (Math . log (2));
+var h2pi = (1 - Math . log10 (Math . PI * 2)) / 2;
+s . cursors . push (new Cursor (Hairline360, 86, 150, 'red'));
+s . cursors . push (new Cursor (h2pi, 18, 150, 'red'));
+s . cursors . push (new Cursor (- h2pi, 86, 150, 'red'));
+s . cursors . push (new Cursor (h2pi, 186, 250, 'red'));
+s . cursors . push (new Cursor (- h2pi, 186, 250, 'red'));
+s . cursorBraces . push (new Engraving ("ARISTO", '10px arial', 'left', 'black', 0.055, 324));
+s . cursorBraces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
 
 var r = new Rule (); s . rules . push (r);
 r . scales . push (new spacer (2));
-r . scales . push (new scale_LL00 (24, {marking_colour: 'red'}));
+r . scales . push (new scale_LL00 (20, {right_extension: 0.046, marking_colour: 'red'}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_LL01_down (24, {marking_colour: 'red'}));
-r . scales . push (new scale_LL02 (24, {marking_colour: 'red'}));
+r . scales . push (new scale_LL01_down (20, {right_extension: 0.026, marking_colour: 'red'}));
+r . scales . push (new scale_LL02 (20, {left_extension: 0.026, right_extension: 0.022, marking_colour: 'red'}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_LL03_down (24, {marking_colour: 'red'}));
-r . scales . push (new scale_CF (24, {left_extension: 0.05, indices: ['>>1<<']}));
+r . scales . push (new scale_LL03_down (20, {left_extension: 0.04, right_extension: 0.064, marking_colour: 'red'}));
+r . scales . push (new scale_CF (20, {left_extension: 0.022, right_extension: 0.06, indices: ['>>1<<']}));
 
 r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_DF (24, {indices: ['>>1<<']}));
-r . scales . push (new spacer (6));
-r . scales . push (new scale_CIF (24, {marking_colour: 'red'}));
+r . scales . push (new scale_DF (20, {left_extension: 0.022, right_extension: 0.06, indices: ['>>1<<'], highlight: 'yellow', highlight_left: 0.19, highlight_right: 0.19}));
 r . scales . push (new spacer (4));
-r . scales . push (new scale_L (24));
+r . scales . push (new scale_CIF (20, {left_extension: 0.018, right_extension: 0.028, marking_colour: 'red'}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_L (20));
 r . scales . push (new spacer (12));
-r . scales . push (new scale_DI (24, {marking_colour: 'red'}));
-r . scales . push (new spacer (6));
-r . scales . push (new scale_C (24));
+r . scales . push (new scale_DI (20, {marking_colour: 'red', indices: [1, 1]}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_C (20, {left_extension: 0.048, right_extension: 0.066, alt: 'black', highlight: 'yellow', highlight_left: 0.19, highlight_right: 0.19}));
 
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (24));
-r . scales . push (new scale_LL3 (24));
+r . scales . push (new scale_D (20, {left_extension: 0.048, right_extension: 0.066, alt: 'black'}));
+r . scales . push (new scale_LL3 (20, {left_extension: 0.04, right_extension: 0.064}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_LL2_down (24));
-r . scales . push (new scale_LL1 (24));
+r . scales . push (new scale_LL2_down (20, {left_extension: 0.022, right_extension: 0.042}));
+r . scales . push (new scale_LL1 (20, {left_extension: 0.006, right_extension: 0.02}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_LL0_down (24));
+r . scales . push (new scale_LL0_down (20, {right_extension: 0.04}));
 r . scales . push (new spacer (2));
 
 s = new Sliderule (1200,
@@ -86,34 +97,36 @@ s = new Sliderule (1200,
   cursor_rounding: 8, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
 sliderules . sliderules . push (s);
 
+//back_german_braces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
+
 r = new Rule (); s . rules . push (r);
 r . scales . push (new spacer (2));
-r . scales . push (new scale_PH2 (24));
+r . scales . push (new scale_PH2 (20));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_SINH2rad_down (24));
-r . scales . push (new scale_TANHrad (24));
+r . scales . push (new scale_SINH2rad_down (20));
+r . scales . push (new scale_TANHrad (20));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_J (24));
-r . scales . push (new scale_A (24, {left_extension: 0.1, alt: 'black', marking_alt: 'red'}));
+r . scales . push (new scale_J (20));
+r . scales . push (new scale_A (20, {left_extension: 0.1, alt: 'black', marking_alt: 'red'}));
 
 r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_B (24));
-r . scales . push (new scale_Tdec (24));
+r . scales . push (new scale_B (20));
+r . scales . push (new scale_Tdec (20));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_STdec_down (24));
-r . scales . push (new scale_S (24));
+r . scales . push (new scale_STdec_down (20));
+r . scales . push (new scale_S (20));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_P_down (24, {marking_colour: 'red'}));
-r . scales . push (new scale_C (24));
+r . scales . push (new scale_P_down (20, {marking_colour: 'red'}));
+r . scales . push (new scale_C (20));
 
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (24));
-r . scales . push (new scale_CI (24));
+r . scales . push (new scale_D (20));
+r . scales . push (new scale_CI (20));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_COSHrad_down (24));
-r . scales . push (new scale_SINH1rad (24));
+r . scales . push (new scale_COSHrad_down (20));
+r . scales . push (new scale_SINH1rad (20));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_PH_down (24));
+r . scales . push (new scale_PH_down (20));
 r . scales . push (new spacer (2));
 
 </script>
