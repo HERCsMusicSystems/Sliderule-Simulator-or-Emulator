@@ -45,6 +45,8 @@
 
 <script>
 
+var front_german_braces = [], front_german_cursors = [], front_us_braces = [], front_us_cursors = [];
+
 front_german_braces . push (new Engraving ("s", '10px arial', 'right', 'red', -0.006, 82));
 front_german_braces . push (new Engraving ("kW", '10px arial', 'left', 'red', 0.006, 82));
 front_german_braces . push (new Engraving ("PS", '10px arial', 'right', 'red', HairlinePS - 0.006, 82));
@@ -59,8 +61,6 @@ front_us_braces . push (new Engraving ("d", '10px arial', 'left', 'red', Hairlin
 front_us_cursors . push (new Cursor (HairlineHPUS, 72, 108, 'red'));
 front_us_cursors . push (new Cursor (HairlineS, 72, 108, 'red'));
 front_us_cursors . push (new Cursor (HairlineD, 146, 182, 'red'));
-back_german_cursors . push (new Cursor (Hairline360, 72, 108, 'red'));
-back_us_cursors . push (new Cursor (Hairline360, 72, 108, 'red'));
 
 var logo = new Image (); logo . src = "staedtler_logo.png";
 var sliderules = new Sliderules ({background: logo, background_colour: '#004082'});
@@ -77,7 +77,7 @@ s . braces . push (new Screw (1.36, 28, 10, 0.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.344, 68, 6, 0.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.36, 229, 10, 0.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.344, 186, 6, 0.5, '#b5a642', '#605321'));
-s . cursorGlassBraces . push (new CursorAngledBrace (0.075, 0.085, 16, 0, '#deb887'));
+s . cursorGlassBraces . push (new CursorAngledBrace (0.075, 0.085, 16, 0, 16, '#deb887'));
 var r = new Rule ({left_margin: 0.18, alt_left_margin: 0.2, right_margin: 0.18, alt_right_margin: 0.2}); s . rules . push (r);
 r . scales . push (new scale_P (18, {left: "P", right: "\u221a1-(0.1X)\u00b2", rs: 0.07, marking_colour: 'red'}));
 r . scales . push (new scale_CSdec (18, {left: "S", left_extension: 0.024, right: "\u2222 sin x", rs: 0.095, centre: "\u2222 cos", cs: 1.07, ca: 'left', cc: 'red'}));
@@ -100,6 +100,7 @@ r . scales . push (new scale_STdec_down (18, {left: "ST", right: "\u2222arc X", 
 //=============================
 
 s = new Sliderule (1200, {cursor_left_extension: 0.065, cursor_right_extension: 0.075, cursor_rounding: 6, cursor_limit_left: 0.06, cursor_limit_right: 0.05, static_markings_shift: 0.044}); sliderules . sliderules . push (s);
+s . cursors . push (new Cursor (Hairline360, 72, 108, 'red'));
 s . braces . push (new StaedtlerLeftBrace (4, 0.13, 0.17, 0.17, 0.19, 10, 80, 90, '#aaaaff', 'red'));
 s . braces . push (new StaedtlerLeftBrace (4, 0.133, 0.16, 0.168, 0.188, 12, 78, 90, '#ddddff', 'red'));
 s . braces . push (new Screw (0.04, 28, 10, 0.5, '#b5a642', '#605321'));
@@ -112,7 +113,7 @@ s . braces . push (new Screw (1.36, 28, 10, 0.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.344, 68, 6, 0.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.36, 229, 10, 0.5, '#b5a642', '#605321'));
 s . braces . push (new Screw (1.344, 186, 6, 0.5, '#b5a642', '#605321'));
-s . cursorGlassBraces . push (new CursorAngledBrace (0.075, 0.085, 16, 0, '#deb887'));
+s . cursorGlassBraces . push (new CursorAngledBrace (0.075, 0.085, 16, 0, 16, '#deb887'));
 r = new Rule ({left_margin: 0.18, alt_left_margin: 0.2, right_margin: 0.18, alt_right_margin: 0.2}); s . rules . push (r);
 r . scales . push (new scale_LL00 (18, {left: "LL\u2080\u2080", right: "e^-0.001x", rs: 0.07, marking_colour: 'red', right_extension: 0.005}));
 r . scales . push (new scale_LL01 (18, {left: "LL\u2080\u2081", right: "e^-0.01x", rs: 0.07, marking_colour: 'red', right_extension: 0.024}));

@@ -46,12 +46,16 @@ var changeSize = function (length) {for (var ind in sliderules . sliderules) sli
 var changeVersion = function (version) {
 	switch (version) {
 	case 'us':
-    sliderules . sliderules [0] . cursorBraces = front_us_braces; sliderules . sliderules [0] . cursors = front_us_cursors;
-    sliderules . sliderules [1] . cursorBraces = back_us_braces; sliderules . sliderules [1] . cursors = back_us_cursors;
+    if (window . front_us_braces != undefined) sliderules . sliderules [0] . cursorBraces = front_us_braces;
+    if (window . front_us_cursors != undefined) sliderules . sliderules [0] . cursors = front_us_cursors;
+    if (window . back_us_braces != undefined) sliderules . sliderules [1] . cursorBraces = back_us_braces;
+    if (window . back_us_cursors != undefined) sliderules . sliderules [1] . cursors = back_us_cursors;
     break;
 	case 'german':
-    sliderules . sliderules [0] . cursorBraces = front_german_braces; sliderules . sliderules [0] . cursors = front_german_cursors;
-    sliderules . sliderules [1] . cursorBraces = back_german_braces; sliderules . sliderules [1] . cursors = back_german_cursors;
+    if (window . front_german_braces != undefined) sliderules . sliderules [0] . cursorBraces = front_german_braces;
+    if (window . front_german_cursors != undefined) sliderules . sliderules [0] . cursors = front_german_cursors;
+    if (window . back_german_braces != undefined) sliderules . sliderules [1] . cursorBraces = back_german_braces;
+    if (window . back_german_cursors != undefined) sliderules . sliderules [1] . cursors = back_german_cursors;
     break;
 	default: break;
 	}

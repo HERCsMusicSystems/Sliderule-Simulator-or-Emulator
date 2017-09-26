@@ -1557,37 +1557,19 @@ var CursorBrace = function (left, right, top, bottom, radius, colour) {
 	}
 };
 
-var CursorBracee = function (left, right, top, bottom, colour) {
+var CursorAngledBrace = function (left, right, top, bottom, angled, colour) {
   this . draw = function (ctx, s) {
     ctx . fillStyle = colour;
     ctx . beginPath ();
     var l = - left * s . length, r = right * s . length;
-    ctx . moveTo (l, bottom); ctx . lineTo (l, 0); ctx . arc (l + top, 0, top, Math . PI, Math . PI * 1.5);//ctx . lineTo (l + top, - top);
-    ctx . arc (r - top, 0, top, Math . PI * 1.5, 0); //ctx . lineTo (r - top, - top);
+    ctx . moveTo (l, bottom); ctx . lineTo (l, 0); ctx . lineTo (l + angled, - top);
+    ctx . lineTo (r - angled, - top);
     ctx . lineTo (r, 0); ctx . lineTo (r, bottom);
     ctx . fill ();
     ctx . beginPath ();
     ctx . translate (0, s . height ());
-    ctx . moveTo (l, - bottom); ctx . lineTo (l, 0); ctx . arc (l + top, 0, top, Math . PI, Math . PI * 0.5, true); //ctx . lineTo (l + top, top);
-    ctx . lineTo (r - top, top); ctx . arc (r - top, 0, top, Math . PI * 0.5, 0, true); //ctx . lineTo (r, 0);
-    ctx . lineTo (r, - bottom);
-    ctx . fill ();
-  };
-};
-
-var CursorAngledBrace = function (left, right, top, bottom, colour) {
-  this . draw = function (ctx, s) {
-    ctx . fillStyle = colour;
-    ctx . beginPath ();
-    var l = - left * s . length, r = right * s . length;
-    ctx . moveTo (l, bottom); ctx . lineTo (l, 0); ctx . lineTo (l + top, - top);
-    ctx . lineTo (r - top, - top);
-    ctx . lineTo (r, 0); ctx . lineTo (r, bottom);
-    ctx . fill ();
-    ctx . beginPath ();
-    ctx . translate (0, s . height ());
-    ctx . moveTo (l, - bottom); ctx . lineTo (l, 0); ctx . lineTo (l + top, top);
-    ctx . lineTo (r - top, top); ctx . lineTo (r, 0);
+    ctx . moveTo (l, - bottom); ctx . lineTo (l, 0); ctx . lineTo (l + angled, top);
+    ctx . lineTo (r - angled, top); ctx . lineTo (r, 0);
     ctx . lineTo (r, - bottom);
     ctx . fill ();
   };
@@ -2038,6 +2020,3 @@ var Sliderules = function (options) {
   	return true;
   };
 };
-
-var front_german_braces = [], front_german_cursors = [], back_german_braces = [], back_german_cursors = [];
-var front_us_braces = [], front_us_cursors = [], back_us_braces = [], back_us_cursors = [];

@@ -23,6 +23,9 @@
 var faber_castell = new Image (); faber_castell . src = "Faber-Castell-gold.png";
 var logo = new Image (); logo . src = "Logo_1951.png";
 
+var front_german_braces = [], front_german_cursors = [], front_us_braces = [], front_us_cursors = [];
+var back_german_braces = [], back_german_cursors = [], back_us_braces = [], back_us_cursors = [];
+
 var sliderules = new Sliderules ({background: faber_castell, background_colour: '#081818'});
 var s = new Sliderule (1200, {left_margin: 0.24, right_margin: 0.24, cursor_rounding: 16, hairline_top: -8, hairline_bottom: -8,
   cursor_left_extension: 0.093, cursor_right_extension: 0.093, markings_background: 'black', markings_colour: 'gold', markings_size: 15, cursor_limit_left: 0.074, cursor_limit_right: 0.074});
@@ -182,6 +185,7 @@ back_us_braces . push (new Screw (0.06, -8, 6, 0.5, '#b5a642', '#605321'));
 back_us_braces . push (new Screw (-0.06, 374, 6, 0.5, '#b5a642', '#605321'));
 back_us_braces . push (new Screw (0.06, 374, 6, 0.5, '#b5a642', '#605321'));
 back_us_braces . push (new Engraving ("CASTELL", 'italic 12px arial', 'center', 'black', 0, 378));
+back_us_braces . push (new Engraving ("d", '12px arial', 'right', 'red', HairlineRight - 0.006, 304));
 back_us_braces . push (new Engraving ("A", '12px arial', 'center', 'red', HairlineRight + HairlineS + HairlineS, 304));
 back_us_cursors . push (new Cursor (HairlineRight + HairlineS + HairlineS, 146, 170, 'red'));
 back_us_cursors . push (new Cursor (HairlineRight + HairlineS + HairlineS, 196, 220, 'red'));
