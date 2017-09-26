@@ -1518,6 +1518,24 @@ var RightBraceBar = function (location, top, bottom, radius, background, colour)
   };
 };
 
+var BraceSupport = function (location, top, bottom, width, radius, background, colour) {
+  this . draw = function (ctx, s) {
+    var position = location * s . length;
+    var h = s . height ();
+    var w = width * 0.5;
+    ctx . beginPath ();
+    ctx . arc (position + w - radius, bottom - radius, radius, 0, Math . PI * 0.5);
+    ctx . arc (position - w + radius, bottom - radius, radius, Math . PI * 0.5, Math . PI);
+    ctx . arc (position - w + radius, top + radius, radius, Math . PI, Math . PI * 1.5);
+    ctx . arc (position + w - radius, top + radius, radius, Math . PI * 1.5, 0);
+    ctx . closePath ();
+    ctx . fillStyle = background;
+    ctx . strokeStyle = colour;
+    ctx . fill ();
+    ctx . stroke ();
+  };
+};
+
 var Logo = function (logo, location, top, scaling, rotation) {
 	this . draw = function (ctx, s) {
 		ctx . translate (location * s . length, top);
