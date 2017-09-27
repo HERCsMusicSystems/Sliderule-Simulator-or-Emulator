@@ -2031,10 +2031,10 @@ var Sliderules = function (options) {
       }
     }
   };
-  for (var key in options) this [key] = options [key];
   this . noChange = function () {
   	if (this . requireRedraw) return false;
   	for (var ind in this . sliderules) {if (this . sliderules [ind] . changed ()) return false;}
   	return true;
   };
+  for (var key in options) this [key] = options [key];
 };
