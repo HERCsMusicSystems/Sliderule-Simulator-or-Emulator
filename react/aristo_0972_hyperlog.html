@@ -46,14 +46,14 @@
 <script>
 var sliderules = new Sliderules ();
 var s = new Sliderule (1200,
-  {cursor_markings_shift: -0.02, cursor_markings_align: 'right', markings_colour: 'gold', markings_background: 'black',
+  {markings_colour: 'gold', markings_background: 'black',
   cursor_rounding: 8, cursor_left_extension: 0.11, cursor_right_extension: 0.11, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
 sliderules . sliderules . push (s);
 
 var HairlineLeft = HairlineD - HairlinePS - HairlinePS;
 var HairlineRight = HairlineLeft - Math . log10 (Math . log (2));
 var h2pi = (1 - Math . log10 (Math . PI * 2)) / 2;
-s . cursors . push (new Cursor (Hairline360, 86, 150, 'red'));
+s . cursors . push (new Cursor (Hairline360, 86, 150, 'red', {marking_shift: 0.006}));
 s . cursors . push (new Cursor (h2pi, 18, 150, 'red'));
 s . cursors . push (new Cursor (- h2pi, 86, 150, 'red'));
 s . cursors . push (new Cursor (h2pi, 186, 250, 'red'));
@@ -62,10 +62,10 @@ s . cursorBraces . push (new Engraving ("ARISTO", '10px arial', 'left', 'black',
 s . cursorBraces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
 
 var r = new Rule (); s . rules . push (r);
-r . markings . push (new BraceSupport (- 0.15, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
-r . markings . push (new BraceSupport (- 0.15, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
-r . markings . push (new BraceSupport (1.15, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
-r . markings . push (new BraceSupport (1.15, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+r . markings . push (new BraceSupport (- 0.146, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
+r . markings . push (new BraceSupport (- 0.148, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+r . markings . push (new BraceSupport (1.146, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
+r . markings . push (new BraceSupport (1.148, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_LL00 (20, {left: "LL00", ls: 0.09, right: "e^-0.001X", rs: 0.09, right_extension: 0.046, marking_colour: 'red'}));
 r . scales . push (new spacer (2));
@@ -92,10 +92,10 @@ r . scales . push (new spacer (4));
 r . scales . push (new scale_C (20, {left: "C", ls: 0.09, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.066, alt: 'black', highlight: 'yellow', highlight_left: 0.19, highlight_right: 0.19}));
 
 r = new Rule (); s . rules . push (r);
-r . markings . push (new BraceSupport (- 0.15, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
-r . markings . push (new BraceSupport (- 0.15, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
-r . markings . push (new BraceSupport (1.15, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
-r . markings . push (new BraceSupport (1.15, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+r . markings . push (new BraceSupport (- 0.146, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
+r . markings . push (new BraceSupport (- 0.148, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+r . markings . push (new BraceSupport (1.146, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
+r . markings . push (new BraceSupport (1.148, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
 r . scales . push (new scale_D (20, {left: "D", ls: 0.09, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.066, alt: 'black'}));
 r . scales . push (new scale_LL3 (20, {left: "LL3", ls: 0.09, right: "e^X", rs: 0.09, left_extension: 0.04, right_extension: 0.064}));
 r . scales . push (new spacer (2));
@@ -106,40 +106,70 @@ r . scales . push (new scale_LL0_down (20, {left: "LL0", ls: 0.09, right: "e^0.0
 r . scales . push (new spacer (2));
 
 s = new Sliderule (1200,
-  {static_markings: false, cursor_markings: false, cursor_markings_shift: -0.02, cursor_markings_align: 'right', markings_colour: 'gold', markings_background: 'black',
-  cursor_rounding: 8, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
+  {markings_colour: 'gold', markings_background: 'black', cursor_rounding: 8, cursor_left_extension: 0.11, cursor_right_extension: 0.11, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
 sliderules . sliderules . push (s);
 
-//back_german_braces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
+var back_german_braces = [], back_german_cursors = [], back_us_braces = [], back_us_cursors = [];
+back_german_cursors . push (new Cursor (HairlineS, 66, 146, 'red', {marking_align: 'right', marking_shift: -0.01}));
+back_german_cursors . push (new Cursor (HairlineD, 210, 270, 'red'));
+back_german_cursors . push (new Cursor (HairlinePS, 66, 146, 'red'));
+back_german_braces . push (new Engraving ("PS", '10px arial', 'center', 'red', HairlinePS, 62));
+back_german_braces . push (new Engraving ("kW", '10px arial', 'right', 'red', -0.006, 46));
+back_german_braces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
+back_german_braces . push (new Screw (0, -7, 6, 0.5, '#b5a642', '#605321'));
+back_us_cursors . push (new Cursor (HairlineS, 66, 146, 'red', {marking_align: 'right', marking_shift: -0.01}));
+back_us_cursors . push (new Cursor (HairlineD, 210, 270, 'red'));
+back_us_cursors . push (new Cursor (HairlineHPUS, 66, 146, 'red'));
+back_us_braces . push (new Engraving ("HP", '10px arial', 'center', 'red', HairlineHPUS, 62));
+back_us_braces . push (new Engraving ("kW", '10px arial', 'right', 'red', -0.006, 46));
+back_us_braces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
+back_us_braces . push (new Screw (0, -7, 6, 0.5, '#b5a642', '#605321'));
+
+s . braces . push (new LeftBrace (2, 0.07, 8, '#ffffc2', 'black', 100, 0.8));
+s . braces . push (new LeftBrace (4, 0.063, 8, '#ffffc2', 'black', 100, 0.8));
+s . braces . push (new BraceSupport (0.05, 4, 332, 36, 4, 'white', 'black'));
+s . braces . push (new BraceSupport (0.054, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
+s . braces . push (new BraceSupport (0.052, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+s . braces . push (new BraceSupport (0.054, 283 - 16, 283 + 16, 20, 4, '#83737c', '#83737c'));
+s . braces . push (new BraceSupport (0.052, 283 - 12, 283 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+s . braces . push (new Engraving ("ARISTO", '18px arial', 'center', '#dddddd', 0.05, 168, Math . PI * 0.5));
+s . braces . push (new RightBrace (2, 0.07, 8, '#ffffc2', 'black', 100, 0.8));
+s . braces . push (new RightBrace (4, 0.063, 8, '#ffffc2', 'black', 100, 0.8));
+s . braces . push (new BraceSupport (1.35, 4, 332, 36, 4, 'white', 'black'));
+s . braces . push (new BraceSupport (1.346, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
+s . braces . push (new BraceSupport (1.348, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+s . braces . push (new BraceSupport (1.346, 283 - 16, 283 + 16, 20, 4, '#83737c', '#83737c'));
+s . braces . push (new BraceSupport (1.348, 283 - 12, 283 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+s . braces . push (new Engraving ("ARISTO", '18px arial', 'center', '#dddddd', 1.35, 168, Math . PI * 1.5));
 
 r = new Rule (); s . rules . push (r);
 r . scales . push (new spacer (2));
-r . scales . push (new scale_PH2 (20));
+r . scales . push (new scale_PH2 (20, {left: "H2", ls: 0.095, right: "\u221a1+X\u00b2", rs: 0.09, left_extension: 0.01}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_SINH2rad_down (20));
-r . scales . push (new scale_TANHrad (20));
+r . scales . push (new scale_SINH2rad_down (20, {left: "Sh2", ls: 0.095, right: "\u2222 sin h", rs: 0.09, left_extension: 0.02, right_extension: 0.005}));
+r . scales . push (new scale_TANHrad (20, {left: "Th", ls: 0.095, right: "\u2222 tan h", rs: 0.09, left_extension: 0.005}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_J (20));
-r . scales . push (new scale_A (20, {left_extension: 0.1, alt: 'black', marking_alt: 'red'}));
+r . scales . push (new scale_J (20, {left: "K", ls: 0.095, right: "X\u00b3", rs: 0.09}));
+r . scales . push (new scale_A (20, {left: "A", ls: 0.095, right: "X\u00b2", rs: 0.09, left_extension: 0.05, alt: 'black', marking_alt: 'red', right_extension: 0.06}));
 
 r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_B (20));
-r . scales . push (new scale_Tdec (20));
+r . scales . push (new scale_B (20, {left: "B", ls: 0.095, right: "X\u00b2", rs: 0.09, left_extension: 0.05, alt: 'black', marking_alt: 'red', right_extension: 0.06, highlight: 'yellow', highlight_left: 0.19, highlight_right: 0.19}));
+r . scales . push (new scale_Tdec (20, {left: "T", ls: 0.095, right: "\u2222 tan", rs: 0.09, left_extension: 0.02}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_STdec_down (20));
-r . scales . push (new scale_S (20));
+r . scales . push (new scale_STdec_down (20, {left: "ST", ls: 0.095, right: "\u2222 arc", rs: 0.09, left_extension: 0.02, right_extension: 0.022, draw_st_corrections: false}));
+r . scales . push (new scale_CSdec (20, {left: "S", ls: 0.095, right: "\u2222 sin", rs: 0.09, centre: "\u2222 cos", ca: 'right', cs: 1.08, cc: 'red', left_extension: 0.02}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_P_down (20, {marking_colour: 'red'}));
-r . scales . push (new scale_C (20));
+r . scales . push (new scale_P_down (20, {left: "P", ls: 0.095, right: "\u221a1-X\u00b2", rs: 0.09, marking_colour: 'red'}));
+r . scales . push (new scale_C (20, {left: "C", ls: 0.095, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.062, alt: 'black', marking_alt: 'red', highlight: 'yellow', highlight_left: 0.19, highlight_right: 0.19}));
 
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (20));
-r . scales . push (new scale_CI (20));
+r . scales . push (new scale_D (20, {left: "D", ls: 0.095, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.062, alt: 'black', marking_alt: 'red'}));
+r . scales . push (new scale_CI (20, {left: "DI", ls: 0.095, right: "1/X", rs: 0.09, marking_colour: 'red'}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_COSHrad_down (20));
-r . scales . push (new scale_SINH1rad (20));
+r . scales . push (new scale_COSHrad_down (20, {left: "Ch", ls: 0.095, right: "\u2222 cos h", rs: 0.09, right_extension: 0.005}));
+r . scales . push (new scale_SINH1rad (20, {left: "Sh1", ls: 0.095, right: "\u2222 sin h", rs: 0.09, right_extension: 0.014}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_PH_down (20));
+r . scales . push (new scale_PH_down (20, {left: "H1", ls: 0.095, right: "\u221a1+X\u00b2", rs: 0.09, right_extension: 0.05}));
 r . scales . push (new spacer (2));
 
 </script>
