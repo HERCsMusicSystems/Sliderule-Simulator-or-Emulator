@@ -50,6 +50,9 @@ var s = new Sliderule (1200,
   cursor_rounding: 8, cursor_left_extension: 0.11, cursor_right_extension: 0.11, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
 sliderules . sliderules . push (s);
 
+s . backBraces . push (new LeftBrace (2, 0.07, 8, '#ffffc2', 'black', 100, 0.8));
+s . backBraces . push (new RightBrace (2, 0.07, 8, '#ffffc2', 'black', 100, 0.8));
+
 var HairlineLeft = HairlineD - HairlinePS - HairlinePS;
 var HairlineRight = HairlineLeft - Math . log10 (Math . log (2));
 var h2pi = (1 - Math . log10 (Math . PI * 2)) / 2;
