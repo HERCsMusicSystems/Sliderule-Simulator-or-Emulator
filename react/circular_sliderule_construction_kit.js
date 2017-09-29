@@ -22,8 +22,13 @@
 
 var spacer = function (height, options) {
   this . height = height;
+  this . colour = 'black'; this . alt = 'red';
   this . draw = function (ctx, radius) {};
   this . sub_draw = function (ctx, radius) {
+    ctx . fillStyle = this . marking_colour ? this . marking_colour : this . colour;
+    ctx . strokeStyle = this . colour;
+    ctx . textAlign = 'center';
+    ctx . font = (this . height * 0.5) + 'px arial';
     ctx . save ();
     this . draw (ctx, radius);
     ctx . restore ();
@@ -45,6 +50,181 @@ var scal = function (height, options) {
       ctx . fillText (ind, 0, - radius - height);
       ctx . rotate (Math . PI / 12);
     }
+  };
+  return s;
+};
+
+var draw_ticks = function (ctx, init, limit, from, to) {
+  ctx . save ();
+  var next = 0, log = 0;
+  for (var ind = init; ind < limit; ind++) {
+    next = Math . log10 (ind);
+    ctx . rotate ((next - log) * 2 * Math . PI);
+    ctx . moveTo (0, from); ctx . lineTo (0, to);
+    log = next;
+  }
+  ctx . restore ();
+};
+
+var scale_C = function (height, options) {
+  var s = new spacer (height, options);
+  s . draw = function (ctx, radius) {
+    var h0 = - radius - this . height;
+    var h5 = h0 + this . height * 0.5, h4 = h0 + this . height * 0.4, h3 = h0 + this . height * 0.3, h2 = h0 + this . height * 0.2;
+    ctx . beginPath ();
+    var log = 0, next = 0, ind = 0;
+    ctx . moveTo (0, h0); ctx . lineTo (0, h5);
+    ctx . fillText ("1.0", 0, h5);
+    ctx . save ();
+    for (ind = 2; ind < 10; ind++) {
+      next = Math . log10 (ind);
+      ctx . rotate ((next - log) * 2 * Math . PI);
+      ctx . fillText (ind + ".0", 0, h5);
+      ctx . moveTo (0, h0); ctx . lineTo (0, h5);
+      log = next;
+    }
+    ctx . restore ();
+    draw_ticks (ctx, 1.5, 10, h0, h4);
+    for (ind = 1.1; ind < 1.5; ind += 0.1) draw_ticks (ctx, ind, 10, h0, h3);
+    for (ind = 1.6; ind < 2; ind += 0.1) draw_ticks (ctx, ind, 10, h0, h3);
+    for (ind = 1.05; ind < 2; ind += 0.05) draw_ticks (ctx, ind, 3, h0, h2);
+    ctx . stroke ();
+    ctx . strokeStyle = 'red';
+    ctx . beginPath ();
+    ctx . ellipse (0, 0, radius, radius + this . height * 0.25, 0, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, radius + this . height * 0.25, radius + this . height * 0.5, Math . PI * 0.5, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, radius + this . height * 0.5, radius + this . height * 0.75, Math . PI, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, radius + this . height * 0.75, radius + this . height, Math . PI * 1.5, 0, Math . PI * 0.5);
+    ctx . closePath ();
+    ctx . stroke ();
+    ctx . strokeStyle = 'blue';
+    ctx . beginPath ();
+    ctx . moveTo (radius, 0);
+    for (ind = 0; ind < 96; ind ++) {
+      ctx . rotate (Math . PI / 48);
+      ctx . lineTo (radius + ind * this . height / 96, 0);
+    }
+    ctx . stroke ();
+  };
+  return s;
+};
+
+var draw_spiral_ticks = function (ctx, init, limit, from, to, spirals, height) {
+  ctx . save ();
+  var next = 0, log = 0, offset = 0;
+  for (var ind = init; ind < limit; ind++) {
+    next = spirals * Math . log10 (ind);
+    ctx . rotate ((next - log) * 2 * Math . PI);
+    offset = height * next;
+    ctx . moveTo (0, from - offset); ctx . lineTo (0, to - offset);
+    log = next;
+  }
+  ctx . restore ();
+};
+
+var spiral25 = function (height, options) {
+  var s = new spacer (height * 26, options);
+  s . sub_height = height;
+  s . draw = function (ctx, radius) {
+    var h0 = - radius - this . height;
+    var h10 = h0 + this . height, h5 = h0 + this . height * 0.5, h4 = h0 + this . height * 0.4, h3 = h0 + this . height * 0.3, h2 = h0 + this . height * 0.2;
+    var ind;
+    ctx . strokeStyle = 'red';
+    ctx . beginPath ();
+    ctx . arc (0, 0, radius, 0, 6); ctx . arc (0, 0, radius + this . height, 0, 6);
+    ctx . stroke ();
+    ctx . strokeStyle = 'black';
+    ctx . beginPath ();
+    for (ind = 1; ind < 26; ind++) {
+      ctx . ellipse (0, 0, radius + this . height * ind / 26, radius + this . height * (ind + 0.25) / 26, Math . PI * -0.5, 0, Math . PI * 0.5);
+      ctx . ellipse (0, 0, radius + this . height * (ind + 0.25) / 26, radius + this . height * (ind + 0.5) / 26, 0, 0, Math . PI * 0.5);
+      ctx . ellipse (0, 0, radius + this . height * (ind + 0.5) / 26, radius + this . height * (ind + 0.75) / 26, Math . PI * 0.5, 0, Math . PI * 0.5);
+      ctx . ellipse (0, 0, radius + this . height * (ind + 0.75) / 26, radius + this . height * (ind + 1) / 26, Math . PI, 0, Math . PI * 0.5);
+    }
+    ctx . stroke ();
+    ctx . beginPath ();
+    draw_spiral_ticks (ctx, 1, 11, - radius - height, - radius, 25, this . sub_height);
+    ctx . stroke ();
+    ctx . strokeStyle = 'blue'; ctx . fillStyle = 'yellow';
+    var log2, offset, dist;
+    ctx . beginPath ();
+    log2 = Math . log10 (3) * 25;
+    offset = 2 * log2 * Math . PI;
+    ctx . ellipse (0, 0, log2 * height + radius, (log2 + 0.25) * height + radius, offset - Math . PI * 0.5, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, (log2 + 0.25) * height + radius, (log2 + 0.5) * height + radius, offset, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, (log2 + 0.5) * height + radius, (log2 + 0.75) * height + radius, offset + Math . PI * 0.5, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, (log2 + 0.75) * height + radius, (log2 + 1) * height + radius, offset + Math . PI, 0, Math . PI * 0.5);
+    ctx . closePath ();
+    log2 = Math . log10 (2) * 25;
+    offset = 2 * log2 * Math . PI;
+    ctx . moveTo (- radius - height * 12, 0);
+    ctx . ellipse (0, 0, log2 * height + radius, (log2 + 0.25) * height + radius, offset - Math . PI * 0.5, Math . PI * 0.5, 0, true);
+    ctx . ellipse (0, 0, (log2 + 0.75) * height + radius, (log2 + 1) * height + radius, offset + Math . PI, Math . PI * 0.5, 0, true);
+    ctx . ellipse (0, 0, (log2 + 0.5) * height + radius, (log2 + 0.75) * height + radius, offset + Math . PI * 0.5, Math . PI * 0.5, 0, true);
+    ctx . ellipse (0, 0, (log2 + 0.25) * height + radius, (log2 + 0.5) * height + radius, offset, Math . PI * 0.5, 0, true);
+    ctx . closePath ();
+    //ctx . stroke ();
+    ctx . fill ();
+
+    ctx . beginPath ();
+    log2 = Math . log10 (5) * 25;
+    offset = 2 * (log2 - 11) * Math . PI;
+    ctx . ellipse (0, 0, log2 * height + radius, (log2 + 0.25) * height + radius, offset - Math . PI * 0.5, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, (log2 + 0.25) * height + radius, (log2 + 0.5) * height + radius, offset, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, (log2 + 0.5) * height + radius, (log2 + 0.75) * height + radius, offset + Math . PI * 0.5, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, (log2 + 0.75) * height + radius, (log2 + 1) * height + radius, offset + Math . PI, 0, Math . PI * 0.5);
+    ctx . closePath ();
+    log2 = Math . log10 (4) * 25;
+    offset = 2 * log2 * Math . PI;
+    dist = radius + height * 16;
+    ctx . moveTo (dist * Math . cos (offset), dist * Math . sin (offset));
+    ctx . ellipse (0, 0, log2 * height + radius, (log2 + 0.25) * height + radius, offset - Math . PI * 0.5, Math . PI * 0.5, 0, true);
+    ctx . ellipse (0, 0, (log2 + 0.75) * height + radius, (log2 + 1) * height + radius, offset + Math . PI, Math . PI * 0.5, 0, true);
+    ctx . ellipse (0, 0, (log2 + 0.5) * height + radius, (log2 + 0.75) * height + radius, offset + Math . PI * 0.5, Math . PI * 0.5, 0, true);
+    ctx . ellipse (0, 0, (log2 + 0.25) * height + radius, (log2 + 0.5) * height + radius, offset, Math . PI * 0.5, 0, true);
+    ctx . closePath ();
+    //ctx . stroke ();
+    ctx . fill ();
+
+    ctx . beginPath ();
+    log2 = Math . log10 (7) * 25;
+    offset = 2 * log2 * Math . PI;
+    ctx . ellipse (0, 0, log2 * height + radius, (log2 + 0.25) * height + radius, offset - Math . PI * 0.5, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, (log2 + 0.25) * height + radius, (log2 + 0.5) * height + radius, offset, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, (log2 + 0.5) * height + radius, (log2 + 0.75) * height + radius, offset + Math . PI * 0.5, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, (log2 + 0.75) * height + radius, (log2 + 1) * height + radius, offset + Math . PI, 0, Math . PI * 0.5);
+    ctx . closePath ();
+    log2 = Math . log10 (6) * 25;
+    offset = 2 * log2 * Math . PI;
+    dist = radius + height * 21;
+    ctx . moveTo (dist * Math . cos (offset), dist * Math . sin (offset));
+    ctx . ellipse (0, 0, log2 * height + radius, (log2 + 0.25) * height + radius, offset - Math . PI * 0.5, Math . PI * 0.5, 0, true);
+    ctx . ellipse (0, 0, (log2 + 0.75) * height + radius, (log2 + 1) * height + radius, offset + Math . PI, Math . PI * 0.5, 0, true);
+    ctx . ellipse (0, 0, (log2 + 0.5) * height + radius, (log2 + 0.75) * height + radius, offset + Math . PI * 0.5, Math . PI * 0.5, 0, true);
+    ctx . ellipse (0, 0, (log2 + 0.25) * height + radius, (log2 + 0.5) * height + radius, offset, Math . PI * 0.5, 0, true);
+    ctx . closePath ();
+    //ctx . stroke ();
+    ctx . fill ();
+
+    ctx . beginPath ();
+    log2 = Math . log10 (9) * 25;
+    offset = 2 * (log2 - 11) * Math . PI;
+    ctx . ellipse (0, 0, log2 * height + radius, (log2 + 0.25) * height + radius, offset - Math . PI * 0.5, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, (log2 + 0.25) * height + radius, (log2 + 0.5) * height + radius, offset, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, (log2 + 0.5) * height + radius, (log2 + 0.75) * height + radius, offset + Math . PI * 0.5, 0, Math . PI * 0.5);
+    ctx . ellipse (0, 0, (log2 + 0.75) * height + radius, (log2 + 1) * height + radius, offset + Math . PI, 0, Math . PI * 0.5);
+    ctx . closePath ();
+    log2 = Math . log10 (8) * 25;
+    offset = 2 * log2 * Math . PI;
+    dist = radius + height * 24;
+    ctx . moveTo (dist * Math . cos (offset), dist * Math . sin (offset));
+    ctx . ellipse (0, 0, log2 * height + radius, (log2 + 0.25) * height + radius, offset - Math . PI * 0.5, Math . PI * 0.5, 0, true);
+    ctx . ellipse (0, 0, (log2 + 0.75) * height + radius, (log2 + 1) * height + radius, offset + Math . PI, Math . PI * 0.5, 0, true);
+    ctx . ellipse (0, 0, (log2 + 0.5) * height + radius, (log2 + 0.75) * height + radius, offset + Math . PI * 0.5, Math . PI * 0.5, 0, true);
+    ctx . ellipse (0, 0, (log2 + 0.25) * height + radius, (log2 + 0.5) * height + radius, offset, Math . PI * 0.5, 0, true);
+    ctx . closePath ();
+    //ctx . stroke ();
+    ctx . fill ();
   };
   return s;
 };
@@ -150,7 +330,7 @@ var Sliderule = function (options) {
 
 var Sliderules = function (options) {
   this . requireRedraw = true;
-  this . position = {x: 132.5, y: 132.5};
+  this . position = {x: 200.5, y: 200.5};
   this . scale = 1; this . scaling_factor = Math . pow (2, 1 / 12);
   this . background_colour = '#99f';
   this . background_translation = {x: 0, y: 0};
