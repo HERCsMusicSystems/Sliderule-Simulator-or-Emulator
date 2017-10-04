@@ -1,0 +1,370 @@
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////
+// 6-sided slide rule by Gregory J. McClure
+///////////////////////////////////////////////////////////////////////////////////
+-->
+<html>
+  <head>
+    <title>GJM 6-sided</title>
+  </head>
+<body>
+<div>
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<select id = on_side onchange = "javascript: change6Sided (this . value);">
+		<option value='1'>1 - LL / Fold e / Ln</option>
+		<option value='2'>2 - LL / Trig degree / P LR</option>
+		<option value='3'>3 - LLD / Fold rt10 / Ton L</option>
+		<option value='4'>4 - LLD / Trig decimal / PH</option>
+		<option value='5'>5 - TempC / Cube / Sqrt</option>
+		<option value='6'>6 - TempF / Trig hyper / PT</option>
+	</select> Side.
+	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 1200 : 880);" />Long/Short.
+</div>
+<div id="root"></div>
+
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>	
+<script src="sliderule_construction_kit_gjm_new.js"></script>	
+<script src="scales.js"></script>
+<script src="scales_gjm_new.js"></script>
+
+<script>
+var gjm_logo = new Image (); gjm_logo . src = "GJM.bmp";
+var gjm6_logo = new Image (); gjm6_logo . src = "GJM6sided.bmp";
+
+var change6Sided = function(side) {
+  sliderules . sliderules [0] . inactive = true;
+  sliderules . sliderules [1] . inactive = true;
+  sliderules . sliderules [2] . inactive = true;
+  sliderules . sliderules [3] . inactive = true;
+  sliderules . sliderules [4] . inactive = true;
+  sliderules . sliderules [5] . inactive = true;
+  switch (side) {
+	case '1': sliderules . sliderules [0] . inactive = false; break;
+	case '2': sliderules . sliderules [1] . inactive = false; break;
+	case '3': sliderules . sliderules [2] . inactive = false; break;
+	case '4': sliderules . sliderules [3] . inactive = false; break;
+	case '5': sliderules . sliderules [4] . inactive = false; break;
+	case '6': sliderules . sliderules [5] . inactive = false; break;
+	default: break;
+  }
+  sliderules . requireRedraw = true;
+};
+
+var changeVersion = function (version) {
+	switch (version) {
+	case 'us':
+    sliderules . sliderules [0] . cursorBraces = front_us_braces; sliderules . sliderules [0] . cursors = front_us_cursors;
+    sliderules . sliderules [1] . cursorBraces = us_braces; sliderules . sliderules [1] . cursors = us_cursors;
+    sliderules . sliderules [2] . cursorBraces = us_braces; sliderules . sliderules [2] . cursors = us_cursors;
+    sliderules . sliderules [3] . cursorBraces = us_braces; sliderules . sliderules [3] . cursors = us_cursors;
+    sliderules . sliderules [4] . cursorBraces = us_braces; sliderules . sliderules [4] . cursors = us_cursors;
+    sliderules . sliderules [5] . cursorBraces = us_braces; sliderules . sliderules [5] . cursors = us_cursors;
+    break;
+	case 'german':
+    sliderules . sliderules [0] . cursorBraces = front_german_braces; sliderules . sliderules [0] . cursors = front_german_cursors;
+    sliderules . sliderules [1] . cursorBraces = german_braces; sliderules . sliderules [1] . cursors = german_cursors;
+    sliderules . sliderules [2] . cursorBraces = german_braces; sliderules . sliderules [2] . cursors = german_cursors;
+    sliderules . sliderules [3] . cursorBraces = german_braces; sliderules . sliderules [3] . cursors = german_cursors;
+    sliderules . sliderules [4] . cursorBraces = german_braces; sliderules . sliderules [4] . cursors = german_cursors;
+    sliderules . sliderules [5] . cursorBraces = german_braces; sliderules . sliderules [5] . cursors = german_cursors;
+    break;
+	default: break;
+	}
+	sliderules . requireRedraw = true;
+};
+
+var sheight = 22;
+var initsize = 880;
+var sliderules = new Sliderules ({position: {x: 8.5, y: 10.5}});
+var german_braces = [];
+var german_cursors = [];
+var front_german_braces = [];
+var front_german_cursors = [];
+var us_braces = [];
+var us_cursors = [];
+var front_us_braces = [];
+var front_us_cursors = [];
+german_braces . push (new Engraving ("s", '12px arial', 'center', 'blue', HairlineS, 111));
+german_braces . push (new Engraving ("kW", '12px arial', 'left', 'blue', 0.006, 111));
+german_braces . push (new Engraving ("PS", '12px arial', 'center', 'blue', HairlinePS, 111));
+german_braces . push (new Engraving ("d", '12px arial', 'center', 'blue', HairlineD, 295));
+front_german_braces . push (new Engraving ("s", '12px arial', 'center', 'blue', HairlineS, 111));
+front_german_braces . push (new Engraving ("kW", '12px arial', 'left', 'blue', 0.006, 111));
+front_german_braces . push (new Engraving ("PS", '12px arial', 'center', 'blue', HairlinePS, 111));
+front_german_braces . push (new Engraving ("d", '12px arial', 'center', 'blue', HairlineD, 295));
+front_german_braces . push (new Engraving ("360", '12px arial', 'center', 'blue', Hairline360, 195));
+front_german_braces . push (new Engraving ("360", '12px arial', 'center', 'blue', Hairline360, 360));
+german_cursors . push (new Cursor (HairlineS, 116, 156, 'red'));
+german_cursors . push (new Cursor (HairlinePS, 116, 156, 'red'));
+german_cursors . push (new Cursor (HairlineD, 300, 340, 'red'));
+front_german_cursors . push (new Cursor (HairlineS, 116, 156, 'red'));
+front_german_cursors . push (new Cursor (HairlinePS, 116, 156, 'red'));
+front_german_cursors . push (new Cursor (HairlineD, 300, 340, 'red'));
+front_german_cursors . push (new Cursor (Hairline360, 200, 230, 'red'));
+front_german_cursors . push (new Cursor (Hairline360, 365, 395, 'red'));
+us_braces . push (new Engraving ("s", '12px arial', 'center', 'blue', HairlineS, 111));
+us_braces . push (new Engraving ("kW", '12px arial', 'left', 'blue', 0.006, 111));
+us_braces . push (new Engraving ("HP", '12px arial', 'center', 'blue', HairlineHPUS, 111));
+us_braces . push (new Engraving ("d", '12px arial', 'center', 'blue', HairlineD, 295));
+front_us_braces . push (new Engraving ("s", '12px arial', 'center', 'blue', HairlineS, 111));
+front_us_braces . push (new Engraving ("kW", '12px arial', 'left', 'blue', 0.006, 111));
+front_us_braces . push (new Engraving ("HP", '12px arial', 'center', 'blue', HairlineHPUS, 111));
+front_us_braces . push (new Engraving ("d", '12px arial', 'center', 'blue', HairlineD, 295));
+front_us_braces . push (new Engraving ("360", '12px arial', 'center', 'blue', Hairline360, 195));
+front_us_braces . push (new Engraving ("360", '12px arial', 'center', 'blue', Hairline360, 360));
+us_cursors . push (new Cursor (HairlineS, 116, 156, 'red'));
+us_cursors . push (new Cursor (HairlineHPUS, 116, 156, 'red'));
+us_cursors . push (new Cursor (HairlineD, 300, 340, 'red'));
+front_us_cursors . push (new Cursor (HairlineS, 116, 156, 'red'));
+front_us_cursors . push (new Cursor (HairlineHPUS, 116, 156, 'red'));
+front_us_cursors . push (new Cursor (HairlineD, 300, 340, 'red'));
+front_us_cursors . push (new Cursor (Hairline360, 200, 230, 'red'));
+front_us_cursors . push (new Cursor (Hairline360, 365, 395, 'red'));
+
+// Side 1
+var s = new Sliderule (initsize, {cursor_rounding: 10}); sliderules . sliderules . push (s);
+var r = new Rule (); s . rules . push (r);
+r . markings . push (new Logo (gjm_logo, -0.15, 70, 0.8));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL3 (sheight, {left_extension: 0.04, right_extension: 0.05, left: "LL3", la: 'right', ls: 0.08, right: "e^x", rs: 0.08, highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LL03_down (sheight, {left_extension: 0.04, right_extension: 0.035, left: "LL/3", la: 'right', ls: 0.08, right: "e^-x", rs: 0.08, colour: 'red', highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LL2 (sheight, {left_extension: 0.045, right_extension: 0.042, left: "LL2", la: 'right', ls: 0.08, right: "e^x", rs: 0.08, highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LL02_down (sheight, {left_extension: 0.052, right_extension: 0.045, left: "LL/2", la: 'right', ls: 0.08, right: "e^-x", rs: 0.08, colour: 'red', highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_AI (sheight, {left_extension: 0.04, right_extension: 0.05, left: "AI", la: 'right', ls: 0.08, right: "1/x\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_A (sheight, {left_extension: 0.05, right_extension: 0.04, left: "A", la: 'right', ls: 0.08, right: "x\u00b2", rs: 0.08}));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_B (sheight, {left_extension: 0.05, right_extension: 0.04, left: "B", la: 'right', ls: 0.08, right: "x\u00b2", rs: 0.08}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_BI (sheight, {left_extension: 0.04, right_extension: 0.05, left: "BI", la: 'right', ls: 0.08, right: "1/x\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_Ln_down (sheight, {left_extension: 0.045, right_extension: 0.045, left: "Ln", la: 'right', ls: 0.08, right: "ln(x)", rs: 0.08}));
+r . scales . push (new scale_CF (sheight, {left_extension: 0.056, right_extension: 0.049, left: "CF", la: 'right', ls: 0.08, right: "\u03c0x", rs: 0.08, colour: 'blue', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (2, {highlight: '#ccffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new scale_CFI (sheight, {left_extension: 0.042, right_extension: 0.05, left: "CFI", la: 'right', ls: 0.08, right: "\u03c0/x", rs: 0.08, colour: 'green', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_DIF (sheight, {left_extension: 0.049, right_extension: 0.056, left: "CIF", la: 'right', ls: 0.08, right: "1/\u03c0x", rs: 0.08, colour: 'red', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "CI", la: 'right', ls: 0.08, right: "1/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_C (sheight, {left_extension: 0.048, right_extension: 0.045, left: "C", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r = new Rule (); s . rules . push (r);
+r . markings . push (new Logo (gjm6_logo, -0.15, 55, 0.8));
+r . scales . push (new scale_D (sheight, {left_extension: 0.048, right_extension: 0.045, left: "D", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "DI", la: 'right', ls: 0.08, right: "1/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_CF (sheight, {left_extension: 0.056, right_extension: 0.049, left: "DF", la: 'right', ls: 0.08, right: "\u03c0x", rs: 0.08, colour: 'blue', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (2, {highlight: '#ccffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new scale_CFI (sheight, {left_extension: 0.042, right_extension: 0.05, left: "DFI", la: 'right', ls: 0.08, right: "\u03c0/x", rs: 0.08, colour: 'green', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_DIF (sheight, {left_extension: 0.049, right_extension: 0.056, left: "DIF", la: 'right', ls: 0.08, right: "1/\u03c0x", rs: 0.08, colour: 'red', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (2));
+
+// Side 2
+s = new Sliderule (initsize, {cursor_rounding: 10}); sliderules . sliderules . push (s);
+r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL1 (sheight, {left_extension: 0.05, right_extension: 0.055, left: "LL1", la: 'right', ls: 0.08, right: "e^x", rs: 0.08, highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LL01_down (sheight, {left_extension: 0.045, right_extension: 0.048, left: "LL/1", la: 'right', ls: 0.08, right: "e^-x", rs: 0.08, colour: 'red', highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LL0 (sheight, {left_extension: 0.05, right_extension: 0.04, left: "LL0", la: 'right', ls: 0.08, right: "e^x", rs: 0.08, highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LL00_down (sheight, {left_extension: 0.05, right_extension: 0.045, left: "LL/0", la: 'right', ls: 0.08, right: "e^-x", rs: 0.08, colour: 'red', highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_AI (sheight, {left_extension: 0.04, right_extension: 0.05, left: "AI", la: 'right', ls: 0.08, right: "1/x\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_A (sheight, {left_extension: 0.05, right_extension: 0.04, left: "A", la: 'right', ls: 0.08, right: "x\u00b2", rs: 0.08}));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_B (sheight, {left_extension: 0.05, right_extension: 0.04, left: "B", la: 'right', ls: 0.08, right: "x\u00b2", rs: 0.08}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_BI (sheight, {left_extension: 0.04, right_extension: 0.05, left: "BI", la: 'right', ls: 0.08, right: "1/x\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_S (sheight, {left_extension: 0.06, left: "S", la: 'right', ls: 0.08, right: "sin\u207b\u00b9(x)", rs: 0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_ST_down (sheight, {left_extension: 0.06, right_extension: 0.055, left: "ST", la: 'right', ls: 0.08, right: "small \u00b0s", rs:0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075, draw_st_corrections: false}));
+r . scales . push (new scale_T (sheight, {left_extension: 0.06, right_extension: 0.05, left: "T", la: 'right', ls: 0.08, right: "tan\u207b\u00b9(x)", rs: 0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_T1_down (sheight, {left_extension: 0.05, right_extension: 0.06, left: "T1", la: 'right', ls: 0.08, right: "tan\u207b\u00b9(x)", rs: 0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "CI", la: 'right', ls: 0.08, right: "1/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_C (sheight, {left_extension: 0.048, right_extension: 0.045, left: "C", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (sheight, {left_extension: 0.048, right_extension: 0.045, left: "D", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "DI", la: 'right', ls: 0.08, right: "1/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_P (sheight, {left_extension: 0.05, left: "P", la: 'right', ls: 0.08, right: "\u221A(1-x\u00b2)", rs: 0.08, colour: 'brown'}));
+r . scales . push (new scale_P2_down (sheight, {left_extension: 0.05, right_extension: 0.04, left: "P2", la: 'right', ls: 0.08, right: "\u221a(1-x\u00b2)", rs: 0.08, colour: 'brown'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LW12 (sheight, {left_extension: 0.061, right_extension: 0.06, left: "LR", la: 'right', ls: 0.08, right: "log(x)/2", rs: 0.08}));
+r . scales . push (new spacer (2));
+
+// Side 3
+s = new Sliderule (initsize, {cursor_rounding: 10}); sliderules . sliderules . push (s);
+r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LLD3 (sheight, {left_extension: 0.045, right_extension: 0.05, left: "LLD3", la: 'right', ls: 0.08, right: "10^x", rs: 0.08, highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LLD03_down (sheight, {left_extension: 0.038, right_extension: 0.06, left: "LLD/3", la: 'right', ls: 0.08, right: "10^-x", rs: 0.08, colour: 'red', highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LLD2 (sheight, {left_extension: 0.048, right_extension: 0.05, left: "LLD2", la: 'right', ls: 0.08, right: "10^x", rs: 0.08, highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LLD02_down (sheight, {left_extension: 0.052, right_extension: 0.042, left: "LLD/2", la: 'right', ls: 0.08, right: "10^-x", rs: 0.08, colour: 'red', highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_AI (sheight, {left_extension: 0.04, right_extension: 0.05, left: "AI", la: 'right', ls: 0.08, right: "1/x\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_A (sheight, {left_extension: 0.05, right_extension: 0.04, left: "A", la: 'right', ls: 0.08, right: "x\u00b2", rs: 0.08}));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_B (sheight, {left_extension: 0.05, right_extension: 0.04, left: "B", la: 'right', ls: 0.08, right: "x\u00b2", rs: 0.08}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_BI (sheight, {left_extension: 0.04, right_extension: 0.05, left: "BI", la: 'right', ls: 0.08, right: "1/x\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_Metric_randl (20, {left_extension: 0.04, right_extension: 0.025, left: "CM", la: 'right', ls: 0.08, right: 'in->cm', rs: 0.08}));
+r . scales . push (new scale_HTon (sheight, {left_extension: 0.06, right_extension: 0.06, left: "HTone", la: 'right', ls: 0.08, right: "Octave x", rs: 0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CF10 (sheight, {left_extension: 0.055, right_extension: 0.045, left: "CF10", la: 'right', ls: 0.08, right: "\u221a(10)x", rs: 0.08, colour: 'blue', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_DIF10 (sheight, {left_extension: 0.045, right_extension: 0.055, left: "CIF10", la: 'right', ls: 0.08, right: "1/\u221a(10)x", rs: 0.08, colour: 'red', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "CI", la: 'right', ls: 0.08, right: "1/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_C (sheight, {left_extension: 0.048, right_extension: 0.045, left: "C", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (sheight, {left_extension: 0.048, right_extension: 0.045, left: "D", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "DI", la: 'right', ls: 0.08, right: "1/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_CF10 (sheight, {left_extension: 0.055, right_extension: 0.045, left: "CF10", la: 'right', ls: 0.08, right: "\u221a(10)x", rs: 0.08, colour: 'blue', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_DIF10 (sheight, {left_extension: 0.045, right_extension: 0.055, left: "CIF10", la: 'right', ls: 0.08, right: "1/\u221a(10)x", rs: 0.08, colour: 'red', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_M (sheight, {left_extension: 0.061, right_extension: 0.06, left: "L", la: 'right', ls: 0.08, right: "log(x)", rs: 0.08}));
+r . scales . push (new spacer (2));
+
+// Side 4
+s = new Sliderule (initsize, {cursor_rounding: 10}); sliderules . sliderules . push (s);
+r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LLD1 (sheight, {left_extension: 0.048, right_extension: 0.058, left: "LLD1", la: 'right', ls: 0.08, right: "10^x", rs: 0.08, highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LLD01_down (sheight, {left_extension: 0.058, right_extension: 0.056, left: "LLD/1", la: 'right', ls: 0.08, right: "10^-x", rs: 0.08, colour: 'red', highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LLD0 (sheight, {left_extension: 0.05, right_extension: 0.048, left: "LLD0", la: 'right', ls: 0.08, right: "10^x", rs: 0.08, highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LLD00_down (sheight, {left_extension: 0.05, right_extension: 0.06, left: "LLD/0", la: 'right', ls: 0.08, right: "10^-x", rs: 0.08, colour: 'red', highlight: '#ffffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_AI (sheight, {left_extension: 0.04, right_extension: 0.05, left: "AI", la: 'right', ls: 0.08, right: "1/x\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_A (sheight, {left_extension: 0.05, right_extension: 0.04, left: "A", la: 'right', ls: 0.08, right: "x\u00b2", rs: 0.08}));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_B (sheight, {left_extension: 0.05, right_extension: 0.04, left: "B", la: 'right', ls: 0.08, right: "x\u00b2", rs: 0.08}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_BI (sheight, {left_extension: 0.04, right_extension: 0.05, left: "BI", la: 'right', ls: 0.08, right: "1/x\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_SCdec (sheight, {left_extension: 0.06, left: "Sd", la: 'right', ls: 0.08, right: "sin\u207b\u00b9(x)", rs: 0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_STdec_down (sheight, {left_extension: 0.06, right_extension: 0.055, left: "STd", la: 'right', ls: 0.08, right: "small \u00b0s", rs:0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075, draw_st_corrections: false}));
+r . scales . push (new scale_TCTdec (sheight, {left_extension: 0.06, right_extension: 0.048, left: "Td", la: 'right', ls: 0.08, right: "tan\u207b\u00b9(x)", rs: 0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_TCT1dec_down (sheight, {left_extension: 0.05, right_extension: 0.06, left: "T1d", la: 'right', ls: 0.08, right: "tan\u207b\u00b9(x)", rs: 0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "CI", la: 'right', ls: 0.08, right: "1/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_C (sheight, {left_extension: 0.048, right_extension: 0.045, left: "C", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (sheight, {left_extension: 0.048, right_extension: 0.045, left: "D", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "DI", la: 'right', ls: 0.08, right: "1/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_PH (sheight, {left_extension: 0.05, right_extension: 0.05, left: "PH", la: 'right', ls: 0.08, right: "\u221a(1+x\u00b2)", rs: 0.08, colour: 'green'}))
+r . scales . push (new scale_PH2_down (sheight, {left_extension: 0.045, right_extension: 0.04, left: "PH2", la: 'right', ls: 0.08, right: "\u221a(1+x\u00b2)", rs: 0.08, colour: 'green'}))
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LnGamma0_down (sheight, {left_extension: 0.06, right_extension: 0.06, left: "LnG0", la: 'right', ls: 0.08, right: "ln\u0393\u207b\u00b9(z)", rs: 0.08}));
+r . scales . push (new spacer (2));
+
+// Side 5
+s = new Sliderule (initsize, {cursor_rounding: 10}); sliderules . sliderules . push (s);
+r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (2));
+r . scales . push (new scale_Cent3 (sheight, {left_extension: 0.06, right_extension: 0.053, left: "Cent3", la: 'right', ls: 0.08, right: "\u00b0C", rs: 0.08, colour: 'blue', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_Cent2_down (sheight, {left_extension: 0.04, right_extension: 0.052, left: "Cent2", la: 'right', ls: 0.08, right: "\u00b0C", rs: 0.08, colour: 'blue', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_Cent1 (sheight, {left_extension: 0.045, right_extension: 0.06, left: "Cent1", la: 'right', ls: 0.08, right: "\u00b0C", rs: 0.08, colour: 'blue', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_Cent0_down (sheight, {left_extension: 0.05, right_extension: 0.05, left: "Cent0", la: 'right', ls: 0.08, right: "\u00b0C", rs: 0.08, colour: 'blue', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_AI (sheight, {left_extension: 0.04, right_extension: 0.05, left: "AI", la: 'right', ls: 0.08, right: "1/x\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_A (sheight, {left_extension: 0.05, right_extension: 0.04, left: "A", la: 'right', ls: 0.08, right: "x\u00b2", rs: 0.08}));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_B (sheight, {left_extension: 0.05, right_extension: 0.04, left: "B", la: 'right', ls: 0.08, right: "x\u00b2", rs: 0.08}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_BI (sheight, {left_extension: 0.04, right_extension: 0.05, left: "BI", la: 'right', ls: 0.08, right: "1/x\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_R1 (sheight, {left_extension: 0.045, right_extension: 0.038, left: "W1", la: 'right', ls: 0.08, right: "\u221ax", rs: 0.08, highlight: '#dddddd', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_W2 (sheight, {left_extension: 0.048, right_extension: 0.045, left: "W2", la: 'right', ls: 0.08, right: "\u221ax", rs: 0.08, highlight: '#dddddd', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_K (sheight, {left_extension: 0.055, right_extension: 0.04, left: "K", la: 'right', ls: 0.08, right: "x\u00b3", rs: 0.08, indices: [1, 10, 100, 1], highlight: '#ddddff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_JI (sheight, {left_extension: 0.04, right_extension: 0.055, left: "KI", la: 'right', ls: 0.08, right: "1/x\u00b3", rs: 0.08, indices: [1, 10, 100, 1], highlight: '#ddddff', highlight_left: 0.075, highlight_right: 0.075, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "CI", la: 'right', ls: 0.08, right: "1/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_C (sheight, {left_extension: 0.048, right_extension: 0.045, left: "C", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (sheight, {left_extension: 0.048, right_extension: 0.045, left: "D", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "DI", la: 'right', ls: 0.08, right: "1/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_R1 (sheight, {left_extension: 0.045, right_extension: 0.038, left: "R1", la: 'right', ls: 0.08, right: "\u221ax", rs: 0.08, highlight: '#dddddd', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_W2 (sheight, {left_extension: 0.048, right_extension: 0.045, left: "R2", la: 'right', ls: 0.08, right: "\u221ax", rs: 0.08, highlight: '#dddddd', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_LnGamma1_down (sheight, {left_extension: 0.06, right_extension: 0.06, left: "LnG1", la: 'right', ls: 0.08, right: "ln\u0393\u207b\u00b9(z)", rs: 0.08}));
+r . scales . push (new spacer (2));
+
+// Side 6
+s = new Sliderule (initsize, {cursor_rounding: 10}); sliderules . sliderules . push (s);
+r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (2));
+r . scales . push (new scale_Fahr3 (sheight, {left_extension: 0.04, right_extension: 0.06, left: "Fahr3", la: 'right', ls: 0.08, right: "\u00b0F", rs: 0.08, colour: 'purple', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_Fahr2_down (sheight, {left_extension: 0.055, right_extension: 0.06, left: "Fahr2", la: 'right', ls: 0.08, right: "\u00b0F", rs: 0.08, colour: 'purple', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_Fahr1 (sheight, {left_extension: 0.038, right_extension: 0.048, left: "Fahr1", la: 'right', ls: 0.08, right: "\u00b0F", rs: 0.08, colour: 'purple', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_Fahr0_down (sheight, {left_extension: 0.06, right_extension: 0.04, left: "Fahr0", la: 'right', ls: 0.08, right: "\u00b0F", rs: 0.08, colour: 'purple', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_AI (sheight, {left_extension: 0.04, right_extension: 0.05, left: "AI", la: 'right', ls: 0.08, right: "1/x\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_A (sheight, {left_extension: 0.05, right_extension: 0.04, left: "A", la: 'right', ls: 0.08, right: "x\u00b2", rs: 0.08}));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_B (sheight, {left_extension: 0.05, right_extension: 0.04, left: "B", la: 'right', ls: 0.08, right: "x\u00b2", rs: 0.08}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_BI (sheight, {left_extension: 0.04, right_extension: 0.05, left: "BI", la: 'right', ls: 0.08, right: "1/x\u00b2", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_sinh1 (sheight, {left_extension: 0.05, right_extension: 0.042, left: "SH1", la: 'right', ls: 0.08, right: "sinh\u207b\u00b9(x)", rs: 0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_sinh2_down (sheight, {left_extension: 0.06, right_extension: 0.045, left: "SH2", la: 'right', ls: 0.08, right: "sinh\u207b\u00b9(x)", rs: 0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (2, {highlight: '#ccffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new scale_cosh (sheight, {right_extension: 0.05, left: "CH", la: 'right', ls: 0.08, right: "cosh\u207b\u00b9(x)", rs: 0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new scale_tanh_down (sheight, {left_extension: 0.05, left: "TH", la: 'right', ls: 0.08, right: "tanh\u207b\u00b9(x)", rs: 0.08, highlight: '#ccffcc', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "CI", la: 'right', ls: 0.08, right: "1/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_C (sheight, {left_extension: 0.048, right_extension: 0.045, left: "C", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (sheight, {left_extension: 0.048, right_extension: 0.045, left: "D", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "DI", la: 'right', ls: 0.08, right: "1/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new scale_PT (sheight, {right_extension: 0.045, left: "PT", la: 'right', ls: 0.08, right: "\u221a(x\u00b2-1)", rs: 0.08, colour: 'green'}));
+r . scales . push (new scale_PT2_down (sheight, {left_extension: 0.045, right_extension: 0.042, left: "PT2", la: 'right', ls: 0.08, right: "\u221a(x\u00b2-1)", rs: 0.08, colour: 'green'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LnGamma2_down (sheight, {left_extension: 0.06, right_extension: 0.06, left: "LnG2", la: 'right', ls: 0.08, right: "ln\u0393\u207b\u00b9(z)", rs: 0.08}));
+r . scales . push (new spacer (2));
+</script>
+
+<script src="sliderule_application.js"></script>
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+change6Sided ('1');
+changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+changeSize (document . getElementById ('short_long') . checked ? 1200 : 880);
+</script>
+
+</body></html>
