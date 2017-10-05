@@ -43,9 +43,9 @@ var changeSide = function (side) {
 
 var changeSize = function (length) {for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . length = length; sliderules . requireRedraw = true;};
 
-var note = "Emulator / Simulator Copyright \u00a9 2017 - " + new Date () . getFullYear () + " Dr Robert Wolf @ http://www.hercsmusicsystems.com.au";
-var note_colours = ['blue', 'gray', 'yellow', 'lavender', 'green', 'olive', 'silver', 'tan', 'wheat', 'khaki'];
-var note_colour = note_colours [Math . floor (Math . random () * note_colours . length)];
+var copyright = "Emulator / Simulator Copyright \u00a9 2017 - " + new Date () . getFullYear () + " Dr Robert Wolf @ http://www.hercsmusicsystems.com.au";
+var copyright_colours = ['blue', 'gray', 'yellow', 'lavender', 'green', 'olive', 'silver', 'tan', 'wheat', 'khaki'];
+var copyright_colour = copyright_colours [Math . floor (Math . random () * copyright_colours . length)];
 
 var SlideruleApplication = React . createClass ({
   dragging: false,
@@ -123,9 +123,9 @@ var SlideruleApplication = React . createClass ({
     ctx . save ();
     sliderules . draw (ctx, width, height);
     ctx . restore ();
-    ctx . fillStyle = note_colour;
+    ctx . fillStyle = copyright_colour;
     ctx . textAlign = 'right';
-    ctx . fillText (note, newState . width - 4, 440 - 4);
+    ctx . fillText (copyright, newState . width - 4, 440 - 4);
   },
   componentDidMount: function () {setInterval (this . draw, 20);},
   getInitialState: function () {return {width: 200, height: 100, dragging: false};},
