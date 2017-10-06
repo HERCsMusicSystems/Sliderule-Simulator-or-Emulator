@@ -1963,8 +1963,9 @@ var Sliderules = function (options) {
       for (ind in this . sliderules) {
         for (sub in this . sliderules [ind] . rules) {
           r = this . sliderules [ind] . rules [sub];
-          if ((isNaN (r . stator) ? (r . stator == rule . stator) : (r . stator >= rule . stator)) && r != rule && ! r . noSync) {
-            r . target = rule . target; r . shift = rule . shift; this . requireRedraw = true;
+          if (r != rule && ! r . noSync) {
+          	if (r . stator == rule . stator) {r . target = rule . target; r . shift = rule . shift; this . requireRedraw = true;}
+          	if (r . stator > rule . stator) {r . target += delta; r . shift += delta; this . requireRedraw = true;}
           }
         }
       }
