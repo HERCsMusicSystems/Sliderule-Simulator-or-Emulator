@@ -235,12 +235,14 @@ var spiral25 = function (height, options) {
 };
 
 var Disc = function (options) {
+  this . rotation = 0;
   this . stator = 0;
   this . disc_colour = 'white';
   this . border_colour = 'black';
   this . scales = [];
   this . width = function () {var h = 0; for (var ind in this . scales) h += this . scales [ind] . height; return h;};
   this . draw = function (ctx, from) {
+    ctx . rotate (this . rotation);
     ctx . fillStyle = this . disc_colour; ctx . strokeStyle = this . border_colour;
     ctx . beginPath ();
     ctx . arc (0, 0, from + this . width (), 0, Math . PI * 2);
@@ -257,12 +259,31 @@ var Disc = function (options) {
       ctx . restore ();
     }
   };
+  this . rotate = function (previous, position) {
+    var angle = Math . atan2 (position . y, position . x) - Math . atan2 (previous . y, previous . x);
+    this . rotation += angle;
+    return angle;
+  };
   for (var key in options) this [key] = options [key];
 };
 
 var Sliderule = function (options) {
-  this . position = {x: 0, y: 0};
+  this . position = {x: 200, y: -200};
   this . discs = [];
+  this . width = function () {var h = 0; for (var ind in this . discs) h += this . discs [ind] . width (); return h;};
+  this . moveDisc = function (previous, position) {
+    if (this . mover != null) return {disc: this . mover, angle: this . mover . rotate (previous, position)};
+    var radius = Math . sqrt (previous . x * previous . x + previous . y * previous . y);
+    for (var ind in this . discs) {
+      var w = this . discs [ind] . width ();
+      if (radius <= w) {
+        this . mover = this . discs [ind];
+        return {disc: this . mover, angle: this . mover . rotate (previous, position)};
+      }
+      radius -= w;
+    }
+    return null;
+  };
   this . draw = function (ctx) {
     ctx . translate (this . position . x, this . position . y);
     var ind;
@@ -270,7 +291,7 @@ var Sliderule = function (options) {
     for (ind in this . discs) {ctx . save (); this . discs [ind] . draw (ctx, radius); ctx . restore (); radius += this . discs [ind] . width ();}
   };
   this . mover = null;
-  this . draww = function (ctx) {
+  /*this . draww = function (ctx) {
     if (this . cursor_target < this . cursor_position) {
       this . cursor_position -= this . animation_delta;
       if (this . cursor_position < this . cursor_target) this . cursor_position = this . cursor_target;
@@ -329,7 +350,7 @@ var Sliderule = function (options) {
     if (this . extra_cursor_markings || this . cursor_markings) this . drawExtraMarkings (ctx);
     ctx . restore ();
     ctx . translate (0, this . height ());
-  };
+  };*/
   this . changed = function () {return this . target != this . shift;};
   for (var key in options) this [key] = options [key];
 };
@@ -341,14 +362,26 @@ var Sliderules = function (options) {
   this . background_colour = '#99f';
   this . background_translation = {x: 0, y: 0};
   this . sliderules = [];
-  this . synchroniseMove = function (delta, position) {
+  this . move = function (previous, position) {
+    for (var ind in this . sliderules) {
+      if (! this . sliderules [ind] . inactive) {
+        var centre = addv (this . position, this . sliderules [ind] . position);
+        var esc = this . sliderules [ind] . moveDisc (subv (previous, centre), subv (position, centre));
+        if (esc) return esc;
+      }
+    }
+    return null;
+  };
+  this . synchroniseMove = function (delta, position, previous) {
   	position = scalv (position, 1 / this . scale);
-  	var v1 = subv (subv (position, delta), this . position);
-  	var v2 = subv (position, this . position);
-  	var a1 = Math . atan2 (v1 . y, v1 . x);
-  	var a2 = Math . atan2 (v2 . y, v2 . x);
-  	console . log (a1, a2, a2 - a1);
-    this . position = addv (this . position, scalv (delta, 1 / this . scale));
+  	//var v1 = subv (subv (position, delta), this . position);
+  	//var v2 = subv (position, this . position);
+  	//var a1 = Math . atan2 (v1 . y, v1 . x);
+  	//var a2 = Math . atan2 (v2 . y, v2 . x);
+  	//console . log (a1, a2, a2 - a1);
+    var esc = this . move (previous, position);
+    if (esc) {}
+    else this . position = addv (this . position, scalv (delta, 1 / this . scale));
     this . requireRedraw = true;
   };
   this . draw = function (ctx, width, height) {

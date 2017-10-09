@@ -24,12 +24,15 @@ var s = new Sliderule (); sliderules . sliderules . push (s);
 
 var d = new Disc (); s . discs . push (d);
 d . scales . push (new spacer (24));
-d = new Disc ({disc_colour: '#e3e3d6'}); s . discs . push (d);
-d . scales . push (new spacer (20));
-d . scales . push (new spacer (20));
 d . scales . push (new scal (20));
+d . scales . push (new spacer (20));
+d = new Disc ({disc_colour: '#e3e3d6'}); s . discs . push (d);
+d . scales . push (new scale_C (20));
+d . scales . push (new spacer (20));
+d = new Disc ({disc_colour: '#e3e3d6'}); s . discs . push (d);
 d . scales . push (new spacer (60));
 d . scales . push (new spiral25 (10));
+d = new Disc ({disc_colour: 'red'}); s . discs . push (d);
 d . scales . push (new scale_C (24));
 </script>
 

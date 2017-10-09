@@ -62,7 +62,7 @@ var SlideruleApplication = React . createClass ({
     if (! this . dragging) return;
     var position = subvbc ({x: event . clientX, y: event . clientY}, this . refs . sliderule . getBoundingClientRect ());
     var delta = subv (position, this . mousePosition);
-    sliderules . synchroniseMove (delta, position);
+    sliderules . synchroniseMove (delta, position, this . mousePosition);
     this . mousePosition = position;
   },
   onMouseUp: function (event) {this . dragging = false; this . setState ({});},
