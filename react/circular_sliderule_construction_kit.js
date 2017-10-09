@@ -236,6 +236,7 @@ var spiral25 = function (height, options) {
 
 var Disc = function (options) {
   this . rotation = 0;
+  this . target = 0;
   this . stator = 0;
   this . disc_colour = 'white';
   this . border_colour = 'black';
@@ -262,6 +263,7 @@ var Disc = function (options) {
   this . rotate = function (previous, position) {
     var angle = Math . atan2 (position . y, position . x) - Math . atan2 (previous . y, previous . x);
     this . rotation += angle;
+    this . target = this . rotation;
     return angle;
   };
   for (var key in options) this [key] = options [key];
@@ -372,15 +374,24 @@ var Sliderules = function (options) {
     }
     return null;
   };
+  this . synchronise = function (disc, angle) {
+    if (! disc) return;
+    if (disc . stator) {
+      for (var ind in this . sliderules) {
+        for (var sub in this . sliderules [ind] . discs) {
+          var d = this . sliderules [ind] . discs [sub];
+          if (d != disc && ! d . noSync) {
+            if (d . stator == disc . stator) {d . target = disc . target; d . rotation = disc . rotation; this . requireRedraw = true;}
+            if (d . stator > disc . stator) {d . target += angle; d . rotation += angle; this . requireRedraw = true;}
+          }
+        }
+      }
+    }
+  };
   this . synchroniseMove = function (delta, position, previous) {
   	position = scalv (position, 1 / this . scale);
-  	//var v1 = subv (subv (position, delta), this . position);
-  	//var v2 = subv (position, this . position);
-  	//var a1 = Math . atan2 (v1 . y, v1 . x);
-  	//var a2 = Math . atan2 (v2 . y, v2 . x);
-  	//console . log (a1, a2, a2 - a1);
     var esc = this . move (previous, position);
-    if (esc) {}
+    if (esc) this . synchronise (esc . disc, esc . angle);
     else this . position = addv (this . position, scalv (delta, 1 / this . scale));
     this . requireRedraw = true;
   };
