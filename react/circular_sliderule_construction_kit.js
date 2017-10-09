@@ -342,6 +342,12 @@ var Sliderules = function (options) {
   this . background_translation = {x: 0, y: 0};
   this . sliderules = [];
   this . synchroniseMove = function (delta, position) {
+  	position = scalv (position, 1 / this . scale);
+  	var v1 = subv (subv (position, delta), this . position);
+  	var v2 = subv (position, this . position);
+  	var a1 = Math . atan2 (v1 . y, v1 . x);
+  	var a2 = Math . atan2 (v2 . y, v2 . x);
+  	console . log (a1, a2, a2 - a1);
     this . position = addv (this . position, scalv (delta, 1 / this . scale));
     this . requireRedraw = true;
   };
