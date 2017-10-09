@@ -20,6 +20,11 @@
 // THE SOFTWARE.                                                                 //
 ///////////////////////////////////////////////////////////////////////////////////
 
+var addv = function (v1, v2) {return {x: v1 . x + v2 . x, y: v1 . y + v2 . y};};
+var subv = function (v1, v2) {return {x: v1 . x - v2 . x, y: v1 . y - v2 . y};};
+var subvbc = function (v1, v2) {return {x: v1 . x - v2 . left, y: v1 . y - v2 . top};};
+var scalv = function (vector, scale) {return {x: vector . x * scale, y: vector . y * scale};};
+
 var spacer = function (height, options) {
   this . height = height;
   this . colour = 'black'; this . alt = 'red';
@@ -264,6 +269,7 @@ var Sliderule = function (options) {
     var radius = 0;
     for (ind in this . discs) {ctx . save (); this . discs [ind] . draw (ctx, radius); ctx . restore (); radius += this . discs [ind] . width ();}
   };
+  this . mover = null;
   this . draww = function (ctx) {
     if (this . cursor_target < this . cursor_position) {
       this . cursor_position -= this . animation_delta;
@@ -335,6 +341,10 @@ var Sliderules = function (options) {
   this . background_colour = '#99f';
   this . background_translation = {x: 0, y: 0};
   this . sliderules = [];
+  this . synchroniseMove = function (delta, position) {
+    this . position = addv (this . position, scalv (delta, 1 / this . scale));
+    this . requireRedraw = true;
+  };
   this . draw = function (ctx, width, height) {
     this . requireRedraw = false;
     ctx . setTransform (1, 0, 0, 1, 0, 0);
@@ -355,5 +365,6 @@ var Sliderules = function (options) {
   	for (var ind in this . sliderules) {if (this . sliderules [ind] . changed ()) return false;}
   	return true;
   };
+  this . resetMovers = function () {for (var ind in this . sliderules) this . sliderules [ind] . mover = null;};
   for (var key in options) this [key] = options [key];
 };
