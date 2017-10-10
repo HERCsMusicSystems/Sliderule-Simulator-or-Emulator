@@ -127,29 +127,32 @@ var draw_spiral_ticks = function (ctx, init, limit, from, to, spirals, height) {
   ctx . restore ();
 };
 
+var draw_spiral_marks = function (ctx, positions, init, limit, from, to, spirals, height) {
+  ctx . save ();
+  var next = 0, log = 0, offset = 0;
+  for (var ind = init; ind < limit; ind++) {
+    next = spirals * Math . log10 (ind);
+    ctx . rotate ((next - log) * 2 * Math . PI);
+    offset = height * next;
+    ctx . moveTo (0, from - offset); ctx . lineTo (0, to - offset);
+    log = next;
+    ctx . textAlign = 'left';
+    var text = (ind . toFixed (positions) + "") . split ('.');
+    ctx . fillText (text [1], 0, to - offset - 1);
+    ctx . textAlign = 'right';
+    ctx . fillText (text [0], 0, to - offset - 1);
+  }
+  ctx . restore ();
+};
+
 var spiral25 = function (height, options) {
   var s = new spacer (height * 26, options);
   s . sub_height = height;
   s . draw = function (ctx, radius) {
-    var h0 = - radius - this . height;
-    var h10 = h0 + this . height, h5 = h0 + this . height * 0.5, h4 = h0 + this . height * 0.4, h3 = h0 + this . height * 0.3, h2 = h0 + this . height * 0.2;
+    ctx . font = height + 'px arial';
+    var h0 = - radius - height;
+    var h10 = h0 + height, h5 = h0 + height * 0.5, h4 = h0 + height * 0.4, h3 = h0 + height * 0.3, h2 = h0 + height * 0.2;
     var ind;
-    ctx . strokeStyle = 'red';
-    ctx . beginPath ();
-    ctx . arc (0, 0, radius, 0, 6); ctx . arc (0, 0, radius + this . height, 0, 6);
-    ctx . stroke ();
-    ctx . strokeStyle = 'black';
-    ctx . beginPath ();
-    for (ind = 1; ind < 26; ind++) {
-      ctx . ellipse (0, 0, radius + this . height * ind / 26, radius + this . height * (ind + 0.25) / 26, Math . PI * -0.5, 0, Math . PI * 0.5);
-      ctx . ellipse (0, 0, radius + this . height * (ind + 0.25) / 26, radius + this . height * (ind + 0.5) / 26, 0, 0, Math . PI * 0.5);
-      ctx . ellipse (0, 0, radius + this . height * (ind + 0.5) / 26, radius + this . height * (ind + 0.75) / 26, Math . PI * 0.5, 0, Math . PI * 0.5);
-      ctx . ellipse (0, 0, radius + this . height * (ind + 0.75) / 26, radius + this . height * (ind + 1) / 26, Math . PI, 0, Math . PI * 0.5);
-    }
-    ctx . stroke ();
-    ctx . beginPath ();
-    draw_spiral_ticks (ctx, 1, 11, - radius - height, - radius, 25, this . sub_height);
-    ctx . stroke ();
     ctx . strokeStyle = 'blue'; ctx . fillStyle = 'yellow';
     var log2, offset, dist;
     ctx . beginPath ();
@@ -230,6 +233,33 @@ var spiral25 = function (height, options) {
     ctx . closePath ();
     //ctx . stroke ();
     ctx . fill ();
+
+    ctx . strokeStyle = 'black';
+    ctx . beginPath ();
+    for (ind = 1; ind < 26; ind++) {
+      ctx . ellipse (0, 0, radius + this . height * ind / 26, radius + this . height * (ind + 0.25) / 26, Math . PI * -0.5, 0, Math . PI * 0.5);
+      ctx . ellipse (0, 0, radius + this . height * (ind + 0.25) / 26, radius + this . height * (ind + 0.5) / 26, 0, 0, Math . PI * 0.5);
+      ctx . ellipse (0, 0, radius + this . height * (ind + 0.5) / 26, radius + this . height * (ind + 0.75) / 26, Math . PI * 0.5, 0, Math . PI * 0.5);
+      ctx . ellipse (0, 0, radius + this . height * (ind + 0.75) / 26, radius + this . height * (ind + 1) / 26, Math . PI, 0, Math . PI * 0.5);
+    }
+    ctx . stroke ();
+
+    ctx . fillStyle = 'black';
+    ctx . beginPath ();
+    for (var fraction = 0; fraction < 100; fraction++) {
+      var sub_fraction = fraction / 100;
+      draw_spiral_marks (ctx, 2, 1 + sub_fraction, 10.01, - radius - height, - radius, 25, this . sub_height);
+      draw_spiral_ticks (ctx, 1 + sub_fraction + 0.005, 10, h0, h5, 25, this . sub_height);
+      draw_spiral_ticks (ctx, 1 + sub_fraction + 0.001, 10, h0, h3, 25, this . sub_height);
+      draw_spiral_ticks (ctx, 1 + sub_fraction + 0.002, 10, h0, h3, 25, this . sub_height);
+      draw_spiral_ticks (ctx, 1 + sub_fraction + 0.003, 10, h0, h3, 25, this . sub_height);
+      draw_spiral_ticks (ctx, 1 + sub_fraction + 0.004, 10, h0, h3, 25, this . sub_height);
+      draw_spiral_ticks (ctx, 1 + sub_fraction + 0.006, 10, h0, h3, 25, this . sub_height);
+      draw_spiral_ticks (ctx, 1 + sub_fraction + 0.007, 10, h0, h3, 25, this . sub_height);
+      draw_spiral_ticks (ctx, 1 + sub_fraction + 0.008, 10, h0, h3, 25, this . sub_height);
+      draw_spiral_ticks (ctx, 1 + sub_fraction + 0.009, 10, h0, h3, 25, this . sub_height);
+    }
+    ctx . stroke ();
   };
   return s;
 };
