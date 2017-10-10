@@ -273,7 +273,7 @@ var Sliderule = function (options) {
   this . position = {x: 200, y: -200};
   this . discs = [];
   this . width = function () {var h = 0; for (var ind in this . discs) h += this . discs [ind] . width (); return h;};
-  this . moveDisc = function (previous, position) {
+  this . rotateDisc = function (previous, position) {
     if (this . mover != null) return {disc: this . mover, angle: this . mover . rotate (previous, position)};
     var radius = Math . sqrt (previous . x * previous . x + previous . y * previous . y);
     for (var ind in this . discs) {
@@ -368,7 +368,7 @@ var Sliderules = function (options) {
     for (var ind in this . sliderules) {
       if (! this . sliderules [ind] . inactive) {
         var centre = addv (this . position, this . sliderules [ind] . position);
-        var esc = this . sliderules [ind] . moveDisc (subv (previous, centre), subv (position, centre));
+        var esc = this . sliderules [ind] . rotateDisc (subv (previous, centre), subv (position, centre));
         if (esc) return esc;
       }
     }
@@ -389,8 +389,7 @@ var Sliderules = function (options) {
     }
   };
   this . synchroniseMove = function (delta, position, previous) {
-  	position = scalv (position, 1 / this . scale);
-    var esc = this . move (previous, position);
+    var esc = this . move (scalv (previous, 1 / this . scale), scalv (position, 1 / this . scale));
     if (esc) this . synchronise (esc . disc, esc . angle);
     else this . position = addv (this . position, scalv (delta, 1 / this . scale));
     this . requireRedraw = true;
