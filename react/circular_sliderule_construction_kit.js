@@ -299,11 +299,50 @@ var Disc = function (options) {
   for (var key in options) this [key] = options [key];
 };
 
+var Cursor = function (options) {
+  this . rotation = 0;
+  this . root_radius = 96;
+  this . left_extension = 0.125;
+  this . right_extension = 0.125;
+  this . margin = 6;
+  this . cursorGlass = "rgba(0, 0, 0, 0.1)";
+  this . cursorFrame = "rgba(0, 0, 0, 0.1)";
+  this . cursorHairline = 'red';
+  this . hairline_top = 0; this . hairline_bottom = 0;
+  this . draw = function (ctx, s) {
+    var radius = s . width ();
+    var correction = Math . asin (this . root_radius / radius);
+    ctx . rotate (this . rotation);
+    ctx . beginPath ();
+    ctx . arc (0, 0, this . root_radius, this . right_extension - correction, Math . PI + correction - this . left_extension);
+    ctx . arc (0, 0, radius + this . margin, Math . PI * 1.5 - this . left_extension, Math . PI * 1.5 + this . right_extension);
+    ctx . closePath ();
+    if (this . cursorGlass) {ctx . fillStyle = this . cursorGlass; ctx . fill ();}
+    if (this . cursorFrame) {ctx . strokeStyle = this . cursorFrame; ctx . stroke ();}
+    if (this . cursorHairline) {
+      ctx . strokeStyle = this . cursorHairline;
+      ctx . beginPath ();
+      ctx . moveTo (0, - this . hairline_bottom); ctx . lineTo (0, - radius - this . hairline_top);
+      ctx . stroke ();
+    }
+  };
+  for (var key in options) this [key] = options [key];
+};
+
 var Sliderule = function (options) {
   this . position = {x: 200, y: -200};
   this . discs = [];
+  this . cursors = [];
   this . width = function () {var h = 0; for (var ind in this . discs) h += this . discs [ind] . width (); return h;};
   this . rotateDisc = function (previous, position) {
+    var atan = Math . atan2 (previous . y, previous . x) + Math . PI * 0.5;
+    for (var cr in this . cursors) {
+      var cursor = this . cursors [cr];
+      if (cursor . rotation - cursor . left_extension < atan && cursor . rotation + cursor . right_extension > atan) {
+        cursor . rotation += Math . atan2 (position . y, position . x) + Math . PI * 0.5 - atan;
+        return cursor;
+      }
+    }
     if (this . mover != null) return {disc: this . mover, angle: this . mover . rotate (previous, position)};
     var radius = Math . sqrt (previous . x * previous . x + previous . y * previous . y);
     for (var ind in this . discs) {
@@ -321,6 +360,7 @@ var Sliderule = function (options) {
     var ind;
     var radius = 0;
     for (ind in this . discs) {ctx . save (); this . discs [ind] . draw (ctx, radius); ctx . restore (); radius += this . discs [ind] . width ();}
+    for (ind in this . cursors) {ctx . save (); this . cursors [ind] . draw (ctx, this); ctx . restore ();}
   };
   this . mover = null;
   /*this . draww = function (ctx) {

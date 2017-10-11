@@ -21,6 +21,9 @@
 <script>
 var sliderules = new Sliderules ({position: {x: 400.5, y: 420.5}});
 var s = new Sliderule (); sliderules . sliderules . push (s);
+var c = new Cursor ({cursorFrame: 'red'});
+s . cursors . push (c);
+s . cursors . push (new Cursor ({cursorFrame: 'blue', rotation: 1}));
 
 var d = new Disc ({stator: 1}); s . discs . push (d);
 d . scales . push (new spacer (24));
