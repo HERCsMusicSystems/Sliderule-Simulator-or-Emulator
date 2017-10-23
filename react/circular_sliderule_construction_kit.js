@@ -38,6 +38,7 @@ var spacer = function (height, options) {
     this . draw (ctx, radius);
     ctx . restore ();
   };
+  this . drawMarkings = function (ctx, h, angle) {};
   for (var key in options) this [key] = options [key];
 };
 
@@ -148,6 +149,17 @@ var draw_spiral_marks = function (ctx, positions, init, limit, from, to, spirals
 var spiral25 = function (height, options) {
   var s = new spacer (height * 26, options);
   s . sub_height = height;
+  s . drawMarkings = function (ctx, h, angle) {
+    var i = angle / (Math . PI * 2);
+    var ii = i / 25;
+    for (var ind = 0; ind < 25; ind++) {
+      var v = Math . pow (10, ii + ind / 25);
+      ctx . fillStyle = 'black';
+      ctx . fillRect (0, - h - (ind + i) * this . sub_height, 50, -10);
+      ctx . fillStyle = 'yellow';
+      ctx . fillText (v . toFixed (4), 0, - h - (ind + i) * this . sub_height);
+    }
+  };
   s . draw = function (ctx, radius) {
     ctx . font = height + 'px arial';
     var h0 = - radius - height;
@@ -311,6 +323,7 @@ var Cursor = function (options) {
   this . cursorHairline = 'red';
   this . hairline_top = 0; this . hairline_bottom = 0;
   this . stator = 0;
+  this . showMarkings = true;
   this . draw = function (ctx, s) {
     var radius = s . width ();
     var correction = Math . asin (this . root_radius / radius);
@@ -326,6 +339,18 @@ var Cursor = function (options) {
       ctx . beginPath ();
       ctx . moveTo (0, - this . hairline_bottom); ctx . lineTo (0, - radius - this . hairline_top);
       ctx . stroke ();
+    }
+    if (this . showMarkings) {
+      ctx . fillStyle = 'black';
+      ctx . textAlign = 'left';
+      var h = 0;
+      for (var ind in s . discs) {
+        for (var sub in s . discs [ind] . scales) {
+          var scale = s . discs [ind] . scales [sub];
+          scale . drawMarkings (ctx, h, this . rotation);
+          h += scale . height;
+        }
+      }
     }
   };
   for (var key in options) this [key] = options [key];
