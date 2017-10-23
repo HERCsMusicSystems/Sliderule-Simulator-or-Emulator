@@ -300,6 +300,7 @@ var Disc = function (options) {
 };
 
 var Cursor = function (options) {
+  this . target = 0;
   this . rotation = 0;
   this . root_radius = 96;
   this . left_extension = 0.125;
@@ -309,6 +310,7 @@ var Cursor = function (options) {
   this . cursorFrame = "rgba(0, 0, 0, 0.1)";
   this . cursorHairline = 'red';
   this . hairline_top = 0; this . hairline_bottom = 0;
+  this . stator = 0;
   this . draw = function (ctx, s) {
     var radius = s . width ();
     var correction = Math . asin (this . root_radius / radius);
@@ -339,8 +341,9 @@ var Sliderule = function (options) {
     for (var cr in this . cursors) {
       var cursor = this . cursors [cr];
       if (cursor . rotation - cursor . left_extension < atan && cursor . rotation + cursor . right_extension > atan) {
-        cursor . rotation += Math . atan2 (position . y, position . x) + Math . PI * 0.5 - atan;
-        return cursor;
+        var angle = Math . atan2 (position . y, position . x) + Math . PI * 0.5 - atan;
+        cursor . rotation += angle;
+        return {disc: 'cursor', cursor: cursor, angle: angle};
       }
     }
     if (this . mover != null) return {disc: this . mover, angle: this . mover . rotate (previous, position)};
@@ -444,15 +447,37 @@ var Sliderules = function (options) {
     }
     return null;
   };
-  this . synchronise = function (disc, angle) {
-    if (! disc) return;
-    if (disc . stator) {
+  this . synchronise = function (esc) {
+    if (! esc . disc) return;
+    if (esc . disc == 'cursor') {
+      for (var ind in this . sliderules) {
+        for (var sub in this . sliderules [ind] . cursors) {
+          var c = this . sliderules [ind] . cursors [sub];
+          if (c != esc . cursor && ! c . noSync) {
+            if (c . stator == esc . cursor . stator) {c . target = esc . cursor . target; c . rotation = esc . cursor . rotation; this . requireRedraw = true;}
+            if (c . stator > esc . cursor . stator) {c . target += esc . angle; c . rotation += esc . angle; this . requireRedraw = true;}
+          }
+        }
+      }
+      return;
+    }
+    if (esc . disc . stator != undefined) {
       for (var ind in this . sliderules) {
         for (var sub in this . sliderules [ind] . discs) {
           var d = this . sliderules [ind] . discs [sub];
-          if (d != disc && ! d . noSync) {
-            if (d . stator == disc . stator) {d . target = disc . target; d . rotation = disc . rotation; this . requireRedraw = true;}
-            if (d . stator > disc . stator) {d . target += angle; d . rotation += angle; this . requireRedraw = true;}
+          if (d != esc . disc && ! d . noSync) {
+            if (d . stator == esc . disc . stator) {d . target = esc . disc . target; d . rotation = esc . disc . rotation; this . requireRedraw = true;}
+            if (d . stator > esc . disc . stator) {d . target += esc . angle; d . rotation += esc . angle; this . requireRedraw = true;}
+          }
+        }
+      }
+      if (esc . disc . stator == 0) {
+        for (var ind in this . sliderules) {
+          for (var sub in this . sliderules [ind] . cursors) {
+            var c = this . sliderules [ind] . cursors [sub];
+            c . target += esc . angle;
+            c . rotation += esc . angle;
+            this . requireRedraw = true;
           }
         }
       }
@@ -460,7 +485,7 @@ var Sliderules = function (options) {
   };
   this . synchroniseMove = function (delta, position, previous) {
     var esc = this . move (scalv (previous, 1 / this . scale), scalv (position, 1 / this . scale));
-    if (esc) this . synchronise (esc . disc, esc . angle);
+    if (esc) this . synchronise (esc);
     else this . position = addv (this . position, scalv (delta, 1 / this . scale));
     this . requireRedraw = true;
   };
