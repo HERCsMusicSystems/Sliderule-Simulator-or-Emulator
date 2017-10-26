@@ -48,12 +48,12 @@ var sliderules = new Sliderules ();
 var s = new Sliderule (1200,
   {static_markings: false, cursor_markings: false, cursor_markings_shift: 0.004, markings_colour: 'gold', markings_background: 'black',
   cursor_rounding: 8, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
-s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 60, 1));
-s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 60, 1));
-s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 60, 1));
-s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 60, 1));
-s . braces . push (new Engraving ("ARISTO", '24px arial', 'center', '#dddddd', 0.04, 147, Math . PI * 0.5));
-s . braces . push (new Engraving ("ARISTO", '24px arial', 'center', '#dddddd', 1.36, 147, Math . PI * 1.5));
+s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 64, 1, -16));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 64, 1, -16));
+s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 64, 1, -16));
+s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 64, 1, -16));
+s . braces . push (new Engraving ("ARISTO", '24px arial', 'center', '#dddddd', 0.04, 135, Math . PI * 0.5));
+s . braces . push (new Engraving ("ARISTO", '24px arial', 'center', '#dddddd', 1.36, 135, Math . PI * 1.5));
 s . cursorBraces . push (new Engraving ("ARISTO", '12px arial', 'right', 'black', 0.07, 226));//, '12px arial', 'black', 'right', 'middle'));
 s . cursors . push (new Cursor (Hairline360, 42, 90, 'red', {marking_shift: 0.004}));
 s . cursors . push (new Cursor (HairlineD, 140, 184, 'red', {marking_shift: 0.004}));

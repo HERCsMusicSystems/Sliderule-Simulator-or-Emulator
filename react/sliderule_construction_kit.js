@@ -35,11 +35,12 @@ var roundRectt = function (ctx, left1, left2, top, right1, right2, bottom, radiu
   ctx . arc (left1 + radius, bottom - radius, radius, step, step + step); ctx . lineTo (left1, top + radius); ctx . arc (left1 + radius, top + radius, radius, step + step, - step);
 };
 
-var leftBrace = function (ctx, left, top, right, bottom, radius, braceRadius, angle) {
+var leftBrace = function (ctx, left, top, right, bottom, radius, braceRadius, angle, verticalShift) {
   var step = Math . PI * 0.5; ctx . moveTo (left + radius, top); ctx . lineTo (right - radius, top); ctx . arc (right - radius, top + radius, radius, -step, 0);
   ctx . lineTo (right, bottom - radius); ctx . arc (right - radius, bottom - radius, radius, 0, step); ctx . lineTo (left + radius, bottom);
   ctx . arc (left + radius, bottom - radius, radius, step, step + step);
   var half = (top + bottom) * 0.5;
+  if (verticalShift != undefined) half += verticalShift;
   ctx . lineTo (left, half + braceRadius);
   ctx . arc (left - Math . cos (angle) * braceRadius, half, braceRadius, angle, - angle, true);
   ctx . lineTo (left, half - braceRadius);
@@ -1367,10 +1368,10 @@ var CursorHPJapan = CursorHP;
 var CursorPS = CursorHP;
 var Cursor360 = function (from, to, colour, options) {return new Cursor (Math . log10 (3.60 / Math . PI), from, to, colour, options);};
 
-var LeftBrace = function (margin, width, radius, background, colour, braceRadius, braceAngle) {
+var LeftBrace = function (margin, width, radius, background, colour, braceRadius, braceAngle, verticalShift) {
   this . draw = function (ctx, s) {
     ctx . beginPath ();
-    leftBrace (ctx, margin, margin, width * s . length, s . height () - margin, 8, braceRadius, braceAngle);
+    leftBrace (ctx, margin, margin, width * s . length, s . height () - margin, 8, braceRadius, braceAngle, verticalShift);
     ctx . fillStyle = background;
     ctx . fill ();
     ctx . strokeStyle = colour;
@@ -1378,12 +1379,12 @@ var LeftBrace = function (margin, width, radius, background, colour, braceRadius
   };
 };
 
-var RightBrace = function (margin, width, radius, background, colour, braceRadius, braceAngle) {
+var RightBrace = function (margin, width, radius, background, colour, braceRadius, braceAngle, verticalShift) {
   this . draw = function (ctx, s) {
     ctx . beginPath ();
     ctx . translate (s . length * (1 + s . left_margin + s . right_margin), 0);
     ctx . scale (-1, 1);
-    leftBrace (ctx, margin, margin, width * s . length, s . height () - margin, 8, braceRadius, braceAngle);
+    leftBrace (ctx, margin, margin, width * s . length, s . height () - margin, 8, braceRadius, braceAngle, verticalShift);
     ctx . fillStyle = background;
     ctx . fill ();
     ctx . strokeStyle = colour;
