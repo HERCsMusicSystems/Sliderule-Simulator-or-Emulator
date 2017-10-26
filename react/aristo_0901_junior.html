@@ -1,0 +1,101 @@
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Aristo 0901 Junior</title>
+  </head>
+<body>
+<div>
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+<!--	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.-->
+<!--	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.-->
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+</div>
+<div id="root"></div>
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+
+<script>
+
+var sliderules = new Sliderules ();
+var s = new Sliderule (1200,
+  {static_markings: false, cursor_markings: false, cursor_markings_shift: 0.004, markings_colour: 'gold', markings_background: 'black',
+  cursor_rounding: 8, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
+s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 60, 1));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 60, 1));
+s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 60, 1));
+s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 60, 1));
+s . braces . push (new Engraving ("ARISTO", '24px arial', 'center', '#dddddd', 0.04, 147, Math . PI * 0.5));
+s . braces . push (new Engraving ("ARISTO", '24px arial', 'center', '#dddddd', 1.36, 147, Math . PI * 1.5));
+s . cursorBraces . push (new Engraving ("ARISTO", '12px arial', 'right', 'black', 0.07, 226));//, '12px arial', 'black', 'right', 'middle'));
+s . cursors . push (new Cursor (Hairline360, 42, 90, 'red', {marking_shift: 0.004}));
+s . cursors . push (new Cursor (HairlineD, 140, 184, 'red', {marking_shift: 0.004}));
+s . cursors . push (new Cursor (HairlineD + Math . log10 (Math . PI / 6) / 3, 228, 252, 'red', {marking_align: 'right', marking_shift: -0.004}));
+s . cursorBraces . push (new Engraving ("v", '12px arial', 'center', 'black', HairlineD + Math . log10 (Math . PI / 6) / 3, 226));
+s . cursorBraces . push (new Engraving ("q", '12px arial', 'left', 'black', 0.002, 222));
+s . cursorBraces . push (new Engraving ("d", '12px arial', 'center', 'black', HairlineD, 195));
+s . cursor_right_extension = 0.074; s . cursor_left_extension = 0.074;
+sliderules . sliderules . push (s);
+var r = new Rule ();
+s . rules . push (r);
+r . scales . push (new spacer (6));
+r . scales . push (new spacer (30, {centre: "ARISTO-JUNIOR", cs: 0, ca: 'left', cc: 'red', right: "ARISTO 0901", ra: 'left', rs: -0.18}));
+r . markings . push (new Engraving ("MADE IN GERMANY", '10px arial', 'right', 'black', 1, 28));
+r . scales . push (new spacer (6));
+r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.022, right_extension: 0.06, indices: ['>>1<<']}));
+r = new Rule ({rounding: 0, stator: 1});
+s . rules . push (r);
+r . scales . push (new scale_DF (24, {left: "CF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.022, right_extension: 0.06, indices: ['>>1<<'], highlight_left: 0.199, highlight_right: 0.199, highlight: 'yellow'}));
+r . scales . push (new scale_DIF (24, {left: "CIF", right: "1/(\u03c0X)", rs: 0.08, ra: 'left', marking_colour: 'red', left_extension: 0.018, right_extension: 0.026}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CI (24, {left: "CI", right: "1/x", rs: 0.08, ra: 'left', marking_colour: 'red'}));
+r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.08, ra: 'left', highlight: 'yellow', highlight_left: 0.199, highlight_right: 0.199}));
+r = new Rule ();
+s . rules . push (r);
+r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.08, ra: 'left'}));
+r . scales . push (new spacer (8));
+r . scales . push (new scale_B (24, {left: "A", right: "X\u00B2", rs: 0.08, ra: 'left'}));
+r . scales . push (new spacer (8));
+r . scales . push (new scale_J (24, {left: "K", right: "X\u00B3", rs: 0.08, ra: 'left'}));
+r . scales . push (new spacer (10));
+
+</script>
+
+<script src="sliderule_application.js"></script>
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+//changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+//changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+</script>
+
+</body></html>
