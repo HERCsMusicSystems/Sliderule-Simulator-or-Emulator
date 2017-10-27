@@ -1,0 +1,152 @@
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Aristo 0908 Trilog</title>
+  </head>
+<body>
+<div>
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+</div>
+<div id="root"></div>
+
+<!--
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+-->
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+
+<script>
+
+var sliderules = new Sliderules ();
+var front_german_cursors = [], front_us_cursors = [], front_german_braces = [], front_us_braces = [];
+var s = new Sliderule (1200,
+  {static_markings: false, cursor_markings: false, cursor_markings_shift: 0.002, markings_colour: 'gold', markings_background: 'black',
+  cursor_rounding: 8, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
+s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 60, 1));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 60, 1));
+//s . braces . push (new Screw (0.04, 42, 12, 0.3, '#b5a642', '#605321'));
+s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 60, 1));
+s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 60, 1));
+s . braces . push (new Engraving ("ARISTO", '24px arial', 'center', '#dddddd', 0.04, 147, Math . PI * 0.5));
+s . braces . push (new Engraving ("ARISTO", '24px arial', 'center', '#dddddd', 1.36, 147, Math . PI * 1.5));
+front_german_cursors . push (new Cursor (HairlineS, 74, 146, 'red', {marking_shift: -0.002, marking_align: 'right'}));
+front_german_cursors . push (new Cursor (HairlinePS, 74, 122, 'red', {marking_shift: 0.002}));
+front_german_cursors . push (new Cursor (HairlineD, 172, 252, 'red', {marking_shift: 0.002}));
+front_us_cursors . push (new Cursor (HairlineS, 74, 146, 'red', {marking_shift: -0.002, marking_align: 'right'}));
+front_us_cursors . push (new Cursor (HairlineHPUS, 74, 122, 'red', {marking_shift: 0.002}));
+front_us_cursors . push (new Cursor (HairlineD, 172, 252, 'red', {marking_shift: 0.002}));
+front_german_braces . push (new CursorAngledBrace (0.08, 0.08, 16, 4, 16, 'gray'));
+front_german_braces . push (new Engraving ("ARISTO", '12px arial', 'right', 'black', 0.07, 276));//, '12px arial', 'black', 'right', 'middle'));
+front_german_braces . push (new Engraving ("kW", '12px arial', 'left', 'black', 0.008, 60));
+front_german_braces . push (new Engraving ("PS", '12px arial', 'left', 'black', 0.05, 74));
+front_us_braces . push (new CursorAngledBrace (0.08, 0.08, 16, 4, 16, 'gray'));
+front_us_braces . push (new Engraving ("ARISTO", '12px arial', 'right', 'black', 0.07, 276));//, '12px arial', 'black', 'right', 'middle'));
+front_us_braces . push (new Engraving ("kW", '12px arial', 'left', 'black', 0.008, 60));
+front_us_braces . push (new Engraving ("HP", '12px arial', 'left', 'black', 0.05 + HairlineHPUS - HairlinePS, 74));
+//s . cursors . push (new CursorText ("kW", 0.008, 54, '12px arial', 'black', 'left', 'middle'));
+//s . cursors . push (new CursorText ("PS", 0.05, 70, '12px arial', 'black', 'left', 'middle'));
+s . cursor_right_extension = 0.074; s . cursor_left_extension = 0.074;
+sliderules . sliderules . push (s);
+var r = new Rule ();
+s . rules . push (r);
+//r . scales . push (new spacer (6));
+//r . scales . push (new spacer (30, {centre: "ARISTO-BISCHOLAR", cs: 0, ca: 'left', cc: 'red', right: "ARISTO 0906 GERMANY", ra: 'right', rs: 0}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_Tdec (24, {left: "T1", right: "\u2222 tan", rs: 0.08, ra: 'left', left_extension: 0.02}));
+r . scales . push (new scale_T1dec (24, {left: "T2", right: "\u2222 tan", rs: 0.08, ra: 'left', right_extension: 0.02}));
+r . scales . push (new scale_A (24, {left: "A", right: "X\u00B2", rs: 0.08, ra: 'left'}));
+r = new Rule ({rounding: 0, stator: 1});
+s . rules . push (r);
+r . scales . push (new scale_B (24, {left: "B", right: "X\u00B2", rs: 0.08, ra: 'left', highlight: 'yellow', highlight_left: 0.199, highlight_right: 0.199}));
+r . scales . push (new scale_AI (24, {left: "BI", right: "1/X\u00B2", marking_colour: 'red', rs: 0.08, ra: 'left'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DI (24, {left: "CI", right: "\u2222 sin", rs: 0.08, ra: 'left', marking_colour: 'red'}));
+r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.08, ra: 'left', highlight: 'yellow', highlight_left: 0.199, highlight_right: 0.199}));
+r = new Rule ();
+s . rules . push (r);
+r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.08, ra: 'left'}));
+r . scales . push (new scale_P_down (24, {marking_colour: 'red', left: "P", right: "\u221A(1-x\u00B2)", ra: 'left', rs: 0.08, left_extension: 0.0}));
+r . scales . push (new scale_CSdec_down (24, {left: "S", right: "\u2222 sin", rs: 0.08, ra: 'left', left_extension: 0.02}));
+r . scales . push (new scale_STdec_down (24, {left: "ST", right: "\u2222 arc", rs: 0.08, ra: 'left', left_extension: 0.02, right_extension: 0.022, draw_st_corrections: false}));
+r . scales . push (new spacer (4));
+
+s = new Sliderule (1200,
+  {inactive: true, static_markings: false, markings_colour: 'gold', markings_background: 'black', cursor_markings_shift: 0.002, cursor_rounding: 8, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
+sliderules . sliderules . push (s);
+s . backBraces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 60, 1));
+s . backBraces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 60, 1));
+s . cursorBraces . push (new CursorAngledBrace (0.08, 0.08, 16, 4, 16, 'gray'));
+s . cursorBraces . push (new Screw (0, -6, 8, 0.5, '#b5a642', '#605321'));
+s . cursor_left_extension = 0.074; s . cursor_right_extension = 0.074;
+s . cursors . push (new Cursor (Hairline360, 50, 146, 'red', {marking_shift: 0.002}));
+r = new Rule ();
+s . rules . push (r);
+r . scales . push (new scale_STdec (24, {left: "ST", right: "\u2222 arc", rs: 0.08, ra: 'left', left_extension: 0.02, right_extension: 0.022, draw_st_corrections: false}));
+r . scales . push (new scale_Tdec (24, {left: "T1", right: "\u2222 tan", rs: 0.08, ra: 'left', left_extension: 0.02}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_T1dec_down (24, {left: "T2", right: "\u2222 tan", rs: 0.08, ra: 'left', right_extension: 0.02}));
+r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.022, right_extension: 0.06, indices: ['>>1<<']}));
+r = new Rule ({stator: 1, rounding: 0});
+s . rules . push (r);
+r . scales . push (new scale_DF (24,
+  {left: "CF", right: "\u03c0X", rs: 0.08, ra: 'left', left_extension: 0.022, right_extension: 0.06,
+  highlight: 'yellow', highlight_left: 0.199, highlight_right: 0.199, indices: ['>>1<<']}));
+r . scales . push (new scale_CIF (24, {left: "CIF", right: "1/(\u03c0X)", rs: 0.08, ra: 'left', marking_colour: 'red', left_extension: 0.018, right_extension: 0.026}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DI (24, {left: "DI", right: "1/x", rs: 0.08, ra: 'left', marking_colour: 'red'}));
+r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.08, ra: 'left', highlight: 'yellow', highlight_left: 0.199, highlight_right: 0.199}));
+r = new Rule ();
+s . rules . push (r);
+r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.08, ra: 'left'}));
+r . scales . push (new spacer (12));
+r . scales . push (new scale_CI (24, {left: "DI", marking_colour: 'red', right: "1/x", rs: 0.08, ra: 'left'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CSdec_down (24, {left: "S", left_extension: 0.02, right: "\u2222 sin", rs: 0.08, ra: 'left', centre: "\u2222 cos", cs: 1.076, ca: 'right', cc: 'red'}));
+r . scales . push (new spacer (12));
+
+</script>
+
+<script src="sliderule_application.js"></script>
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+</script>
+
+</body></html>
