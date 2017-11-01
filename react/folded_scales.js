@@ -60,7 +60,7 @@ var scale_CIF10 = function (height, options) {
   s . value = function (location) {return 10 / (Math . pow (10, location) * this . fold);};
   s . location = function (value) {return Math . log10 (1 / (this . fold * value * 0.1));};
   s . draw = function (ctx, length) {
-    var shift = Math . log10 (10 / s . fold);
+    var shift = s . location (1);
     ctx . translate (length * shift, s . height);
     draw_log_1R (ctx, - length, s . height, shift + s . left_extension, s);
     mark (ctx, s . indices [0], 0, s . height * 0.5);
@@ -72,7 +72,7 @@ var scale_CIF10 = function (height, options) {
 var scale_DIF10 = function (height, options) {
   var s = new scale_CIF10 (height, options);
   s . draw = function (ctx, length) {
-    var shift = Math . log10 (10 / s . fold);
+    var shift = s . location (1);
     ctx . translate (length * shift, 0);
     draw_log_1R (ctx, - length, - s . height, shift + s . left_extension, s);
     mark (ctx, s . indices [0], 0, - s . height * 0.5);
@@ -113,7 +113,7 @@ var scale_CIF36 = function (height, options) {
   s . value = function (location) {return 10 / (Math . pow (10, location) * 3.6);};
   s . location = function (value) {return Math . log10 (1 / (0.36 * value));};
   s . draw = function (ctx, length) {
-    var shift = Math . log10 (10 / 3.6);
+    var shift = s . location (1);
     ctx . translate (length * shift, s . height);
     draw_log_1R (ctx, - length, s . height, shift + s . left_extension, s);
     mark (ctx, s . indices [0], 0, s . height * 0.5);
@@ -125,7 +125,7 @@ var scale_CIF36 = function (height, options) {
 var scale_DIF36 = function (height, options) {
   var s = new scale_CIF36 (height, options);
   s . draw = function (ctx, length) {
-    var shift = Math . log10 (10 / 3.6);
+    var shift = s . location (1);
     ctx . translate (length * shift, 0);
     draw_log_1R (ctx, - length, - s . height, shift + s . left_extension, s);
     mark (ctx, s . indices [0], 0, - s . height * 0.5);
@@ -135,3 +135,108 @@ var scale_DIF36 = function (height, options) {
   return s;
 };
 
+var scale_CFM = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (10, location - 1) / Math . log10 (Math . E);};
+  s . location = function (value) {return Math . log10 (10 * value * Math . log10 (Math . E));};
+  s . draw = function (ctx, length) {
+    var shift = s . location (1);
+    ctx . translate (length * shift, s . height);
+    draw_log_1R (ctx, length, s . height, 1 - shift + s . right_extension, s);
+    mark (ctx, s . indices [0], 0, s . height * 0.5);
+    ctx . translate (- length, 0);
+    draw_log_1L (ctx, length, s . height, 1 - shift - s . left_extension, s);
+  };
+  return s;
+};
+var scale_DFM = function (height, options) {
+  var s = new scale_CFM (height, options);
+  s . draw = function (ctx, length) {
+    var shift = s . location (1);
+    ctx . translate (length * shift, 0);
+    draw_log_1R (ctx, length, - s . height, 1 - shift + s . right_extension, s);
+    mark (ctx, s . indices [0], 0, - s . height * 0.5);
+    ctx . translate (- length, 0);
+    draw_log_1L (ctx, length, - s . height, 1 - shift - s . left_extension, s);
+  };
+  return s;
+};
+var scale_CIFM = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (10, 1 - location) * Math . log10 (Math . E);};
+  s . location = function (value) {return 1 - Math . log10 (value / Math . log10 (Math . E));};
+  s . draw = function (ctx, length) {
+    var shift = this . location (1);
+    ctx . translate (length * shift, s . height);
+    draw_log_1R (ctx, - length, s . height, shift + s . left_extension, s);
+    mark (ctx, s . indices [0], 0, s . height * 0.5);
+    ctx . translate (length, 0);
+    draw_log_1L (ctx, - length, s . height, shift - s . right_extension, s);
+  };
+  return s;
+};
+var scale_DIFM = function (height, options) {
+  var s = new scale_CIFM (height, options);
+  s . draw = function (ctx, length) {
+    var shift = this . location (1);
+    ctx . translate (length * shift, 0);
+    draw_log_1R (ctx, - length, - s . height, shift + s . left_extension, s);
+    mark (ctx, s . indices [0], 0, - s . height * 0.5);
+    ctx . translate (length, 0);
+    draw_log_1L (ctx, - length, - s . height, shift - s . right_extension, s);
+  };
+  return s;
+};
+
+var scale_CF1M = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (10, location) * Math . log10 (Math . E);};
+  s . location = function (value) {return Math . log10 (10 * value / Math . log10 (Math . E)) - 1;};
+  s . draw = function (ctx, length) {
+    var shift = s . location (1);
+    ctx . translate (length * shift, s . height);
+    draw_log_1R (ctx, length, s . height, 1 - shift + s . right_extension, s);
+    mark (ctx, s . indices [0], 0, s . height * 0.5);
+    ctx . translate (- length, 0);
+    draw_log_1L (ctx, length, s . height, 1 - shift - s . left_extension, s);
+  };
+  return s;
+};
+var scale_DF1M = function (height, options) {
+  var s = new scale_CF1M (height, options);
+  s . draw = function (ctx, length) {
+    var shift = s . location (1);
+    ctx . translate (length * shift, 0);
+    draw_log_1R (ctx, length, - s . height, 1 - shift + s . right_extension, s);
+    mark (ctx, s . indices [0], 0, - s . height * 0.5);
+    ctx . translate (- length, 0);
+    draw_log_1L (ctx, length, - s . height, 1 - shift - s . left_extension, s);
+  };
+  return s;
+};
+var scale_CIF1M = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (10, - location) / Math . log10 (Math . E);};
+  s . location = function (value) {return - Math . log10 (value * Math . log10 (Math . E));};
+  s . draw = function (ctx, length) {
+    var shift = s . location (1);
+    ctx . translate (length * shift, s . height);
+    draw_log_1R (ctx, - length, s . height, shift + s . left_extension, s);
+    mark (ctx, s . indices [0], 0, s . height * 0.5);
+    ctx . translate (length, 0);
+    draw_log_1L (ctx, - length, s . height, shift - s . right_extension, s);
+  };
+  return s;
+};
+var scale_DIF1M = function (height, options) {
+  var s = new scale_CIF1M (height, options);
+  s . draw = function (ctx, length) {
+    var shift = s . location (1);
+    ctx . translate (length * shift, 0);
+    draw_log_1R (ctx, - length, - s . height, shift + s . left_extension, s);
+    mark (ctx, s . indices [0], 0, - s . height * 0.5);
+    ctx . translate (length, 0);
+    draw_log_1L (ctx, - length, - s . height, shift - s . right_extension, s);
+  };
+  return s;
+};
