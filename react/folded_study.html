@@ -1,0 +1,121 @@
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Study on Folded Scales</title>
+  </head>
+<body>
+<div>
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<!--<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.-->
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+  &nbsp;&nbsp;&nbsp;Fold at:
+  <input type = radio name = fold onchange = "javascript: changeFold ('pi');" value = pi />
+  <input type = radio name = fold onchange = "javascript: changeFold ('sqrt10');" value = sqrt10 />
+  <input type = radio name = fold onchange = "javascript: changeFold ('360');" value = 360 />
+</div>
+<div id="root"></div>
+
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+<script src="folded_scales.js"></script>
+
+<script>
+
+var changeFold = function (fold) {
+  for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . inactive = true;
+  switch (fold) {
+  case 'pi': sliderules . sliderules [0] . inactive = false; break;
+  case 'sqrt10': sliderules . sliderules [1] . inactive = false; break;
+  case '360': sliderules . sliderules [2] . inactive = false; break;
+  default: break;
+  }
+  sliderules . requireRedraw = true;
+};
+
+var sliderules = new Sliderules ();
+var s = new Sliderule (1200); sliderules . sliderules . push (s);
+var r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (4));
+r . scales . push (new scale_CF (24));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_DF (24));
+r . scales . push (new scale_CIF (24, {marking_colour: 'red'}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_DI (24, {marking_colour: 'red'}));
+r . scales . push (new scale_C (24));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (24));
+r . scales . push (new spacer (4));
+
+var s = new Sliderule (1200); sliderules . sliderules . push (s);
+var r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (4));
+r . scales . push (new scale_CF10 (24));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_DF10 (24));
+r . scales . push (new scale_CIF10 (24, {marking_colour: 'red'}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_DI (24, {marking_colour: 'red'}));
+r . scales . push (new scale_C (24));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (24));
+r . scales . push (new spacer (4));
+
+var s = new Sliderule (1200); sliderules . sliderules . push (s);
+var r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (4));
+r . scales . push (new scale_CF36 (24));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_DF36 (24));
+r . scales . push (new scale_CIF36 (24, {marking_colour: 'red'}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_DI (24, {marking_colour: 'red'}));
+r . scales . push (new scale_C (24));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (24));
+r . scales . push (new spacer (4));
+
+</script>
+
+<script src="sliderule_application.js"></script>
+
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+//changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+//changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+//changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
+//changeFold (document . getElementById ('fold') . value);
+var fold = document . getElementsByName ('fold');
+for (var ind in fold) if (fold [ind] . checked) changeFold (fold [ind] . value);
+</script>
+
+</body></html>
