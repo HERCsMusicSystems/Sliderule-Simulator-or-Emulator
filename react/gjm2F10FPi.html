@@ -1,0 +1,106 @@
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//            Copyright (C) 2017 Gregory J. McClure / Steve Treadwell            //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////
+// Special folded slide rule by Gregory J. McClure and Steve Treadwell
+///////////////////////////////////////////////////////////////////////////////////
+-->
+<html>
+  <head>
+    <title>GJM FRoot10 FPi</title>
+  </head>
+<body>
+<div>
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other folding.
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 1200 : 880);" />Long/Short.
+</div>
+<div id="root"></div>
+
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+<script src="sliderule_construction_kit.js"></script>	
+<script src="sliderule_construction_kit_gjm_new.js"></script>	
+<script src="scales.js"></script>
+<script src="scales_gjm_new.js"></script>
+
+<script>
+var gjm_logo = new Image (); gjm_logo . src = "GJM.bmp";
+var gjm2_logo = new Image (); gjm2_logo . src = "GJM2F10FPi.bmp";
+
+var sheight = 25;
+var initsize = 880;
+var sliderules = new Sliderules ({position: {x: 8.5, y: 10.5}, background_colour: 'black'});
+
+// Side 1
+var s = new Sliderule (initsize, {cursor_rounding: 10, cursor_motion: 1.0}); sliderules . sliderules . push (s);
+var r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CF10 (sheight, {left_extension: 0.055, right_extension: 0.045, left: "DF\u221a", la: 'right', ls: 0.08, right: "\u221a(10)x/10", rs: 0.08, colour: 'blue', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r = new Rule ({stator: 1, rule_motion: 1.0}); s . rules . push (r);
+r . markings . push (new Logo (gjm2_logo, -0.155, 80, 0.8));
+r . markings . push (new Logo (gjm_logo, -0.155, 40, 0.8));
+r . scales . push (new scale_DF10 (sheight, {left_extension: 0.055, right_extension: 0.045, left: "CF\u221a", la: 'right', ls: 0.08, right: "\u221a(10)x/10", rs: 0.08, colour: 'blue', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (5, {highlight: '#ccffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new scale_DIF10 (sheight, {left_extension: 0.045, right_extension: 0.055, left: "CIF\u221a", la: 'right', ls: 0.08, right: "10/\u221a(10)x", rs: 0.08, colour: 'red', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (5));
+r . scales . push (new scale_CI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "CI", la: 'right', ls: 0.08, right: "10/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (5));
+r . scales . push (new scale_C (sheight, {left_extension: 0.048, right_extension: 0.045, left: "C", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (sheight, {left_extension: 0.048, right_extension: 0.045, left: "D", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r . scales . push (new spacer (2));
+
+// Side 2
+s = new Sliderule (initsize, {cursor_rounding: 10, cursor_motion: 1.0}); sliderules . sliderules . push (s);
+r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CF (sheight, {left_extension: 0.05, right_extension: 0.049, left: "DF", la: 'right', ls: 0.08, right: "\u03c0x/10", rs: 0.08, colour: 'blue', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r = new Rule ({stator: 1, rule_motion: 1.0}); s . rules . push (r);
+r . markings . push (new Logo (gjm2_logo, -0.155, 80, 0.8));
+r . markings . push (new Logo (gjm_logo, -0.155, 40, 0.8));
+r . scales . push (new scale_DF (sheight, {left_extension: 0.05, right_extension: 0.049, left: "CF", la: 'right', ls: 0.08, right: "\u03c0x/10", rs: 0.08, colour: 'blue', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (5, {highlight: '#ccffff', highlight_left: 0.16, highlight_right: 0.16}));
+r . scales . push (new scale_DIF (sheight, {left_extension: 0.042, right_extension: 0.056, left: "CIF", la: 'right', ls: 0.08, right: "10/\u03c0x", rs: 0.08, colour: 'red', highlight: '#ccffff', highlight_left: 0.075, highlight_right: 0.075}));
+r . scales . push (new spacer (5));
+r . scales . push (new scale_CI (sheight, {left_extension: 0.045, right_extension: 0.048, left: "CI", la: 'right', ls: 0.08, right: "10/x", rs: 0.08, colour: 'red'}));
+r . scales . push (new spacer (5));
+r . scales . push (new scale_C (sheight, {left_extension: 0.048, right_extension: 0.045, left: "C", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (sheight, {left_extension: 0.048, right_extension: 0.045, left: "D", la: 'right', ls: 0.08, right: "x", rs: 0.08}));
+r . scales . push (new spacer (2));
+</script>
+
+<script src="sliderule_application.js"></script>
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeSize (document . getElementById ('short_long') . checked ? 1200 : 880);
+copyright = "Special Folded Sliderule Design and Copyright \u00a9 2017 - " + new Date () . getFullYear () + " Gregory J. McClure / Steve Treadwell                 " + copyright;
+copyright_colour = 'white';
+sliderules . sliderule(1) . inactive = true;
+</script>
+
+</body></html>
