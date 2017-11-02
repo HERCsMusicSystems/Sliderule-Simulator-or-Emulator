@@ -1,0 +1,215 @@
+<!DOCTYPE doctype PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                        
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+                        
+  <meta name="Author" content="Robert Wolf">
+                        
+  <meta name="Keywords" content="embedded, embedded system, microcontroller, expert, expert system, HERCs Prolog, Prolog, interpreter, music, midi, ruby gem, ruby, gem, HERCs, Abakos, synthesizer, synthesiser, vst, plugin, sliderule, slide-rule, slide rule">
+                        
+  <meta name="GENERATOR"
+ content="Mozilla/4.78 [en] (X11; U; Linux 2.4.9-34 i686) [Netscape]">
+  <title>Slide rule... an elegant instrument for a more civilized time.</title>
+    
+  <meta name="robots" content="all">
+<link rel="shortcut icon" type="image/x-icon" href="h.ico"/>
+
+</head>
+<body text="#000000" bgcolor="#ffffff" link="#0000ef" vlink="#51188e" alink="#ff0000">
+
+<font face="arial">
+
+<center>      
+<h1>The Slide Rule Simulator</h1>
+<h1>The Slide Rule Emulator</h1>
+     </center>
+
+<center><i><font size="+2">
+... an elegant instrument<br/>
+for a more civilized time ...<br/>
+
+</font></i>
+<br/>
+(last update: 5th October 2017)
+</center>
+
+<div>
+
+	<div style="float: left;">
+		<h1>Collection of Slide Rule replicas</h1>
+		<ul>
+			<li><a href="react/aristo_0906_bischolar.html" >Aristo 0906 Bischolar</a></li>
+		  <li><a href="react/aristo_0972_hyperlog.html" >Aristo 0972 Hyperlog</a></li>
+			<li><a href="react/faber_castell_2_82n.html" >Faber-Castell 2/82N</a></li>
+			<li><a href="react/faber_castell_2_83n.html" >Faber-Castell 2/83N</a></li>
+			<li><a href="react/faber_castell_2_84.html" >Faber-Castell 2/84</a></li>
+			<li><a href="react/faber_castell_2_84n.html" >Faber-Castell 2/84N</a></li>
+			<li><a href="react/k_e_decilon.html" >Keuffel & Esser 68-1100 Deci-Lon</a></li>
+			<li><a href="react/skala.html" >Skala</a></li>
+			<li><a href="react/staedtler_544_28.html" >Staedtler 544 28</a></li>
+			<li><a href="react/circular.html" >Work-in-progress on circular....</a></li>
+		</ul>
+	</div>
+	
+	<div style="float: left; padding: 40px;">&nbsp;</div>
+
+	<div style="float: left;">
+		<h1>Gregory J. McClure's collection</h1>
+		<ul>
+			<li><a href="react/gjm6sided.html" >6 - Sided</a></li>
+			<li><a href="react/gjm8sidedstat.html" >8 - Sided Stat</a></li>
+			<li><a href="react/gjm2F10FPi.html" >FRoot10 FPi (for Steve Treadwell)</a></li>
+		</ul>
+	</div>
+	
+	<div style="clear: both;"></div>
+
+</div>
+
+The slide rules above are very close replicas of existing models.
+<ul>
+	<li>Drag rule or cursor with mouse.</li>
+	<li>Use mouse wheel to zoom-in or zoom-out.</li>
+	<li>Click on checkboxes for appropriate actions.</li>
+	<li>Right-click on cursor or on scale to enter digital values. You can:
+		<ul>
+			<li>Enter integer or floating-point value, i.e.: <b>3.14</b></li>
+			<li>Enter degrees using ":", i.e.: <b>2:30:26</b></li>
+			<li>Enter pre-defined constants: <b>pi</b>, <b>pi1</b>, <b>e</b>, <b>e1</b>, <b>c</b>, <b>c1</b>, <b>q</b></li>
+		</ul>
+	</li>
+	<li>You can <a href="react.zip">download</a> the entire collection to your computer and run locally (without internet connection).</li>
+	<li>Once you download the entire collection you can start building your own models.
+		Simply, open one of the models in text editor, see how it works and enjoy coding.</li>
+</ul>
+
+<br/><br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+</div>
+<div id="root"></div>
+<script src="react/react.js"></script>
+<script src="react/react-dom.js"></script>
+<script src="react/sliderule_construction_kit.js"></script>
+<script src="react/scales.js"></script>
+
+<script src="react/faber_castell_2_83n.js"></script>
+<script src="react/sliderule_application_fixed.js"></script>
+
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1><a name="Links" /><font size="+2">Links</font></h1>
+<blockquote>
+<table><tr><td>
+<a href="http://groups.yahoo.com/group/sliderule/join">
+  <img src="http://us.i1.yimg.com/us.yimg.com/i/yg/img/i/us/ui/join.gif"
+       style="border: 0px;"
+       alt="Click to join sliderule"/>
+  <p>Click to join sliderule</p>
+</a>
+</td><td>
+<form method="get"
+      action="http://groups.yahoo.com/subscribe/sliderule"
+      style="background-color: #ffc; width: 254px; padding: 2px 4px">
+  <h6 style="font-weight: bold; margin-bottom: 5px; text-align: center">
+      Subscribe to sliderule</h6>
+  <input style="vertical-align: top"
+      type="text"
+      name="user"
+      value="enter email address"
+      size="20" />
+  <input type="image" alt="Click to join sliderule"
+      name="Click to join sliderule"
+      src="http://us.i1.yimg.com/us.yimg.com/i/yg/img/i/us/ui/join.gif" />
+  <p style="text-align: center;">
+  Powered by <a href="http://us.groups.yahoo.com/">us.groups.yahoo.com</a></p>
+</form>
+</td></tr></table>
+
+
+<a href="http://sliderulemuseum.com/">
+<img src="SRM_Banner600.jpg" /><br />
+INTERNATIONAL SLIDE RULE MUSEUM
+</a><br />
+... an excellent source of slide rule rela related informations
+<br /><br /><br />
+
+<a href="http://www.oughtred.org/">
+<img src="oughtred-header-graphic7.gif" />
+</a>
+
+
+</blockquote>
+
+<h1><a name="Contract"/><font size="+2">Contact</font></h1>
+<blockquote>
+<ul>
+
+<li>You may actually figure-out for yourself how to write to me.
+My name Robert Wolf.
+Put the dot in-between name and surname.
+The domain is the same as this page (look into the address bar), without the "sliderule" part.
+</li>
+</ul>
+</blockquote>
+
+
+
+</font>
+
+
+
+
+
+</body></html>
