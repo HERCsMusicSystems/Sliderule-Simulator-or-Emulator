@@ -30,7 +30,7 @@
 <div>
 	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
-	<!--<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.-->
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
 	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fold at:
   <input type = radio name = fold onchange = "javascript: changeFold ('pi');" value = pi checked = true />&#x03c0;
@@ -193,7 +193,7 @@ r . scales . push (new spacer (24));
 <script>
 changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
-//changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 //changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 //changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
 changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
