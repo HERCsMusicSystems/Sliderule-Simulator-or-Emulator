@@ -1355,6 +1355,8 @@ var HairlineHPEurope = HairlineHP;
 var HairlineHPJapan = HairlineHP;
 var HairlinePS = HairlineHP;
 var Hairline360 = Math . log10 (3.60 / Math . PI);
+var Hairline360S = Math . log10 (3.60 / Math . sqrt (10));
+var Hairline360R = Hairline360 - Hairline360S - Hairline360S;
 
 var CursorS = function (from, to, colour, options) {return new Cursor (- Math . log10 (1 / Math . sqrt (Math . PI * 0.25)), from, to, colour, options);};
 var CursorD = function (from, to, colour, options) {return new Cursor (Math . log10 (1 / Math . sqrt (Math . PI * 0.25)), from, to, colour, options);};
