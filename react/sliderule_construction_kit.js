@@ -1224,10 +1224,13 @@ var spacer = function (height, options) {
     if (this . cf !== undefined) ctx . font = this . cf;
     if (this . centre !== undefined) {ctx . textAlign = this . ca; ctx . fillText (this . centre, length * this . cs, textBase);}
   };
+  this . read = function (position) {return null;};
   this . examine = function (position) {
     if (position . y < 0 || position . y > this . height) return null;
     var p = prompt ('Value for: ' + (this . left ? this . left : '') + ' ' + (this . right ? this . right : '') , '0.0000');
     if (p === null) return null;
+    var re = this . read (p);
+    if (re != null) return re;
     switch (p) {
       case 'pi': p = Math . PI; break;
       case 'pi1': p = Math . PI * 10; break;
