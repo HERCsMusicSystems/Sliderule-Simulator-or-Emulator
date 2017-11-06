@@ -42,8 +42,42 @@
 
 <script src="sliderule_construction_kit.js"></script>
 <script src="scales.js"></script>
+<script src="scales_gjm_new.js"></script>
+<script src="sliderule_construction_kit_gjm_new.js"></script>
 
 <script>
+
+var masses_underscore = {
+  H:	1.0079,
+  He:	4.0026,
+  Li:	6.9410,
+  Be:	9.0122
+};
+
+var scale_Chemical = function (height, from, to, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . pow (10, location);};
+  s . location = function (value) {return Math . log10 (value);};
+  s . read = function (position) {
+    position = position [0] . toUpperCase () + position . slice (1) . toLowerCase ();
+    var underscore = masses_underscore [position];
+    if (underscore != undefined) return Math . log10 (underscore);
+    return null;
+  };
+  s . draw = function (ctx, length) {
+    var h5 = s . height * 0.5;
+    var location, ind;
+    ctx . translate (0, s . height);
+    for (ind in masses_underscore) {
+      if (ind >= from && ind < to) {
+        location = length * Math . log10 (masses_underscore [ind]);
+        smark (ctx, ind, location, 0, h5);
+        mmark (ctx, "__", location, h5);
+      }
+    }
+  };
+  return s;
+};
 
 var sliderules = new Sliderules ();
 var s = new Sliderule (1200); sliderules . sliderules . push (s);
@@ -52,7 +86,7 @@ r . scales . push (new spacer (24));
 r . scales . push (new scale_L (24));
 r . scales . push (new scale_A (24));
 r . scales . push (new scale_CF (24));
-r = new Rule (); s . rules . push (r);
+r = new Rule ({stator: 1}); s . rules . push (r);
 r . scales . push (new scale_DF (24));
 r . scales . push (new scale_DIF (24));
 r . scales . push (new scale_CI (24));
@@ -62,6 +96,23 @@ r . scales . push (new scale_D (24));
 r . scales . push (new scale_LL3_down (24));
 r . scales . push (new scale_LL2_down (24));
 r . scales . push (new scale_LL1_down (24));
+
+s = new Sliderule (1200); sliderules . sliderules . push (s);
+r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (24));
+r . scales . push (new scale_Chemical (24, 'A', 'N', {lines: [{left: 0, right: 1, height: 1}]}));
+r . scales . push (new spacer (24));
+r . scales . push (new spacer (24));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new spacer (24));
+r . scales . push (new scale_Fahr2 (24));
+r . scales . push (new scale_Cent2_down (24));
+r . scales . push (new spacer (24));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (24));
+r . scales . push (new spacer (24));
+r . scales . push (new spacer (24));
+r . scales . push (new spacer (24));
 
 </script>
 
