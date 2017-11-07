@@ -1488,6 +1488,22 @@ var DecilonBottomRightBrace = function (radius, one, two, three, four, margin, l
 	};
 };
 
+var LTopLeftBrace = function (radius, r2, from, to, mid_point, margin, background, colour, s) {
+  this . draw = function (ctx, s) {
+    var ff = from * s . length, tt = to * s . length, hh = s . height ();
+    ctx . beginPath ();
+    ctx . arc (tt - radius - margin, radius + margin, radius, Math . PI * 1.5, Math . PI * 2);
+    ctx . arc (tt - radius - margin, hh - radius - margin, radius, 0, Math . PI * 0.5);
+    ctx . arc (ff + radius + margin, hh - radius - margin, radius, Math . PI * 0.5, Math . PI);
+    ctx . arc (ff - r2 + margin, mid_point + r2 - margin, r2, 0, Math . PI * 1.5, true);
+    ctx . arc (margin + radius, mid_point - radius - margin, radius, Math . PI * 0.5, Math . PI);
+    ctx . arc (margin + radius, radius + margin, radius, Math . PI, Math . PI * 1.5);
+    ctx . closePath ();
+    ctx . fillStyle = background; ctx . fill ();
+    ctx . strokeStyle = colour; ctx . stroke ();
+  };
+};
+
 var LeftBraceBar = function (location, top, bottom, radius, background, colour) {
   this . draw = function (ctx, s) {
     var position = location * s . length;
