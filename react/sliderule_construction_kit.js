@@ -1297,7 +1297,7 @@ var Rule = function (options) {
   this . draw = function (ctx, length, sliderule) {
     this . animate ();
     ctx . save ();
-    ctx . fillStyle = this . rule_colour;
+    ctx . fillStyle = typeof (this . rule_colour) == 'object' ? ctx . createPattern (this . rule_colour, 'repeat') : this . rule_colour;
     ctx . lineWidth = 1;
     ctx . translate (length * (this . shift - this . left_margin), 0);
     ctx . beginPath ();
@@ -1688,6 +1688,31 @@ var DecilonWindow = function (radius, l1, l2, l3, t1, t2, t3, background, colour
 		ctx . arc (- le3, tb2, radius, Math . PI, Math . PI * 0.5, true);
 		ctx . arc (le3, tb2, radius, Math . PI * 0.5, 0, true);
 		ctx . arc (le3 + radius + radius, tb3 + radius + radius, radius, Math . PI, Math . PI * 1.5);
+		ctx . arc (le2, tb3, radius, Math . PI * 0.5, 0, true);
+		ctx . closePath ();
+		ctx . fillStyle = background;
+		ctx . fill ();
+		ctx . strokeStyle = colour;
+		ctx . stroke ();
+	};
+};
+
+var HemmiWindow = function (radius, l1, l2, t1, t3, background, colour) {
+	this . draw = function (ctx, s) {
+		var le1 = s . length * l1 - radius, le2 = s . length * l2 - radius;
+		var te1 = radius - t1, te3 = radius - t3;
+		var ht = s . height ();
+		var tb1 = ht - te1, tb3 = ht - te3;
+		ctx . beginPath ();
+		ctx . arc (le1, te1, radius, Math . PI * 1.5, 0);
+		ctx . arc (le1, tb1, radius, 0, Math . PI * 0.5);
+		ctx . arc (- le1, tb1, radius, Math . PI * 0.5, Math . PI);
+		ctx . arc (- le1, te1, radius, Math . PI, Math . PI * 1.5);
+		ctx . closePath ();
+		ctx . moveTo (le2 + radius, te3);
+		ctx . arc (le2, te3, radius, 0, Math . PI * 1.5, true);
+		ctx . arc (- le2, te3, radius, Math . PI * 1.5, Math . PI, true);
+		ctx . arc (- le2, tb3, radius, Math . PI, Math . PI * 0.5, true);
 		ctx . arc (le2, tb3, radius, Math . PI * 0.5, 0, true);
 		ctx . closePath ();
 		ctx . fillStyle = background;
