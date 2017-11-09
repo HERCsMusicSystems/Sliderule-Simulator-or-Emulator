@@ -114,8 +114,8 @@ r . scales . push (new scale_Chemical (24,
 r . scales . push (new spacer (24));
 r = new Rule ({stator: 1}); s . rules . push (r);
 r . scales . push (new spacer (24));
-r . scales . push (new scale_Fahrenheit (24));
-r . scales . push (new scale_Cent2_down (24));
+r . scales . push (new scale_Fahrenheit (24, {lines: [{left: 0, right: 1, height: 1}]}));
+r . scales . push (new scale_Centigrade_down (24));
 r . scales . push (new scale_Kelvin (24));
 r . scales . push (new spacer (24));
 r = new Rule ({left_margin: 0.15, right_margin: 0.15}); s . rules . push (r);
