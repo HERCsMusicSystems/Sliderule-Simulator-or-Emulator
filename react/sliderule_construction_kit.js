@@ -221,6 +221,7 @@ var draw_log_1R = function (ctx, length, height, extension, scale) {
     location = (0.5 + Math . log10 (Math . sqrt (4 / Math . PI)));
       if (location < extension) smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), h2, h5);
   }
+  if (scale . draw_r) {location = Math . log10 (18 / Math . PI); if (location < extension) smark (ctx, 'R', length * location, h2, h5);}
   if (scale . draw_q) {location = Math . log10 (Math . PI / 1.8); if (location < extension) smark (ctx, 'q', length * location, h2, h5);}
   if (abs_length < 300) { // 2 4
     draw_XR (ctx, Math . log10, length, 1, 2, extension, h4, 1, 0.5, 1);
@@ -291,6 +292,7 @@ var draw_log_1L = function (ctx, length, height, extension, scale) {
     location = (0.5 + Math . log10 (Math . sqrt (4 / Math . PI)));
       if (location > extension) smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), height * 0.2, height * 0.5);
   }
+  if (scale . draw_r) {location = Math . log10 (18 / Math . PI); if (location > extension) smark (ctx, 'R', length * location, h2, h5);}
   if (scale . draw_q) {location = Math . log10 (Math . PI / 1.8); if (location > extension) smark (ctx, 'q', length * location, h2, h5);}
   if (abs_length < 300) {
     draw_XL (ctx, Math . log10, length, 1, 2, extension, h4, 1, 0.5, 1);
@@ -1233,12 +1235,15 @@ var spacer = function (height, options) {
     if (re != null) return re;
     switch (p) {
       case 'pi': p = Math . PI; break;
+      case 'pi0': p = Math . PI / 10; break;
       case 'pi1': p = Math . PI * 10; break;
       case 'e': p = Math . E; break;
       case 'e1': p = Math . E * 10; break;
       case 'c': p = Math . sqrt (4 / Math . PI); break;
       case 'c1': p = Math . sqrt (40 / Math . PI); break;
       case 'q': p = Math . PI / 1.8; break;
+      case 'r': p = 18 / Math . PI; break;
+      case 'r0': p = 1.8 / Math . PI; break;
       default:
         var pp = p . split (":");
         var divisor = 1;
