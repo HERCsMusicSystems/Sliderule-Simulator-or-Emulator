@@ -33,7 +33,7 @@
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<!--<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.-->
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
-  <input type = checkbox id = dimm_scales onchange = "javascript: if (this . checked) dimmm (0); else undimm ();" />Dimm.
+  <input type = checkbox id = dimm_scales onchange = "javascript: if (this . checked) dcl_dimm (); else dcl_undimm ();" />Dimm.
 	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long.
 </div>
 <div id="root"></div>
@@ -46,47 +46,8 @@
 <script src="sliderule_ctrl.js"></script>
 
 <script>
-var dimmm = function (intensity) {
-  dimm (intensity);
-  if (intensity >= 208) return;
-  setTimeout (function () {dimmm (intensity + 8);}, 100);
-};
-var dimm = function (intensity) {
-  intensity = intensity . toString (16);
-  if (intensity . length < 2) intensity = "0" + intensity;
-  for (var esc in sliderules . sliderules) {
-    for (var ind in sliderules . sliderules [esc] . rules) {
-      for (var sub in sliderules . sliderules [esc] . rules [ind] . scales) {
-        var scale = sliderules . sliderules [esc] . rules [ind] . scales [sub];
-        scale . colour = '#' + intensity + intensity + intensity;
-        scale . alt = '#ff' + intensity + intensity;
-        if (scale . marking_colour != undefined && (scale . marking_colour [0] == '#' || scale . marking_colour == 'red')) scale . marking_colour = '#ff' + intensity + intensity;
-      }
-    }
-  }
-  //sliderules . sliderules [0] . rules [0] . scales [3] . colour = 'black';
-  //sliderules . sliderules [0] . rules [1] . scales [0] . colour = 'black';
-  sliderules . sliderules [0] . rules [1] . scales [4] . colour = 'black';
-  sliderules . sliderules [0] . rules [2] . scales [0] . colour = 'black';
-  sliderules . sliderules [1] . rules [0] . scales [5] . colour = 'black';
-  sliderules . sliderules [1] . rules [1] . scales [0] . colour = 'black';
-  sliderules . sliderules [1] . rules [1] . scales [4] . colour = 'black';
-  sliderules . sliderules [1] . rules [2] . scales [0] . colour = 'black';
-  sliderules . requireRedraw = true;
-};
-var undimm = function () {
-  for (var esc in sliderules . sliderules) {
-    for (var ind in sliderules . sliderules [esc] . rules) {
-      for (var sub in sliderules . sliderules [esc] . rules [ind] . scales) {
-        var scale = sliderules . sliderules [esc] . rules [ind] . scales [sub];
-        if (scale . colour [0] == '#') scale . colour = 'black';
-        if (scale . alt [0] == '#') scale . alt = 'red';
-        if (scale . marking_colour != undefined && scale . marking_colour [0] == '#') scale . marking_colour = 'red';
-      }
-    }
-  }
-  sliderules . requireRedraw = true;
-};
+var dcl_dimm = function () {isolate (["A", "B", "C", "D"]); dimmm (255, 47, 8);};
+var dcl_undimm = function () {dimmm (47, 255, 8); setTimeout (function () {isolate ();}, 3600);};
 </script>
 
 <script>
@@ -228,7 +189,7 @@ changeMarkings ('hairline', document . getElementById ('on_hairline') . checked)
 //changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
-if (document . getElementById ('dimm_scales') . checked) dimm(208);
+if (document . getElementById ('dimm_scales') . checked) {isolate (["A", "B", "C", "D"]); dimm(47, ['black', 'red']);}
 </script>
 
 </body></html>
