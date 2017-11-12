@@ -1923,7 +1923,8 @@ var Sliderule = function (length, options) {
       for (var sub in this . rules [ind] . scales) {
         h = this . rules [ind] . scales [sub] . height;
         hh = h * 0.5;
-        description = this . rules [ind] . scales [sub] . display (this . cursor_position - this . rules [ind] . shift, this . precision);
+        if (this . rules [ind] . scales [sub] . dimm) description = null;
+        else description = this . rules [ind] . scales [sub] . display (this . cursor_position - this . rules [ind] . shift, this . precision);
         if (description !== null) {
           ctx . fillStyle = this . markings_background;
           measure = ctx . measureText (description);

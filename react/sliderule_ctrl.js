@@ -7,3 +7,20 @@ var cookies = function () {
 	return ret;
 };
 
+var dimm_scales = function (sliderule, rules) {
+	for (var ind in rules) {
+		for (var sub in rules [ind] . scales) {
+			sliderules . sliderules [sliderule] . rules [rules [ind] . rule] . scales [rules [ind] . scales [sub]] . dimm = true;
+		}
+	}
+	sliderules . requireRedraw = true;
+};
+
+var undimm_scales = function () {
+	for (var s in sliderules . sliderules)
+		for (var r in sliderules . sliderules [s] . rules)
+			for (var c in sliderules . sliderules [s] . rules [r] . scales)
+				delete sliderules . sliderules [s] . rules [r] . scales [c] . dimm;
+	sliderules . requireRedraw = true;
+};
+
