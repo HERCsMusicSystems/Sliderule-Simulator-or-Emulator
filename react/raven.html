@@ -49,6 +49,7 @@
 <script src="sliderule_construction_kit.js"></script>
 <script src="scales.js"></script>
 <script src="folded_scales.js"></script>
+<script src="sliderule_ctrl.js"></script>
 
 <script>
 
@@ -81,23 +82,27 @@ s . cursorBraces . push (new Screw (0.07, 253, 6, Math . random () * Math . PI, 
 s . cursors . push (new Cursor (Hairline360, 36, 120, 'red'));
 s . cursors . push (new Cursor (Hairline360R, 36, 120, 'red', {marking_align: 'right', marking_shift: -0.01}));
 var r = new Rule (); s . rules . push (r);
-r . markings . push (new Engraving ('FOLD STUDY', '16px arial', 'left', 'red', 0, 20));
+r . markings . push (new Engraving ('RAVEN', '16px arial', 'left', 'red', 0, 20));
 r . markings . push (new Engraving ('Made in Australia', '12px arial', 'right', 'black', 1, 16));
 r . scales . push (new spacer (24));
-r . scales . push (new scale_CIF (24, {left: "DIF", right: "10/\u03c0X", rs: 0.07, marking_colour: 'red', indices: ['>>1<<']}));
-r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.07, indices: ['>>1<<']}));
+r . scales . push (new scale_P (24, {left: "P"}));
+r . scales . push (new scale_K (24, {left: "K", right: "X\u00b3", rs: 0.07, indices: ['1', '10', '100', '1000']}));
+r . scales . push (new scale_A (24, {left: "A", right: "X\u00b2", rs: 0.07, indices: ['1', '10', '100']}));
 r = new Rule ({stator: 1}); s . rules . push (r);
 r . markings . push (new RuleBars (-0.194, 1, 4, 96, 9, 6, 4, 'tan'));
 r . markings . push (new RuleBars (1.194, -1, 4, 96, 9, 6, 4, 'tan'));
-r . scales . push (new scale_DF (24, {left: "CF", right: "\u03c0X", rs: 0.07, indices: ['>>1<<'], draw_r: true, draw_q: true}));
-r . scales . push (new scale_CIF (24, {left: "CIF", right: "10/\u03c0X", rs: 0.07, marking_colour: 'red', indices: ['>>1<<']}));
+r . scales . push (new scale_B (24, {left: "B", right: "X\u00b2", rs: 0.07, indices: ['1', '10', '100']}));
+r . scales . push (new scale_SCdec (24, {left: "S", right: "sin X", rs: 0.07}));
 r . scales . push (new spacer (4));
-r . scales . push (new scale_DI (24, {left: "CI", right: "10/X", rs: 0.07, marking_colour: 'red'}));
-r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, draw_r: true, draw_q: true}));
+r . scales . push (new scale_TCTdec_down (24, {left: "T", right: "tan X", rs: 0.07}));
+r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, draw_st_corrections: true, draw_r: true}));
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.07, }));
-r . scales . push (new scale_DI (24, {left: "DI", right: "10/X", rs: 0.07, marking_colour: 'red'}));
-r . scales . push (new spacer (24));
+r . scales . push (new scale_DLL0 (24, {left: "D", right: "X", rs: 0.07, draw_r: true}));
+r . scales . push (new scale_M (24, {left: "L"}));
+r . scales . push (new scale_LL01_down (24, {left: "LL01"}));
+r . scales . push (new scale_LL00_down (24, {left: "LL00"}));
+r . scales . push (new spacer (2));
+
 
 var s = new Sliderule (1200, {cursor_top_margin: 13, cursor_bottom_margin: 13, hairline_top: -10, hairline_bottom: -10, cursor_limit_left: 0.028, cursor_limit_right: 0.028, markings_background: 'yellow'}); sliderules . sliderules . push (s);
 s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 74, 1));
@@ -113,24 +118,25 @@ s . cursorBraces . push (new Screw (0.07, 253, 6, Math . random () * Math . PI, 
 s . cursors . push (new Cursor (Hairline360S, 36, 120, 'red'));
 s . cursors . push (new Cursor (- Hairline360S, 36, 120, 'red', {marking_align: 'right', marking_shift: -0.01}));
 var r = new Rule (); s . rules . push (r);
-r . markings . push (new Engraving ('FOLD STUDY', '16px arial', 'left', 'red', 0, 20));
+r . markings . push (new Engraving ('RAVEN', '16px arial', 'left', 'red', 0, 20));
 r . markings . push (new Engraving ('Made in Australia', '12px arial', 'right', 'black', 1, 16));
 r . scales . push (new spacer (24));
-r . scales . push (new scale_K (24, {left: "K", right: "X\u00b3", rs: 0.07, indices: ['1', '10', '100', '1000']}));
-r . scales . push (new scale_A (24, {left: "A", right: "X\u00b2", rs: 0.07, indices: ['1', '10', '100']}));
+r . scales . push (new scale_LL03 (24, {left: "LL03"}));
+r . scales . push (new scale_LL02 (24, {left: "LL02"}));
+r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.07, indices: ['>>1<<']}));
 r = new Rule ({stator: 1}); s . rules . push (r);
 r . markings . push (new RuleBars (-0.194, 1, 4, 96, 9, 6, 4, 'tan'));
 r . markings . push (new RuleBars (1.194, -1, 4, 96, 9, 6, 4, 'tan'));
-r . scales . push (new scale_B (24, {left: "B", right: "X\u00b2", rs: 0.07, indices: ['1', '10', '100']}));
-r . scales . push (new scale_SCdec (24, {left: "S", right: "sin X", rs: 0.07}));
+r . scales . push (new scale_DF (24, {left: "CF", right: "\u03c0X", rs: 0.07, indices: ['>>1<<'], draw_r: true, draw_q: true}));
+r . scales . push (new scale_CIF (24, {left: "CIF", right: "10/\u03c0X", rs: 0.07, marking_colour: 'red', indices: ['>>1<<']}));
 r . scales . push (new spacer (4));
-r . scales . push (new scale_TCTdec_down (24, {left: "T", right: "tan X", rs: 0.07}));
-r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, draw_r: true}));
+r . scales . push (new scale_DI (24, {left: "CI", right: "10/X", rs: 0.07, marking_colour: 'red'}));
+r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, draw_r: true, draw_q: true}));
 r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_DLL0 (24, {left: "D", right: "X", rs: 0.07, draw_r: true}));
-r . scales . push (new scale_LL1_down (24, {left: "LL1"}))
-r . scales . push (new scale_LL2_down (24, {left: "LL1"}))
-r . scales . push (new scale_LL3_down (24, {left: "LL1"}))
+r . scales . push (new scale_LL1_down (24, {left: "LL1"}));
+r . scales . push (new scale_LL2_down (24, {left: "LL2"}));
+r . scales . push (new scale_LL3_down (24, {left: "LL3"}));
 r . scales . push (new spacer (2));
 
 </script>
