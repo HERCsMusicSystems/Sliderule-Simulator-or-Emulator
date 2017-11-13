@@ -2059,7 +2059,8 @@ var Sliderules = function (options) {
   };
   this . synchroniseTarget = function (delta) {
     var esc = this . examine (scalv (delta, 1 / this . scale));
-    if (esc) this . synchronise (esc . rule, esc . delta);
+    //console . log (esc);
+    //if (esc) this . synchronise (esc . rule, esc . delta);
   };
   this . synchroniseMove = function (delta, position) {
     var esc = this . move (scalv (delta, 1 / this . scale), scalv (position, 1 / this . scale));

@@ -71,3 +71,43 @@ var dimm = function (intensity, colours) {
   }
   sliderules . requireRedraw = true;
 };
+
+var cursorTo = function (name, value) {
+  for (var sr in sliderules . sliderules) {
+    var sliderule = sliderules . sliderules [sr];
+    if (! sliderule . inactive) {
+      for (var r in sliderule . rules) {
+        var rule = sliderule . rules [r];
+        for (var s in rule . scales) {
+          var scale = rule . scales [s];
+          if (scale . left == name) {
+            var location = scale . location (value);
+            sliderule . cursor_target = location;
+            return;
+          }
+        }
+      }
+    }
+  }
+};
+
+var slideTo = function (name, value) {
+  for (var sr in sliderules . sliderules) {
+    var sliderule = sliderules . sliderules [sr];
+    if (! sliderule . inactive) {
+      for (var r in sliderule . rules) {
+        var rule = sliderule . rules [r];
+        if (rule . stator != 0) {
+          for (var s in rule . scales) {
+            var scale = rule . scales [s];
+            if (scale . left == name) {
+              var location = scale . location (value);
+              rule . target = - location + sliderule . cursor_target;
+              return;
+            }
+          }
+        }
+      }
+    }
+  }
+};
