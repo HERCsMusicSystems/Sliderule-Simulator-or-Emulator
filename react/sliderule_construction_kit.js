@@ -1962,9 +1962,9 @@ var Sliderule = function (length, options) {
           if (y + hh >= this . cursors [esc] . from && y + hh <= this . cursors [esc] . to &&
           	((this . extra_cursor_markings && ! this . cursors [esc] . main) || (this . cursor_markings && this . cursors [esc] . main))) {
             ctx . fillStyle = this . markings_background;
-            description = this . rules [ind] . scales [sub] . value (this . cursor_position - this . rules [ind] . shift + offset);
+            if (this . rules [ind] . scales [sub] . dimm) description = null;
+            else description = this . rules [ind] . scales [sub] . display (this . cursor_position - this . rules [ind] . shift + offset, this . precision);
             if (description !== null) {
-              description = description . toFixed (this . precision);
               measure = ctx . measureText (description);
               ctx . textAlign = this . cursors [esc] . marking_align;
               if (this . cursors [esc] . marking_align === 'left') {
