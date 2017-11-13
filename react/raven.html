@@ -139,6 +139,17 @@ r . scales . push (new scale_LL2_down (24, {left: "LL2"}));
 r . scales . push (new scale_LL3_down (24, {left: "LL3"}));
 r . scales . push (new spacer (2));
 
+var training = function () {
+  sequencer ([
+    {action: function () {isolate (["A", "B"]); changeMarkings ('hairline', true);}, delay: 1500},
+    {action: function () {alert ('Slide cursor to 2 on "A"'); cursorTo ("A", 2);}, delay: 1500},
+    {action: function () {alert ('Align 1 on "B" with the cursor'); slideTo ("B", 1);}, delay: 1500},
+    {action: function () {alert ('Slide cursor to 3 on "B"'); cursorTo ("B", 3);}, delay: 1500},
+    {action: function () {alert ('Now read "6" on the "A" scale');}, delay: 1500},
+    {action: function () {isolate (); cursorTo ("A", 1); slideTo ("B", 1);}, delay: 2000}
+  ]);
+};
+
 </script>
 
 <script src="sliderule_application.js"></script>

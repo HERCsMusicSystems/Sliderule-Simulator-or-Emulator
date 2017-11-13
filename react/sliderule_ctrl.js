@@ -82,7 +82,7 @@ var cursorTo = function (name, value) {
           var scale = rule . scales [s];
           if (scale . left == name) {
             var location = scale . location (value);
-            sliderule . cursor_target = location;
+            sliderule . cursor_target = location + rule . target;
             return;
           }
         }
@@ -110,4 +110,13 @@ var slideTo = function (name, value) {
       }
     }
   }
+};
+
+var sequencer = function (steps, index) {
+  if (index == undefined) {setTimeout (function () {sequencer (steps, 0);}, steps [0] . delay); return;}
+  if (index >= steps . length) return;
+  steps [index] . action ();
+  index += 1;
+  if (index >= steps . length) return;
+  setTimeout (function () {sequencer (steps, index);}, steps [index] . delay);
 };
