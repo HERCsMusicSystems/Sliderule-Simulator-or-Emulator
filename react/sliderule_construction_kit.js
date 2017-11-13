@@ -1269,6 +1269,8 @@ var RuleBars = function (shift, direction, top, bottom, bars, step, width, colou
   }
 };
 
+var track = [];
+
 var Rule = function (options) {
   this . stator = 0;
   this . left_margin = 0.2; this . right_margin = 0.2;
@@ -1326,7 +1328,10 @@ var Rule = function (options) {
     var value;
     for (var ind in this . scales) {
       value = this . scales [ind] . examine (position);
-      if (value !== null) return value;
+      if (value !== null) {
+        track . push ({scale: this . scales [ind] . left, location: value, value: this . scales [ind] . value (value)});
+        return value;
+      }
       position = subv (position, {x: 0, y: this . scales [ind] . height});
     }
     return null;
@@ -1998,6 +2003,7 @@ var Sliderule = function (length, options) {
           if (target > 1 + this . cursor_limit_right) target = 1 + this . cursor_limit_right;
           delta = target - this . cursor_target;
           this . cursor_target = target;
+          track [track . length - 1] . source = 'cursor';
           return {rule: this, target: target, delta: delta, tick: delta * this . length};
         } else {
           target = - value + this . cursor_target;
@@ -2005,6 +2011,7 @@ var Sliderule = function (length, options) {
           if (target > 1 + this . right_margin) target = 1 + this . right_margin;
           delta = target - this . rules [ind] . target;
           this . rules [ind] . target = target;
+          track [track . length - 1] . source = 'slide';
           return {rule: this . rules [ind], target: target, delta: delta, tick: delta * this . length};
         }
         return true;
