@@ -40,6 +40,10 @@
   <input type = radio name = fold onchange = "javascript: changeFold ('360');" value = 360 />360
   <input type = radio name = fold onchange = "javascript: changeFold ('x/log(e)');" value = "x/log(e)" />x/log(e)
   <input type = radio name = fold onchange = "javascript: changeFold ('x*log(e)');" value = "x*log(e)" />x&#x00b7;log(e)
+  <br/>
+  <select id = lessons />
+  <input type = button id = play value = Play onclick = "javascript: playLesson ();" />&nbsp;&nbsp;&nbsp;
+  <font color = red ><span id = info /></font>
 </div>
 <div id="root"></div>
 
@@ -52,6 +56,17 @@
 <script src="sliderule_ctrl.js"></script>
 
 <script>
+
+var message = function (info) {
+  if (info == "") {document . getElementById ('info') . innerHTML = ""; return;}
+  document . getElementById ('info') . innerHTML += "&nbsp;&nbsp;" + info; alert (info);
+};
+var playLesson = function () {
+  document . getElementById ('info') . innerHTML = "";
+  var lesson = multiplicationLessons [document . getElementById ('lessons') . value];
+  if (lesson == null) {alert ("Lesson not found."); return;}
+  sequencer (lesson (message));
+};
 
 var changeFold = function (fold) {
   for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . inactive = true;
@@ -120,7 +135,7 @@ s . cursors . push (new Cursor (Hairline360, 74, 122, 'red'));
 var r = new Rule (); s . rules . push (r);
 r . markings . push (new Engraving ('RAVEN', '16px arial', 'left', 'red', 0, 20));
 r . markings . push (new Engraving ('Made in Australia', '12px arial', 'right', 'black', 1, 16));
-r . scales . push (new spacer (24));
+r . scales . push (new spacer (26));
 r . scales . push (new scale_LL03 (24, {left: "LL03"}));
 r . scales . push (new scale_LL02 (24, {left: "LL02"}));
 r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.07, indices: ['>>1<<']}));
@@ -129,7 +144,7 @@ r . markings . push (new RuleBars (-0.194, 1, 4, 96, 9, 6, 4, 'tan'));
 r . markings . push (new RuleBars (1.194, -1, 4, 96, 9, 6, 4, 'tan'));
 r . scales . push (new scale_DF (24, {left: "CF", right: "\u03c0X", rs: 0.07, indices: ['>>1<<'], draw_r: true, draw_q: true}));
 r . scales . push (new scale_CIF (24, {left: "CIF", right: "10/\u03c0X", rs: 0.07, marking_colour: 'red', indices: ['>>1<<']}));
-r . scales . push (new spacer (4));
+r . scales . push (new spacer (2));
 r . scales . push (new scale_DI (24, {left: "CI", right: "10/X", rs: 0.07, marking_colour: 'red'}));
 r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, draw_r: true, draw_q: true}));
 r = new Rule (); s . rules . push (r);
@@ -153,6 +168,8 @@ var training = function () {
 </script>
 
 <script src="sliderule_application.js"></script>
+
+<script src="sliderule_tutorial_multiplications.js"></script>
 
 <script>
 changeMarkings ('stator', document . getElementById ('on_side') . checked);

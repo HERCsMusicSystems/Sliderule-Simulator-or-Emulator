@@ -72,6 +72,32 @@ var dimm = function (intensity, colours) {
   sliderules . requireRedraw = true;
 };
 
+var hasScale = function (sliderule, name) {
+  for (var rule in sliderule . rules) {
+    for (var scale in sliderule . rules [rule] . scales) {
+      if (sliderule . rules [rule] . scales [scale] . left == name) return true;
+    }
+  }
+  return false;
+};
+
+var hasScales = function (sliderule, names) {
+  for (var ind in names) {if (! hasScale (sliderule, names [ind])) return false;}
+  return true;
+};
+
+var ensureSide = function (names) {
+  var ind;
+  for (ind in sliderules . sliderules) sliderules . sliderules [ind] . inactive = true;
+  for (ind in sliderules . sliderules) {
+    if (hasScales (sliderules . sliderules [ind], names)) {
+      sliderules . sliderules [ind] . inactive = false;
+      sliderules . requireRedraw = true;
+      return;
+    }
+  }
+};
+
 var cursorTo = function (name, value) {
   for (var sr in sliderules . sliderules) {
     var sliderule = sliderules . sliderules [sr];

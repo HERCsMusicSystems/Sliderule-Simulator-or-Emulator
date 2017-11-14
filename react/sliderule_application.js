@@ -134,7 +134,7 @@ var SlideruleApplication = React . createClass ({
   draw: function () {
     var width = window . innerWidth; var height = window . innerHeight;
     var bound = this . refs . sliderule . getBoundingClientRect ();
-    var newState = {width: width - bound . left * 4, height: height - bound . top * 4};
+    var newState = {width: width - bound . left * 4, height: height - bound . top * 1.5};
     if (this . state . width !== newState . width || this . state . height !== newState . height) sliderules . requireRedraw = true;
   	if (sliderules . noChange ()) return;
     this . setState (newState);

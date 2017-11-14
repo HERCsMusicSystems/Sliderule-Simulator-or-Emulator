@@ -20,6 +20,8 @@
 // THE SOFTWARE.                                                                 //
 ///////////////////////////////////////////////////////////////////////////////////
 
+var rndlist = function (list) {return list [Math . floor (Math . random () * list . length)];};
+
 var roundRect = function (ctx, left1, left2, top, right1, right2, bottom, radius) {
   var atan = Math . atan2 (left1 - left2, bottom - top - radius - radius);
   var btan = Math . atan2 (right1 - right2, bottom - top - radius - radius);
