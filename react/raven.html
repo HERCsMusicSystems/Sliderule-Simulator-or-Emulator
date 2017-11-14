@@ -43,7 +43,10 @@
   <br/>
   <select id = lessons />
   <input type = button id = play value = Play onclick = "javascript: playLesson ();" />&nbsp;&nbsp;&nbsp;
-  <font color = red ><span id = info /></font>
+  <input type = button id = clear_instructions onclick = "javascript: document . getElementById ('info') . innerHTML = '';" value = "Clear instructions." />
+  <div style = "display: block; position: fixed; background-color: white; border-color: black; border-style: solid; border-width: 1px;">
+    <font color = red ><span id = info /></font>
+  </div>
 </div>
 <div id="root"></div>
 
@@ -59,7 +62,7 @@
 
 var message = function (info) {
   if (info == "") {document . getElementById ('info') . innerHTML = ""; return;}
-  document . getElementById ('info') . innerHTML += "&nbsp;&nbsp;" + info; alert (info);
+  document . getElementById ('info') . innerHTML += info + "<br />";// alert (info);
 };
 var playLesson = function () {
   document . getElementById ('info') . innerHTML = "";

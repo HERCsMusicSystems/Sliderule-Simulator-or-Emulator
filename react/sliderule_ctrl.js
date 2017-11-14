@@ -107,8 +107,8 @@ var cursorTo = function (name, value) {
         for (var s in rule . scales) {
           var scale = rule . scales [s];
           if (scale . left == name) {
-            var location = scale . location (value);
-            sliderule . cursor_target = location + rule . target;
+            var target = scale . location (value) + rule . target;
+            for (var tss in sliderules . sliderules) sliderules . sliderules [tss] . cursor_target = target;
             return;
           }
         }
@@ -127,8 +127,12 @@ var slideTo = function (name, value) {
           for (var s in rule . scales) {
             var scale = rule . scales [s];
             if (scale . left == name) {
-              var location = scale . location (value);
-              rule . target = - location + sliderule . cursor_target;
+              var target = sliderule . cursor_target - scale . location (value);
+              for (var tss in sliderules . sliderules) {
+                for (var tr in sliderules . sliderules [tss] . rules) {
+                  if (sliderules . sliderules [tss] . rules [tr] . stator != 0) sliderules . sliderules [tss] . rules [tr] . target = target;
+                }
+              }
               return;
             }
           }
