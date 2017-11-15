@@ -34,12 +34,6 @@
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
 	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
 	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fold at:
-  <input type = radio name = fold onchange = "javascript: changeFold ('pi');" value = pi checked = true />&#x03c0;
-  <input type = radio name = fold onchange = "javascript: changeFold ('sqrt10');" value = sqrt10 />&#x221a;10
-  <input type = radio name = fold onchange = "javascript: changeFold ('360');" value = 360 />360
-  <input type = radio name = fold onchange = "javascript: changeFold ('x/log(e)');" value = "x/log(e)" />x/log(e)
-  <input type = radio name = fold onchange = "javascript: changeFold ('x*log(e)');" value = "x*log(e)" />x&#x00b7;log(e)
   <br/>
   <select id = lessons />
   <input type = button id = play value = Play onclick = "javascript: playLesson ();" />&nbsp;&nbsp;&nbsp;
@@ -71,18 +65,6 @@ var playLesson = function () {
   sequencer (lesson (message));
 };
 
-var changeFold = function (fold) {
-  for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . inactive = true;
-  switch (fold) {
-  case 'pi': sliderules . sliderules [0] . inactive = false; break;
-  case 'sqrt10': sliderules . sliderules [1] . inactive = false; break;
-  case '360': sliderules . sliderules [2] . inactive = false; break;
-  case 'x/log(e)': sliderules . sliderules [3] . inactive = false; break;
-  case 'x*log(e)': sliderules . sliderules [4] . inactive = false; break;
-  default: break;
-  }
-  sliderules . requireRedraw = true;
-};
 
 var outback = new Image (); outback . src = 'outback.jpg';
 var sliderules = new Sliderules ({background: outback, background_translation: {x: 0, y: -360}, background_colour: 'black'});
@@ -116,7 +98,7 @@ r . scales . push (new spacer (2));
 r . scales . push (new scale_TCTdec_down (24, {left: "T", right: "tan X", rs: 0.07}));
 r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, draw_st_corrections: true, draw_r: true}));
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_DLL0 (24, {left: "D", right: "X", rs: 0.07, draw_r: true}));
+r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.07, draw_r: true}));
 r . scales . push (new scale_M (24, {left: "L"}));
 r . scales . push (new scale_LL01_down (24, {left: "LL01"}));
 r . scales . push (new scale_LL00_down (24, {left: "LL00"}));
@@ -181,8 +163,6 @@ changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
 changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
-var fold = document . getElementsByName ('fold');
-//for (var ind in fold) if (fold [ind] . checked) changeFold (fold [ind] . value);
 </script>
 
 </body></html>

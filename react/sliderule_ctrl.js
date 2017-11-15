@@ -1,10 +1,24 @@
 
 var cookies = function () {
 	var c = document . cookie . split (';');
+  if (c == "") return {};
 	var ret = {};
 	var sub;
 	for (var ind in c) {sub = c [ind] . split ('='); ret [sub [0] . trim ()] = sub [1];}
 	return ret;
+};
+
+var increaseCookieResult = function (cookie, delta) {
+  if (delta == undefined) delta = 1;
+  var c = cookies ();
+  if (c [cookie] == undefined) {document . cookie = cookie + " = " + delta + "; max-age=33554432"; return;}
+  document . cookie = cookie + " = " + (Number (c [cookie]) + delta) + "; max-age=33554432";
+};
+
+var removeCookie = function (cookie) {document . cookie = cookie + "=;max-age=0";}
+var removeAllCookies = function () {
+  var c = cookies ();
+  for (var ind in c) removeCookie (ind);
 };
 
 var isolate = function (scales) {
@@ -141,6 +155,29 @@ var slideTo = function (name, value) {
     }
   }
 };
+
+var readValue = function (name) {
+  for (var sr in sliderules . sliderules) {
+    var sliderule = sliderules . sliderules [sr];
+    if (! sliderule . inactive) {
+      for (var r in sliderule . rules) {
+        var rule = sliderule . rules [r];
+        for (var s in rule . scales) {
+          var scale = rule . scales [s];
+          if (scale . left == name) {
+            return scale . value (sliderule . cursor_target - rule . target);
+          }
+        }
+      }
+    }
+  }
+  return null;
+};
+
+var checkValue = function (name, value, tolerance) {
+  if (tolerance == undefined) tolerance = 2;
+  return Number (Math . abs (value - readValue (name))) . toFixed (tolerance) == 0;
+}
 
 var sequencer = function (steps, index) {
   if (index == undefined) {setTimeout (function () {sequencer (steps, 0);}, steps [0] . delay); return;}

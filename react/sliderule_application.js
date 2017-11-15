@@ -67,6 +67,7 @@ var copyright_colours = ['blue', 'gray', 'yellow', 'lavender', 'green', 'olive',
 var copyright_colour = copyright_colours [Math . floor (Math . random () * copyright_colours . length)];
 
 var SlideruleApplication = React . createClass ({
+  checkRequired: false,
   dragging: false,
   mousePosition: {x: 0, y: 0},
   onContext: function (event) {event . preventDefault ();},
@@ -136,7 +137,15 @@ var SlideruleApplication = React . createClass ({
     var bound = this . refs . sliderule . getBoundingClientRect ();
     var newState = {width: width - bound . left * 4, height: height - bound . top * 1.5};
     if (this . state . width !== newState . width || this . state . height !== newState . height) sliderules . requireRedraw = true;
-  	if (sliderules . noChange ()) return;
+  	if (sliderules . noChange ()) {
+      if (this . checkRequired) {
+        if (sliderules . objective)
+          if (sliderules . objective ()) delete sliderules . objective;
+        this . checkRequired = false;
+      }
+      return;
+    }
+    this . checkRequired = true;
     this . setState (newState);
     var ctx = this . refs . sliderule . getContext ('2d');
     ctx . save ();
