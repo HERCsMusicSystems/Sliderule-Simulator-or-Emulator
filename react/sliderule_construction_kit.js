@@ -1283,6 +1283,7 @@ var Rule = function (options) {
   this . border_colour = 'black';
   this . scales = [];
   this . markings = [];
+  this . backMarkings = [];
   this . move = function (delta, length) {
     delta *= this . rule_motion; delta /= length;
     this . target += delta;
@@ -1306,14 +1307,16 @@ var Rule = function (options) {
   this . draw = function (ctx, length, sliderule) {
     this . animate ();
     ctx . save ();
-    ctx . fillStyle = typeof (this . rule_colour) == 'object' ? ctx . createPattern (this . rule_colour, 'repeat') : this . rule_colour;
-    ctx . lineWidth = 1;
     ctx . translate (length * (this . shift - this . left_margin), 0);
-    ctx . beginPath ();
-    	roundRect (ctx, 0, length * (this . left_margin - this . alt_left_margin), 0, (1 + this . left_margin + this . right_margin) * length, (1 + this . left_margin + this . alt_right_margin) * length, this . ruleHeight (), this . rounding);
-    	ctx . fill (); ctx . strokeStyle = this . border_colour; ctx . stroke ();
-    ctx . fillStyle = 'black';
+    if (this . rule_colour) {
+		ctx . fillStyle = typeof (this . rule_colour) == 'object' ? ctx . createPattern (this . rule_colour, 'repeat') : this . rule_colour;
+		ctx . lineWidth = 1;
+		ctx . beginPath ();
+			roundRect (ctx, 0, length * (this . left_margin - this . alt_left_margin), 0, (1 + this . left_margin + this . right_margin) * length, (1 + this . left_margin + this . alt_right_margin) * length, this . ruleHeight (), this . rounding);
+			ctx . fill (); ctx . strokeStyle = this . border_colour; ctx . stroke ();
+    }
     ctx . translate (this . left_margin * length, 0);
+    for (var bm in this . backMarkings) {ctx . save (); this . backMarkings [bm] . draw (ctx, sliderule); ctx . restore ();}
     var scale;
     for (var ind in this . scales) {
       scale = this . scales [ind];
