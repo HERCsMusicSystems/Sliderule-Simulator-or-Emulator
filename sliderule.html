@@ -72,7 +72,7 @@ for a more civilized time ...<br/>
       </li>
       <li>
       	<b>HERCs</b>
-      	<ul>
+      	<ul id=hercs>
       	  <li><a href="react/fold_study.html" >Fold Study</a></li>
       	</ul>
       </li>
@@ -152,6 +152,7 @@ The slide rules above are very close replicas of existing models.
 
 <script src="react/faber_castell_2_83n.js"></script>
 <script src="react/sliderule_application_fixed.js"></script>
+<script src="react/sliderule_ctrl.js"></script>
 
 <script>
 changeMarkings ('stator', document . getElementById ('on_side') . checked);
@@ -163,7 +164,23 @@ changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
 </script>
 
 
+<script>
 
+var ck = cookies ();
+var hercs = document . getElementById ('hercs');
+var appendLi = function (ul, name) {
+  var li = document . createElement ('li');
+  li . innerHTML = "<a href=Hogwarts_" + name + ".html>" + name + "</a>";
+  ul . append (li);
+};
+if (Number (ck ['Folded-scale multiplication (C/D/CF/DF)']) > 0 && hercs) {
+  appendLi (hercs, "Gryffindor");
+  appendLi (hercs, "Ravenclaw");
+  appendLi (hercs, "Hufflepuff");
+  appendLi (hercs, "Slytherin");
+}
+
+</script>
 
 
 
