@@ -2,7 +2,7 @@
 <div align=center>
 <h1>SLIDERULES:</h1>
 <div align=left style="display: inline-block;">
-<li><b>Aristo</b><ul>
+<li><b>Aristo</b><ul id = aristo>
 <li><a href=aristo_0901_junior.html>Aristo 0901 Junior</a></li>
 <li><a href=aristo_0906_bischolar.html>Aristo 0906 Bischolar</a></li>
 <li><a href=aristo_0908_trilog.html>Aristo 0908 Trilog</a></li>
@@ -22,7 +22,7 @@
 </ul></li>
 <li><b>Gilson</b><ul><li><a href=gilson_atlas.html>Gilson Atlas</a></li></ul></li>
 <li><b>Hemmi</b><ul><li><a href=hemmi_257_chemical.html>257 Chemical</a></li></ul></li>
-<li><b>HERCs</b><ul>
+<li><b>HERCs</b><ul id = hercs>
 <li><a href=fold_study.html>Fold Study</a></li>
 <li><a href=raven.html>Raven</a></li>
 </ul></li>
@@ -39,3 +39,16 @@
 </ul></li>
 </div>
 </div>
+
+<script>
+
+var ck = cookies ();
+var hercs = document . getElementById ('hercs');
+if (Number (ck ['Folded-scale multiplication (C/D/CF/DF)']) > 0 && hercs) {
+  var li;
+  li = document . createElement ('li');
+  li . innerHTML = "<a href=Hogwarts_Gryffindor.html>Gryffindor</a>";
+  hercs . append (li);
+}
+
+</script>
