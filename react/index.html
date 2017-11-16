@@ -44,11 +44,16 @@
 
 var ck = cookies ();
 var hercs = document . getElementById ('hercs');
+var appendLi = function (ul, name) {
+  var li = document . createElement ('li');
+  li . innerHTML = "<a href=Hogwarts_" + name + ".html>" + name + "</a>";
+  ul . append (li);
+};
 if (Number (ck ['Folded-scale multiplication (C/D/CF/DF)']) > 0 && hercs) {
-  var li;
-  li = document . createElement ('li');
-  li . innerHTML = "<a href=Hogwarts_Gryffindor.html>Gryffindor</a>";
-  hercs . append (li);
+  appendLi (hercs, "Gryffindor");
+  appendLi (hercs, "Ravenclaw");
+  appendLi (hercs, "Hufflepuff");
+  appendLi (hercs, "Slytherin");
 }
 
 </script>
