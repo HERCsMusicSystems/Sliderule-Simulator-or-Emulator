@@ -1836,6 +1836,7 @@ var Sliderule = function (length, options) {
   this . static_markings_shift = 0.01; this . static_markings_align = 'left';
   this . cursor_markings_shift = 0.01; this . cursor_markings_align = 'left';
   this . cursor_limit_left = 0.2; this . cursor_limit_right = 0.2;
+  this . index_area = 0.01;
   this . height = function () {var h = 0; for (var ind in this . rules) h += this . rules [ind] . ruleHeight (); return h;};
   this . moveCursor = function (delta) {
     delta *= this . cursor_motion; delta /= this . length;
@@ -1997,7 +1998,8 @@ var Sliderule = function (length, options) {
   this . examine = function (position) {
     if (position . y < 0 || position . y > this .height ()) return false;
     position = subv (position, {x: this . length * this . left_margin, y: 0});
-    var is_cursor = position . x / this . length - this . cursor_position;
+    var adjusted_x_position = position . x / this . length;
+    var is_cursor = adjusted_x_position - this . cursor_position;
     is_cursor = (is_cursor < this . cursor_right_extension && is_cursor > - this . cursor_left_extension);
     var value, target, delta;
     for (var ind in this . rules) {
@@ -2012,7 +2014,9 @@ var Sliderule = function (length, options) {
           track [track . length - 1] . source = 'cursor';
           return {rule: this, target: target, delta: delta, tick: delta * this . length};
         } else {
-          target = - value + this . cursor_target;
+          if (Math . abs (adjusted_x_position) <= this . index_area) target = - value;
+          else if (Math . abs (adjusted_x_position - 1) <= this . index_area) target = 1 - value;
+          else target = this . cursor_target - value;
           if (target < -1 - this . left_margin) target = -1 - this . left_margin;
           if (target > 1 + this . right_margin) target = 1 + this . right_margin;
           delta = target - this . rules [ind] . target;

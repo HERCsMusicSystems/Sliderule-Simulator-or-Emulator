@@ -100,8 +100,8 @@ r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, draw_st_co
 r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.07, draw_r: true}));
 r . scales . push (new scale_M (24, {left: "L"}));
-r . scales . push (new scale_LL01_down (24, {left: "LL01"}));
-r . scales . push (new scale_LL00_down (24, {left: "LL00"}));
+r . scales . push (new scale_LL01_down (24, {left: "LL01", marking_colour: 'red'}));
+r . scales . push (new scale_LL00_down (24, {left: "LL00", marking_colour: 'red'}));
 r . scales . push (new spacer (2));
 
 
@@ -121,8 +121,8 @@ var r = new Rule (); s . rules . push (r);
 r . markings . push (new Engraving ('RAVEN', '16px arial', 'left', 'red', 0, 20));
 r . markings . push (new Engraving ('Made in Australia', '12px arial', 'right', 'black', 1, 16));
 r . scales . push (new spacer (26));
-r . scales . push (new scale_LL03 (24, {left: "LL03"}));
-r . scales . push (new scale_LL02 (24, {left: "LL02"}));
+r . scales . push (new scale_LL03 (24, {left: "LL03", marking_colour: 'red'}));
+r . scales . push (new scale_LL02 (24, {left: "LL02", marking_colour: 'red'}));
 r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.07, indices: ['>>1<<']}));
 r = new Rule ({stator: 1}); s . rules . push (r);
 r . markings . push (new RuleBars (-0.194, 1, 4, 96, 9, 6, 4, 'tan'));
