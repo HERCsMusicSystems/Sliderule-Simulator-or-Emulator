@@ -27,6 +27,14 @@
     <title>Gryffindor</title>
   </head>
 <body>
+<style>
+@font-face
+{
+font-family: snell;
+src: url('snellbt-regular.otf'),
+url('snellbt-regular.eot');
+}
+</style>
 <div>
 	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
@@ -52,18 +60,13 @@
 <script src="folded_scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
 
+<script src="sliderule_tutorial_multiplications.js"></script>
+<script src="sliderule_test_multiplications.js"></script>
+
+
 <script>
 
-var message = function (info) {
-  if (info == "") {document . getElementById ('info') . innerHTML = ""; return;}
-  document . getElementById ('info') . innerHTML += info + "<br />";// alert (info);
-};
-var playLesson = function () {
-  document . getElementById ('info') . innerHTML = "";
-  var lesson = multiplicationLessons [document . getElementById ('lessons') . value];
-  if (lesson == null) {alert ("Lesson not found."); return;}
-  sequencer (lesson (message));
-};
+readSlideruleLessons ();
 
 
 var Hogwarts = new Image (); Hogwarts . src = 'Hogwarts.jpg';
@@ -82,26 +85,26 @@ s . cursorBraces . push (new Screw (0.07, 303, 6, Math . random () * Math . PI, 
 s . cursors . push (new Cursor (HairlinePS, 74, 122, 'red'));
 s . cursors . push (new Cursor (HairlineS, 74, 122, 'red'));
 s . cursors . push (new Cursor (HairlineD, 172, 220, 'red', {marking_align: 'right', marking_shift: -0.01}));
-var r = new Rule (); s . rules . push (r);
-r . markings . push (new Engraving ('Gryffindor', '16px arial', 'left', 'red', 0, 20));
-r . markings . push (new Engraving ('Made in Hogwarts', '12px arial', 'right', 'black', 1, 16));
+var r = new Rule ({rule_colour: '#00000070'}); s . rules . push (r);
+r . markings . push (new Engraving ('Gryffindor', '32px snell', 'left', 'gold', 0.03, 26));
+r . markings . push (new Engraving ('Made in Australia', '18px snell', 'right', 'gold', 1, 16));
 r . scales . push (new spacer (26));
-r . scales . push (new scale_P (24, {left: "P"}));
-r . scales . push (new scale_K (24, {left: "K", right: "X\u00b3", rs: 0.07, indices: ['1', '10', '100', '1000']}));
-r . scales . push (new scale_A (24, {left: "A", right: "X\u00b2", rs: 0.07, indices: ['1', '10', '100']}));
-r = new Rule ({stator: 1}); s . rules . push (r);
-r . markings . push (new RuleBars (-0.194, 1, 4, 96, 9, 6, 4, 'tan'));
-r . markings . push (new RuleBars (1.194, -1, 4, 96, 9, 6, 4, 'tan'));
-r . scales . push (new scale_B (24, {left: "B", right: "X\u00b2", rs: 0.07, indices: ['1', '10', '100']}));
-r . scales . push (new scale_SCdec (24, {left: "S", right: "sin X", rs: 0.07}));
+r . scales . push (new scale_P (24, {left: "P", right: "\u221a1-x\u00b2", rs: 0.07, colour: 'gold'}));
+r . scales . push (new scale_K (24, {left: "K", right: "X\u00b3", rs: 0.07, indices: ['1', '10', '100', '1000'], colour: 'gold'}));
+r . scales . push (new scale_A (24, {left: "A", right: "X\u00b2", rs: 0.07, indices: ['1', '10', '100'], colour: 'gold'}));
+r = new Rule ({stator: 1, left_margin: 0.21, right_margin: 0.21, rule_colour: '#00000070'}); s . rules . push (r);
+r . markings . push (new RuleBars (-0.204, 1, 4, 96, 9, 6, 4, 'tan'));
+r . markings . push (new RuleBars (1.204, -1, 4, 96, 9, 6, 4, 'tan'));
+r . scales . push (new scale_B (24, {left: "B", right: "X\u00b2", rs: 0.07, indices: ['1', '10', '100'], colour: 'gold'}));
+r . scales . push (new scale_SCdec (24, {left: "S", right: "sin X", rs: 0.07, colour: 'gold'}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_TCTdec_down (24, {left: "T", right: "tan X", rs: 0.07}));
-r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, draw_st_corrections: true, draw_r: true}));
-r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.07, draw_r: true}));
-r . scales . push (new scale_M (24, {left: "L"}));
-r . scales . push (new scale_LL01_down (24, {left: "LL01"}));
-r . scales . push (new scale_LL00_down (24, {left: "LL00"}));
+r . scales . push (new scale_TCTdec_down (24, {left: "T", right: "tan X", rs: 0.07, colour: 'gold'}));
+r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, draw_st_corrections: true, draw_r: true, colour: 'gold'}));
+r = new Rule ({rule_colour: '#00000070'}); s . rules . push (r);
+r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.07, draw_r: true, colour: 'gold'}));
+r . scales . push (new scale_M (24, {left: "L", right: "log X", rs: 0.07, colour: 'gold'}));
+r . scales . push (new scale_LL01_down (24, {left: "LL01", marking_colour: 'red', right: "e^-0.01x", rs: 0.02, colour: 'gold'}));
+r . scales . push (new scale_LL00_down (24, {left: "LL00", marking_colour: 'red', right: "e^-0.001x", rs: 0.02, colour: 'gold'}));
 r . scales . push (new spacer (2));
 
 
@@ -118,25 +121,26 @@ s . cursorBraces . push (new Screw (-0.07, 303, 6, Math . random () * Math . PI,
 s . cursorBraces . push (new Screw (0.07, 303, 6, Math . random () * Math . PI, 'gold', 'silver'));
 s . cursors . push (new Cursor (Hairline360, 74, 122, 'red'));
 var r = new Rule (); s . rules . push (r);
-r . markings . push (new Engraving ('Gryffindor', '16px arial', 'left', 'red', 0, 20));
-r . markings . push (new Engraving ('Made in Hogwarts', '12px arial', 'right', 'black', 1, 16));
+r . markings . push (new Engraving ('RAVEN', '16px arial', 'left', 'red', 0, 20));
+r . markings . push (new Engraving ('Made in Australia', '12px arial', 'right', 'black', 1, 16));
 r . scales . push (new spacer (26));
-r . scales . push (new scale_LL03 (24, {left: "LL03"}));
-r . scales . push (new scale_LL02 (24, {left: "LL02"}));
+r . scales . push (new scale_LL03 (24, {left: "LL03", marking_colour: 'red', right: "e^-x", rs: 0.02}));
+r . scales . push (new scale_LL02 (24, {left: "LL02", marking_colour: 'red', right: "e^-0.1x", rs: 0.02}));
 r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.07, indices: ['>>1<<']}));
-r = new Rule ({stator: 1}); s . rules . push (r);
-r . markings . push (new RuleBars (-0.194, 1, 4, 96, 9, 6, 4, 'tan'));
-r . markings . push (new RuleBars (1.194, -1, 4, 96, 9, 6, 4, 'tan'));
+r = new Rule ({stator: 1, left_margin: 0.21, right_margin: 0.21}); s . rules . push (r);
+r . markings . push (new RuleBars (-0.204, 1, 4, 96, 9, 6, 4, 'tan'));
+r . markings . push (new RuleBars (1.204, -1, 4, 96, 9, 6, 4, 'tan'));
 r . scales . push (new scale_DF (24, {left: "CF", right: "\u03c0X", rs: 0.07, indices: ['>>1<<'], draw_r: true, draw_q: true}));
 r . scales . push (new scale_CIF (24, {left: "CIF", right: "10/\u03c0X", rs: 0.07, marking_colour: 'red', indices: ['>>1<<']}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_DI (24, {left: "CI", right: "10/X", rs: 0.07, marking_colour: 'red'}));
 r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, draw_r: true, draw_q: true}));
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_DLL0 (24, {left: "D", right: "X", rs: 0.07, draw_r: true}));
-r . scales . push (new scale_LL1_down (24, {left: "LL1"}));
-r . scales . push (new scale_LL2_down (24, {left: "LL2"}));
-r . scales . push (new scale_LL3_down (24, {left: "LL3"}));
+r . scales . push (new scale_DLL0 (24, {left: "D", right: "X", rs: 0.07, centre: "e^0.001x", cs: 1.02, ca: 'left', cc: 'red', draw_r: true}));
+r . markings . push (new Engraving ("LL", 'italic 12px arial', 'left', 'red', -0.08, 18));
+r . scales . push (new scale_LL1_down (24, {left: "LL1", right: "e^0.01x", rs: 0.02}));
+r . scales . push (new scale_LL2_down (24, {left: "LL2", right: "e^0.1x", rs: 0.02}));
+r . scales . push (new scale_LL3_down (24, {left: "LL3", right: "e^x", rs: 0.02}));
 r . scales . push (new spacer (2));
 
 var training = function () {
@@ -153,8 +157,6 @@ var training = function () {
 </script>
 
 <script src="sliderule_application.js"></script>
-
-<script src="sliderule_tutorial_multiplications.js"></script>
 
 <script>
 changeMarkings ('stator', document . getElementById ('on_side') . checked);
