@@ -102,9 +102,5 @@ multiplicationTests ['Folded-scale multiplication test (C/D/CF/DF)'] = function 
   return null;
 };
 
-for (var ind in multiplicationTests) {
-  var option = document . createElement ('option');
-  option . text = ind;
-  document . getElementById ('lessons') . add (option);
-}
 slideruleLessons . push (multiplicationTests);
+

@@ -1,6 +1,4 @@
 
-var slideruleLessons = [];
-
 var cookies = function () {
 	var c = document . cookie . split (';');
   if (c == "") return {};
@@ -190,3 +188,33 @@ var sequencer = function (steps, index) {
   if (index >= steps . length) return;
   setTimeout (function () {sequencer (steps, index);}, steps [index] . delay);
 };
+
+var slideruleLessons = [];
+var readSlideruleLessons = function (id, lessons) {
+	if (id == undefined) id = 'lessons';
+	if (lessons == undefined) lessons = slideruleLessons;
+	for (var ind in lessons) {
+		for (var sub in lessons [ind]) {
+			var option = document . createElement ('option');
+			option . text = sub;
+			document . getElementById ('lessons') . add (option);
+		}
+	}
+};
+var lessonMessage = function (info) {
+	if (info == "") {document . getElementById ('info') . innerHTML = ""; return;}
+	document . getElementById ('info') . innerHTML += info + "<br />";
+};
+var playLesson = function (lessons, info) {
+	if (lessons == undefined) lessons = 'lessons';
+	if (info == undefined) info = 'info';
+	document . getElementById (info) . innerHTML = "";
+	var lesson_id = document . getElementById (lessons) . value;
+	for (var ind in slideruleLessons) {
+		var lesson = slideruleLessons [ind] [lesson_id];
+		if (lesson != null) {sequencer (lesson (lessonMessage)); return;}
+	}
+	alert ("Lesson not found.");
+};
+
+

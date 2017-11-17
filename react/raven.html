@@ -52,21 +52,13 @@
 <script src="folded_scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
 
+<script src="sliderule_tutorial_multiplications.js"></script>
+<script src="sliderule_test_multiplications.js"></script>
+
+
 <script>
 
-var message = function (info) {
-  if (info == "") {document . getElementById ('info') . innerHTML = ""; return;}
-  document . getElementById ('info') . innerHTML += info + "<br />";// alert (info);
-};
-var playLesson = function () {
-  document . getElementById ('info') . innerHTML = "";
-  var lesson_id = document . getElementById ('lessons') . value;
-  for (var ind in slideruleLessons) {
-    var lesson = slideruleLessons [ind] [lesson_id];
-    if (lesson != null) {sequencer (lesson (message)); return;}
-  }
-  alert ("Lesson not found.");
-};
+readSlideruleLessons ();
 
 
 var outback = new Image (); outback . src = 'outback.jpg';
@@ -156,9 +148,6 @@ var training = function () {
 </script>
 
 <script src="sliderule_application.js"></script>
-
-<script src="sliderule_tutorial_multiplications.js"></script>
-<script src="sliderule_test_multiplications.js"></script>
 
 <script>
 changeMarkings ('stator', document . getElementById ('on_side') . checked);

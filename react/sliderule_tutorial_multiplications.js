@@ -179,9 +179,5 @@ multiplicationLessons ['Folded-scale multiplication (C/D/CF/DF)'] = function (me
   ];
 };
 
-for (var ind in multiplicationLessons) {
-  var option = document . createElement ('option');
-  option . text = ind;
-  document . getElementById ('lessons') . add (option);
-}
 slideruleLessons . push (multiplicationLessons);
+
