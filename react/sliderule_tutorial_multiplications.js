@@ -1,7 +1,7 @@
 
 var multiplicationLessons = {};
 
-multiplicationLessons ['Simple Multiplication (A/B)'] = function (message) {
+multiplicationLessons ['Simple multiplication (A/B)'] = function (message) {
   var a = rndlist ([2, 3, 4, 5, 6, 7, 8, 9, 10]);
   var b = rndlist ([2, 3, 4, 5, 6, 7, 8, 9, 10]);
   return [
@@ -19,7 +19,7 @@ multiplicationLessons ['Simple Multiplication (A/B)'] = function (message) {
     sliderules . objective = function () {
       if (checkValue ("A", a * b) && checkValue ("B", b)) {
         message ("Mission accomplished!");
-        increaseCookieResult ('Simple Multiplication (A/B)');
+        increaseCookieResult ('lesson_ab');
         return true;
       }
       return false;};}, delay: 6000},
@@ -27,7 +27,7 @@ multiplicationLessons ['Simple Multiplication (A/B)'] = function (message) {
   ];
 };
 
-multiplicationLessons ['Simple Multiplication (C/D)'] = function (message) {
+multiplicationLessons ['Simple multiplication (C/D)'] = function (message) {
   var a = 9, b = 9;
   while (a * b > 10) {a = crnu (Math . floor (11 + Math . random () * 100) / 10); b = crnu (Math . floor (11 + Math . random () * 100) / 10);}
   return [
@@ -43,9 +43,9 @@ multiplicationLessons ['Simple Multiplication (C/D)'] = function (message) {
     {action: function () {message ("Read the result " + crnu (a * b) + " on the D scale.");}, delay: 4000},
     {action: function () {cursorTo ("D", 1); slideTo ("C", 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
-      if (checkValue ("D", a * b / 10) && checkValue ("C", b)) {
+      if (checkValue ("D", a * b) && checkValue ("C", b)) {
         message ("Mission accomplished!");
-        increaseCookieResult ('Simple Multiplication (C/D)');
+        increaseCookieResult ('lesson_cd');
         return true;
       }
       return false;};}, delay: 6000},
@@ -72,7 +72,7 @@ multiplicationLessons ['Wrap-around multiplication (C/D)'] = function (message) 
     sliderules . objective = function () {
       if (checkValue ("D", a * b / 10) && checkValue ("C", b)) {
         message ("Mission accomplished!");
-        increaseCookieResult ('Wrap-around multiplication (C/D)');
+        increaseCookieResult ('lesson_wrap_arround_cd');
         return true;
       }
       return false;};}, delay: 6000},
@@ -101,7 +101,7 @@ multiplicationLessons ['Folded-scale multiplication (CF/DF)'] = function (messag
     sliderules . objective = function () {
       if (checkValue ("DF", a * b) && checkValue ("CF", b)) {
         message ("Mission accomplished!");
-        increaseCookieResult ('Folded-scale multiplication (CF/DF)');
+        increaseCookieResult ('lesson_cfdf');
         return true;
       }
       return false;};}, delay: 6000},
@@ -141,7 +141,7 @@ multiplicationLessons ['Folded-scale all numbers multiplication (CF/DF)'] = func
     sliderules . objective = function () {
       if (checkValue ("DF", a * b) && checkValue ("CF", b)) {
         message ("Mission accomplished!");
-        increaseCookieResult ('Folded-scale all numbers multiplication (CF/DF)');
+        increaseCookieResult ('lesson_powered_cfdf');
         return true;
       }
       return false;};}, delay: 6000},
@@ -171,7 +171,7 @@ multiplicationLessons ['Folded-scale multiplication (C/D/CF/DF)'] = function (me
     sliderules . objective = function () {
       if (checkValue ("DF", a * b / 10) && checkValue ("CF", b / 10)) {
         message ("Mission accomplished!");
-        increaseCookieResult ('Folded-scale multiplication (C/D/CF/DF)');
+        increaseCookieResult ('lesson_cdcfdf');
         return true;
       }
       return false;};}, delay: 6000},

@@ -60,7 +60,9 @@ var message = function (info) {
 };
 var playLesson = function () {
   document . getElementById ('info') . innerHTML = "";
-  var lesson = multiplicationLessons [document . getElementById ('lessons') . value];
+  var lesson_id = document . getElementById ('lessons') . value;
+  var lesson = multiplicationLessons [lesson_id];
+  if (lesson == null) lesson = multiplicationTests [lesson_id];
   if (lesson == null) {alert ("Lesson not found."); return;}
   sequencer (lesson (message));
 };
@@ -155,6 +157,7 @@ var training = function () {
 <script src="sliderule_application.js"></script>
 
 <script src="sliderule_tutorial_multiplications.js"></script>
+<script src="sliderule_test_multiplications.js"></script>
 
 <script>
 changeMarkings ('stator', document . getElementById ('on_side') . checked);

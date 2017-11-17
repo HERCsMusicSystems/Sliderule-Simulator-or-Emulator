@@ -180,6 +180,7 @@ var checkValue = function (name, value, tolerance) {
 }
 
 var sequencer = function (steps, index) {
+  if (! steps) return;
   if (index == undefined) {setTimeout (function () {sequencer (steps, 0);}, steps [0] . delay); return;}
   if (index >= steps . length) return;
   steps [index] . action ();
