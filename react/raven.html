@@ -61,10 +61,11 @@ var message = function (info) {
 var playLesson = function () {
   document . getElementById ('info') . innerHTML = "";
   var lesson_id = document . getElementById ('lessons') . value;
-  var lesson = multiplicationLessons [lesson_id];
-  if (lesson == null) lesson = multiplicationTests [lesson_id];
-  if (lesson == null) {alert ("Lesson not found."); return;}
-  sequencer (lesson (message));
+  for (var ind in slideruleLessons) {
+    var lesson = slideruleLessons [ind] [lesson_id];
+    if (lesson != null) {sequencer (lesson (message)); return;}
+  }
+  alert ("Lesson not found.");
 };
 
 

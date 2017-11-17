@@ -107,4 +107,4 @@ for (var ind in multiplicationTests) {
   option . text = ind;
   document . getElementById ('lessons') . add (option);
 }
-
+slideruleLessons . push (multiplicationTests);

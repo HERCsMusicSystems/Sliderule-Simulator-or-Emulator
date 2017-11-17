@@ -184,3 +184,4 @@ for (var ind in multiplicationLessons) {
   option . text = ind;
   document . getElementById ('lessons') . add (option);
 }
+slideruleLessons . push (multiplicationLessons);

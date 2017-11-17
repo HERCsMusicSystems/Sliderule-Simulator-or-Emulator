@@ -1,4 +1,6 @@
 
+var slideruleLessons = [];
+
 var cookies = function () {
 	var c = document . cookie . split (';');
   if (c == "") return {};
