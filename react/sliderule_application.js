@@ -66,8 +66,6 @@ var copyright = "Emulator / Simulator Copyright \u00a9 2017 - " + new Date () . 
 var copyright_colours = ['blue', 'gray', 'yellow', 'lavender', 'green', 'olive', 'silver', 'tan', 'wheat', 'khaki'];
 var copyright_colour = copyright_colours [Math . floor (Math . random () * copyright_colours . length)];
 
-var fixedHeight = false;
-
 var SlideruleApplication = React . createClass ({
   checkRequired: false,
   dragging: false,
@@ -138,7 +136,7 @@ var SlideruleApplication = React . createClass ({
     var width = window . innerWidth; var height = window . innerHeight;
     var bound = this . refs . sliderule . getBoundingClientRect ();
     var newState = {width: width - bound . left * 4, height: height - bound . top * 1.5};
-    if (fixedHeight) newState . height = fixedHeight;
+    if (sliderules . fixedHeight) newState . height = sliderules . fixedHeight;
     if (this . state . width !== newState . width || this . state . height !== newState . height) sliderules . requireRedraw = true;
   	if (sliderules . noChange ()) {
       if (this . checkRequired) {
