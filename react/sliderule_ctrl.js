@@ -4,15 +4,46 @@ var cookies = function () {
   if (c == "") return {};
 	var ret = {};
 	var sub;
-	for (var ind in c) {sub = c [ind] . split ('='); ret [sub [0] . trim ()] = sub [1];}
+	for (var ind in c) {
+    sub = c [ind] . split ('=');
+    var value;
+    try {
+      value = JSON . parse (sub [1]);
+    } catch (e) {value = sub [1];}
+    ret [sub [0] . trim ()] = value;
+  }
 	return ret;
 };
 
-var increaseCookieResult = function (cookie, delta) {
+var increaseCookieResult = function (cookie, selector, delta) {
+  if (selector == undefined) selector = sliderules . name;
+  if (selector == undefined) return;
   if (delta == undefined) delta = 1;
   var c = cookies ();
-  if (c [cookie] == undefined) {document . cookie = cookie + " = " + delta + "; max-age=33554432"; return;}
-  document . cookie = cookie + " = " + (Number (c [cookie]) + delta) + "; max-age=33554432";
+  if (c [cookie] == undefined) {
+    var js = {};
+    js [selector] = delta;
+    document . cookie = cookie + " = " + JSON . stringify (js) + "; max-age=33554432";
+    return;
+  }
+  var cjs = c [cookie];
+  if (cjs [selector] == undefined) {
+    cjs [selector] = delta;
+    document . cookie = cookie + " = " + JSON . stringify (cjs) + "; max-age=33554432";
+    return;
+  }
+  cjs [selector] += delta;
+  document . cookie = cookie + " = " + JSON . stringify (cjs) + "; max-age=33554432";
+};
+
+var cookieScore = function (cookie) {
+  var c = cookies ();
+  if (c == undefined) return 0;
+  var cs = c [cookie];
+  if (cs == undefined) return 0;
+  var score = 0;
+  for (var ind in cs) score += cs [ind];
+  return score;
 };
 
 var removeCookie = function (cookie) {document . cookie = cookie + "=;max-age=0";}
@@ -197,7 +228,7 @@ var readSlideruleLessons = function (id, lessons) {
 		for (var sub in lessons [ind]) {
 			var option = document . createElement ('option');
 			option . text = sub;
-			document . getElementById ('lessons') . add (option);
+			document . getElementById (id) . add (option);
 		}
 	}
 };
@@ -214,7 +245,7 @@ var playLesson = function (lessons, info) {
 		var lesson = slideruleLessons [ind] [lesson_id];
 		if (lesson != null) {sequencer (lesson (lessonMessage)); return;}
 	}
-	alert ("Lesson not found.");
+	alert ("Scenario [" + lesson_id + "] not found.");
 };
 
 

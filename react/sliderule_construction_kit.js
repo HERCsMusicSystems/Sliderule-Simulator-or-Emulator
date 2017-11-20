@@ -1247,6 +1247,7 @@ var spacer = function (height, options) {
       case 'q': p = Math . PI / 1.8; break;
       case 'r': p = 18 / Math . PI; break;
       case 'r0': p = 1.8 / Math . PI; break;
+      case 'r1': p = 180 / Math . PI; break;
       default:
         var pp = p . split (":");
         var divisor = 1;
@@ -1333,7 +1334,8 @@ var Rule = function (options) {
     if (position . y < 0 || position . y > this . ruleHeight ()) return null;
     var value;
     for (var ind in this . scales) {
-      value = this . scales [ind] . examine (position);
+      var scale = this . scales [ind];
+      value = scale . dimm ? null : this . scales [ind] . examine (position);
       if (value !== null) {
         track . push ({scale: this . scales [ind] . left, location: value, value: this . scales [ind] . value (value)});
         return value;
@@ -2045,6 +2047,7 @@ var Sliderules = function (options) {
   this . background_colour = '#99f';
   this . background_translation = {x: 0, y: 0};
   this . sliderules = [];
+  this . name = 'generic';
   this . synchronise = function (rule, delta) {
     if (! rule) return;
     var ind, sub, r;

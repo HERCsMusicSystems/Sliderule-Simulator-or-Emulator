@@ -35,8 +35,10 @@
 	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
 	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
   <br/>
-  <select id = lessons />
-  <input type = button id = play value = Play onclick = "javascript: playLesson ();" />&nbsp;&nbsp;&nbsp;
+  <select id = lessons><option value = "Choose Lesson ====" >Choose Lesson ====</option></select>
+  <input type = button value = "Play lesson" onclick = "javascript: playLesson ('lessons');" />&nbsp;&nbsp;&nbsp;
+  <select id = tests><option value = "Choose Test of Merit ====" >Choose Test of Merit ====</option></select>
+  <input type = button value = "Attempt test" onclick = "javascript: playLesson ('tests');" />&nbsp;&nbsp;&nbsp;
   <input type = button id = clear_instructions onclick = "javascript: document . getElementById ('info') . innerHTML = '';" value = "Clear instructions." />
   <div style = "display: block; position: fixed; background-color: white; border-color: black; border-style: solid; border-width: 1px;">
     <font color = red ><span id = info /></font>
@@ -58,11 +60,12 @@
 
 <script>
 
-readSlideruleLessons ();
+readSlideruleLessons ('lessons', [multiplicationLessons]);
+readSlideruleLessons ('tests', [multiplicationTests]);
 
 
 var outback = new Image (); outback . src = 'outback.jpg';
-var sliderules = new Sliderules ({background: outback, background_translation: {x: 0, y: -360}, background_colour: 'black'});
+var sliderules = new Sliderules ({background: outback, background_translation: {x: 0, y: -360}, background_colour: 'black', name: 'Raven'});
 var s = new Sliderule (1200, {cursor_top_margin: 13, cursor_bottom_margin: 13, hairline_top: -10, hairline_bottom: -10, cursor_limit_left: 0.028, cursor_limit_right: 0.028, markings_background: 'yellow'}); sliderules . sliderules . push (s);
 s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 74, 1));
 s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 76, 1));
