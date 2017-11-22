@@ -35,13 +35,13 @@ var r = new Rule ({rule_colour: oak_pattern}); s . rules . push (r);
 r . markings . push (new Screw (-0.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
 r . markings . push (new Screw (1.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
 r . scales . push (new spacer (24));
-r . scales . push (new scale_A (24, {left: "A"}));
+r . scales . push (new scale_A (24, {left: "A", ls: 0.05}));
 r = new Rule ({stator: 1, rule_colour: oak_pattern}); s . rules . push (r);
-r . scales . push (new scale_B (24, {left: "B"}));
-r . scales . push (new scale_C (24, {left: "C"}));
+r . scales . push (new scale_B (24, {left: "B", ls: 0.05}));
+r . scales . push (new scale_C (24, {left: "C", ls: 0.05}));
 r = new Rule ({rule_colour: oak_pattern}); s . rules . push (r);
 r . markings . push (new Screw (-0.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
 r . markings . push (new Screw (1.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
-r . scales . push (new scale_D (24, {left: "D"}));
+r . scales . push (new scale_D (24, {left: "D", ls: 0.05}));
 r . scales . push (new spacer (24));
 
