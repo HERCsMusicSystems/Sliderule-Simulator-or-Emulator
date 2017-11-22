@@ -131,6 +131,9 @@ before you can be granted access to this ancient and mysterious artefact of Hira
 <div class = lore>Are you willing go through trials?</div>
 <div class = lore><a href=osiris_artefact.html>Yes, I am ready.</a></div>
 <br />
+<div class = lore>
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+</div>
 
 </i></font>
 </div>
@@ -188,10 +191,6 @@ setInterval (manipulateBackground, 100);
 
 
 
-<div style="background-color: white;">
-	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
-	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
-</div>
 <div id="root"></div>
 
 <script src="react.js"></script>

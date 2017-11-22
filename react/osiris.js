@@ -29,12 +29,19 @@ var s = new Sliderule (1000); sliderules . sliderules . push (s);
 
 s . cursorBraces . push (new CursorWindow (16, 10, oak_pattern, 'blue'));
 
+s . backBraces . push (new FlatFloor (0.21, 0.21, -4, -4, 10, 'blue', oak_pattern));
+
 var r = new Rule ({rule_colour: oak_pattern}); s . rules . push (r);
+r . markings . push (new Screw (-0.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+r . markings . push (new Screw (1.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
 r . scales . push (new spacer (24));
 r . scales . push (new scale_A (24, {left: "A"}));
 r = new Rule ({stator: 1, rule_colour: oak_pattern}); s . rules . push (r);
 r . scales . push (new scale_B (24, {left: "B"}));
 r . scales . push (new scale_C (24, {left: "C"}));
 r = new Rule ({rule_colour: oak_pattern}); s . rules . push (r);
+r . markings . push (new Screw (-0.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+r . markings . push (new Screw (1.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
 r . scales . push (new scale_D (24, {left: "D"}));
 r . scales . push (new spacer (24));
+

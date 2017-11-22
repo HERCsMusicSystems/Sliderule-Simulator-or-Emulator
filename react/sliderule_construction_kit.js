@@ -1682,6 +1682,24 @@ var Floor = function (left, right, top, bottom, rounding, radius, holes, colour,
 	};
 };
 
+var FlatFloor = function (left, right, top, bottom, rounding, colour, background) {
+	this . draw = function (ctx, s) {
+		var le = s . length * (s . left_margin - left); var re = s . length * (s . left_margin + 1 + right);
+		var bt = s . height () - bottom;
+		var mid = (top + bt) * 0.5;
+		ctx . beginPath ();
+		ctx . arc (le + rounding, top + rounding, rounding, Math . PI, Math . PI * 1.5);
+		ctx . arc (re - rounding, top + rounding, rounding, Math . PI * 1.5, 0);
+		ctx . arc (re - rounding, bt - rounding, rounding, 0, Math . PI * 0.5);
+		ctx . arc (le + rounding, bt - rounding, rounding, Math . PI * 0.5, Math . PI);
+		ctx . closePath ();
+		ctx . fillStyle = background;
+		ctx . fill ();
+		ctx . strokeStyle = colour;
+		ctx . stroke ();
+	};
+};
+
 var DecilonWindow = function (radius, l1, l2, l3, t1, t2, t3, background, colour) {
 	this . draw = function (ctx, s) {
 		var le1 = s . length * l1 - radius, le2 = s . length * l2 - radius, le3 = s . length * l3 - radius;
