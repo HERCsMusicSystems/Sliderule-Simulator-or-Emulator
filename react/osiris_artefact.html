@@ -97,45 +97,23 @@ With Knight Templars being guardians of the peace, Europe enjoyed 200 years of p
 
 <br />
 
-<div class = lore>
-In 1305 the King Philip IV of France, together with Pope Clement V, both being heavily in debt, decided to appropriate Kinght Templar's wealth.
-At dawn on Friday, 13th October 1307, under fabricated accusations, they arrested the entire order. Prosecution, torture and executions followed.
-However, many members of the order escaped and managed to hide and preserve their secrets and mysteries leaving Philip IV and Clement V empty handed.
-Both the king and the pope died horrible deaths soon after and the entire Europe sank into a long 100-years war and turmoil.
-Nevertheless, every Friday the 13th is considered unlucky ever since.
-</div>
-
-<br />
-
-<div class = lore>
-The surviving Knight Templars and their successors secretly continued to influence the development of civilisation.
-Many achievements of humankind can be attributed to the hidden knowledge practiced by the order.
-After all, the cities of Washington in USA, Adelaide in South Australi and Christchurch in New Zealand
-were build according to the principles which were found by Hugues de Payens under the ruins of Solomons Temple in 1119....
-</div>
-
-<br />
-
-<div class = lore>
-The ancient and mysterious artefact of Hiram Abif's is a powerful and dangerous tool.
-It allowes you to design and build thing of great beauty.
-However, it can be also used to inflict immense destruction.
-Indeed, it was used not only to send man to the Moon but also to build nuclear bombs, which killed thousands in Hiroshima.
-It is therefore necessary for you to put your principles to the test of merit,
-before you can be granted access to this ancient and mysterious artefact of Hiram Abif.
-</div>
-
-<br />
-
 <div class = lore>Your status now is: <font color=blue>The poor seeker of ancient artefacts</font></div>
 <div class = lore>Are you willing go through trials?</div>
 <div class = lore><a href=osiris_artefact.html>Yes, I am ready.</a></div>
 <br />
-<div class = lore>
-	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+</i></font>
+<div class = lore style = "width: 100%;">
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings&nbsp;
+  <select id = lessons><option value = "Choose Lesson ====" >Choose Lesson ====</option></select>
+  <input type = button value = "Play lesson" onclick = "javascript: playLesson ('lessons');" />&nbsp;&nbsp;
+  <select id = tests><option value = "Choose Test of Merit ====" >Choose Test of Merit ====</option></select>
+  <input type = button value = "Attempt test" onclick = "javascript: playLesson ('tests');" />&nbsp;&nbsp;
+  <input type = button id = clear_instructions onclick = "javascript: document . getElementById ('info') . innerHTML = '';" value = "Clear instructions." />
 </div>
 
-</i></font>
+  <div style = "display: block; position: absolute; background-color: white; border-color: black; border-style: solid; border-width: 1px;">
+    <font color = red ><span id = info /></font>
+  </div>
 </div>
 
 <!--<audio src="courage.wav" autoplay loop />-->
@@ -200,11 +178,17 @@ setInterval (manipulateBackground, 100);
 <script src="scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
 <script src="sliderule_application.js"></script>
+<script src="sliderule_tutorial_multiplications.js"></script>
+<script src="sliderule_test_multiplications.js"></script>
 
 
 <script src="osiris.js"></script>
 
-<script>sliderules . fixedHeight = 440;</script>
+<script>
+readSlideruleLessons ('lessons', [multiplicationLessons]);
+readSlideruleLessons ('tests', [multiplicationTests]);
+sliderules . fixedHeight = 440;
+</script>
 <script>
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 //changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
