@@ -66,6 +66,12 @@ var copyright = "Emulator / Simulator Copyright \u00a9 2017 - " + new Date () . 
 var copyright_colours = ['blue', 'gray', 'yellow', 'lavender', 'green', 'olive', 'silver', 'tan', 'wheat', 'khaki'];
 var copyright_colour = copyright_colours [Math . floor (Math . random () * copyright_colours . length)];
 
+var createPattern = function (image, id) {
+	if (id == undefined) id = 'sliderule_canvas';
+	var ctx = document . getElementById (id) . getContext ("2d");
+	return ctx . createPattern (image, 'repeat');
+};
+
 var SlideruleApplication = React . createClass ({
   checkRequired: false,
   dragging: false,
@@ -164,7 +170,7 @@ var SlideruleApplication = React . createClass ({
     return React.createElement(
       'div',
       { style: { align: 'center' } }, [//, position: 'relative' } }, [
-      React.createElement('canvas', { key: 1, ref: 'sliderule', width: this.state.width, height: this.state.height, 
+      React.createElement('canvas', { key: 1, id: 'sliderule_canvas', ref: 'sliderule', width: this.state.width, height: this.state.height, 
         onMouseDown: this.onMouseDown,
         onMouseMove: this.onMouseMove,
         onMouseUp: this.onMouseUp,

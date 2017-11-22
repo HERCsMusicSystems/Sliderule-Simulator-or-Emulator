@@ -1311,7 +1311,7 @@ var Rule = function (options) {
     ctx . save ();
     ctx . translate (length * (this . shift - this . left_margin), 0);
     if (this . rule_colour) {
-		ctx . fillStyle = typeof (this . rule_colour) == 'object' ? ctx . createPattern (this . rule_colour, 'repeat') : this . rule_colour;
+    	ctx . fillStyle = this . rule_colour;
 		ctx . lineWidth = 1;
 		ctx . beginPath ();
 			roundRect (ctx, 0, length * (this . left_margin - this . alt_left_margin), 0, (1 + this . left_margin + this . right_margin) * length, (1 + this . left_margin + this . alt_right_margin) * length, this . ruleHeight (), this . rounding);
@@ -1788,7 +1788,7 @@ var CursorWindow = function (margin, radius, background, colour) {
     ctx . arc (left + radius + margin, h + s . cursor_bottom_margin - margin - radius + rd, radius, Math . PI, Math . PI * 0.5, true);
     ctx . arc (right - radius - margin, h + s . cursor_bottom_margin - margin - radius + rd, radius, Math . PI * 0.5, 0, true);
     ctx . closePath ();
-    ctx . fillStyle = typeof (background) == 'object' ? ctx . createPattern (background, 'repeat') : background;
+    ctx . fillStyle = background;
     ctx . fill ();
     ctx . strokeStyle = colour; ctx . stroke ();
   };
