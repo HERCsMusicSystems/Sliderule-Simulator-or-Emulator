@@ -1770,6 +1770,30 @@ var DecilonCursorBrace = function (shift, l1, t1, r1, l2, t2, r2, background, co
 	};
 };
 
+var CursorWindow = function (margin, radius, background, colour) {
+  this . draw = function (ctx, s) {
+    var right = s . cursor_right_extension * s . length;
+    var left = - s . cursor_left_extension * s . length;
+    var rd = s . cursor_rounding;
+    var h = s . height ();
+    ctx . beginPath ();
+    ctx . arc (right - rd, - s . cursor_top_margin, rd, Math . PI * 1.5, 0);
+    ctx . arc (right - rd, h + s . cursor_bottom_margin, rd, 0, Math . PI * 0.5);
+    ctx . arc (left + rd, h + s . cursor_bottom_margin, rd, Math . PI * 0.5, Math . PI);
+    ctx . arc (left + rd, - s . cursor_top_margin, rd, Math . PI, Math . PI * 1.5);
+    ctx . closePath ();
+    ctx . moveTo (right - margin, - s . cursor_top_margin + margin - rd + radius);
+    ctx . arc (right - radius - margin, - s . cursor_top_margin + margin + radius - rd, radius, 0, Math . PI * 1.5, true);
+    ctx . arc (left + radius + margin, - s. cursor_top_margin + margin + radius - rd, radius, Math . PI * 1.5, Math . PI, true);
+    ctx . arc (left + radius + margin, h + s . cursor_bottom_margin - margin - radius + rd, radius, Math . PI, Math . PI * 0.5, true);
+    ctx . arc (right - radius - margin, h + s . cursor_bottom_margin - margin - radius + rd, radius, Math . PI * 0.5, 0, true);
+    ctx . closePath ();
+    ctx . fillStyle = typeof (background) == 'object' ? ctx . createPattern (background, 'repeat') : background;
+    ctx . fill ();
+    ctx . strokeStyle = colour; ctx . stroke ();
+  };
+};
+
 var Screw = function (shift, top, radius, angle, background, colour) {
 	this . draw = function (ctx, s) {
 		var location = shift * s . length;

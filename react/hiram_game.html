@@ -9,17 +9,31 @@ url('snellbt-regular.eot');
 
 div.lore {
   text-indent: 50px;
-  width: 700px;
+  width: 900px;
   margin: 0 auto;
 }
+
+@keyframes animatedTemplars {
+  from {background-size: 1800px;} to {background-size: 2000px;}
+}
+
+div.templars {
+  background-image: url(knights-templar.jpg);
+  background-color: rgba(255, 255, 255, 0.6);
+  background-blend-mode: lighten;
+  width: 100%;
+  background-position: center;
+  animation: animatedTemplars 10s linear infinite;
+}
+
 </style>
 <body bgcolor=black>
 
-
-<div style="background-image: url(knights-templar.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.6); width: 100%; background-repeat: no-repeat; background-position: center; background-size: 1800px;">
+<!--<div id = bg class = templars>-->
+<div id = bg style="background-image: url(knights-templar.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.6); width: 100%; background-repeat: no-repeat; background-size: 1800px;">
 
 <br />
-<center><h2>Hiram Abif's artefact</h2></center>
+<center><h2><i>Hiram Abif's artefact</i></h2></center>
 
 <font size="+1"><i>
 
@@ -53,9 +67,18 @@ With Knight Templars being guardians of the peace, Europe enjoyed 200 years of p
 <div class = lore>
 In 1305 the King Philip IV of France, together with Pope Clement V, both being heavily in debt, decided to appropriate Kinght Templar's wealth.
 At dawn on Friday, 13th October 1307, under fabricated accusations, they arrested the entire order. Prosecution, torture and executions followed.
-However, the Knights managed to hide and preserve their secrets and mysteries leaving Philip IV and Clement V empty handed.
+However, many members of the order escaped and managed to hide and preserve their secrets and mysteries leaving Philip IV and Clement V empty handed.
 Both the king and the pope died horrible deaths soon after and the entire Europe sank into a long 100-years war and turmoil.
 Nevertheless, every Friday the 13th is considered unlucky ever since.
+</div>
+
+<br />
+
+<div class = lore>
+The surviving Knight Templars and their successors secretly continued to influence the development of civilisation.
+Many achievements of humankind can be attributed to the hidden knowledge practiced by the order.
+After all, the cities of Washington in USA, Adelaide in South Australi and Christchurch in New Zealand
+were build according to the principles which were found by Hugues de Payens under the ruins of Solomons Temple in 1119....
 </div>
 
 <br />
@@ -64,6 +87,7 @@ Nevertheless, every Friday the 13th is considered unlucky ever since.
 The ancient and mysterious artefact of Hiram Abif's is a powerful and dangerous tool.
 It allowes you to design and build thing of great beauty.
 However, it can be also used to inflict immense destruction.
+Indeed, it was used not only to send man to the Moon but also to build nuclear bombs, which killed thousands in Hiroshima.
 It is therefore necessary for you to put your principles to the test of merit,
 before you can be granted access to this ancient and mysterious artefact of Hiram Abif.
 </div>
@@ -78,5 +102,36 @@ before you can be granted access to this ancient and mysterious artefact of Hira
 </i></font>
 </div>
 
-<audio src="courage.mp3" autoplay loop />
+<audio src="couragee.mp3" autoplay loop />
+<script>
+var size = 1800;
+var opacity = 0.6;
+var templars = [
+    "url('knights-templar.jpg')",
+    "url('knights-templar_2.jpg')",
+    "url('knights-templar_3.jpg')",
+    "url('knights-templar_4.jpg')",
+    "url('knights-templar_5.jpg')"
+  ];
+var templar_id = 1;
+var manipulateBackground = function () {
+  var style = document . getElementById ('bg') . style;
+  style . backgroundSize = size + "px";
+  style . backgroundColor = "rgba(255, 255, 255, " + opacity + ")";
+  size += 1;
+  if (size > 1900) {
+    opacity += 0.01;
+    if (opacity > 0.98) {
+      opacity_step = -0.01;
+      style . backgroundImage = templars [templar_id];
+      templar_id += 1;
+      if (templar_id >= templars . length) templar_id = 0;
+      size = 1800;
+    }
+  } else {
+    if (opacity > 0.6) opacity -= 0.01;
+  }
+};
+setInterval (manipulateBackground, 100);
+</script>
 </body>

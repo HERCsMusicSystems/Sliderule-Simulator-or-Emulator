@@ -20,15 +20,19 @@
 // THE SOFTWARE.                                                                 //
 ///////////////////////////////////////////////////////////////////////////////////
 
-var sliderules = new Sliderules ();
-var sliderule = new Sliderule (1000); sliderules . sliderules . push (sliderule);
+var oak = new Image (); oak . src = 'oak.png';
 
-var r = new Rule (); sliderule . rules . push (r);
+var sliderules = new Sliderules ();
+var s = new Sliderule (1000); sliderules . sliderules . push (s);
+
+s . cursorBraces . push (new CursorWindow (16, 10, oak, 'blue'));
+
+var r = new Rule ({rule_colour: oak}); s . rules . push (r);
 r . scales . push (new spacer (24));
 r . scales . push (new scale_A (24));
-r = new Rule ({stator: 1}); sliderule . rules . push (r);
+r = new Rule ({stator: 1, rule_colour: oak}); s . rules . push (r);
 r . scales . push (new scale_B (24));
 r . scales . push (new scale_C (24));
-r = new Rule (); sliderule . rules . push (r);
+r = new Rule ({rule_colour: oak}); s . rules . push (r);
 r . scales . push (new scale_D (24));
 r . scales . push (new spacer (24));
