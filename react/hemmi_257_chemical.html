@@ -47,14 +47,11 @@
 <script src="scales_chemical.js"></script>
 <script src="scales_temperature.js"></script>
 
-<script src="sliderule_application.js"></script>
-
 <script>
 
 var sliderules = new Sliderules ();
 
 var wood = new Image (); wood . src = 'oak.png'; wood . onload = function () {sliderules . requireRedraw = true;};
-var wood_pattern = createPattern (wood);
 
 var s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_top_margin: 20, cursor_bottom_margin: 20}); sliderules . sliderules . push (s);
 s . cursorBraces . push (new HemmiWindow (8, 0.072, 0.07, 24, -5, '#9498a1', 'black'));
@@ -66,17 +63,17 @@ s . braces . push (new LBottomLeftBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 're
 s . braces . push (new LBottomLeftBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
 s . braces . push (new LBottomRightBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 'red'));
 s . braces . push (new LBottomRightBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
-var r = new Rule ({rule_colour: wood_pattern, left_margin: 0.15, right_margin: 0.15}); s . rules . push (r);
+var r = new Rule ({rule_colour: wood, left_margin: 0.15, right_margin: 0.15}); s . rules . push (r);
 r . scales . push (new spacer (24, {centre: "\u263c SUN \u263c   HEMMI     JAPAN     No. 257", cs: 1, ca: 'right'}));
 r . scales . push (new scale_L (24));
 r . scales . push (new scale_A (24));
 r . scales . push (new scale_CF (24));
-r = new Rule ({rule_colour: wood_pattern, stator: 1}); s . rules . push (r);
+r = new Rule ({rule_colour: wood, stator: 1}); s . rules . push (r);
 r . scales . push (new scale_DF (24));
 r . scales . push (new scale_DIF (24));
 r . scales . push (new scale_CI (24));
 r . scales . push (new scale_C (24));
-r = new Rule ({rule_colour: wood_pattern}); s . rules . push (r);
+r = new Rule ({rule_colour: wood}); s . rules . push (r);
 r . scales . push (new scale_D (24));
 r . scales . push (new scale_LL3_down (24));
 r . scales . push (new scale_LL2_down (24));
@@ -92,7 +89,7 @@ s . braces . push (new LTopLeftBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 'red')
 s . braces . push (new LTopLeftBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
 s . braces . push (new LTopRightBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 'red'));
 s . braces . push (new LTopRightBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
-r = new Rule ({rule_colour: wood_pattern}); s . rules . push (r);
+r = new Rule ({rule_colour: wood}); s . rules . push (r);
 r . markings . push (new Engraving ("Ch", '24px arial', 'left', 'black', -0.07, 56));
 r . scales . push (new spacer (20));
 r . scales . push (new scale_Chemical (24,
@@ -128,6 +125,8 @@ r . scales . push (new spacer (24));
 r . scales . push (new spacer (24));
 
 </script>
+
+<script src="sliderule_application.js"></script>
 
 <script> changeSide ('front'); </script>
 <script>

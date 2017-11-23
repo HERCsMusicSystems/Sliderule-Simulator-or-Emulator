@@ -23,23 +23,22 @@
 var osiris = new Image (); osiris . src = 'osiris_4.jpg';
 var sliderules = new Sliderules ({background: osiris, background_scaling: {x: 2, y: 2}, background_translation: {x: 0, y: -150}});
 var oak = new Image (); oak . src = 'oak.png'; oak . onload = function () {sliderules . requireRedraw = true;};
-var oak_pattern = createPattern (oak);
 
 var s = new Sliderule (1000); sliderules . sliderules . push (s);
 
-s . cursorBraces . push (new CursorWindow (16, 10, oak_pattern, 'blue'));
+s . cursorBraces . push (new CursorWindow (16, 10, oak, 'blue'));
 
-s . backBraces . push (new FlatFloor (0.21, 0.21, -4, -4, 10, 'blue', oak_pattern));
+s . backBraces . push (new FlatFloor (0.21, 0.21, -4, -4, 10, 'blue', oak));
 
-var r = new Rule ({rule_colour: oak_pattern}); s . rules . push (r);
+var r = new Rule ({rule_colour: oak}); s . rules . push (r);
 r . markings . push (new Screw (-0.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
 r . markings . push (new Screw (1.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
 r . scales . push (new spacer (24));
 r . scales . push (new scale_A (24, {left: "A", ls: 0.05}));
-r = new Rule ({stator: 1, rule_colour: oak_pattern}); s . rules . push (r);
+r = new Rule ({stator: 1, rule_colour: oak}); s . rules . push (r);
 r . scales . push (new scale_B (24, {left: "B", ls: 0.05}));
 r . scales . push (new scale_C (24, {left: "C", ls: 0.05}));
-r = new Rule ({rule_colour: oak_pattern}); s . rules . push (r);
+r = new Rule ({rule_colour: oak}); s . rules . push (r);
 r . markings . push (new Screw (-0.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
 r . markings . push (new Screw (1.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
 r . scales . push (new scale_D (24, {left: "D", ls: 0.05}));
