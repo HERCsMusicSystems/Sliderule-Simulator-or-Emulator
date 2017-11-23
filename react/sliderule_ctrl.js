@@ -206,8 +206,8 @@ var readValue = function (name) {
 };
 
 var checkValue = function (name, value, tolerance) {
-  if (tolerance == undefined) tolerance = 2;
-  return Number (Math . abs (value - readValue (name))) . toFixed (tolerance) == 0;
+  if (tolerance == undefined) tolerance = 0.01;
+  return Number (Math . abs (value - readValue (name))) < tolerance;
 }
 
 var sequencer = function (steps, index) {

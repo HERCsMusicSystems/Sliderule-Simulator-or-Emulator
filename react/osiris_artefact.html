@@ -147,7 +147,7 @@ var manipulateBackground = function () {
     if (opacity > 0.6) opacity -= 0.01;
   }
 };
-setInterval (manipulateBackground, 100);
+//setInterval (manipulateBackground, 100);
 </script>
 
 
@@ -177,16 +177,18 @@ setInterval (manipulateBackground, 100);
 <script src="sliderule_construction_kit.js"></script>
 <script src="scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
-<script src="sliderule_tutorial_multiplications.js"></script>
+<script src="sliderule_tutorial_manual.js"></script>
 <script src="sliderule_test_multiplications.js"></script>
 
 
 <script src="osiris.js"></script>
 
 <script>
-readSlideruleLessons ('lessons', [multiplicationLessons]);
+readSlideruleLessons ('lessons', [userManual]);
 readSlideruleLessons ('tests', [multiplicationTests]);
-sliderules . fixedHeight = 440;
+sliderules . fixedHeight = 340;
+sliderules . mission = function () {console . log (cookies ()); return false;};
+sliderules . name = "osiris_artefact";
 </script>
 <script src="sliderule_application.js"></script>
 <script>
