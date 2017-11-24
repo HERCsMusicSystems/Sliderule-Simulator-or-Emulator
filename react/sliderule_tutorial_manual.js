@@ -13,9 +13,27 @@ userManual ['Moving Cursor'] = function (message) {
     sliderules . objective = function () {
       if (checkValue ("A", a)) {message ("Mission accomplished!"); increaseCookieResult ('manual_cursor'); return true;}
       return false;
-    }
-    }, delay: 6000},
+    };}, delay: 6000},
     {action: function () {message ("Now try these instruction again.");}, dealy: 4000}
+  ];
+};
+
+userManual ['Moving Slide'] = function (message) {
+  var a = 1;
+  while (a == 1 || a > 100) a = 1 + Math . floor (Math . random () * 100);
+  return [
+    {action: function () {ensureSide (["A", "B"]);}, delay: 0},
+    {action: function () {message ("The task: move slide to put " + a + " on the B scale under cursor's hairline.");}, delay: 100},
+    {action: function () {message ("Let's say the cursor is currently located at 10.");}, delay: 1000},
+    {action: function () {cursorTo ("A", 10);}, delay: 1000},
+    {action: function () {message ("Drag the slide until " + a + " on the B scale is under the cursor's hairline.");}, delay: 3000},
+    {action: function () {slideTo ("B", a);}, delay: 2000},
+    {action: function () {slideTo ("B", 10);
+    sliderules . objective = function () {
+      if (checkValue ("B", a)) {message ("Mission accomplished!"); increaseCookieResult ('manual slide'); return true;}
+      return false;
+    };}, delay: 6000},
+    {action: function () {message ("Now try these instructions again.");}, delay: 4000}
   ];
 };
 
