@@ -11,7 +11,7 @@ userManual ['Moving Cursor'] = function (message) {
     {action: function () {cursorTo ("A", a);}, delay: 1000},
     {action: function () {cursorTo ("A", 1);
     sliderules . objective = function () {
-      if (checkValue ("A", a)) {message ("Mission accomplished!"); increaseCookieResult ('manual_cursor'); return true;}
+      if (checkValue ("A", a)) {message ("Mission accomplished!"); increaseCookieResult ('manual cursor'); return true;}
       return false;
     };}, delay: 6000},
     {action: function () {message ("Now try these instruction again.");}, dealy: 4000}
