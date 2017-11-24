@@ -205,9 +205,27 @@ var readValue = function (name) {
   return null;
 };
 
+var readLocation = function (name, value) {
+  for (var sr in sliderules . sliderules) {
+    var sliderule = sliderules . sliderules [sr];
+    if (! sliderules . inactive) {
+      for (var r in sliderule . rules) {
+        var rule = sliderule . rules [r];
+        for (var s in rule . scales) {
+          var scale = rule . scales [s];
+          if (scale . left == name) {
+            if (value == undefined) return sliderule . cursor_target - rule .target;
+            return scale . location (value);
+          }
+        }
+      }
+    }
+  }
+};
+
 var checkValue = function (name, value, tolerance) {
-  if (tolerance == undefined) tolerance = 0.01;
-  return Number (Math . abs (value - readValue (name))) < tolerance;
+  if (tolerance == undefined) tolerance = 0.0005;
+  return Number (Math . abs (readLocation (name, value) - readLocation (name))) < tolerance;
 }
 
 var sequencer = function (steps, index) {
