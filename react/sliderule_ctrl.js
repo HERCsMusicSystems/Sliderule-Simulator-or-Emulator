@@ -36,14 +36,18 @@ var increaseCookieResult = function (cookie, selector, delta) {
   document . cookie = cookie + " = " + JSON . stringify (cjs) + "; max-age=33554432";
 };
 
-var cookieScore = function (cookie) {
+var cookieScore = function (cookie, selector) {
   var c = cookies ();
   if (c == undefined) return 0;
   var cs = c [cookie];
   if (cs == undefined) return 0;
   var score = 0;
-  for (var ind in cs) score += cs [ind];
-  return score;
+  if (selector == undefined) {
+    for (var ind in cs) score += cs [ind];
+    return score;
+  }
+  cs = cs [selector];
+  return cs == undefined ? 0 : cs;
 };
 
 var removeCookie = function (cookie) {document . cookie = cookie + "=;max-age=0";}

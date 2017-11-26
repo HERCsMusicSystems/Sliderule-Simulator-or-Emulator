@@ -1255,8 +1255,6 @@ var spacer = function (height, options) {
         for (var ind in pp) {p += Number (pp [ind]) / divisor; divisor *= 60;}
         break;
     }
-    p = this . location (p);
-    if (isNaN (p)) return null;
     return p;
   };
   for (var key in options) this [key] = options [key];
@@ -1340,10 +1338,14 @@ var Rule = function (options) {
     var value;
     for (var ind in this . scales) {
       var scale = this . scales [ind];
-      value = scale . dimm ? null : this . scales [ind] . examine (position);
-      if (value !== null) {
-        track . push ({scale: this . scales [ind] . left, location: value, value: this . scales [ind] . value (value)});
-        return value;
+      if (! scale . dimm) {
+        value = scale . examine (position);
+        var location = scale . location (value);
+        if (isNaN (location)) location = null;
+        if (location != null) {
+          track . push ({scale: scale . left, location: location, value: value});
+          return location;
+        }
       }
       position = subv (position, {x: 0, y: this . scales [ind] . height});
     }

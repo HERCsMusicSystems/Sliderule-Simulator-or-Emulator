@@ -187,7 +187,14 @@ var manipulateBackground = function () {
 readSlideruleLessons ('lessons', [userManual]);
 readSlideruleLessons ('tests', [userTrial]);
 sliderules . fixedHeight = 340;
-sliderules . mission = function () {console . log (cookies ()); return false;};
+sliderules . mission = function () {
+  console . log (cookieScore ("trial cursor"), cookieScore ("trial slide"));
+  if (cookieScore ("trial cursor") > 0 && cookieScore ("trial slide") > 0) {
+    alert ("You are now a master");
+    return true;
+  }
+  return false;
+};
 sliderules . name = "osiris_artefact";
 </script>
 <script src="sliderule_application.js"></script>
