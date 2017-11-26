@@ -100,6 +100,7 @@ With Knight Templars being guardians of the peace, Europe enjoyed 200 years of p
 <div class = lore>Your status now is: <font color=blue>The poor seeker of ancient artefacts</font></div>
 <div class = lore>Are you willing go through trials?</div>
 <div class = lore><a href=osiris_artefact.html>Yes, I am ready.</a></div>
+<div class = lore>Mission:<br /><span id = mission /></div>
 <br />
 </i></font>
 <div class = lore style = "width: 100%;">
@@ -188,14 +189,12 @@ readSlideruleLessons ('lessons', [userManual]);
 readSlideruleLessons ('tests', [userTrial]);
 sliderules . fixedHeight = 340;
 sliderules . mission = function () {
-  console . log (cookieScore ("trial cursor"), cookieScore ("trial slide"));
-  if (cookieScore ("trial cursor") > 0 && cookieScore ("trial slide") > 0) {
-    alert ("You are now a master");
-    return true;
-  }
+  document . getElementById ('mission') . innerHTML = cookieMission (userTrial, 2, sliderules . name) . join ('<br/>');
+  if (checkCookieScores (userTrial, 2, sliderules . name)) {return true;}
   return false;
 };
-sliderules . name = "osiris_artefact";
+sliderules . name = "Osiris Artefact";
+if (sliderules . mission ()) delete sliderules . mission;
 </script>
 <script src="sliderule_application.js"></script>
 <script>
