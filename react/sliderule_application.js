@@ -141,9 +141,11 @@ var SlideruleApplication = React . createClass ({
   	if (sliderules . noChange ()) {
       if (this . checkRequired) {
         if (sliderules . objective)
-          if (sliderules . objective ()) delete sliderules . objective;
-        if (sliderules . mission)
-          if (sliderules . mission ()) delete sliderules . mission;
+          if (sliderules . objective ()) {
+          	delete sliderules . objective;
+          	if (sliderules . mission)
+              if (sliderules . mission ()) delete sliderules . mission;
+          }
         this . checkRequired = false;
       }
       return;
