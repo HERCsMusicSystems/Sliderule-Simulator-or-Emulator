@@ -66,6 +66,9 @@ var copyright = "Emulator / Simulator Copyright \u00a9 2017 - " + new Date () . 
 var copyright_colours = ['blue', 'gray', 'yellow', 'lavender', 'green', 'olive', 'silver', 'tan', 'wheat', 'khaki'];
 var copyright_colour = copyright_colours [Math . floor (Math . random () * copyright_colours . length)];
 
+var slideruleMission = function () {if (sliderules . mission) if (sliderules . mission ()) delete sliderules . mission;};
+var slideruleObjective = function () {if (sliderules . objective) if (sliderules . objective ()) {delete sliderules . objective; slideruleMission ();}};
+
 var SlideruleApplication = React . createClass ({
   checkRequired: false,
   dragging: false,
@@ -139,15 +142,7 @@ var SlideruleApplication = React . createClass ({
     if (sliderules . fixedHeight) newState . height = sliderules . fixedHeight;
     if (this . state . width !== newState . width || this . state . height !== newState . height) sliderules . requireRedraw = true;
   	if (sliderules . noChange ()) {
-      if (this . checkRequired) {
-        if (sliderules . objective)
-          if (sliderules . objective ()) {
-          	delete sliderules . objective;
-          	if (sliderules . mission)
-              if (sliderules . mission ()) delete sliderules . mission;
-          }
-        this . checkRequired = false;
-      }
+      if (this . checkRequired) {slideruleObjective (); this . checkRequired = false;}
       return;
     }
     this . checkRequired = true;

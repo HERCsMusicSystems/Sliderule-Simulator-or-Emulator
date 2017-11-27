@@ -15,6 +15,8 @@ var cookies = function () {
 	return ret;
 };
 
+var cook = function (cookie, value) {document . cookie = cookie + " = " + JSON . stringify (value) + "; max-age=33554432";};
+
 var increaseCookieResult = function (cookie, selector, delta) {
   if (selector == undefined) selector = sliderules . name;
   if (selector == undefined) return;
@@ -69,6 +71,32 @@ var removeCookie = function (cookie) {document . cookie = cookie + "=;max-age=0"
 var removeAllCookies = function () {
   var c = cookies ();
   for (var ind in c) removeCookie (ind);
+};
+
+var artefacts = function (cookie) {
+  if (cookie == undefined) cookie = 'artefacts';
+  var artefacts = cookies () [cookie];
+  if (artefacts == undefined) return [];
+  return artefacts;
+};
+
+var addArtefact = function (artefact, cookie) {
+  if (cookie == undefined) cookie = 'artefacts';
+  var artefacts = cookies () [cookie];
+  if (artefacts == undefined) artefacts = [];
+  if (artefacts . indexOf (artefact) >= 0) return;
+  artefacts . push (artefact);
+  cook (cookie, artefacts);
+};
+
+var removeArtefact = function (artefact, cookie) {
+  if (cookie == undefined) cookie = 'artefacts';
+  if (artefact == undefined) {cook (cookie, []); return;}
+  var artefacts = cookies () [cookie];
+  var ind = artefacts . indexOf (artefact);
+  if (ind < 0) return;
+  artefacts . splice (ind, 1);
+  cook (cookie, artefacts);
 };
 
 var isolate = function (scales) {
