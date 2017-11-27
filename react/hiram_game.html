@@ -87,13 +87,26 @@ which was found by Hugues de Payens under the ruins of Solomon's Temple in 1119.
 
 <div class = lore>Your status now is: <font color=blue>The poor seeker of ancient artefacts</font></div>
 <div class = lore>Are you willing go through trials?</div>
-<div class = lore><a href=osiris_artefact.html>Yes, I am ready.</a></div>
+<div class = lore><span id = next /></div>
 <br />
 
+<div class = lore>Artefacts:<br /><span id = artefacts /></div>
+
 </i></font>
+<div align=center><input type=button value="Reset game" onclick="javascript: if (confirm ('Are you sure?')) removeAllCookies ();"/></div>
 </div>
 
 <audio src="couragee.mp3" autoplay loop />
+<script src="sliderule_ctrl.js"></script>
+<script src="templars_artefacts.js"></script>
+
+<script>
+updateArtefacts ();
+var arts = artefacts ();
+var next = document . getElementById ('next');
+if (arts . length < 1) next . innerHTML = '<a href="osiris_artefact.html">I am ready to begin trials.</a>';
+else next . innerHTML = '<a href="' + arts [arts . length - 1] . replace (" ", "_") . toLowerCase () + '.html">I am ready to continue trials.</a>';
+</script>
 <script>
 var size = 1800;
 var opacity = 0.6;

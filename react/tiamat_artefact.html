@@ -24,7 +24,7 @@
 -->
 <html>
   <head>
-    <title>Osiris Artefact</title>
+    <title>Tiamat Artefact</title>
   </head>
 
 
@@ -67,7 +67,7 @@ div.templars {
 <div id = bg style="background-image: url(osiris_1.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.6); width: 100%; background-repeat: no-repeat; background-size: 1800px;">
 
 <br />
-<center><h2><i>Osiris artefact</i></h2></center>
+<center><h2><i>Tiamat artefact</i></h2></center>
 
 <font size="+1"><i>
 
@@ -99,7 +99,6 @@ With Knight Templars being guardians of the peace, Europe enjoyed 200 years of p
 
 <div class = lore>Your status now is: <font color=blue>The poor seeker of ancient artefacts</font></div>
 <div class = lore>Are you willing go through trials?</div>
-<div class = lore><a href=osiris_artefact.html>Yes, I am ready.</a></div>
 <div class = lore>Mission:<br /><span id = mission /></div>
 <div class = lore>Artefacts:<br /><span id = artefacts /></div>
 <br />
@@ -183,7 +182,7 @@ var manipulateBackground = function () {
 <script src="sliderule_test_manual.js"></script>
 
 
-<script src="osiris.js"></script>
+<script src="tiamat.js"></script>
 
 <script src="templars_artefacts.js"></script>
 
@@ -195,12 +194,12 @@ readSlideruleLessons ('tests', [userTrial]);
 sliderules . fixedHeight = 340;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores (userTrial, 2, sliderules . name)) {addArtefact ('Tiamat Artefact'); ret = true;}
+  if (checkCookieScores (userTrial, 2, sliderules . name)) {addArtefact ('Zeus Artefact'); ret = true;}
   updateMissions ();
   updateArtefacts ();
   return ret;
 };
-sliderules . name = "Osiris Artefact";
+sliderules . name = "Tiamat Artefact";
 addArtefact (sliderules . name);
 </script>
 <script src="sliderule_application.js"></script>
