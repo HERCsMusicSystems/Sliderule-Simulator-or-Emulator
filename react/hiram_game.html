@@ -85,15 +85,17 @@ which was found by Hugues de Payens under the ruins of Solomon's Temple in 1119.
 
 <br />
 
-<div class = lore>Your status now is: <font color=blue>The poor seeker of ancient artefacts</font></div>
-<div class = lore>Are you willing go through trials?</div>
-<div class = lore><span id = next /></div>
+<div class = lore>Are you willing go through trials? <span id = next /></div><br/>
+<div class = lore style="text-indent: 0px;">Your status now is: <font color=blue><span id = seeker /></font></div><br/>
+<!--<div class = lore style="text-indent: 0px;">Mission:<br /><font color=blue><span id = mission /></font></div><br/>-->
+<div class = lore style="text-indent: 0px;">Your artefacts:<br /><font color=blue><span id = artefacts /></font></div>
 <br />
 
-<div class = lore>Artefacts:<br /><span id = artefacts /></div>
+<!--<div class = lore>Artefacts:<br /><span id = artefacts /></div>-->
 
 </i></font>
-<div align=center><input type=button value="Reset game" onclick="javascript: if (confirm ('Are you sure?')) removeAllCookies ();"/></div>
+<div align=center><input type=button value="Reset game" onclick="javascript: if (confirm ('Are you sure you want to reset the game?')) {removeAllCookies (); location . reload ();}"/></div>
+<br/><br/>
 </div>
 
 <audio src="couragee.mp3" autoplay loop />
@@ -102,6 +104,7 @@ which was found by Hugues de Payens under the ruins of Solomon's Temple in 1119.
 
 <script>
 updateArtefacts ();
+updateSeeker ();
 var arts = artefacts ();
 var next = document . getElementById ('next');
 if (arts . length < 1) next . innerHTML = '<a href="osiris_artefact.html">I am ready to begin trials.</a>';

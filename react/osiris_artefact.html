@@ -79,29 +79,31 @@ As the artefact you are seeking is very powerful, these tests are, in fact, for 
 <br />
 
 <div class = lore>
-The Temple Mount was located directly above the ruins of the Temple of Solomon, King of ancient Israel.
-The knights began excavation works immediately and discovered a crypt which contained a number of ancient and mysterious artefacts.
-One of those artefact was the tool of Hiram Abif's, the constructor of the Solomon Temple.
-This very powerful artefact allowed him to perform very complex calculations necessary for the construction of the Temple.
-Although its origins are not known, some say it was the legacy of an ancient and mysterious civilisation.
-Some other say that it was the God Himself, who gave it to King Solomon.
+You will begin your tests on a much smaller artefact, which was used by Egyptian Priests
+for calculating the positions of the planets as well as for construction work.
 </div>
 
 <br />
 
 <div class = lore>
-When Hugues de Payens and his knights returned to France the Knight Templars order grew rapidly achieving great wealth, prominence and power.
-Armed with the newly discovered ancient and mysterious lore, they began Gothic style and laid down the foundation of the modern banking system.
-With Knight Templars being guardians of the peace, Europe enjoyed 200 years of peace and prosperity.
+The egyptian artefact consists of two rules, which are immovable, and one movable slide.
+There is a also a movable cursor window with hairline.
+It is constructed from wood and straw.
 </div>
 
 <br />
 
-<div class = lore>Your status now is: <font color=blue>The poor seeker of ancient artefacts</font></div>
-<div class = lore>Are you willing go through trials?</div>
-<div class = lore><a href=osiris_artefact.html>Yes, I am ready.</a></div>
-<div class = lore>Mission:<br /><span id = mission /></div>
-<div class = lore>Artefacts:<br /><span id = artefacts /></div>
+<div class = lore>
+You will learn how to slide the cursor and/or slide by dragging the with your mouse.
+You will also learn how to move them automatically by right-clicking on scales and entering numerical values.
+It is also possible to read the numerical position of hairline by checking the "Markings" checkbox.
+</div>
+
+<br />
+
+<div class = lore style="text-indent: 0px;">Your status now is: <font color=blue><span id = seeker /></font></div><br/>
+<div class = lore style="text-indent: 0px;">Mission:<br /><font color=blue><span id = mission /></font></div><br/>
+<div class = lore style="text-indent: 0px;">Your artefacts:<br /><span id = artefacts /></div>
 <br />
 </i></font>
 <div class = lore style = "width: 100%;">
@@ -198,6 +200,7 @@ sliderules . mission = function () {
   if (checkCookieScores (userTrial, 2, sliderules . name)) {addArtefact ('Tiamat Artefact'); ret = true;}
   updateMissions ();
   updateArtefacts ();
+  updateSeeker ();
   return ret;
 };
 sliderules . name = "Osiris Artefact";
