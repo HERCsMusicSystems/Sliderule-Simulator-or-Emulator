@@ -94,7 +94,7 @@ It is constructed from wood and straw.
 <br />
 
 <div class = lore>
-You will learn how to slide the cursor and/or slide by dragging the with your mouse.
+You will learn how to slide the cursor and/or slide by dragging them with your mouse.
 You will also learn how to move them automatically by right-clicking on scales and entering numerical values.
 It is also possible to read the numerical position of hairline by checking the "Markings" checkbox.
 </div>
@@ -198,7 +198,7 @@ sliderules . fixedHeight = 340;
 sliderules . mission = function () {
   var ret = false;
   if (checkCookieScores (userTrial, 2, sliderules . name)) {addArtefact ('Tiamat Artefact'); ret = true;}
-  updateMissions ();
+  updateMissions (userTrial);
   updateArtefacts ();
   updateSeeker ();
   return ret;

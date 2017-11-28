@@ -64,7 +64,7 @@ div.templars {
 <body bgcolor=white>
 
 <!--<div id = bg class = templars>-->
-<div id = bg style="background-image: url(osiris_1.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.6); width: 100%; background-repeat: no-repeat; background-size: 1800px;">
+<div id = bg style="background-image: url(sumer_01.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.6); width: 100%; background-repeat: no-repeat; background-size: 1800px;">
 
 <br />
 <center><h2><i>Tiamat artefact</i></h2></center>
@@ -72,36 +72,25 @@ div.templars {
 <font size="+1"><i>
 
 <div class = lore>
-Before you are allowed to access Hiram Abif's artefact your principles need to be put to the test.
-As the artefact you are seeking is very powerful, these tests are, in fact, for your safety and protection!
+The Sumerian civilisation was known to be highly advanced in mathematics.
+The artefact you are going to use is 5000 years old and is made of clay
+and in all external appearances similar to the Egyptian.
 </div>
 
 <br />
 
 <div class = lore>
-The Temple Mount was located directly above the ruins of the Temple of Solomon, King of ancient Israel.
-The knights began excavation works immediately and discovered a crypt which contained a number of ancient and mysterious artefacts.
-One of those artefact was the tool of Hiram Abif's, the constructor of the Solomon Temple.
-This very powerful artefact allowed him to perform very complex calculations necessary for the construction of the Temple.
-Although its origins are not known, some say it was the legacy of an ancient and mysterious civilisation.
-Some other say that it was the God Himself, who gave it to King Solomon.
+You will now be trained on how to use it to perform simple calculations, such as multiplications, divisions, raising to the square and finding sqare roots.
+Good luck!
 </div>
 
 <br />
 
-<div class = lore>
-When Hugues de Payens and his knights returned to France the Knight Templars order grew rapidly achieving great wealth, prominence and power.
-Armed with the newly discovered ancient and mysterious lore, they began Gothic style and laid down the foundation of the modern banking system.
-With Knight Templars being guardians of the peace, Europe enjoyed 200 years of peace and prosperity.
-</div>
-
+<div class = lore style="text-indent: 0px;">Your status now is: <font color=blue><span id = seeker /></font></div><br/>
+<div class = lore style="text-indent: 0px;">Mission:<br /><font color=blue><span id = mission /></font></div><br/>
+<div class = lore style="text-indent: 0px;">Your artefacts:<br /><span id = artefacts /></div>
 <br />
 
-<div class = lore>Your status now is: <font color=blue>The poor seeker of ancient artefacts</font></div>
-<div class = lore>Are you willing go through trials?</div>
-<div class = lore>Mission:<br /><span id = mission /></div>
-<div class = lore>Artefacts:<br /><span id = artefacts /></div>
-<br />
 </i></font>
 <div class = lore style = "width: 100%;">
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings&nbsp;
@@ -178,8 +167,8 @@ var manipulateBackground = function () {
 <script src="sliderule_construction_kit.js"></script>
 <script src="scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
-<script src="sliderule_tutorial_manual.js"></script>
-<script src="sliderule_test_manual.js"></script>
+<script src="sliderule_tutorial_multiplications.js"></script>
+<script src="sliderule_test_multiplications.js"></script>
 
 
 <script src="tiamat.js"></script>
@@ -189,14 +178,15 @@ var manipulateBackground = function () {
 <script>
 
 
-readSlideruleLessons ('lessons', [userManual]);
-readSlideruleLessons ('tests', [userTrial]);
-sliderules . fixedHeight = 340;
+readSlideruleLessons ('lessons', [multiplicationLessons]);
+readSlideruleLessons ('tests', [multiplicationTests]);
+sliderules . fixedHeight = 300;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores (userTrial, 2, sliderules . name)) {addArtefact ('Zeus Artefact'); ret = true;}
-  updateMissions ();
+  if (checkCookieScores (multiplicationTests, 2, sliderules . name)) {addArtefact ('Zeus Artefact'); ret = true;}
+  updateMissions (multiplicationTests);
   updateArtefacts ();
+  updateSeeker ();
   return ret;
 };
 sliderules . name = "Tiamat Artefact";

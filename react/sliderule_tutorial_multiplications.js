@@ -19,7 +19,7 @@ multiplicationLessons ['Simple multiplication (A/B)'] = function (message) {
     sliderules . objective = function () {
       if (checkValue ("A", a * b) && checkValue ("B", b)) {
         message ("Mission accomplished!");
-        increaseCookieResult ('lesson_ab');
+        increaseCookieResult ('Simple multiplication (A/B)');
         return true;
       }
       return false;};}, delay: 6000},
@@ -45,7 +45,7 @@ multiplicationLessons ['Simple multiplication (C/D)'] = function (message) {
     sliderules . objective = function () {
       if (checkValue ("D", a * b) && checkValue ("C", b)) {
         message ("Mission accomplished!");
-        increaseCookieResult ('lesson_cd');
+        increaseCookieResult ('Simple multiplication (C/D)');
         return true;
       }
       return false;};}, delay: 6000},
@@ -72,7 +72,7 @@ multiplicationLessons ['Wrap-around multiplication (C/D)'] = function (message) 
     sliderules . objective = function () {
       if (checkValue ("D", a * b / 10) && checkValue ("C", b)) {
         message ("Mission accomplished!");
-        increaseCookieResult ('lesson_wrap_arround_cd');
+        increaseCookieResult ('Wrap-around multiplication (C/D)');
         return true;
       }
       return false;};}, delay: 6000},
@@ -101,7 +101,7 @@ multiplicationLessons ['Folded-scale multiplication (CF/DF)'] = function (messag
     sliderules . objective = function () {
       if (checkValue ("DF", a * b) && checkValue ("CF", b)) {
         message ("Mission accomplished!");
-        increaseCookieResult ('lesson_cfdf');
+        increaseCookieResult ('Folded-scale multiplication (CF/DF)');
         return true;
       }
       return false;};}, delay: 6000},
@@ -141,7 +141,7 @@ multiplicationLessons ['Folded-scale all numbers multiplication (CF/DF)'] = func
     sliderules . objective = function () {
       if (checkValue ("DF", a * b) && checkValue ("CF", b)) {
         message ("Mission accomplished!");
-        increaseCookieResult ('lesson_powered_cfdf');
+        increaseCookieResult ('Folded-scale all numbers multiplication (CF/DF)');
         return true;
       }
       return false;};}, delay: 6000},
@@ -171,7 +171,7 @@ multiplicationLessons ['Folded-scale multiplication (C/D/CF/DF)'] = function (me
     sliderules . objective = function () {
       if (checkValue ("DF", a * b / 10) && checkValue ("CF", b / 10)) {
         message ("Mission accomplished!");
-        increaseCookieResult ('lesson_cdcfdf');
+        increaseCookieResult ('Folded-scale multiplication (C/D/CF/DF)');
         return true;
       }
       return false;};}, delay: 6000},

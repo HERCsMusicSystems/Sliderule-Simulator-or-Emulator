@@ -8,7 +8,7 @@ multiplicationTests ['Simple multiplication test (A/B)'] = function (message) {
   sliderules . objective = function () {
     if (checkValue ("A", a * b) && checkValue ("B", b)) {
       message ("Mission accomplished!");
-      increaseCookieResult ('test_ab');
+      increaseCookieResult ('Simple multiplication test (A/B)');
       return true;
     }
     return false;
@@ -23,7 +23,7 @@ multiplicationTests ['Simple multiplication test (C/D)'] = function (message) {
   sliderules . objective = function () {
     if (checkValue ("D", a * b) && checkValue ("C", b)) {
       message ("Mission accomplished!");
-      increaseCookieResult ('test_cd');
+      increaseCookieResult ('Simple multiplication test (C/D)');
       return true;
     }
     return false;
@@ -38,7 +38,7 @@ multiplicationTests ['Wrap-around multiplication test (C/D)'] = function (messag
   sliderules . objective = function () {
     if (checkValue ("D", a * b / 10) && checkValue ("C", b)) {
       message ("Mission accomplished!");
-      increaseCookieResult ('test_wrap_arround_cd');
+      increaseCookieResult ('Wrap-around multiplication test (C/D)');
       return true;
     }
     return false;
@@ -56,7 +56,7 @@ multiplicationTests ['Folded-scale multiplication test (CF/DF)'] = function (mes
   sliderules . objective = function () {
     if (checkValue ("DF", a * b) && checkValue ("CF", b)) {
       message ("Mission accomplished!");
-      increaseCookieResult ('test_cfdf');
+      increaseCookieResult ('Folded-scale multiplication test (CF/DF)');
       return true;
     }
     return false;
@@ -76,7 +76,7 @@ multiplicationTests ['Folded-scale all numbers multiplication test (CF/DF)'] = f
   sliderules . objective = function () {
     if (checkValue ("DF", a * b) && checkValue ("CF", b)) {
       message ("Mission accomplished!");
-      increaseCookieResult ('test_powered_cfdf');
+      increaseCookieResult ('Folded-scale all numbers multiplication test (CF/DF)');
       return true;
     }
     return false;
@@ -94,7 +94,7 @@ multiplicationTests ['Folded-scale multiplication test (C/D/CF/DF)'] = function 
   sliderules . objective = function () {
     if (checkValue ("DF", a * b / 10) && checkValue ("CF", b / 10)) {
       message ("Mission accomplished!");
-      increaseCookieResult ('lesson_cdcfdf');
+      increaseCookieResult ('Folded-scale multiplication test (C/D/CF/DF)');
       return true;
     }
     return false;

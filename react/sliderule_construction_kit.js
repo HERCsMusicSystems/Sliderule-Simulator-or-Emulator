@@ -1340,11 +1340,13 @@ var Rule = function (options) {
       var scale = this . scales [ind];
       if (! scale . dimm) {
         value = scale . examine (position);
-        var location = scale . location (value);
-        if (isNaN (location)) location = null;
-        if (location != null) {
-          track . push ({scale: scale . left, location: location, value: value});
-          return location;
+        if (value != null) {
+          var location = scale . location (value);
+          if (isNaN (location)) location = null;
+          if (location != null) {
+            track . push ({scale: scale . left, location: location, value: value});
+            return location;
+          }
         }
       }
       position = subv (position, {x: 0, y: this . scales [ind] . height});
