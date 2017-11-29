@@ -62,7 +62,7 @@ front_us_cursors . push (new Cursor (HairlineHPUS, 72, 108, 'red'));
 front_us_cursors . push (new Cursor (HairlineS, 72, 108, 'red'));
 front_us_cursors . push (new Cursor (HairlineD, 146, 182, 'red'));
 
-var logo = new Image (); logo . src = "staedtler_logo.png";
+var logo = new Image (); logo . src = "staedtler_logo.png"; logo . onload = function () {sliderules . requireRedraw = true;};
 var sliderules = new Sliderules ({background: logo, background_colour: '#004082'});
 var s = new Sliderule (1200, {cursor_left_extension: 0.065, cursor_right_extension: 0.075, cursor_rounding: 6, cursor_limit_left: 0.06, cursor_limit_right: 0.05, static_markings_shift: 0.044}); sliderules . sliderules . push (s);
 s . braces . push (new StaedtlerLeftBrace (4, 0.13, 0.17, 0.17, 0.19, 10, 80, 90, '#aaaaff', 'red'));

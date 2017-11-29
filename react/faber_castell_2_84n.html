@@ -44,7 +44,7 @@
 
 <script>
 
-var faber_castell = new Image (); faber_castell . src = "Faber-Castell.png";
+var faber_castell = new Image (); faber_castell . src = "Faber-Castell.png"; faber_castell . onload = function () {sliderules . requireRedraw = true;};
 
 var v1 = Math . log10 (Math . pow (Math . E, Math . log (10) - 140 * Math . PI / 200));
 var v2 = Math . log10 (Math . pow (Math . E, (Math . log (10) - 2.2)));

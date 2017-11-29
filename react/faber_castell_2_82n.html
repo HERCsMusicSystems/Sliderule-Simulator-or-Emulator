@@ -45,8 +45,8 @@
 
 <script>
 
-var faber_castell = new Image (); faber_castell . src = "Faber-Castell.png";
-var logo = new Image (); logo . src = "Logo_1951.png";
+var faber_castell = new Image (); faber_castell . src = "Faber-Castell.png"; faber_castell . onload = function () {sliderules . requireRedraw = true;};
+var logo = new Image (); logo . src = "Logo_1951.png"; logo . onload = function () {sliderules . requireRedraw = true;};
 
 var front_german_braces = [], front_german_cursors = [], front_us_braces = [], front_us_cursors = [];
 var back_german_braces = [], back_german_cursors = [], back_us_braces = [], back_us_cursors = [];

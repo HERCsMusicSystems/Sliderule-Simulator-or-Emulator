@@ -63,7 +63,7 @@ var changeFold = function (fold) {
   sliderules . requireRedraw = true;
 };
 
-var outback = new Image (); outback . src = 'outback.jpg';
+var outback = new Image (); outback . src = 'outback.jpg'; outback . onload = function () {sliderules . requireRedraw = true;};
 var sliderules = new Sliderules ({background: outback, background_translation: {x: 0, y: -360}, background_colour: 'black'});
 outback . onload = function () {sliderules . requireRedraw = true;};
 var s = new Sliderule (1200, {cursor_top_margin: 13, cursor_bottom_margin: 13, hairline_top: -10, hairline_bottom: -10, cursor_limit_left: 0.028, cursor_limit_right: 0.028, markings_background: 'yellow'}); sliderules . sliderules . push (s);
