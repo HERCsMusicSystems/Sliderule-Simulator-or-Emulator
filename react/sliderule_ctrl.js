@@ -53,15 +53,19 @@ var cookieScore = function (cookie, selector) {
 };
 
 var checkCookieScores = function (trials, value, artefact) {
-  for (var ind in trials) if (cookieScore (ind, artefact) < value) return false;
+  for (var sub in trials) {
+    for (var ind in trials [sub]) if (cookieScore (ind, artefact) < value) return false;
+  }
   return true;
 };
 
 var cookieMission = function (trials, value, artefact) {
   var ret = [];
-  for (var ind in trials) {
-    var score = value - cookieScore (ind, artefact);
-    if (score > 0) ret . push (ind + " requires " + score + " more passes.");
+  for (var sub in trials) {
+    for (var ind in trials [sub]) {
+      var score = value - cookieScore (ind, artefact);
+      if (score > 0) ret . push (ind + " requires " + score + " more passes.");
+    }
   }
   if (ret . length == 0) ret . push ("All trials passed.");
   return ret;

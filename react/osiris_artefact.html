@@ -182,7 +182,9 @@ var manipulateBackground = function () {
 <script src="scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
 <script src="sliderule_tutorial_manual.js"></script>
+<script src="sliderule_tutorial_multiplications.js"></script>
 <script src="sliderule_test_manual.js"></script>
+<script src="sliderule_test_multiplications.js"></script>
 
 
 <script src="osiris.js"></script>
@@ -192,13 +194,13 @@ var manipulateBackground = function () {
 <script>
 
 
-readSlideruleLessons ('lessons', [userManual]);
-readSlideruleLessons ('tests', [userTrial]);
+readSlideruleLessons ('lessons', [userManual, multiplicationLessons]);
+readSlideruleLessons ('tests', [userTrial, multiplicationTests]);
 sliderules . fixedHeight = 340;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores (userTrial, 2, sliderules . name)) {addArtefact ('Tiamat Artefact'); ret = true;}
-  updateMissions (userTrial);
+  if (checkCookieScores ([userTrial, multiplicationTests], 2, sliderules . name)) {addArtefact ('Tiamat Artefact'); ret = true;}
+  updateMissions ([userTrial, multiplicationTests]);
   updateArtefacts ();
   updateSeeker ();
   return ret;

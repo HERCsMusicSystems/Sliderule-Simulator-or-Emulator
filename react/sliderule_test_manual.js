@@ -30,7 +30,7 @@ userTrial ['Right-click cursor test'] = function (message) {
   var a = 1;
   while (a == 1 || a > 100) a = 1 + Math . floor (Math . random () * 100);
   track = [];
-  message ("The task: move cursor to " + a + " on the A scale.");
+  message ("The task: right-click on the cursor on the A scale to put " + a + " under cursor's hairline.");
   sliderules . objective = function () {
     if (track . length < 1) return false;
     var t = track [track . length - 1];
@@ -45,7 +45,7 @@ userTrial ['Right-click slide test'] = function (message) {
   while (a == 1 || a > 100) a = 1 + Math . floor (Math . random () * 100);
   cursorTo ("A", 10);
   track = [];
-  message ("The task: move cursor to " + a + " on the A scale.");
+  message ("The task: right-click on the slide on the A scale to put " + a + " under cursor's hairline.");
   sliderules . objective = function () {
     if (track . length < 1) return false;
     var t = track [track . length - 1];
