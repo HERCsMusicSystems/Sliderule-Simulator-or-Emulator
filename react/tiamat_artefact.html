@@ -73,14 +73,17 @@ div.templars {
 
 <div class = lore>
 The Sumerian civilisation was known to be highly advanced in mathematics.
-The artefact you are going to use is 5000 years old and is made of clay
-and in all external appearances similar to the Egyptian.
+The artefact you are going to use is 5000 years old and is made of clay.
+Although in all external appearances it looks similar to the Egyptian
+it has a different set of scales.
+In particular, it has two folded scales, where number "1" appears in the middle.
+This arrangement allows for performing calculations with better precision.
 </div>
 
 <br />
 
 <div class = lore>
-You will now be trained on how to use it to perform simple calculations, such as multiplications, divisions, raising to the square and finding sqare roots.
+You will now be trained on how to use it to perform multiplications in a more complex way.
 Good luck!
 </div>
 
@@ -167,8 +170,8 @@ var manipulateBackground = function () {
 <script src="sliderule_construction_kit.js"></script>
 <script src="scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
-<script src="sliderule_tutorial_multiplications.js"></script>
-<script src="sliderule_test_multiplications.js"></script>
+<script src="sliderule_tutorial_multiplications_folded.js"></script>
+<script src="sliderule_test_multiplications_folded.js"></script>
 
 
 <script src="tiamat.js"></script>
@@ -178,13 +181,13 @@ var manipulateBackground = function () {
 <script>
 
 
-readSlideruleLessons ('lessons', [multiplicationLessons]);
-readSlideruleLessons ('tests', [multiplicationTests]);
+readSlideruleLessons ('lessons', [foldedMultiplicationLessons]);
+readSlideruleLessons ('tests', [foldedMultiplicationTests]);
 sliderules . fixedHeight = 300;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores (multiplicationTests, 2, sliderules . name)) {addArtefact ('Zeus Artefact'); ret = true;}
-  updateMissions (multiplicationTests);
+  if (checkCookieScores ([foldedMultiplicationTests], 2, sliderules . name)) {addArtefact ('Zeus Artefact'); ret = true;}
+  updateMissions ([foldedMultiplicationTests]);
   updateArtefacts ();
   updateSeeker ();
   return ret;
