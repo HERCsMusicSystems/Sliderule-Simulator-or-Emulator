@@ -54,14 +54,18 @@
 <script src="folded_scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
 
+<script src="sliderule_tutorial_manual.js"></script>
 <script src="sliderule_tutorial_multiplications.js"></script>
+<script src="sliderule_tutorial_multiplications_folded.js"></script>
+<script src="sliderule_test_manual.js"></script>
 <script src="sliderule_test_multiplications.js"></script>
+<script src="sliderule_test_multiplications_folded.js"></script>
 
 
 <script>
 
-readSlideruleLessons ('lessons', [multiplicationLessons]);
-readSlideruleLessons ('tests', [multiplicationTests]);
+readSlideruleLessons ('lessons', [userManual, multiplicationLessons, foldedMultiplicationLessons]);
+readSlideruleLessons ('tests', [userTrial, multiplicationTests, foldedMultiplicationTests]);
 
 
 var outback = new Image (); outback . src = 'outback.jpg'; outback . onload = function () {sliderules . requireRedraw = true;};
