@@ -26,23 +26,29 @@ var clay2 = new Image (); clay2 . src = 'clay_03.jpg'; clay2 . onload = function
 
 var sliderules = new Sliderules ({background_colour: 'tan'});
 
-var s = new Sliderule (1000); sliderules . sliderules . push (s);
+var s = new Sliderule (1200, {cursor_markings_shift: 0.002}); sliderules . sliderules . push (s);
 
 s . cursorBraces . push (new CursorWindow (16, 10, oak, 'blue'));
 
-s . backBraces . push (new FlatFloor (0.21, 0.21, -18, -18, 10, 'tan', clay1));
+s . backBraces . push (new FlatFloor (0.21, 0.21, -18, -18, 10, 'tan', oak));
 
-var r = new Rule ({rule_colour: clay2}); s . rules . push (r);
-r . markings . push (new Screw (-0.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
-r . markings . push (new Screw (1.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
-r . scales . push (new spacer (24));
-r . scales . push (new scale_CF (24, {left: "DF", ls: 0.05}));
-r = new Rule ({stator: 1, rule_colour: clay2}); s . rules . push (r);
-r . scales . push (new scale_DF (24, {left: "CF", ls: 0.05}));
+s . cursors . push (new Cursor (HairlineD, 0, 192, 'green', {marking_shift: 0.002}));
+s . cursors . push (new Cursor (HairlineS, 0, 192, 'green', {marking_align: 'right', marking_shift: -0.002}));
+
+var r = new Rule ({rule_colour: oak}); s . rules . push (r);
+r . markings . push (new Screw (-0.175, 30, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+r . markings . push (new Screw (1.175, 30, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+r . scales . push (new spacer (12));
+r . scales . push (new scale_P (24, {left: "P", ls: 0.05}));
+r . scales . push (new scale_A (24, {left: "A", ls: 0.05}));
+r = new Rule ({stator: 1, rule_colour: oak}); s . rules . push (r);
+r . scales . push (new scale_B (24, {left: "B", ls: 0.05}));
 r . scales . push (new scale_C (24, {left: "C", ls: 0.05}));
-r = new Rule ({rule_colour: clay2}); s . rules . push (r);
-r . markings . push (new Screw (-0.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
-r . markings . push (new Screw (1.175, 24, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+r = new Rule ({rule_colour: oak}); s . rules . push (r);
+r . markings . push (new Screw (-0.175, 42, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+r . markings . push (new Screw (1.175, 42, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
 r . scales . push (new scale_D (24, {left: "D", ls: 0.05}));
-r . scales . push (new spacer (24));
+r . scales . push (new scale_Sdec_down (24, {left: "S", ls: 0.05}));
+r . scales . push (new scale_Tdec_down (24, {left: "T", ls: 0.05}));
+r . scales . push (new spacer (12));
 

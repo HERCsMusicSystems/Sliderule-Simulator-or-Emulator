@@ -64,7 +64,7 @@ div.templars {
 <body bgcolor=white>
 
 <!--<div id = bg class = templars>-->
-<div id = bg style="background-image: url(sumer_01.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.6); width: 100%; background-repeat: no-repeat; background-size: 1800px;">
+<div id = bg style="background-image: url(acropolis.jpeg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.6); width: 100%; background-repeat: no-repeat; background-size: 1800px;">
 
 <br />
 <center><h2><i>Pythagoras artefact</i></h2></center>
@@ -72,18 +72,28 @@ div.templars {
 <font size="+1"><i>
 
 <div class = lore>
-The Sumerian civilisation was known to be highly advanced in mathematics.
-The artefact you are going to use is 5000 years old and is made of clay.
-Although in all external appearances it looks similar to the Egyptian
-it has a different set of scales.
-In particular, it has two folded scales, where number "1" appears in the middle.
-This arrangement allows for performing calculations with better precision.
+You will now continue your trials learning from Pythagoras itself.
+It is not known how he got into posession of this artefact.
+Most likely he constructed it himself.
+It is, however, quite possible that he has seen an Egyptian artefact in action
+or perhaps even the one, which belonged to Hiram Abif himself.
 </div>
 
 <br />
 
 <div class = lore>
-You will now be trained on how to use it to perform multiplications in a more complex way.
+Pythagoras' artefact, although similar to the Egyptian, includes several more scales.
+Their purpose is to perform trigonometrical calculations.
+It also has two additional green hairlines, which purpose will be explained during the course of the trials.
+The artefact is made of olive tree.
+</div>
+
+<br />
+
+<div class = lore>
+You will now be trained on how to use the artefact to calculate trigonometrical functions.
+Understanding of trigonometry is not compulsory at this moment.
+All you need is to be able to use the artefact to obtain requested values.
 Good luck!
 </div>
 
@@ -97,6 +107,7 @@ Good luck!
 </i></font>
 <div class = lore style = "width: 100%;">
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings&nbsp;
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Other markings&nbsp;
   <select id = lessons><option value = "Choose Lesson ====" >Choose Lesson ====</option></select>
   <input type = button value = "Play lesson" onclick = "javascript: playLesson ('lessons');" />&nbsp;&nbsp;
   <select id = tests><option value = "Choose Test of Merit ====" >Choose Test of Merit ====</option></select>
@@ -198,6 +209,7 @@ addArtefact (sliderules . name);
 <script src="sliderule_application.js"></script>
 <script>
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 //changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 slideruleMission ();
 </script>
