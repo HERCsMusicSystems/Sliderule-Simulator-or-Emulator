@@ -18,7 +18,7 @@ multiplicationTests ['Simple multiplication test (A/B)'] = function (message) {
 
 multiplicationTests ['Simple multiplication test (C/D)'] = function (message) {
   var a = 9, b = 9;
-  while (a * b > 10) {a = crnu (Math . floor (11 + Math . random () * 100) / 10); b = crnu (Math . floor (11 + Math . random () * 100) / 10);}
+  while (a > 10 || b > 10 || a * b > 10) {a = crnu (Math . floor (11 + Math . random () * 100) / 10); b = crnu (Math . floor (11 + Math . random () * 100) / 10);}
   message ("The task: multiply " + a + " by " + b + " using C/D scales.");
   sliderules . objective = function () {
     if (checkValue ("D", a * b) && checkValue ("C", b)) {
@@ -33,7 +33,7 @@ multiplicationTests ['Simple multiplication test (C/D)'] = function (message) {
 
 multiplicationTests ['Wrap-around multiplication test (C/D)'] = function (message) {
   var a = 1, b = 1;
-  while (a * b < 10 || a * b > 100) {a = crnu (Math . floor (11 + Math . random () * 100) / 10); b = crnu (Math . floor (11 + Math . random () * 100) / 10);}
+  while (a > 10 || b > 10 || a * b < 10 || a * b > 100) {a = crnu (Math . floor (11 + Math . random () * 100) / 10); b = crnu (Math . floor (11 + Math . random () * 100) / 10);}
   message ("The task: multiply " + a + " by " + b + " using C/D scales.");
   sliderules . objective = function () {
     if (checkValue ("D", a * b / 10) && checkValue ("C", b)) {

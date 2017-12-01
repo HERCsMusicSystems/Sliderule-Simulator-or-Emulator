@@ -29,7 +29,7 @@ multiplicationLessons ['Simple multiplication (A/B)'] = function (message) {
 
 multiplicationLessons ['Simple multiplication (C/D)'] = function (message) {
   var a = 9, b = 9;
-  while (a * b > 10) {a = crnu (Math . floor (11 + Math . random () * 100) / 10); b = crnu (Math . floor (11 + Math . random () * 100) / 10);}
+  while (a > 10 || b > 10 || a * b > 10) {a = crnu (Math . floor (11 + Math . random () * 100) / 10); b = crnu (Math . floor (11 + Math . random () * 100) / 10);}
   return [
     {action: function () {ensureSide (["C", "D"]);}, delay: 100},
     {action: function () {message ("The task: multiply " + a + " by " + b + " using C/D scales.");}, delay: 1000},
@@ -55,7 +55,7 @@ multiplicationLessons ['Simple multiplication (C/D)'] = function (message) {
 
 multiplicationLessons ['Wrap-around multiplication (C/D)'] = function (message) {
   var a = 1, b = 1;
-  while (a * b < 10 || a * b > 100) {a = crnu (Math . floor (11 + Math . random () * 100) / 10); b = crnu (Math . floor (11 + Math . random () * 100) / 10);}
+  while (a > 10 || b > 10 || a * b < 10 || a * b > 100) {a = crnu (Math . floor (11 + Math . random () * 100) / 10); b = crnu (Math . floor (11 + Math . random () * 100) / 10);}
   return [
     {action: function () {ensureSide (["C", "D"]);}, delay: 100},
     {action: function () {message ("The task: multiply " + a + " by " + b + " using C/D scales.");}, delay: 1000},

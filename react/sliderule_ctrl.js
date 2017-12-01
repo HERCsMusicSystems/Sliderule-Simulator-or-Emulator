@@ -25,7 +25,14 @@ var storage = function () {
 };
 
 //var cook = function (cookie, value) {document . cookie = cookie + " = " + JSON . stringify (value) + "; max-age=33554432";};
-var cook = function (cookie, value) {window . localStorage . setItem (cookie, JSON . stringify (value));};
+var cook = function (cookie, value) {
+	if (value == undefined) {
+		value = window . localStorage . getItem (cookie);
+		if (value == undefined) return undefined;
+		return JSON . parse (value);
+	}
+	window . localStorage . setItem (cookie, JSON . stringify (value));
+};
 
 /*var increaseCookieResult = function (cookie, selector, delta) {
   if (selector == undefined) selector = sliderules . name;
@@ -122,15 +129,17 @@ var cookiesToStorage = function () {
 
 var artefacts = function (cookie) {
   if (cookie == undefined) cookie = 'artefacts';
-  var artefacts = cookies () [cookie];
+  var artefacts = window . localStorage . getItem (cookie);
   if (artefacts == undefined) return [];
+  artefacts = JSON . parse (artefacts);
   return artefacts;
 };
 
 var addArtefact = function (artefact, cookie) {
   if (cookie == undefined) cookie = 'artefacts';
-  var artefacts = cookies () [cookie];
+  var artefacts = window . localStorage . getItem (cookie);
   if (artefacts == undefined) artefacts = [];
+  else artefacts = JSON . parse (artefacts);
   if (artefacts . indexOf (artefact) >= 0) return;
   artefacts . push (artefact);
   cook (cookie, artefacts);
@@ -139,7 +148,9 @@ var addArtefact = function (artefact, cookie) {
 var removeArtefact = function (artefact, cookie) {
   if (cookie == undefined) cookie = 'artefacts';
   if (artefact == undefined) {cook (cookie, []); return;}
-  var artefacts = cookies () [cookie];
+  var artefacts = window . localStorage . getItem (cookie);
+  if (artefacts == undefined) {cook (cookie, []); return;}
+  artefacts = JSON . parse (artefacts);
   var ind = artefacts . indexOf (artefact);
   if (ind < 0) return;
   artefacts . splice (ind, 1);
