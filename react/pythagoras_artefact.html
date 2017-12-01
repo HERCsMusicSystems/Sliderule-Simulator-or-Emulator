@@ -79,6 +79,11 @@ It is, however, quite possible that he has seen an Egyptian artefact in action
 or perhaps even the one, which belonged to Hiram Abif himself.
 </div>
 
+<div style = "position: absolute;">
+<img src = right_angled_triangle.png width = "40%" /><br/>
+<img src = circle.png width = "32%" />
+</div>
+
 <br />
 
 <div class = lore>
@@ -94,6 +99,12 @@ The artefact is made of olive tree.
 You will now be trained on how to use the artefact to calculate trigonometrical functions.
 Understanding of trigonometry is not compulsory at this moment.
 All you need is to be able to use the artefact to obtain requested values.
+However, there are several useful relations, which you would find helpful:<br/>
+<font size = "+1"  color = blue>
+&emsp;<i>tan &#x03b1</i> = <i>a</i> / <i>b</i>
+&emsp;<i>sin &#x03b1</i> = <i>a</i> / <i>c</i>
+</font>
+<br />
 Good luck!
 </div>
 
@@ -181,8 +192,8 @@ var manipulateBackground = function () {
 <script src="sliderule_construction_kit.js"></script>
 <script src="scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
-<script src="sliderule_tutorial_multiplications_folded.js"></script>
-<script src="sliderule_test_multiplications_folded.js"></script>
+<script src="sliderule_tutorial_trigonometry.js"></script>
+<script src="sliderule_test_trigonometry.js"></script>
 
 
 <script src="pythagoras.js"></script>
@@ -192,13 +203,13 @@ var manipulateBackground = function () {
 <script>
 
 
-readSlideruleLessons ('lessons', [foldedMultiplicationLessons]);
-readSlideruleLessons ('tests', [foldedMultiplicationTests]);
+readSlideruleLessons ('lessons', [trigonometryLessons]);
+readSlideruleLessons ('tests', [trigonometryTests]);
 sliderules . fixedHeight = 300;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([foldedMultiplicationTests], 2, sliderules . name)) {addArtefact ('Zeus Artefact'); ret = true;}
-  updateMissions ([foldedMultiplicationTests]);
+  if (checkCookieScores ([trigonometryTests], 2, sliderules . name)) {addArtefact ('Flamel Artefact'); ret = true;}
+  updateMissions ([trigonometryTests]);
   updateArtefacts ();
   updateSeeker ();
   return ret;

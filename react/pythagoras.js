@@ -45,10 +45,11 @@ r = new Rule ({stator: 1, rule_colour: oak}); s . rules . push (r);
 r . scales . push (new scale_B (24, {left: "B", ls: 0.05}));
 r . scales . push (new scale_C (24, {left: "C", ls: 0.05}));
 r = new Rule ({rule_colour: oak}); s . rules . push (r);
-r . markings . push (new Screw (-0.175, 42, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
-r . markings . push (new Screw (1.175, 42, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+r . markings . push (new Screw (-0.175, 54, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+r . markings . push (new Screw (1.175, 54, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
 r . scales . push (new scale_D (24, {left: "D", ls: 0.05}));
 r . scales . push (new scale_Sdec_down (24, {left: "S", ls: 0.05}));
 r . scales . push (new scale_Tdec_down (24, {left: "T", ls: 0.05}));
+r . scales . push (new scale_STdec_down (24, {left: "ST", ls: 0.05}));
 r . scales . push (new spacer (12));
 
