@@ -15,9 +15,19 @@ var cookies = function () {
 	return ret;
 };
 
-var cook = function (cookie, value) {document . cookie = cookie + " = " + JSON . stringify (value) + "; max-age=33554432";};
+var storage = function () {
+  var ret = {};
+  for (var ind in window . localStorage) {
+    var value = window . localStorage . getItem (ind);
+    try {ret [ind] = JSON . parse (value);} catch (e) {ret [ind] = value;}
+  }
+  return ret;
+};
 
-var increaseCookieResult = function (cookie, selector, delta) {
+//var cook = function (cookie, value) {document . cookie = cookie + " = " + JSON . stringify (value) + "; max-age=33554432";};
+var cook = function (cookie, value) {window . localStorage . setItem (cookie, JSON . stringify (value));};
+
+/*var increaseCookieResult = function (cookie, selector, delta) {
   if (selector == undefined) selector = sliderules . name;
   if (selector == undefined) return;
   if (delta == undefined) delta = 1;
@@ -36,15 +46,41 @@ var increaseCookieResult = function (cookie, selector, delta) {
   }
   cjs [selector] += delta;
   document . cookie = cookie + " = " + JSON . stringify (cjs) + "; max-age=33554432";
+};*/
+
+var increaseCookieResult = function (cookie, selector, delta) {
+  if (selector == undefined) selector = sliderules . name;
+  if (selector == undefined) return;
+  if (delta == undefined) delta = 1;
+  var c = window . localStorage . getItem (cookie);
+  if (c == undefined) {var js = {}; js [selector] = delta; window . localStorage . setItem (cookie, JSON . stringify (js)); return;}
+  var cjs = JSON . parse (c);
+  if (cjs [selector] == undefined) {cjs [selector] = delta; window . localStorage . setItem (cookie, JSON . stringify (cjs)); return;}
+  cjs [selector] += delta;
+  window . localStorage . setItem (cookie, JSON . stringify (cjs));
 };
 
-var cookieScore = function (cookie, selector) {
+/*var cookieScore = function (cookie, selector) {
   var c = cookies ();
   if (c == undefined) return 0;
   var cs = c [cookie];
   if (cs == undefined) return 0;
   var score = 0;
   if (selector == undefined) {
+    for (var ind in cs) score += cs [ind];
+    return score;
+  }
+  cs = cs [selector];
+  return cs == undefined ? 0 : cs;
+};*/
+
+var cookieScore = function (cookie, selector) {
+  var c = window . localStorage . getItem (cookie);
+  if (c == undefined) return 0;
+  var cs = JSON . parse (c);
+  if (cs == undefined) return 0;
+  if (selector == undefined) {
+    var score = 0;
     for (var ind in cs) score += cs [ind];
     return score;
   }
@@ -71,10 +107,17 @@ var cookieMission = function (trials, value, artefact) {
   return ret;
 };
 
-var removeCookie = function (cookie) {document . cookie = cookie + "=;max-age=0";}
-var removeAllCookies = function () {
+//var removeCookie = function (cookie) {document . cookie = cookie + "=;max-age=0";}
+var removeCookie = function (cookie) {window . localStorage . removeItem (cookie);};
+/*var removeAllCookies = function () {
   var c = cookies ();
   for (var ind in c) removeCookie (ind);
+};*/
+var removeAllCookies = function () {window . localStorage . clear ();};
+
+var cookiesToStorage = function () {
+  var c = cookies ();
+  for (var ind in c) window . localStorage . setItem (ind, JSON . stringify (c [ind]));
 };
 
 var artefacts = function (cookie) {
