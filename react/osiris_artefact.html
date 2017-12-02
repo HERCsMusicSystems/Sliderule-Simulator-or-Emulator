@@ -210,14 +210,14 @@ var manipulateBackground = function () {
 
 <script>
 
-
+var trials = Number (cook ('trials'));
 readSlideruleLessons ('lessons', [userManual, multiplicationLessons]);
 readSlideruleLessons ('tests', [userTrial, multiplicationTests]);
 sliderules . fixedHeight = 340;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([userTrial, multiplicationTests], 2, sliderules . name)) {addArtefact ('Tiamat Artefact'); ret = true;}
-  updateMissions ([userTrial, multiplicationTests]);
+  if (checkCookieScores ([userTrial, multiplicationTests], trials, sliderules . name)) {addArtefact ('Tiamat Artefact'); ret = true;}
+  updateMissions ([userTrial, multiplicationTests], trials);
   updateArtefacts ();
   updateSeeker ();
   return ret;

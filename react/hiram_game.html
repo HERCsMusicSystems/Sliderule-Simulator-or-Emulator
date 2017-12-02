@@ -86,6 +86,16 @@ which was found by Hugues de Payens under the ruins of Solomon's Temple in 1119.
 <br />
 
 <div class = lore>Are you willing go through trials? <span id = next /></div><br/>
+<div class = lore style="text-indent: 0px;">
+How hard trials are you willing to take?
+	<select id = trials onchange = "javascript: cook ('trials', this . value);">
+		<option value = 1>Single pass</option>
+		<option value = 2>Two passes</option>
+		<option value = 3>Three passes</option>
+		<option value = 4>Four passes</option>
+		<option value = 5>Five passes</option>
+	</select>
+</div>
 <div class = lore style="text-indent: 0px;">Your status now is: <font color=blue><span id = seeker /></font></div><br/>
 <!--<div class = lore style="text-indent: 0px;">Mission:<br /><font color=blue><span id = mission /></font></div><br/>-->
 <div class = lore style="text-indent: 0px;">Your artefacts:<br /><font color=blue><span id = artefacts /></font></div>
@@ -101,6 +111,13 @@ which was found by Hugues de Payens under the ruins of Solomon's Temple in 1119.
 <audio src="courage.mp3" autoplay loop />
 <script src="sliderule_ctrl.js"></script>
 <script src="templars_artefacts.js"></script>
+
+<script>
+var trials = cook ('trials');
+if (trials == undefined) trials = 2;
+else trials = Number (trials);
+document . getElementById ('trials') . value = trials;
+</script>
 
 <script>
 updateArtefacts ();

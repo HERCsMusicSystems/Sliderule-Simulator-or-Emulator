@@ -1,6 +1,7 @@
 
-var updateMissions = function (trial) {
-	document . getElementById ('mission') . innerHTML = cookieMission (trial, 2, sliderules . name) . join ('<br />');
+var updateMissions = function (trial, trials) {
+	if (trials == undefined) trials = 2;
+	document . getElementById ('mission') . innerHTML = cookieMission (trial, trials, sliderules . name) . join ('<br />');
 };
 
 var updateArtefacts = function () {
