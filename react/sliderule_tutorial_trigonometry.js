@@ -109,4 +109,18 @@ trigonometryLessons ['Small angle to radians conversion'] = function (message) {
   ];
 };
 
+trigonometryLessons ['Calculate c and \u03b1'] = function (message) {
+  var a = 0, b = 0, c = 0;
+  while (a < 1 || b < 1 || a > b || c > 10) {
+  	a = 1 + Math . floor (Math . random () * 10);
+  	b = 1 + Math . floor (Math . random () * 10);
+  	c = crnu (Math . sqrt (a * a + b + b));
+  }
+  return [
+    {action: function () {ensureSide (["CI", "D", "S", "T"]);}, delay: 100},
+    {action: function () {message ("The task: a = " + a + ", b = " + b + ", find c and \u03b1.");}, delay: 500},
+    {action: function () {isolate (["S", "T", "CI", "D"]); changeMarkings ('hairline', true); dimmm (255, 80, 8);}, delay: 500}
+  ];
+};
+
 slideruleLessons . push (trigonometryLessons);

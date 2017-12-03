@@ -45,4 +45,15 @@ trigonometryTests ['Angle of a tangent test'] = function (message) {
   };
 };
 
+trigonometryTests ['Small angle to radians conversion test'] = function (message) {
+  var angle = 0;
+  while (angle > 5.7 || angle < 0.58) angle = crnu (Math . floor (Math . random () * 100) / 10);
+  var radians = crnu (angle * Math . PI / 180, 7);
+  message ("The task: convert " + angle + " degrees to radians.");
+  sliderules . objective = function () {
+    if (checkValue ("ST", angle)) {message ("Mission accomplished!"); increaseCookieResult ('Small angle to radians conversion test'); return true;}
+    return false;
+  };
+};
+
 slideruleLessons . push (trigonometryTests);

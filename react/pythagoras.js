@@ -43,6 +43,7 @@ r . scales . push (new scale_P (24, {left: "P", ls: 0.05}));
 r . scales . push (new scale_A (24, {left: "A", ls: 0.05}));
 r = new Rule ({stator: 1, rule_colour: oak}); s . rules . push (r);
 r . scales . push (new scale_B (24, {left: "B", ls: 0.05}));
+r . scales . push (new scale_CI (24, {left: "CI", ls: 0.05}));
 r . scales . push (new scale_C (24, {left: "C", ls: 0.05}));
 r = new Rule ({rule_colour: oak}); s . rules . push (r);
 r . markings . push (new Screw (-0.175, 54, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
