@@ -56,4 +56,23 @@ trigonometryTests ['Small angle to radians conversion test'] = function (message
   };
 };
 
+trigonometryTests ['Calculate c and \u03b1 test'] = function (message) {
+  var a = 0, b = 0, c = 0;
+  while (a <= 1 || b <= 1 || a > b || c > 10) {
+    a = 1 + Math . floor (Math . random () * 9);
+    b = 1 + Math . floor (Math . random () * 9);
+    c = crnu (Math . sqrt (a * a + b * b), 5);
+  }
+  var alpha = crnu (Math . atan (a / b) * 180 / Math . PI, 5);
+  message ("The task: a = " + a + ", b = " + b + ", find c and \u03b1.");
+  sliderules . objective = function () {
+    if (checkValue ("S", alpha) && checkValue ("CI", c)) {
+      message ("Mission accomplished!");
+      increaseCookieResult ('Calculate c and \u03b1 test');
+      return true;
+    }
+    return false;
+  };
+};
+
 slideruleLessons . push (trigonometryTests);

@@ -202,14 +202,15 @@ var manipulateBackground = function () {
 
 <script>
 
-
+var trials = Number (cook ('trials'));
+if (isNaN (trials)) trials = 2;
 readSlideruleLessons ('lessons', [trigonometryLessons]);
 readSlideruleLessons ('tests', [trigonometryTests]);
 sliderules . fixedHeight = 300;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([trigonometryTests], 2, sliderules . name)) {addArtefact ('Flamel Artefact'); ret = true;}
-  updateMissions ([trigonometryTests]);
+  if (checkCookieScores ([trigonometryTests], trials, sliderules . name)) {addArtefact ('Flamel Artefact'); ret = true;}
+  updateMissions ([trigonometryTests], trials);
   updateArtefacts ();
   updateSeeker ();
   return ret;

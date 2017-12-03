@@ -107,7 +107,7 @@ var cookieMission = function (trials, value, artefact) {
   for (var sub in trials) {
     for (var ind in trials [sub]) {
       var score = value - cookieScore (ind, artefact);
-      if (score > 0) ret . push (ind + " requires " + score + " more passes.");
+      if (score > 0) ret . push (ind + " requires " + score + (score > 1 ? " more passes." : " more pass."));
     }
   }
   if (ret . length == 0) ret . push ("All trials passed.");

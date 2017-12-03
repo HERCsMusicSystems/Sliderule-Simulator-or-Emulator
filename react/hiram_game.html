@@ -114,7 +114,7 @@ How hard trials are you willing to take?
 
 <script>
 var trials = cook ('trials');
-if (trials == undefined) trials = 2;
+if (trials == undefined) {trials = 2; cook ('trials', 2);}
 else trials = Number (trials);
 document . getElementById ('trials') . value = trials;
 </script>

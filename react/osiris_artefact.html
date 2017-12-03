@@ -211,6 +211,7 @@ var manipulateBackground = function () {
 <script>
 
 var trials = Number (cook ('trials'));
+if (isNaN (trials)) trials = 2;
 readSlideruleLessons ('lessons', [userManual, multiplicationLessons]);
 readSlideruleLessons ('tests', [userTrial, multiplicationTests]);
 sliderules . fixedHeight = 340;
