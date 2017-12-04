@@ -64,7 +64,7 @@ div.templars {
 <body bgcolor=white>
 
 <!--<div id = bg class = templars>-->
-<div id = bg style="background-image: url(acropolis.jpeg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.6); width: 100%; background-repeat: no-repeat; background-size: 1800px;">
+<div id = bg style="background-image: url(acropolis.jpeg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.6); width: 100%; background-repeat: no-repeat; background-size: 2600px; background-position: -300px 0px;">
 
 <br />
 <center><h2><i>Pythagoras artefact</i></h2></center>
@@ -88,7 +88,7 @@ or perhaps even the one, which belonged to Hiram Abif himself.
 
 <div class = lore>
 Pythagoras' artefact, although similar to the Egyptian, includes several more scales.
-Their purpose is to perform trigonometrical calculations.
+Their purpose is to perform reciprocal and trigonometrical calculations.
 It also has two additional green hairlines, which purpose will be explained during the course of the trials.
 The artefact is made of olive tree.
 </div>
@@ -96,7 +96,8 @@ The artefact is made of olive tree.
 <br />
 
 <div class = lore>
-You will now be trained on how to use the artefact to calculate trigonometrical functions.
+You will now be trained on how to use the artefact to multiply and divide using reciprocal scale
+as well as calculate trigonometrical functions.
 Understanding of trigonometry is not compulsory at this moment.
 All you need is to be able to use the artefact to obtain requested values.
 However, there are several useful relations, which you would find helpful:<br/>
@@ -192,7 +193,9 @@ var manipulateBackground = function () {
 <script src="sliderule_construction_kit.js"></script>
 <script src="scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
+<script src="sliderule_tutorial_reciprocal.js"></script>
 <script src="sliderule_tutorial_trigonometry.js"></script>
+<script src="sliderule_test_reciprocal.js"></script>
 <script src="sliderule_test_trigonometry.js"></script>
 
 
@@ -204,13 +207,13 @@ var manipulateBackground = function () {
 
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
-readSlideruleLessons ('lessons', [trigonometryLessons]);
-readSlideruleLessons ('tests', [trigonometryTests]);
+readSlideruleLessons ('lessons', [reciprocalLessons, trigonometryLessons]);
+readSlideruleLessons ('tests', [reciprocalTests, trigonometryTests]);
 sliderules . fixedHeight = 300;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([trigonometryTests], trials, sliderules . name)) {addArtefact ('Flamel Artefact'); ret = true;}
-  updateMissions ([trigonometryTests], trials);
+  if (checkCookieScores ([reciprocalTests, trigonometryTests], trials, sliderules . name)) {addArtefact ('Flamel Artefact'); ret = true;}
+  updateMissions ([reciprocalTests, trigonometryTests], trials);
   updateArtefacts ();
   updateSeeker ();
   return ret;
