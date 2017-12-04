@@ -128,7 +128,10 @@ trigonometryLessons ['Calculate c and \u03b1'] = function (message) {
     {action: function () {message ("MoveCursor to " + b + " on the CI scale.");}, delay: 2000},
     {action: function () {cursorTo ("CI", b);}, delay: 1500},
     {action: function () {message ("Read the \u03b1 angle of " + alpha + " degrees from the T scale.");}, delay: 2000},
-    {action: function () {message ("Now move the cursor to " + alpha + " degrees on the S scale.");}, delay: 3000},
+    {action: function () {message ("Since sine of " + alpha + " degrees is a fractional number....");}, delay: 2000},
+    {action: function () {message (".... and " + a + " on the CI scale is already aligned with 10 on the D scale....");}, delay: 2000},
+    {action: function () {message (".... " + a + " can be easily divided by sine of " + alpha + " degrees.");}, delay: 2000},
+    {action: function () {message ("Simply move the cursor to " + alpha + " degrees on the S scale.");}, delay: 3000},
     {action: function () {cursorTo ("S", alpha);}, delay: 1500},
     {action: function () {message ("The value of c is " + c + " and can be read from the CI scale.");}, delay: 2000},
     {action: function () {cursorTo ("D", 1); slideTo ("CI", 10); dimmm (80, 255, 8);
