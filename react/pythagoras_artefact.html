@@ -101,12 +101,16 @@ as well as calculate trigonometrical functions.
 Understanding of trigonometry is not compulsory at this moment.
 All you need is to be able to use the artefact to obtain requested values.
 However, there are several useful relations, which you would find helpful:<br/>
+</i>
 <font size = "+1"  color = blue>
-&emsp;<i>tan &#x03b1</i> = <i>a</i> / <i>b</i>
-&emsp;<i>sin &#x03b1</i> = <i>a</i> / <i>c</i>
+&emsp;<i>tan &#x03b1 </i> = <i>a</i> / <i>b</i>
+&emsp;<i>sin &#x03b1 </i> = <i>a</i> / <i>c</i>
 &emsp;<i>c</i> = <i>a</i> / <i>sin &#x03b1</i>
-&emsp;<i>a</i> = <i>c</i> &#x00d7 <i>sin &#x03b1</i>
+&emsp;<i>a</i> = <i>c</i> &#x00d7 <i>sin &#x03b1</i><br />
+&emsp;<i>Area</i> = &#x03c0 &#x00d7 <i>r</i>&#x00b2
+&emsp;<i>Area</i> = <i>d</i>&#x00b2 &#x00d7 &#x03c0 / 4
 </font>
+<i>
 <br />
 Good luck!
 </div>
@@ -198,9 +202,11 @@ var manipulateBackground = function () {
 <script src="manual/sliderule_tutorial_reciprocal.js"></script>
 <script src="manual/sliderule_tutorial_trigonometry.js"></script>
 <script src="manual/sliderule_tutorial_pythagorean.js"></script>
+<script src="manual/sliderule_tutorial_circle_area.js"></script>
 <script src="manual/sliderule_test_reciprocal.js"></script>
 <script src="manual/sliderule_test_trigonometry.js"></script>
 <script src="manual/sliderule_test_pythagorean.js"></script>
+<script src="manual/sliderule_test_circle_area.js"></script>
 
 
 <script src="pythagoras.js"></script>
@@ -211,13 +217,14 @@ var manipulateBackground = function () {
 
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
-readSlideruleLessons ('lessons', [reciprocalLessons, trigonometryLessons, pythagoreanLessons]);
-readSlideruleLessons ('tests', [reciprocalTests, trigonometryTests, pythagoreanTests]);
+readSlideruleLessons ('lessons', [reciprocalLessons, trigonometryLessons, pythagoreanLessons, circleAreaLessons]);
+var allTests = [reciprocalTests, trigonometryTests, pythagoreanTests, circleAreaTests];
+readSlideruleLessons ('tests', allTests);
 sliderules . fixedHeight = 300;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([reciprocalTests, trigonometryTests, pythagoreanTests], trials, sliderules . name)) {addArtefact ('Flamel Artefact'); ret = true;}
-  updateMissions ([reciprocalTests, trigonometryTests, pythagoreanTests], trials);
+  if (checkCookieScores (allTests, trials, sliderules . name)) {addArtefact ('Flamel Artefact'); ret = true;}
+  updateMissions (allTests, trials);
   updateArtefacts ();
   updateSeeker ();
   return ret;
