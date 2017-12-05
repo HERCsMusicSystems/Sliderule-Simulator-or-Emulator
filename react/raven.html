@@ -54,18 +54,22 @@
 <script src="folded_scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
 
-<script src="sliderule_tutorial_manual.js"></script>
-<script src="sliderule_tutorial_multiplications.js"></script>
-<script src="sliderule_tutorial_multiplications_folded.js"></script>
-<script src="sliderule_test_manual.js"></script>
-<script src="sliderule_test_multiplications.js"></script>
-<script src="sliderule_test_multiplications_folded.js"></script>
+<script src="manual/sliderule_tutorial_manual.js"></script>
+<script src="manual/sliderule_tutorial_multiplications.js"></script>
+<script src="manual/sliderule_tutorial_multiplications_folded.js"></script>
+<script src="manual/sliderule_tutorial_reciprocal.js"></script>
+<script src="manual/sliderule_tutorial_trigonometry.js"></script>
+<script src="manual/sliderule_test_manual.js"></script>
+<script src="manual/sliderule_test_multiplications.js"></script>
+<script src="manual/sliderule_test_reciprocal.js"></script>
+<script src="manual/sliderule_test_multiplications_folded.js"></script>
+<script src="manual/sliderule_test_trigonometry.js"></script>
 
 
 <script>
 
-readSlideruleLessons ('lessons', [userManual, multiplicationLessons, foldedMultiplicationLessons]);
-readSlideruleLessons ('tests', [userTrial, multiplicationTests, foldedMultiplicationTests]);
+readSlideruleLessons ('lessons', [userManual, multiplicationLessons, foldedMultiplicationLessons, reciprocalLessons, trigonometryLessons]);
+readSlideruleLessons ('tests', [userTrial, multiplicationTests, foldedMultiplicationTests, reciprocalTests, trigonometryTests]);
 
 
 var outback = new Image (); outback . src = 'outback.jpg'; outback . onload = function () {sliderules . requireRedraw = true;};
