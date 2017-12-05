@@ -109,6 +109,36 @@ trigonometryLessons ['Small angle to radians conversion'] = function (message) {
   ];
 };
 
+trigonometryLessons ['Calculate a'] = function (message) {
+  var a = 0, c = 0;
+  while (a <= 1 || c <= 1 || a >= c || c > 10) {
+    a = 1 + Math . floor (Math . random () * 9);
+    c = 1 + Math . floor (Math . random () * 9);
+  }
+  var alpha = crnu (Math . asin (a / c) * 180 / Math . PI, 5);
+  return [
+    {action: function () {ensureSide (['C', 'D', 'S']); isolate (['C', 'D', 'S']); changeMarkings ('hairline', true); dimmm (255, 80, 8);}, delay: 100},
+    {action: function () {message ("The task: c = " + c + ", \u03b1 = " + alpha + ", find a.");}, delay: 500},
+    {action: function () {message ("Move cursor to 10 on the D scale.");}, delay: 2000},
+    {action: function () {cursorTo ('D', 10);}, delay: 1500},
+    {action: function () {message ("Align " + c + " on the the C scale with cursor's hairline.");}, delay: 2000},
+    {action: function () {slideTo ('C', c);}, delay: 2000},
+    {action: function () {message ("Move cursor to " + alpha + " on the S scale.");}, delay: 3000},
+    {action: function () {cursorTo ('S', alpha);}, delay: 1500},
+    {action: function () {message ("Read the value of a = " + a + " on the C scale.");}, delay: 3000},
+    {action: function () {cursorTo ('D', 1); slideTo ('C', 1); dimmm (80, 255, 8);
+    sliderules . objective = function () {
+      if (checkValue ('S', alpha) && checkValue ('C', a)) {
+        message ("Mission accomplished!");
+        increaseCookieResult ('Calculate a');
+        return true;
+      }
+      return false;
+    };}, delay: 6000},
+    {action: function () {isolate (); message ("Try these instructions again.");}, delay: 3000}
+  ];
+};
+
 trigonometryLessons ['Calculate c and \u03b1'] = function (message) {
   var a = 0, b = 0, c = 0;
   while (a <= 1 || b <= 1 || a > b || c > 10) {
@@ -123,7 +153,7 @@ trigonometryLessons ['Calculate c and \u03b1'] = function (message) {
     {action: function () {isolate (["S", "T", "CI", "D"]); changeMarkings ('hairline', true); dimmm (255, 80, 8);}, delay: 500},
     {action: function () {message ("Move cursor to " + a + " on the D scale.");}, delay: 1000},
     {action: function () {cursorTo ("D", a);}, delay: 1500},
-    {action: function () {message ("Align 10 on CI scale with cursor's hairline.");}, delay: 2000},
+    {action: function () {message ("Align 10 on the CI scale with cursor's hairline.");}, delay: 2000},
     {action: function () {slideTo ("CI", 10);}, delay: 1500},
     {action: function () {message ("MoveCursor to " + b + " on the CI scale.");}, delay: 2000},
     {action: function () {cursorTo ("CI", b);}, delay: 1500},
@@ -139,7 +169,7 @@ trigonometryLessons ['Calculate c and \u03b1'] = function (message) {
       if (checkValue ("S", alpha) && checkValue ("CI", c)) {message ("Mission accomplished!"); increaseCookieResult ('Calculate c and \u03b1'); return true;}
       return false;
     }}, delay: 6000},
-    {action: function () {isolate (); message ("Try these instructions again");}, delay: 3000}
+    {action: function () {isolate (); message ("Try these instructions again.");}, delay: 3000}
   ];
 };
 

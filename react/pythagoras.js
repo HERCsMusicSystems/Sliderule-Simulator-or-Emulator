@@ -32,8 +32,8 @@ s . cursorBraces . push (new CursorWindow (16, 10, oak, 'blue'));
 
 s . backBraces . push (new FlatFloor (0.21, 0.21, -18, -18, 10, 'tan', oak));
 
-s . cursors . push (new Cursor (HairlineD, 0, 192, 'green', {marking_shift: 0.002}));
-s . cursors . push (new Cursor (HairlineS, 0, 192, 'green', {marking_align: 'right', marking_shift: -0.002}));
+s . cursors . push (new Cursor (HairlineD, 0,240, 'green', {marking_shift: 0.002}));
+s . cursors . push (new Cursor (HairlineS, 0, 240, 'green', {marking_align: 'right', marking_shift: -0.002}));
 
 var r = new Rule ({rule_colour: oak}); s . rules . push (r);
 r . markings . push (new Screw (-0.175, 30, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
