@@ -197,8 +197,10 @@ var manipulateBackground = function () {
 <script src="sliderule_ctrl.js"></script>
 <script src="manual/sliderule_tutorial_reciprocal.js"></script>
 <script src="manual/sliderule_tutorial_trigonometry.js"></script>
+<script src="manual/sliderule_tutorial_pythagorean.js"></script>
 <script src="manual/sliderule_test_reciprocal.js"></script>
 <script src="manual/sliderule_test_trigonometry.js"></script>
+<script src="manual/sliderule_test_pythagorean.js"></script>
 
 
 <script src="pythagoras.js"></script>
@@ -209,13 +211,13 @@ var manipulateBackground = function () {
 
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
-readSlideruleLessons ('lessons', [reciprocalLessons, trigonometryLessons]);
-readSlideruleLessons ('tests', [reciprocalTests, trigonometryTests]);
+readSlideruleLessons ('lessons', [reciprocalLessons, trigonometryLessons, pythagoreanLessons]);
+readSlideruleLessons ('tests', [reciprocalTests, trigonometryTests, pythagoreanTests]);
 sliderules . fixedHeight = 300;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([reciprocalTests, trigonometryTests], trials, sliderules . name)) {addArtefact ('Flamel Artefact'); ret = true;}
-  updateMissions ([reciprocalTests, trigonometryTests], trials);
+  if (checkCookieScores ([reciprocalTests, trigonometryTests, pythagoreanTests], trials, sliderules . name)) {addArtefact ('Flamel Artefact'); ret = true;}
+  updateMissions ([reciprocalTests, trigonometryTests, pythagoreanTests], trials);
   updateArtefacts ();
   updateSeeker ();
   return ret;
