@@ -16,4 +16,26 @@ circleAreaTests ['Area from radius test'] = function (message) {
   };
 };
 
+circleAreaTests ['Area from diameter test'] = function (message) {
+  var d = 0;
+  while (d <= 1 || d > 10) d = crnu (1 + Math . floor (Math . random () * 111) / 10);
+  var area = crnu (d * d * Math . PI / 4, 5);
+  message ("The task: diameter d = " + d + ", find the area of the circle.");
+  sliderules . objective = function () {
+    if (checkValue ('A', d * d)) {message ("Mission accomplished!"); increaseCookieResult ('Area from diameter test'); return true;}
+    return false;
+  };
+};
+
+circleAreaTests ['Diameter from area test'] = function (message) {
+  var area = 0;
+  while (area <= 1 || area > 78) area = crnu (1 + Math . floor (Math . random () * 111));
+  var d = crnu (Math . sqrt (area * 4 / Math . PI), 5);
+  message ("The task: area = " + area + ", find the diameter of the circle.");
+  sliderules . objective = function () {
+    if (checkValue ('D', Math . sqrt (area))) {message ("Mission accomplished!"); increaseCookieResult ('Diameter from area test'); return true;}
+    return false;
+  };
+};
+
 slideruleLessons . push (circleAreaTests);
