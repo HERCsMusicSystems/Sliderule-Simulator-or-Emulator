@@ -7,6 +7,7 @@
 
 [[route *req *res GET ""] [*res "HTTP/1.0 200 OK\n\n"] [*res [] : "index.html"]]
 [[route *req *res GET *sliderule] [*res "HTTP/1.0 200 OK\n\n"] [*res [] : *sliderule]]; "</h1><body>"]]
+[[route *req *res GET *folder *script] [*res "HTTP/1.0 200 OK\n\n"] [add *folder "/" *script *path] [*res [] : *path]]
 [[route *req *res : *route] [*res "HTTP/1.0 200 OK\n\n<body><h1>Prolog Webserver" [*route] "</h1></body>"]]
 
 [res [http_request *req] [*req HTTP_URI : *route] [route *req http_responder : *route]]
