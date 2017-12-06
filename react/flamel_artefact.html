@@ -24,7 +24,7 @@
 -->
 <html>
   <head>
-    <title>Osiris Artefact</title>
+    <title>Nicolas Flamel Artefact</title>
   </head>
 
 
@@ -58,59 +58,31 @@ div.templars {
 </style>
 
 
+
 <body bgcolor=white style="margin: 0px; padding: 0px;">
 
 <!--<div id = bg class = templars>-->
-<div id = bg style="background-image: url(osiris_1.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.6); width: 100%; background-repeat: no-repeat; background-size: 1900px;">
+<div id = bg style="background-image: url(alchemical_02.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.2); width: 100%; background-repeat: no-repeat; background-size: 2000px; background-position: 0px -200px;">
 
 <br />
-<center><h2><i>Osiris artefact</i></h2></center>
+<center><h1><i><font color=gold>Nicolas Flamel's artefact</font></i></h1></center>
 
-<font size="+1"><i>
+<font size="+1" color=gold><i>
 
 <div class = lore>
-Before you are allowed to access Hiram Abif's artefact your principles need to be put to the test.
-As the artefact you are seeking is very powerful, these tests are, in fact, for your safety and protection!
+The Sumerian civilisation was known to be highly advanced in mathematics.
+The artefact you are going to use is 5000 years old and is made of clay.
+Although in all external appearances it looks similar to the Egyptian
+it has a different set of scales.
+In particular, it has two folded scales, where number "1" appears in the middle.
+This arrangement allows for performing calculations with better precision.
 </div>
 
 <br />
 
 <div class = lore>
-You will begin your tests on a much smaller artefact, which was used by Egyptian Priests
-for calculating the positions of the planets as well as for construction work.
-</div>
-
-<br />
-
-<div class = lore>
-The egyptian artefact consists of two rules, which are immovable, and one movable slide.
-There is a also a movable cursor window with hairline.
-It is constructed from wood and straw.
-</div>
-
-<br />
-
-<div class = lore>
-You will learn how to slide the cursor and/or slide by dragging them with your mouse
-and how to move them automatically by right-clicking on scales and entering numerical values.
-You will also learn how to perform simple multiplications using A/B scales, and with greater precision using C/D scales.
-</div>
-
-<br />
-
-<div class = lore>
-The checkbox to the left makes it possible to read the numerical position of the hairline.
-There are two drop-down menus.
-One with tutorials on how to operate the artefact.
-Another with tasks.
-Simply, choose a tutorial and play it.
-Once you are ready for the trials, choose them one at the time and click the "Attempt trial" button to proceed.
-</div>
-
-<br />
-
-<div class = lore>
-Good luck! You will need it.
+You will now be trained on how to use it to perform multiplications in a more complex way.
+Good luck!
 </div>
 
 <br />
@@ -119,6 +91,7 @@ Good luck! You will need it.
 <div class = lore style="text-indent: 0px;">Mission:<br /><font color=blue><span id = mission /></font></div><br/>
 <div class = lore style="text-indent: 0px;">Your artefacts:<br /><span id = artefacts /></div>
 <br />
+
 </i></font>
 <div class = lore style = "width: 100%;">
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings&nbsp;
@@ -194,13 +167,11 @@ var manipulateBackground = function () {
 <script src="sliderule_construction_kit.js"></script>
 <script src="scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
-<script src="manual/sliderule_tutorial_manual.js"></script>
-<script src="manual/sliderule_tutorial_multiplications.js"></script>
-<script src="manual/sliderule_test_manual.js"></script>
-<script src="manual/sliderule_test_multiplications.js"></script>
+<script src="manual/sliderule_tutorial_multiplications_folded.js"></script>
+<script src="manual/sliderule_test_multiplications_folded.js"></script>
 
 
-<script src="osiris.js"></script>
+<script src="flamel.js"></script>
 
 <script src="templars_artefacts.js"></script>
 
@@ -208,18 +179,18 @@ var manipulateBackground = function () {
 
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
-readSlideruleLessons ('lessons', [userManual, multiplicationLessons]);
-readSlideruleLessons ('tests', [userTrial, multiplicationTests]);
-sliderules . fixedHeight = 340;
+readSlideruleLessons ('lessons', [foldedMultiplicationLessons]);
+readSlideruleLessons ('tests', [foldedMultiplicationTests]);
+sliderules . fixedHeight = 400;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([userTrial, multiplicationTests], trials, sliderules . name)) {addArtefact ('Tiamat Artefact'); ret = true;}
-  updateMissions ([userTrial, multiplicationTests], trials);
+  if (checkCookieScores ([foldedMultiplicationTests], trials, sliderules . name)) {addArtefact ('Pythagoras Artefact'); ret = true;}
+  updateMissions ([foldedMultiplicationTests], trials);
   updateArtefacts ();
   updateSeeker ();
   return ret;
 };
-sliderules . name = "Osiris Artefact";
+sliderules . name = "Flamel Artefact";
 addArtefact (sliderules . name);
 </script>
 <script src="sliderule_application.js"></script>
@@ -228,6 +199,6 @@ changeMarkings ('hairline', document . getElementById ('on_hairline') . checked)
 //changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 slideruleMission ();
 </script>
-
 </div>
+
 </body></html>

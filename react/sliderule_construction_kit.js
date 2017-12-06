@@ -2145,6 +2145,7 @@ var Sliderules = function (options) {
   	this . requireRedraw = false;
     ctx . setTransform (1, 0, 0, 1, 0, 0);
     ctx . fillStyle = this . background_colour;
+    ctx . clearRect (0, 0, width, height);
     ctx . fillRect (0, 0, width, height);
     if (this . background) {
       ctx . save ();
