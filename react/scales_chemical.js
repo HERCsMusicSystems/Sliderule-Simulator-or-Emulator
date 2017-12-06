@@ -173,13 +173,12 @@ var scale_Chemical = function (height, elements, options) {
     else {e . mass /= 100; e . decoration = 'overline';}
     s . elements . push (e);
   }
-  s . value = function (location) {return Math . pow (10, location + 1);};
-  s . location = function (value) {return Math . log10 (value) - 1;};
+  s . value = function (location) {return Math . pow (10, location);};
+  s . location = function (value) {return Math . log10 (value);};
   s . read = function (position) {
     var mass = masses [position . toLowerCase ()];
     if (mass != undefined) {
-      mass = Math . log10 (mass);
-      while (mass > 1) mass -= 1;
+      while (mass > 10) mass /= 10;
       return mass;
     }
     return null;

@@ -36,21 +36,43 @@ s . cursors . push (new Cursor (HairlineD, 84, 156, 'green', {marking_shift: 0.0
 s . cursors . push (new Cursor (HairlineS, 36, 84, 'green', {marking_align: 'right', marking_shift: -0.002}));
 
 var r = new Rule ({rule_colour: oak}); s . rules . push (r);
-r . markings . push (new Screw (-0.175, 30, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
-r . markings . push (new Screw (1.175, 30, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+r . markings . push (new Screw (-0.175, 50, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+r . markings . push (new Screw (1.175, 50, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+
+
 r . scales . push (new spacer (12));
-r . scales . push (new scale_P (24, {left: "P", ls: 0.05}));
+r . scales . push (new scale_Chemical (24,
+    ['H', {e: 'Ag', align: 'right'}, {e: 'B', align: 'left'}, 'Cd', 'C', 'I', 'Cs', 'Ba', {e: 'CH3', v: 'CH\u2083'}, 'O', 'OH', {e: 'H2o', v: 'H\u2082O'}, 'F',
+      {e: 'Au', shift: -3}, {e: 'Hg', shift: 3}, 'Bi',
+      'Mg', 'CN', 'Al', 'CO', {e: 'C2H5', v: 'C\u2082H\u2085'}, 'Cl', {e: 'K', shift: -2},
+      {e: 'He', shift: 2}, 'COOH', 'Cr', {e: 'Mn', shift: -4}, {e: 'Fe', shift: 4},
+      {e: 'Co', shift: -4}, {e: 'CO3', v: 'CO\u2083', shift: 7}, 'Cu', 'Li',
+      {e: 'As', align: 'right'}, {e: 'C6H5', v: 'C\u2086H\u2085'}, {e: 'Br', align: 'left'}, 'Kr',
+      'Be', 'Mo'
+      ],
+    {left: 'A~M', ls: 0.01, la: 'right', lines: [{left: Math . log10 (element_mass . H), right: Math . log10 (element_mass . Mo) - 1, height: 1}]}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_Chemical (24,
+    [{e: 'Sn', shift: -2}, {e: 'Sb', shift: 2}, 'Xe', 'N', 'NH', {e: 'NH2', v: 'NH\u2082'},
+    {e: 'P2O7', v: 'P\u2082O\u2087', align: 'right'}, {e: 'NH4', v: 'NH\u2084', shift: -4}, {e: 'W', shift: 4},
+    'Pt', 'Ne', {e: 'Pb', shift: 3}, {e: 'Ra', shift: -4}, {e: 'Na', shift: 4}, 'U',
+    'Si', 'Air', 'P', 'S', {e: 'Ar', align: 'right'}, {e: 'Ca', align: 'left'}, {e: 'NO2', v: 'NO\u2082'}, 'Ti', 'V',
+    'Ni', {e: 'NO3', v: 'NO\u2083'}, 'Zn', 'Se', 'Rb', {e: 'Zr', shift: -4}, {e: 'PO4', v: 'PO\u2084', shift: -6}, {e: 'SO4', v: 'SO\u2084', align: 'left'}
+    ],
+    {left: 'N~Z', ls: 0.01, la: 'right', lines: [{left: Math . log10 (element_mass . Sn) - 2, right: Math . log10 (element_mass . SO4) - 1, height: 1}]}));
+r . scales . push (new spacer (12));
+
+
+
 r . scales . push (new scale_A (24, {left: "A", ls: 0.05}));
 r = new Rule ({stator: 1, rule_colour: oak}); s . rules . push (r);
 r . scales . push (new scale_B (24, {left: "B", ls: 0.05}));
 r . scales . push (new scale_CI (24, {left: "CI", ls: 0.05}));
 r . scales . push (new scale_C (24, {left: "C", ls: 0.05}));
 r = new Rule ({rule_colour: oak}); s . rules . push (r);
-r . markings . push (new Screw (-0.175, 54, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
-r . markings . push (new Screw (1.175, 54, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+r . markings . push (new Screw (-0.175, 30, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+r . markings . push (new Screw (1.175, 30, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
 r . scales . push (new scale_D (24, {left: "D", ls: 0.05}));
-r . scales . push (new scale_Sdec_down (24, {left: "S", ls: 0.05}));
-r . scales . push (new scale_Tdec_down (24, {left: "T", ls: 0.05}));
-r . scales . push (new scale_STdec_down (24, {left: "ST", ls: 0.05}));
+r . scales . push (new scale_DI (24, {left: "DI", ls: 0.05}));
 r . scales . push (new spacer (12));
 
