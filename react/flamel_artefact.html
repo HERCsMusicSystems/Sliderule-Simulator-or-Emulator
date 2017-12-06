@@ -59,15 +59,16 @@ div.templars {
 
 
 
-<body bgcolor=white style="margin: 0px; padding: 0px;">
+<body bgcolor=white style="margin: 0px; padding: 0px;" vlink=white link=white alink=blue >
 
 <!--<div id = bg class = templars>-->
+<font color=gold>
 <div id = bg style="background-image: url(alchemical_02.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.2); width: 100%; background-repeat: no-repeat; background-size: 2000px; background-position: 0px -200px;">
 
 <br />
-<center><h1><i><font color=gold>Nicolas Flamel's artefact</font></i></h1></center>
+<center><h1><i>Nicolas Flamel's artefact</i></h1></center>
 
-<font size="+1" color=gold><i>
+<font size="+1"><i>
 
 <div class = lore>
 The Sumerian civilisation was known to be highly advanced in mathematics.
@@ -87,9 +88,9 @@ Good luck!
 
 <br />
 
-<div class = lore style="text-indent: 0px;">Your status now is: <font color=blue><span id = seeker /></font></div><br/>
-<div class = lore style="text-indent: 0px;">Mission:<br /><font color=blue><span id = mission /></font></div><br/>
-<div class = lore style="text-indent: 0px;">Your artefacts:<br /><span id = artefacts /></div>
+<div class = lore style="text-indent: 0px;">Your status now is: <font color=white><span id = seeker /></font></div><br/>
+<div class = lore style="text-indent: 0px;">Mission:<br /><font color=white><span id = mission /></font></div><br/>
+<div class = lore style="text-indent: 0px;">Your artefacts:<br /><font color=white><span id = artefacts /></font></div>
 <br />
 
 </i></font>
@@ -185,7 +186,7 @@ readSlideruleLessons ('tests', [foldedMultiplicationTests]);
 sliderules . fixedHeight = 400;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([foldedMultiplicationTests], trials, sliderules . name)) {addArtefact ('Pythagoras Artefact'); ret = true;}
+  if (checkCookieScores ([foldedMultiplicationTests], trials, sliderules . name)) {addArtefact ('Copernicus Artefact'); ret = true;}
   updateMissions ([foldedMultiplicationTests], trials);
   updateArtefacts ();
   updateSeeker ();
@@ -200,6 +201,6 @@ changeMarkings ('hairline', document . getElementById ('on_hairline') . checked)
 //changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 slideruleMission ();
 </script>
+</font>
 </div>
-
 </body></html>
