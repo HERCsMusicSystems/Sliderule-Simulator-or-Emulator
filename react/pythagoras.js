@@ -24,7 +24,7 @@ var oak = new Image (); oak . src = 'oak.png'; oak . onload = function () {slide
 var clay1 = new Image (); clay1 . src = 'clay_01.jpg'; clay1 . onload = function () {sliderules . requireRedraw = true;};
 var clay2 = new Image (); clay2 . src = 'clay_03.jpg'; clay2 . onload = function () {sliderules . requireRedraw = true;};
 
-var sliderules = new Sliderules ({background_colour: '#00000000'});
+var sliderules = new Sliderules ();
 
 var s = new Sliderule (1200, {cursor_markings_shift: 0.002}); sliderules . sliderules . push (s);
 

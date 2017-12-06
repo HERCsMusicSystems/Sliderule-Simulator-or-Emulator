@@ -22,7 +22,7 @@
 
 var osiris = new Image (); osiris . src = 'hieroglyphs.jpg';
 //var sliderules = new Sliderules ({background: osiris, background_scaling: {x: 2, y: 2}, background_translation: {x: 0, y: -150}});
-var sliderules = new Sliderules ({background_colour: '#00000000'});
+var sliderules = new Sliderules ();
 var oak = new Image (); oak . src = 'oak.png'; oak . onload = function () {sliderules . requireRedraw = true;};
 
 var s = new Sliderule (1000); sliderules . sliderules . push (s);

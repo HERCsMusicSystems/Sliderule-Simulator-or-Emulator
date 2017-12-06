@@ -2105,7 +2105,6 @@ var Sliderules = function (options) {
   this . requireRedraw = true;
   this . position = {x: 32.5, y: 32.5};
   this . scale = 1; this . scaling_factor = Math . pow (2, 1 / 12);
-  this . background_colour = '#99f';
   this . background_translation = {x: 0, y: 0};
   this . sliderules = [];
   this . name = 'generic';
@@ -2144,9 +2143,8 @@ var Sliderules = function (options) {
   this . draw = function (ctx, width, height) {
   	this . requireRedraw = false;
     ctx . setTransform (1, 0, 0, 1, 0, 0);
-    ctx . fillStyle = this . background_colour;
     ctx . clearRect (0, 0, width, height);
-    ctx . fillRect (0, 0, width, height);
+    if (this . background_colour) {ctx . fillStyle = this . background_colour; ctx . fillRect (0, 0, width, height);}
     if (this . background) {
       ctx . save ();
       if (this . background_scaling) ctx . scale (this . background_scaling . x, this . background_scaling . y);
