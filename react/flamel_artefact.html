@@ -169,8 +169,9 @@ var manipulateBackground = function () {
 <script src="scales.js"></script>
 <script src="scales_chemical.js"></script>
 <script src="sliderule_ctrl.js"></script>
-<script src="manual/sliderule_tutorial_multiplications_folded.js"></script>
-<script src="manual/sliderule_test_multiplications_folded.js"></script>
+<script src="manual/chemical.js"></script>
+<script src="manual/sliderule_tutorial_chemical.js"></script>
+<script src="manual/sliderule_test_chemical.js"></script>
 
 
 <script src="flamel.js"></script>
@@ -181,13 +182,13 @@ var manipulateBackground = function () {
 
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
-readSlideruleLessons ('lessons', [foldedMultiplicationLessons]);
-readSlideruleLessons ('tests', [foldedMultiplicationTests]);
+readSlideruleLessons ('lessons', [chemicalLessons]);
+readSlideruleLessons ('tests', [chemicalTests]);
 sliderules . fixedHeight = 400;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([foldedMultiplicationTests], trials, sliderules . name)) {addArtefact ('Copernicus Artefact'); ret = true;}
-  updateMissions ([foldedMultiplicationTests], trials);
+  if (checkCookieScores ([chemicalTests], trials, sliderules . name)) {addArtefact ('Copernicus Artefact'); ret = true;}
+  updateMissions ([chemicalTests], trials);
   updateArtefacts ();
   updateSeeker ();
   return ret;

@@ -152,11 +152,22 @@ Bh: 264,
 Sg: 266,
 Mt: 268,
 Rg: 272,
-Hs: 277
+Hs: 277,
+Ds: 281.16206,
+Cn: 285,
+Nh: 286,
+Fl: 289,
+Mc: 290,
+Lv: 293,
+Ts: 294,
+Og: 294
 };
 
 var masses = [];
-for (var ind in element_mass) masses [ind . toLowerCase ()] = element_mass [ind];
+for (var ind in element_mass) {
+  var id = ind . toLowerCase ();
+  if (! masses [id]) masses [id] = element_mass [ind];
+}
 
 var scale_Chemical = function (height, elements, options) {
   var s = new spacer (height, options);
@@ -176,7 +187,8 @@ var scale_Chemical = function (height, elements, options) {
   s . value = function (location) {return Math . pow (10, location);};
   s . location = function (value) {return Math . log10 (value);};
   s . read = function (position) {
-    var mass = masses [position . toLowerCase ()];
+    var mass = element_mass [position];
+    if (mass == undefined) mass = masses [position . toLowerCase ()];
     if (mass != undefined) {
       while (mass > 10) mass /= 10;
       return mass;
