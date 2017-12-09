@@ -65,4 +65,28 @@ chemicalLessons ['Heavy element mass'] = function (message) {
   ];
 };
 
+chemicalLessons ['Molecular mass of a compound'] = function (message) {
+  var compound;
+  while (! compound) compound = rndlist (compound_table);
+  var mass = element_mass [compound . formulae];
+  var masss = mass;
+  if (masss > 10) masss = crnu (masss / 10, 5);
+  if (masss < 1) masss = crnu (masss * 10, 5);
+  var fm = formulae (compound);
+  return [
+    {action: function () {ensureSide (['A~M', 'N~Z', 'D']); isolate (['A~M', 'N~Z', 'D']); changeMarkings ('hairline', true); dimmm (255, 80, 8);}, delay: 100},
+    {action: function () {message ("The task: find molecular mass of " + compound . name + " (" + fm + ").");}, delay: 500},
+    {action: function () {message ("Right-click on the cursor over the Chemical scale and enter " + compound . formulae + ".");}, delay: 2000},
+    {action: function () {cursorTo ('D', masss);}, delay: 1500},
+    {action: function () {message ("Read " + masss + " on the D scale.");}, delay: 3000},
+    {action: function () {if (mass != masss) message ("Adjust decimal point to obtain mass = " + mass + ".");}, delay: 1000},
+    {action: function () {cursorTo ('D', 1); dimmm (80, 255, 8);
+    sliderules . objective = function () {
+      if (checkValue ('D', masss)) {message ("Mission accomplished!"); increaseCookieResult ('Molecular mass of a compound'); return true;}
+      return false;
+    };}, delay: 6000},
+    {action: function () {isolate (); message ("Try these instructions again.");}, delay: 3000}
+  ];
+};
+
 slideruleLessons . push (chemicalLessons);

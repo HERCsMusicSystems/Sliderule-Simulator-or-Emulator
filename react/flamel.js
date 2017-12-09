@@ -39,7 +39,7 @@ r . markings . push (new Screw (1.175, 50, 6, Math . random () * Math . PI, '#b5
 
 r . scales . push (new spacer (12));
 r . scales . push (new scale_Chemical (24,
-    ['H', {e: 'Ag', align: 'right'}, {e: 'B', align: 'left'}, 'Cd', 'C', 'I', 'Cs', 'Ba', {e: 'CH3', v: 'CH\u2083'}, 'O', 'OH', {e: 'H2o', v: 'H\u2082O'}, 'F',
+    ['H', {e: 'Ag', align: 'right'}, {e: 'B', align: 'left'}, 'Cd', 'C', 'I', 'Cs', 'Ba', {e: 'CH3', v: 'CH\u2083'}, 'O', 'OH', {e: 'H2O', v: 'H\u2082O'}, 'F',
       {e: 'Au', shift: -3}, {e: 'Hg', shift: 3}, 'Bi',
       'Mg', 'CN', 'Al', 'CO', {e: 'C2H5', v: 'C\u2082H\u2085'}, 'Cl', {e: 'K', shift: -2},
       {e: 'He', shift: 2}, 'COOH', 'Cr', {e: 'Mn', shift: -4}, {e: 'Fe', shift: 4},

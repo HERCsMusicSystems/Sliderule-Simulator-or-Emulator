@@ -29,7 +29,7 @@ trigonometryTests ['Angle of a sine test'] = function (message) {
   var angle = crnu (Math . asin (sine) * 180 / Math . PI, 5);
   message ("The task: find an angle, which sine is " + sine + ".");
   sliderules . objective = function () {
-    if (checkValue ("C", sine * 10)) {message ("Mission accomplished!"); increaseCookieResult ('Angle of a sine test'); return true;}
+    if (checkValue ("D", sine * 10)) {message ("Mission accomplished!"); increaseCookieResult ('Angle of a sine test'); return true;}
     return false;
   };
 };
@@ -40,7 +40,7 @@ trigonometryTests ['Angle of a tangent test'] = function (message) {
   var angle = crnu (Math . atan (tangent) * 180 / Math . PI, 5);
   message ("The task: find an angle, which tangent is " + tangent + ".");
   sliderules . objective = function () {
-    if (checkValue ("C", tangent * 10)) {message ("Mission accomplished!"); increaseCookieResult ('Angle of a tangent test'); return true;}
+    if (checkValue ("D", tangent * 10)) {message ("Mission accomplished!"); increaseCookieResult ('Angle of a tangent test'); return true;}
     return false;
   };
 };
