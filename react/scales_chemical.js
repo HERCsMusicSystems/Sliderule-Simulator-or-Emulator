@@ -24,6 +24,36 @@
 // Chemical
 //////////////////////////////////////////////////////////////////////////////
 
+var rj = function (file) {
+	var req = new XMLHttpRequest ();
+	req . onreadystatechange = function () {if (this . readyState == 4 && this . status == 200) this . data = JSON . parse (this . responseText);};
+	req . open ("GET", file, true);
+	req . send ();
+	return req;
+};
+
+var t1 = rj ("PeriodicTableJSON.json");
+var t2 = rj ("periodic-data.json");
+var t3 = rj ("periodicTable.json");
+
+var show = function () {
+var count = 0;
+for (var ind in t1 . data . elements) {
+	var mass = t2 . data [ind] . atomicMass;
+	if (Array . isArray (mass)) mass = mass [0];
+	if (typeof mass == 'string') mass = Number (mass . split ('(') [0]);
+	var m1 = t1 . data . elements [ind] . atomic_mass;
+	var m3 = element_mass [t1 . data . elements [ind] . symbol];
+	if (mass != m1 && mass != m3) {count += 1; console . log (t1 . data . elements [ind] . name, m1, mass, m3);}
+	/*console . log (
+		t1 . data . elements [ind] . name, t1 . data . elements [ind] . atomic_mass,
+		mass,
+		element_mass [t1 . data . elements [ind] . symbol]
+	);*/
+};
+console . log (count);
+}
+
 var element_mass = {
 H: 1.0079,
 He: 4.0026,
