@@ -28,7 +28,7 @@ var sliderules = new Sliderules ();
 
 var s = new Sliderule (1200, {cursor_markings_shift: 0.002}); sliderules . sliderules . push (s);
 
-s . cursorBraces . push (new CursorWindow (16, 10, oak, 'blue'));
+s . cursorBraces . push (new CursorWindow (14, 10, oak, 'blue'));
 
 s . backBraces . push (new FlatFloor (0.21, 0.21, -18, -18, 10, 'tan', oak));
 

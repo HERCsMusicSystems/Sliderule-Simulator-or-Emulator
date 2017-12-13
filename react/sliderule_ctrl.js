@@ -333,14 +333,15 @@ var checkValue = function (name, value, tolerance) {
   return Number (Math . abs (readLocation (name, value) - readLocation (name))) < tolerance;
 }
 
+var sequencerTimeout = null;
 var sequencer = function (steps, index) {
   if (! steps) return;
-  if (index == undefined) {setTimeout (function () {sequencer (steps, 0);}, steps [0] . delay); return;}
+  if (index == undefined) {sequencerTimeout = setTimeout (function () {sequencer (steps, 0);}, steps [0] . delay); return;}
   if (index >= steps . length) return;
   steps [index] . action ();
   index += 1;
   if (index >= steps . length) return;
-  setTimeout (function () {sequencer (steps, index);}, steps [index] . delay);
+  sequencerTimeout = setTimeout (function () {sequencer (steps, index);}, steps [index] . delay);
 };
 
 var slideruleLessons = [];
@@ -360,6 +361,7 @@ var lessonMessage = function (info) {
 	document . getElementById ('info') . innerHTML += info + "<br />";
 };
 var playLesson = function (lessons, info) {
+	clearTimeout (sequencerTimeout);
 	if (lessons == undefined) lessons = 'lessons';
 	if (info == undefined) info = 'info';
 	document . getElementById (info) . innerHTML = "";

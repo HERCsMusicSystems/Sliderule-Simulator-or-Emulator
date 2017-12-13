@@ -89,4 +89,45 @@ chemicalLessons ['Molecular mass of a compound'] = function (message) {
   ];
 };
 
+chemicalLessons ['Calculate molecular mass of a compound'] = function (message) {
+  var compound;
+  while (! compound) compound = rndlist (compound_table);
+  var fm = formulae (compound);
+  var ret = [];
+  ret . push ({action: function () {ensureSide (['A~M', 'N~Z', 'C', 'D']); isolate (['A~M', 'N~Z', 'C', 'D']); changeMarkings ('hairline', true); dimmm (255, 80, 8);}, delay: 100});
+  ret . push ({action: function () {message ("The task: calculate molecular mass of " + compound . name + " (" + fm + ").");}, delay: 500});
+  var total_mass = 0;
+  var t1 = "", t2 = "";
+  var condition = [];
+  for (var ind in compound . elements) {
+    var el = compound . elements [ind];
+    var mass = element_mass [el . element];
+    ret . push ({action: function (element, mass) {return function () {message ("Right-click on the cursor to obtain the mass of " + element + " = " + mass + ".");};} (el . element, mass), delay: 3000});
+    ret . push ({action: function (mass) {return function () {cursorTo ('D', mass);};} (getMolecularMass (el . element)), delay: 1000});
+    var subcompound = formulae ({elements: [{element: el . element, count: el . count}]});
+    if (el . count > 1) {
+      mass *= el . count;
+      ret . push ({action: function (compound, mass) {return function () {message ("Use the C scale to obtain the mass of " + compound + " = " + mass + ".");};} (subcompound, mass), delay: 3000});
+      ret . push ({action: function () {slideTo ('C', 1);}, delay: 1000});
+      ret . push ({action: function (count) {return function () {cursorTo ('C', count);};} (el . count), delay: 1000});
+    }
+    total_mass += mass;
+    t1 += (t1 == "" ? "" : " + ") + subcompound;
+    t2 += (t2 == "" ? "" : " + ") + mass;
+    while (mass > 10) mass /= 10;
+    condition . push (mass);
+  }
+  ret . push ({action: function () {message ("The total mass of " + fm + " = " + t1 + " = " + t2 + " = " + total_mass + ".");}, delay: 3000});
+  ret . push ({action: function () {cursorTo ('D', 1); slideTo ('C', 1); dimmm (80, 255, 8);
+  sliderules . objective = function () {
+    var check = true;
+    for (var ind in condition) {if (checkValue ('D', condition [ind])) condition [ind] = 0; if (condition [ind] != 0) check = false;}
+    if (check) {message ("Mission accomplished!"); increaseCookieResult ('Calculate molecular mass of a compound'); return true;}
+    return false;
+  };
+  }, delay: 6000});
+  ret . push ({action: function () {message ("Try these instructions again.");}, delay: 3000});
+  return ret;
+};
+
 slideruleLessons . push (chemicalLessons);

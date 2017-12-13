@@ -24,41 +24,11 @@
 // Chemical
 //////////////////////////////////////////////////////////////////////////////
 
-var rj = function (file) {
-	var req = new XMLHttpRequest ();
-	req . onreadystatechange = function () {if (this . readyState == 4 && this . status == 200) this . data = JSON . parse (this . responseText);};
-	req . open ("GET", file, true);
-	req . send ();
-	return req;
-};
-
-var t1 = rj ("PeriodicTableJSON.json");
-var t2 = rj ("periodic-data.json");
-var t3 = rj ("periodicTable.json");
-
-var show = function () {
-var count = 0;
-for (var ind in t1 . data . elements) {
-	var mass = t2 . data [ind] . atomicMass;
-	if (Array . isArray (mass)) mass = mass [0];
-	if (typeof mass == 'string') mass = Number (mass . split ('(') [0]);
-	var m1 = t1 . data . elements [ind] . atomic_mass;
-	var m3 = element_mass [t1 . data . elements [ind] . symbol];
-	if (mass != m1 && mass != m3) {count += 1; console . log (t1 . data . elements [ind] . name, m1, mass, m3);}
-	/*console . log (
-		t1 . data . elements [ind] . name, t1 . data . elements [ind] . atomic_mass,
-		mass,
-		element_mass [t1 . data . elements [ind] . symbol]
-	);*/
-};
-console . log (count);
-}
-
 var element_mass = {
-H: 1.0079,
-He: 4.0026,
+H: 1.00794,
+He: 4.002602,
 Li: 6.941,
-Be: 9.0122,
+Be: 9.012182,
 B: 10.811,
 C: 12.0107,
 N: 14.0067,
@@ -69,49 +39,49 @@ NH2: 16.02258,
 OH: 17.01,
 H2O: 18.01528,
 NH4: 18.03846,
-F: 18.9984,
+F: 18.9984032,
 Ne: 20.1797,
-Na: 22.9897,
+Na: 22.98976928,
 Mg: 24.305,
 CN: 26.02,
-Al: 26.9815,
+Al: 26.9815386,
 CO: 28.01,
 Si: 28.0855,
 Air: 28.97,
 N8O2: 28.97,
 C2H5: 30.07,
-P: 30.9738,
+P: 30.973762,
 S: 32.065,
 Cl: 35.453,
 K: 39.0983,
 Ar: 39.948,
 Ca: 40.078,
-Sc: 44.9559,
+Sc: 44.955912,
 NO2: 46.0055,
 Ti: 47.867,
 V: 50.9415,
 Cr: 51.9961,
-Mn: 54.938,
+Mn: 54.938045,
 Fe: 55.845,
 Ni: 58.6934,
-Co: 58.9332,
+Co: 58.933195,
 CO3: 60.008,
 NO3: 62.0049,
 Cu: 63.546,
-Zn: 65.39,
+Zn: 65.38,
 Ga: 69.723,
 Ge: 72.64,
 As: 74.9216,
 C6H5: 77.106,
 Se: 78.96,
 Br: 79.904,
-Kr: 83.8,
+Kr: 83.798,
 Rb: 85.4678,
 Sr: 87.62,
-Y: 88.9059,
+Y: 88.90585,
 COOH: 45.0174,
 Zr: 91.224,
-Nb: 92.9064,
+Nb: 92.90638,
 PO4: 94.971361,
 Mo: 95.94,
 SO4: 96.06,
@@ -188,7 +158,7 @@ Ds: 281.16206,
 Cn: 285,
 Nh: 286,
 Fl: 289,
-Mc: 290,
+Mc: 288,
 Lv: 293,
 Ts: 294,
 Og: 294
@@ -363,6 +333,13 @@ for (var ind in element_mass) {
 }
 for (var ind in periodic_table) {masses [periodic_table [ind] . name . toLowerCase ()] = element_mass [periodic_table [ind] . element];}
 for (var ind in compound_table) {masses [compound_table [ind] . name . toLowerCase ()] = element_mass [compound_table [ind] . formulae];}
+
+var getMolecularMass = function (el) {
+  var mass = masses [el . toLowerCase ()];
+  while (mass > 10) mass /= 10;
+  while (mass < 1) mass *= 10;
+  return mass;
+};
 
 var scale_Chemical = function (height, elements, options) {
   var s = new spacer (height, options);
