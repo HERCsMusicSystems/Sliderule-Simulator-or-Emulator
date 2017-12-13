@@ -3,8 +3,8 @@ var chemicalLessons = {};
 
 chemicalLessons ['Element mass'] = function (message) {
   var element;
-  while (! element || element_mass [element . element] < 10 || element_mass [element . element] > 100) element = rndlist (periodic_table);
-  var mass = element_mass [element . element];
+  while (! element || masses [element . element] < 10 || masses [element . element] > 100) element = rndlist (periodic_table);
+  var mass = masses [element . element];
   var masss = crnu (mass / 10);
   return [
     {action: function () {ensureSide (['A~M', 'N~Z', 'D']); isolate (['A~M', 'N~Z', 'D']); changeMarkings ('hairline', true); dimmm (255, 80, 8);}, delay: 100},
@@ -24,8 +24,8 @@ chemicalLessons ['Element mass'] = function (message) {
 
 chemicalLessons ['Light element mass'] = function (message) {
   var element;
-  while (! element || element_mass [element . element] > 10) element = rndlist (periodic_table);
-  var mass = element_mass [element . element];
+  while (! element || masses [element . element] > 10) element = rndlist (periodic_table);
+  var mass = masses [element . element];
   return [
     {action: function () {ensureSide (['A~M', 'N~Z', 'D']); isolate (['A~M', 'N~Z', 'D']); changeMarkings ('hairline', true); dimmm (255, 80, 8);}, delay: 100},
     {action: function () {message ("The task: find molecular mass of " + element . name + " (" + element . element + ").");}, delay: 500},
@@ -45,8 +45,8 @@ chemicalLessons ['Light element mass'] = function (message) {
 
 chemicalLessons ['Heavy element mass'] = function (message) {
   var element;
-  while (! element || element_mass [element . element] < 100) element = rndlist (periodic_table);
-  var mass = element_mass [element . element];
+  while (! element || masses [element . element] < 100) element = rndlist (periodic_table);
+  var mass = masses [element . element];
   var masss = crnu (mass / 100);
   return [
     {action: function () {ensureSide (['A~M', 'N~Z', 'D']); isolate (['A~M', 'N~Z', 'D']); changeMarkings ('hairline', true); dimmm (255, 80, 8);}, delay: 100},
@@ -68,7 +68,7 @@ chemicalLessons ['Heavy element mass'] = function (message) {
 chemicalLessons ['Molecular mass of a compound'] = function (message) {
   var compound;
   while (! compound) compound = rndlist (compound_table);
-  var mass = element_mass [compound . formulae];
+  var mass = masses [compound . formulae];
   var masss = mass;
   if (masss > 10) masss = crnu (masss / 10, 5);
   if (masss < 1) masss = crnu (masss * 10, 5);
@@ -101,7 +101,7 @@ chemicalLessons ['Calculate molecular mass of a compound'] = function (message) 
   var condition = [];
   for (var ind in compound . elements) {
     var el = compound . elements [ind];
-    var mass = element_mass [el . element];
+    var mass = masses [el . element];
     ret . push ({action: function (element, mass) {return function () {message ("Right-click on the cursor to obtain the mass of " + element + " = " + mass + ".");};} (el . element, mass), delay: 3000});
     ret . push ({action: function (mass) {return function () {cursorTo ('D', mass);};} (getMolecularMass (el . element)), delay: 1000});
     var subcompound = formulae ({elements: [{element: el . element, count: el . count}]});
@@ -114,15 +114,27 @@ chemicalLessons ['Calculate molecular mass of a compound'] = function (message) 
     total_mass += mass;
     t1 += (t1 == "" ? "" : " + ") + subcompound;
     t2 += (t2 == "" ? "" : " + ") + mass;
-    while (mass > 10) mass /= 10;
-    condition . push (mass);
+    var check = mass;
+    while (check > 10) check /= 10;
+    condition . push ({compound: subcompound, mass: mass, check: check});
   }
   ret . push ({action: function () {message ("The total mass of " + fm + " = " + t1 + " = " + t2 + " = " + total_mass + ".");}, delay: 3000});
   ret . push ({action: function () {cursorTo ('D', 1); slideTo ('C', 1); dimmm (80, 255, 8);
   sliderules . objective = function () {
     var check = true;
-    for (var ind in condition) {if (checkValue ('D', condition [ind])) condition [ind] = 0; if (condition [ind] != 0) check = false;}
-    if (check) {message ("Mission accomplished!"); increaseCookieResult ('Calculate molecular mass of a compound'); return true;}
+    for (var ind in condition) {
+      if (condition [ind] != null && checkValue ('D', condition [ind] . check)) {
+        message ("Yes, the mass of " + condition [ind] . compound + " = " + condition [ind] . mass + ".");
+        condition [ind] = null;
+      }
+      if (condition [ind] != null) check = false;
+    }
+    if (check) {
+      message ("Mission accomplished!");
+      message ("The total mass of " + fm + " = " + t1 + " = " + t2 + " = " + total_mass + ".");
+      increaseCookieResult ('Calculate molecular mass of a compound');
+      return true;
+    }
     return false;
   };
   }, delay: 6000});

@@ -3,8 +3,8 @@ var chemicalTests = {};
 
 chemicalTests ['Element mass test'] = function (message) {
   var element;
-  while (! element || element_mass [element . element] < 10 || element_mass [element . element] > 100) element = rndlist (periodic_table);
-  var mass = element_mass [element . element];
+  while (! element || masses [element . element] < 10 || masses [element . element] > 100) element = rndlist (periodic_table);
+  var mass = masses [element . element];
   var masss = crnu (mass / 10);
   message ("The task: find molecular mass of " + element . name + " (" + element . element + ").");
   sliderules . objective = function () {
@@ -19,8 +19,8 @@ chemicalTests ['Element mass test'] = function (message) {
 
 chemicalTests ['Light element mass test'] = function (message) {
   var element;
-  while (! element || element_mass [element . element] > 10) element = rndlist (periodic_table);
-  var mass = element_mass [element . element];
+  while (! element || masses [element . element] > 10) element = rndlist (periodic_table);
+  var mass = masses [element . element];
   message ("The task: find molecular mass of " + element . name + " (" + element . element + ").");
   sliderules . objective = function () {
     if (checkValue ('D', mass)) {
@@ -34,8 +34,8 @@ chemicalTests ['Light element mass test'] = function (message) {
 
 chemicalTests ['Heavy element mass test'] = function (message) {
   var element;
-  while (! element || element_mass [element . element] < 100) element = rndlist (periodic_table);
-  var mass = element_mass [element . element];
+  while (! element || masses [element . element] < 100) element = rndlist (periodic_table);
+  var mass = masses [element . element];
   var masss = crnu (mass / 100);
   message ("The task: find molecular mass of " + element . name + " (" + element . element + ").");
   sliderules . objective = function () {
@@ -51,7 +51,7 @@ chemicalTests ['Heavy element mass test'] = function (message) {
 chemicalTests ['Molecular mass of a compound test'] = function (message) {
   var compound;
   while (! compound) compound = rndlist (compound_table);
-  var mass = element_mass [compound . formulae];
+  var mass = masses [compound . formulae];
   var masss = mass;
   if (masss > 10) masss = crnu (masss / 10, 5);
   if (masss < 1) masss = crnu (masss * 10, 5);
@@ -77,7 +77,7 @@ chemicalTests ['Calculate molecular mass of a compound test'] = function (messag
   var condition = [];
   for (var ind in compound . elements) {
     var el = compound . elements [ind];
-    var mass = element_mass [el . element];
+    var mass = masses [el . element];
     var subcompound = formulae ({elements: [{element: el . element, count: el . count}]});
     if (el . count > 1) {
       mass *= el . count;
@@ -85,13 +85,14 @@ chemicalTests ['Calculate molecular mass of a compound test'] = function (messag
     total_mass += mass;
     t1 += (t1 == "" ? "" : " + ") + subcompound;
     t2 += (t2 == "" ? "" : " + ") + mass;
-    while (mass > 10) mass /= 10;
-    condition . push ({compound: subcompound, mass: mass});
+    var check = mass;
+    while (check > 10) check /= 10;
+    condition . push ({compound: subcompound, mass: mass, check: check});
   }
   sliderules . objective = function () {
     var check = true;
     for (var ind in condition) {
-      if (condition [ind] != null && checkValue ('D', condition [ind] . mass)) {
+      if (condition [ind] != null && checkValue ('D', condition [ind] . check)) {
         message ("Yes, the mass of " + condition [ind] . compound + " = " + condition [ind] . mass + ".");
         condition [ind] = null;
       }

@@ -47,7 +47,7 @@ r . scales . push (new scale_Chemical (24,
       {e: 'As', align: 'right'}, {e: 'C6H5', v: 'C\u2086H\u2085'}, {e: 'Br', align: 'left'}, 'Kr',
       'Be', 'Mo'
       ],
-    {left: 'A~M', ls: 0.01, la: 'right', lines: [{left: Math . log10 (element_mass . H), right: Math . log10 (element_mass . Mo) - 1, height: 1}]}));
+    {left: 'A~M', ls: 0.01, la: 'right', lines: [{left: Math . log10 (masses . H), right: Math . log10 (masses . Mo) - 1, height: 1}]}));
 r . scales . push (new spacer (4));
 r . scales . push (new scale_Chemical (24,
     [{e: 'Sn', shift: -2}, {e: 'Sb', shift: 2}, 'Xe', 'N', 'NH', {e: 'NH2', v: 'NH\u2082'},
@@ -56,7 +56,7 @@ r . scales . push (new scale_Chemical (24,
     'Si', 'Air', 'P', 'S', {e: 'Ar', align: 'right'}, {e: 'Ca', align: 'left'}, {e: 'NO2', v: 'NO\u2082'}, 'Ti', 'V',
     'Ni', {e: 'NO3', v: 'NO\u2083'}, 'Zn', 'Se', 'Rb', {e: 'Zr', shift: -4}, {e: 'PO4', v: 'PO\u2084', shift: -6}, {e: 'SO4', v: 'SO\u2084', align: 'left'}
     ],
-    {left: 'N~Z', ls: 0.01, la: 'right', lines: [{left: Math . log10 (element_mass . Sn) - 2, right: Math . log10 (element_mass . SO4) - 1, height: 1}]}));
+    {left: 'N~Z', ls: 0.01, la: 'right', lines: [{left: Math . log10 (masses . Sn) - 2, right: Math . log10 (masses . SO4) - 1, height: 1}]}));
 r . scales . push (new spacer (12));
 
 
