@@ -1,0 +1,215 @@
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Nicolas Copernicus Artefact</title>
+  </head>
+
+
+<style>
+@font-face
+{
+font-family: snell;
+src: url('snellbt-regular.otf'),
+url('snellbt-regular.eot');
+}
+
+div.lore {
+  text-indent: 50px;
+  width: 900px;
+  margin: 0 auto;
+}
+
+@keyframes animatedTemplars {
+  from {background-size: 1800px;} to {background-size: 2000px;}
+}
+
+div.templars {
+  background-image: url(knights-templar.jpg);
+  background-color: rgba(255, 255, 255, 0.6);
+  background-blend-mode: lighten;
+  width: 100%;
+  background-position: center;
+  animation: animatedTemplars 10s linear infinite;
+}
+
+</style>
+
+
+
+<body bgcolor=white style="margin: 0px; padding: 0px;" vlink=white link=white alink=blue >
+
+<!--<div id = bg class = templars>-->
+<font color=gold>
+<div id = bg style="background-image: url(alchemical_02.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.2); width: 100%; background-repeat: no-repeat; background-size: 2000px; background-position: 0px -200px;">
+
+<br />
+<center><h1><i>Nicolas Flamel's artefact</i></h1></center>
+
+<font size="+1"><i>
+
+<div class = lore>
+Born in 1340, Nicolas Flamel is a well known alchemist.
+He discovered "Philosopher's Stone", a substance capable of turning base metals into gold.
+He also created "Elixir of Life", which grants the drinker eternal life.
+Currently he lives with his wife, Pernelle, in Paris.
+</div>
+
+<br />
+
+<div class = lore>
+It is little know that Nicolas Flamel used in his research a mysterius artefact,
+similar to the one used by Hiram Abif.
+It made it possible to calculate molecular masses of chemical elements and compounds in seconds rather than finding them through research.
+</div>
+
+<br />
+
+<div class = lore>
+You will now be trained on how to use it to calculate molecular masses of chemical elements and compounds.
+Good luck!
+</div>
+
+<br />
+
+<div class = lore style="text-indent: 0px;">Your status now is: <font color=white><span id = seeker /></font></div><br/>
+<div class = lore style="text-indent: 0px;">Mission:<br /><font color=white><span id = mission /></font></div><br/>
+<div class = lore style="text-indent: 0px;">Your artefacts:<br /><font color=white><span id = artefacts /></font></div>
+<br />
+
+</i></font>
+<div class = lore style = "width: 100%;">
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings&nbsp;
+  <select id = lessons><option value = "Choose Lesson ====" >Choose Lesson ====</option></select>
+  <input type = button value = "Play lesson" onclick = "javascript: playLesson ('lessons');" />&nbsp;&nbsp;
+  <select id = tests><option value = "Choose Test of Merit ====" >Choose Test of Merit ====</option></select>
+  <input type = button value = "Attempt test" onclick = "javascript: playLesson ('tests');" />&nbsp;&nbsp;
+  <input type = button id = clear_instructions onclick = "javascript: document . getElementById ('info') . innerHTML = '';" value = "Clear instructions." />
+</div>
+
+  <div style = "display: block; position: absolute; background-color: white; border-color: black; border-style: solid; border-width: 1px;">
+    <font color = red ><span id = info /></font>
+  </div>
+
+<!--<audio src="courage.wav" autoplay loop />-->
+<script>
+var size = 1800;
+var opacity = 0.6;
+var templars = [
+    "url('osiris_1.jpg')",
+    "url('osiris_2.jpg')",
+    "url('osiris_3.jpg')",
+    "url('osiris_4.jpg')",
+    "url('osiris_5.jpg')",
+    "url('osiris_6.jpg')"
+  ];
+var templar_id = 1;
+var manipulateBackground = function () {
+  var style = document . getElementById ('bg') . style;
+  style . backgroundSize = size + "px";
+  style . backgroundColor = "rgba(255, 255, 255, " + opacity + ")";
+  size += 1;
+  if (size > 1900) {
+    opacity += 0.01;
+    if (opacity > 0.98) {
+      opacity_step = -0.01;
+      style . backgroundImage = templars [templar_id];
+      templar_id += 1;
+      if (templar_id >= templars . length) templar_id = 0;
+      size = 1800;
+    }
+  } else {
+    if (opacity > 0.6) opacity -= 0.01;
+  }
+};
+//setInterval (manipulateBackground, 100);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="root"></div>
+
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+<script src="scales_chemical.js"></script>
+<script src="sliderule_ctrl.js"></script>
+<script src="manual/sliderule_tutorial_chemical.js"></script>
+<script src="manual/sliderule_test_chemical.js"></script>
+
+<script>
+var sliderules = new Sliderules ({name: "Copernicus", manufacturer: "Copernicus", made_in: "Made in Poland"});
+</script>
+<script src="raven.js"></script>
+
+<script src="templars_artefacts.js"></script>
+
+<script>
+sliderules . sliderules [1] . inactive = true;
+
+var trials = Number (cook ('trials'));
+if (isNaN (trials)) trials = 2;
+readSlideruleLessons ('lessons', [chemicalLessons]);
+readSlideruleLessons ('tests', [chemicalTests]);
+sliderules . fixedHeight = 400;
+sliderules . mission = function () {
+  var ret = false;
+  if (checkCookieScores ([chemicalTests], trials, sliderules . name)) {addArtefact ('Copernicus Artefact'); ret = true;}
+  updateMissions ([chemicalTests], trials);
+  updateArtefacts ();
+  updateSeeker ();
+  return ret;
+};
+sliderules . name = "Flamel Artefact";
+addArtefact (sliderules . name);
+</script>
+<script src="sliderule_application.js"></script>
+<script>
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+//changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+slideruleMission ();
+</script>
+</font>
+</div>
+</body></html>
