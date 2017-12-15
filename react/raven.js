@@ -23,10 +23,10 @@
 var front_german_cursors = [], front_us_cursors = [];
 
 var s = new Sliderule (1200, {cursor_top_margin: 13, cursor_bottom_margin: 13, hairline_top: -10, hairline_bottom: -10, cursor_limit_left: 0.028, cursor_limit_right: 0.028, markings_background: 'yellow'}); sliderules . sliderules . push (s);
-s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 74, 1));
-s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 76, 1));
-s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 74, 1));
-s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 76, 1));
+s . braces . push (new LeftBrace (2, 0.07, 8, 'gold', 'black', 74, 1));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'tan', 'black', 76, 1));
+s . braces . push (new RightBrace (2, 0.07, 8, 'gold', 'black', 74, 1));
+s . braces . push (new RightBrace (4, 0.063, 8, 'tan', 'black', 76, 1));
 s . cursorGlassBraces . push (new DecilonCursorBrace (1, 0.1, 12, 8, 0.04, 18, 4, 'tan', 'black'));
 s . cursorBraces . push (new Engraving (sliderules . manufacturer, '12px arial', 'right', 'red', 0.09, 289));
 s . cursorBraces . push (new Engraving (sliderules . name, '12px arial', 'left', 'red', -0.09, 12));
@@ -35,11 +35,11 @@ s . cursorBraces . push (new Screw (0.07, -9, 6, Math . random () * Math . PI, '
 s . cursorBraces . push (new Screw (-0.07, 303, 6, Math . random () * Math . PI, 'gold', 'silver'));
 s . cursorBraces . push (new Screw (0.07, 303, 6, Math . random () * Math . PI, 'gold', 'silver'));
 front_german_cursors . push (new Cursor (HairlinePS, 74, 122, 'red'));
-front_german_cursors . push (new Cursor (HairlineS, 74, 122, 'red'));
-front_german_cursors . push (new Cursor (HairlineD, 172, 220, 'red', {marking_align: 'right', marking_shift: -0.01}));
+front_german_cursors . push (new Cursor (HairlineS, 74, 122, 'red', {marking_align: 'right', marking_shift: -0.01}));
+front_german_cursors . push (new Cursor (HairlineD, 172, 220, 'red'));
 front_us_cursors . push (new Cursor (HairlineHPUS, 74, 122, 'red'));
-front_us_cursors . push (new Cursor (HairlineS, 74, 122, 'red'));
-front_us_cursors . push (new Cursor (HairlineD, 172, 220, 'red', {marking_align: 'right', marking_shift: -0.01}));
+front_us_cursors . push (new Cursor (HairlineS, 74, 122, 'red', {marking_align: 'right', marking_shift: -0.01}));
+front_us_cursors . push (new Cursor (HairlineD, 172, 220, 'red'));
 var r = new Rule (); s . rules . push (r);
 r . markings . push (new Engraving (sliderules . name, '16px arial', 'left', 'red', 0, 20));
 r . markings . push (new Engraving (sliderules . made_in, '12px arial', 'right', 'black', 1, 16));
@@ -64,10 +64,10 @@ r . scales . push (new spacer (2));
 
 
 var s = new Sliderule (1200, {cursor_top_margin: 13, cursor_bottom_margin: 13, hairline_top: -10, hairline_bottom: -10, cursor_limit_left: 0.028, cursor_limit_right: 0.028, markings_background: 'yellow'}); sliderules . sliderules . push (s);
-s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 74, 1));
-s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 76, 1));
-s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 74, 1));
-s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 76, 1));
+s . braces . push (new LeftBrace (2, 0.07, 8, 'gold', 'black', 74, 1));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'tan', 'black', 76, 1));
+s . braces . push (new RightBrace (2, 0.07, 8, 'gold', 'black', 74, 1));
+s . braces . push (new RightBrace (4, 0.063, 8, 'tan', 'black', 76, 1));
 s . cursorGlassBraces . push (new DecilonCursorBrace (1, 0.1, 12, 8, 0.04, 18, 4, 'tan', 'black'));
 s . cursorBraces . push (new Engraving (sliderules . manufacturer, '12px arial', 'right', 'red', 0.09, 289));
 s . cursorBraces . push (new Engraving (sliderules . name, '12px arial', 'left', 'red', -0.09, 12));

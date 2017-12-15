@@ -24,7 +24,7 @@
 -->
 <html>
   <head>
-    <title>Nicolas Copernicus Artefact</title>
+    <title>Nicolaus Copernicus Artefact</title>
   </head>
 
 
@@ -63,33 +63,49 @@ div.templars {
 
 <!--<div id = bg class = templars>-->
 <font color=gold>
-<div id = bg style="background-image: url(alchemical_02.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.2); width: 100%; background-repeat: no-repeat; background-size: 2000px; background-position: 0px -200px;">
+<div id = bg style="background-image: url(nebulae_01.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0); width: 100%; background-repeat: no-repeat; background-size: 2600px; background-position: 0px -200px;">
 
 <br />
-<center><h1><i>Nicolas Flamel's artefact</i></h1></center>
+<center><h1><i>Nicolaus Copernicus' artefact</i></h1></center>
 
 <font size="+1"><i>
 
 <div class = lore>
-Born in 1340, Nicolas Flamel is a well known alchemist.
-He discovered "Philosopher's Stone", a substance capable of turning base metals into gold.
-He also created "Elixir of Life", which grants the drinker eternal life.
-Currently he lives with his wife, Pernelle, in Paris.
+Born in 1473 Nicolaus Copernicus was a man of renaissance.
+He described his "Heliocentric Theory" in his seminal work "De revolutionibus orbium coelestium", which was first printed in 1543 in Nuremberg.
+The scientific nature of his work together with use of latin made it difficult for the Holy Roman Church to react quickly.
+Once the Inquisition was ready to act and prosecute Copernicus for heresy, it was discovered that he already died peace in 1543 from natural causes and old age.
+</div>
+<div style = "position: absolute;">
+<img src = right_angled_triangle.png width = "40%" /><br/>
+<img src = circle.png width = "32%" />
 </div>
 
 <br />
 
 <div class = lore>
-It is little know that Nicolas Flamel used in his research a mysterius artefact,
-similar to the one used by Hiram Abif.
-It made it possible to calculate molecular masses of chemical elements and compounds in seconds rather than finding them through research.
+The artefact, which he used for calculations, was made from semi-transparent materials, which allowed him to watch the sky and perform calculations at the same time.
+You will now be trained and tested in a much more elaborate application of his artefact than before.
 </div>
 
 <br />
 
 <div class = lore>
-You will now be trained on how to use it to calculate molecular masses of chemical elements and compounds.
 Good luck!
+<br /><br />
+Some useful formulas:<br />
+<font size = "+1"  color = white>
+</i>
+&emsp;if <i>x</i> = e&#x207f then <i>x</i>&#x2071 = (e&#x207f)&#x2071 = <i>e</i>&#x207f&#x2071<br/>
+&emsp;<i>x</i>&#x207f &#x00d7 <i>x</i>&#x2071 = <i>x</i>&#x207f&#x207a&#x2071<br />
+&emsp;<i>tan &#x03b1 </i> = <i>a</i> / <i>b</i>
+&emsp;<i>sin &#x03b1 </i> = <i>a</i> / <i>c</i>
+&emsp;<i>c</i> = <i>a</i> / <i>sin &#x03b1</i>
+&emsp;<i>a</i> = <i>c</i> &#x00d7 <i>sin &#x03b1</i><br />
+&emsp;<i>Area</i> = &#x03c0 &#x00d7 <i>r</i>&#x00b2
+&emsp;<i>Area</i> = <i>d</i>&#x00b2 &#x00d7 &#x03c0 / 4
+</font>
+<i>
 </div>
 
 <br />
@@ -102,6 +118,8 @@ Good luck!
 </i></font>
 <div class = lore style = "width: 100%;">
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings&nbsp;
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Other Markings&nbsp;
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.&nbsp;
   <select id = lessons><option value = "Choose Lesson ====" >Choose Lesson ====</option></select>
   <input type = button value = "Play lesson" onclick = "javascript: playLesson ('lessons');" />&nbsp;&nbsp;
   <select id = tests><option value = "Choose Test of Merit ====" >Choose Test of Merit ====</option></select>
@@ -175,39 +193,50 @@ var manipulateBackground = function () {
 <script src="scales.js"></script>
 <script src="scales_chemical.js"></script>
 <script src="sliderule_ctrl.js"></script>
-<script src="manual/sliderule_tutorial_chemical.js"></script>
-<script src="manual/sliderule_test_chemical.js"></script>
+<script src="manual/sliderule_tutorial_log.js"></script>
+<script src="manual/sliderule_test_log.js"></script>
 
 <script>
-var sliderules = new Sliderules ({name: "Copernicus", manufacturer: "Copernicus", made_in: "Made in Poland"});
+var sliderules = new Sliderules ({name: "", manufacturer: "", made_in: ""});
 </script>
 <script src="raven.js"></script>
 
 <script src="templars_artefacts.js"></script>
 
 <script>
-sliderules . sliderules [1] . inactive = true;
+//sliderules . sliderules [1] . inactive = true;
+for (var sliderule in sliderules . sliderules) {
+  for (var rule in sliderules . sliderules [sliderule] . rules) {
+    sliderules . sliderules [sliderule] . rules [rule] . rule_colour = '#d2b48c33';
+    sliderules . sliderules [sliderule] . rules [rule] . border_colour = 'tan';
+    for (var scale in sliderules . sliderules [sliderule] . rules [rule] . scales) {
+      sliderules . sliderules [sliderule] . rules [rule] . scales [scale] . colour = '#ffd700';
+    }
+  }
+}
+sliderules . sliderules [0] . cursors = front_german_cursors;
+//sliderules . sliderules [0] . rules [1] . rule_colour = '#00000000';
 
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
-readSlideruleLessons ('lessons', [chemicalLessons]);
-readSlideruleLessons ('tests', [chemicalTests]);
-sliderules . fixedHeight = 400;
+readSlideruleLessons ('lessons', [logLessons]);
+readSlideruleLessons ('tests', [logTests]);
+sliderules . fixedHeight = 600;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([chemicalTests], trials, sliderules . name)) {addArtefact ('Copernicus Artefact'); ret = true;}
-  updateMissions ([chemicalTests], trials);
+  if (checkCookieScores ([logTests], trials, sliderules . name)) {addArtefact ('Hiram Abif Artefact'); ret = true;}
+  updateMissions ([logTests], trials);
   updateArtefacts ();
   updateSeeker ();
   return ret;
 };
-sliderules . name = "Flamel Artefact";
-addArtefact (sliderules . name);
+addArtefact ("Copernicus Artefact");
 </script>
 <script src="sliderule_application.js"></script>
 <script>
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
-//changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 slideruleMission ();
 </script>
 </font>
