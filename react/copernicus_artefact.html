@@ -210,7 +210,9 @@ for (var sliderule in sliderules . sliderules) {
     sliderules . sliderules [sliderule] . rules [rule] . rule_colour = '#d2b48c33';
     sliderules . sliderules [sliderule] . rules [rule] . border_colour = 'tan';
     for (var scale in sliderules . sliderules [sliderule] . rules [rule] . scales) {
-      sliderules . sliderules [sliderule] . rules [rule] . scales [scale] . colour = '#ffd700';
+      var s = sliderules . sliderules [sliderule] . rules [rule] . scales [scale];
+      s . colour = '#ffd700';
+      //if (s . alt == 'black') s . alt = '#ffd700';
     }
   }
 }
