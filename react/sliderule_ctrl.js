@@ -211,8 +211,7 @@ var dimm = function (intensity, colours) {
           var scale = sliderules . sliderules [esc] . rules [ind] . scales [sub];
           if (scale . dimm) {
             scale . colour = intensify_colour (scale . colour, intensity, colours);
-            scale . colour = intensify_colour (scale . colour, intensity, colours);
-            scale . alt = '#ff0000' + intensity;
+            scale . alt = intensify_colour (scale . alt, intensity, colours);
             if (scale . marking_colour != undefined) scale . marking_colour = intensify_colour (scale . marking_colour, intensity, colours);
           }
         }
