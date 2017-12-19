@@ -202,6 +202,7 @@ var manipulateBackground = function () {
 <script src="scales_chemical.js"></script>
 <script src="sliderule_ctrl.js"></script>
 <script src="manual/sliderule_tutorial_log.js"></script>
+<script src="manual/sliderule_tutorial_trigonometry_slide.js"></script>
 <script src="manual/sliderule_test_log.js"></script>
 
 <script>
@@ -229,7 +230,7 @@ sliderules . sliderules [0] . cursors = front_german_cursors;
 
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
-readSlideruleLessons ('lessons', [logLessons]);
+readSlideruleLessons ('lessons', [logLessons, trigonometrySlideLessons]);
 readSlideruleLessons ('tests', [logTests]);
 sliderules . fixedHeight = 600;
 sliderules . mission = function () {
