@@ -21,7 +21,7 @@ trigonometrySlideLessons ['Sine of an angle using slide'] = function (message) {
       return true;
     }
     return false;
-  }}, delay: 6000},
+  };}, delay: 6000},
   {action: function () {isolate (); message ("Try these instruction again.");}, delay: 4000}
   ];
 };
@@ -46,7 +46,7 @@ trigonometrySlideLessons ['Tangent of an angle using slide'] = function (message
       return true;
     }
     return false;
-  }}, delay: 6000},
+  };}, delay: 6000},
   {action: function () {isolate (); message ("Try these instruction again.");}, delay: 4000}
   ];
 };
@@ -71,7 +71,7 @@ trigonometrySlideLessons ['Angle of a sine using slide'] = function (message) {
       return true;
     }
     return false;
-  }}, delay: 6000},
+  };}, delay: 6000},
   {action: function () {isolate (); message ("Try these instruction again.");}, delay: 4000}
   ];
 };
@@ -96,7 +96,7 @@ trigonometrySlideLessons ['Angle of a tangent using slide'] = function (message)
       return true;
     }
     return false;
-  }}, delay: 6000},
+  };}, delay: 6000},
   {action: function () {isolate (); message ("Try these instruction again.");}, delay: 4000}
   ];
 };
@@ -131,7 +131,7 @@ trigonometrySlideLessons ['Small angle to radians conversion using slide'] = fun
       return true;
     }
     return false;
-  }}, delay: 6000},
+  };}, delay: 6000},
   {action: function () {isolate (); message ("Try these instruction again.");}, delay: 4000}
   ];
 };
@@ -199,7 +199,7 @@ trigonometrySlideLessons ['Calculate c and \u03b1 using slide'] = function (mess
         return true;
       }
       return false;
-    }}, delay: 6000},
+    };}, delay: 6000},
     {action: function () {isolate (); message ("Try these instructions again.");}, delay: 3000}
   ];
 };

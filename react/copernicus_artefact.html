@@ -63,7 +63,7 @@ div.templars {
 
 <!--<div id = bg class = templars>-->
 <font color=gold>
-<div id = bg style="background-image: url(nebulae_01.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0); width: 100%; background-repeat: no-repeat; background-size: 2600px; background-position: 0px -200px;">
+<div id = bg style="background-image: url(nebulae_01.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0); width: 100%; background-repeat: repeat; background-size: 3400px; background-position: 0px -200px;">
 
 <br />
 <center><h1><i>Nicolaus Copernicus' artefact</i></h1></center>
@@ -204,6 +204,7 @@ var manipulateBackground = function () {
 <script src="manual/sliderule_tutorial_log.js"></script>
 <script src="manual/sliderule_tutorial_trigonometry_slide.js"></script>
 <script src="manual/sliderule_test_log.js"></script>
+<script src="manual/sliderule_test_trigonometry_slide.js"></script>
 
 <script>
 var sliderules = new Sliderules ({name: "", manufacturer: "", made_in: ""});
@@ -231,12 +232,12 @@ sliderules . sliderules [0] . cursors = front_german_cursors;
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
 readSlideruleLessons ('lessons', [logLessons, trigonometrySlideLessons]);
-readSlideruleLessons ('tests', [logTests]);
+readSlideruleLessons ('tests', [logTests, trigonometrySlideTests]);
 sliderules . fixedHeight = 600;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([logTests], trials, sliderules . name)) {addArtefact ('Hiram Abif Artefact'); ret = true;}
-  updateMissions ([logTests], trials);
+  if (checkCookieScores ([logTests, trigonometrySlideTests], trials, sliderules . name)) {addArtefact ('Hiram Abif Artefact'); ret = true;}
+  updateMissions ([logTests, trigonometrySlideTests], trials);
   updateArtefacts ();
   updateSeeker ();
   return ret;
