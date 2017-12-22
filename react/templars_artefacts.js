@@ -9,7 +9,7 @@ var updateArtefacts = function () {
 	var content = [];
 	for (var ind in a) {
 		var aa = a [ind];
-		var href = "<a href=\"" + aa . replace (" ", "_") . toLowerCase () + ".html\" >" + aa + "</a>";
+		var href = "<a href=\"" + aa . replace (" ", "_") . replace (" ", "_") . toLowerCase () + ".html\" >" + aa + "</a>";
 		content . push (href);
 	}
 	if (content . length < 1) content . push ('none');

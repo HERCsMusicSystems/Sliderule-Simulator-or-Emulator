@@ -1,0 +1,204 @@
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Hiram Abif's Artefact</title>
+  </head>
+
+
+<style>
+@font-face
+{
+font-family: snell;
+src: url('snellbt-regular.otf'),
+url('snellbt-regular.eot');
+}
+
+div.lore {
+  text-indent: 50px;
+  width: 900px;
+  margin: 0 auto;
+}
+
+</style>
+
+
+
+<body bgcolor=white style="margin: 0px; padding: 0px;" vlink=white link=white alink=blue >
+
+<font color=black>
+<div id = bg style="background-image: url(solomon_temple.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0); width: 100%; background-repeat: repeat; background-size: 2400px; background-position: 0px 0px;">
+
+<br />
+<center><h1><i>Hiram Abif's artefact</i></h1></center>
+
+<font size="+1"><i>
+
+<div class = lore>
+This is it! Congratulations! You have proven yourself to be worthy of discovering Hiram Abif's Artefact.
+</div>
+<div style = "position: absolute;">
+<img src = right_angled_triangle.png width = "40%" /><br/>
+<img src = circle.png width = "32%" />
+</div>
+
+<br />
+
+<div class = lore>
+Hiram Abif was the chief architect of King Solomon's Temple.
+He was murdered in the Temple he designed by three ruffians during an unsuccessful attempt to force him to divulge the secrets of his craft.
+</div>
+
+<br />
+
+<div class = lore>
+In 1119 Knight Templars discovered the artefact, which Hiram Abif used for performing calculations in his design and construction work.
+Soon after this discovery, Gothic style in architecture was introduced in Europe.
+In 20th century similar tools were mass produced (named "slide rule") by companies such as Faber-Castell in Germany, Keufell & Esser in US and Hemmi in Japan.
+They were used for engineering purposes.
+</div>
+
+<br />
+
+<div class = lore>
+Ever since electronic calculators were invented, the art of using slide rules become forgotten.
+</div>
+
+<br />
+
+<div class = lore>
+You will now be introduced to several spectacular formulas and how they can be performed on the artefact. Enjoy!
+</div>
+
+<br />
+
+<div class = lore>
+Good luck!
+<br /><br />
+Some useful formulas:<br />
+<font size = "+1"  color = white>
+</i>
+&emsp;if <i>x</i> = e&#x207f then <i>x</i>&#x2071 = (e&#x207f)&#x2071 = <i>e</i>&#x207f&#x2071<br/>
+&emsp;<i>x</i>&#x207f &#x00d7 <i>x</i>&#x2071 = <i>x</i>&#x207f&#x207a&#x2071<br />
+&emsp;<i>tan &#x03b1 </i> = <i>a</i> / <i>b</i>
+&emsp;<i>sin &#x03b1 </i> = <i>a</i> / <i>c</i>
+&emsp;<i>c</i> = <i>a</i> / <i>sin &#x03b1</i>
+&emsp;<i>a</i> = <i>c</i> &#x00d7 <i>sin &#x03b1</i><br />
+&emsp;<i>Area</i> = &#x03c0 &#x00d7 <i>r</i>&#x00b2
+&emsp;<i>Area</i> = <i>d</i>&#x00b2 &#x00d7 &#x03c0 / 4
+</font>
+<i>
+</div>
+
+<br />
+
+<div class = lore style="text-indent: 0px;">Your status now is: <font color=white><span id = seeker /></font></div><br/>
+<div class = lore style="text-indent: 0px;">Mission:<br /><font color=white><span id = mission /></font></div><br/>
+<div class = lore style="text-indent: 0px;">Your artefacts:<br /><font color=white><span id = artefacts /></font></div>
+<br />
+
+</i></font>
+<div class = lore style = "width: 100%;">
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings&nbsp;
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Other Markings&nbsp;
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.&nbsp;
+  <select id = lessons><option value = "Choose Lesson ====" >Choose Lesson ====</option></select>
+  <input type = button value = "Play lesson" onclick = "javascript: playLesson ('lessons');" />&nbsp;&nbsp;
+  <select id = tests><option value = "Choose Test of Merit ====" >Choose Test of Merit ====</option></select>
+  <input type = button value = "Attempt test" onclick = "javascript: playLesson ('tests');" />&nbsp;&nbsp;
+  <input type = button id = clear_instructions onclick = "javascript: document . getElementById ('info') . innerHTML = '';" value = "Clear instructions." />
+</div>
+
+  <div style = "display: block; position: absolute; background-color: white; border-color: black; border-style: solid; border-width: 1px;">
+    <font color = red ><span id = info /></font>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="root"></div>
+
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+<script src="scales_chemical.js"></script>
+<script src="sliderule_ctrl.js"></script>
+<script src="manual/sliderule_tutorial_log.js"></script>
+<script src="manual/sliderule_tutorial_trigonometry_slide.js"></script>
+<script src="manual/sliderule_test_log.js"></script>
+<script src="manual/sliderule_test_trigonometry_slide.js"></script>
+
+<script src="hiram_abif.js"></script>
+
+<script src="templars_artefacts.js"></script>
+
+<script>
+
+var trials = Number (cook ('trials'));
+if (isNaN (trials)) trials = 2;
+readSlideruleLessons ('lessons', [logLessons, trigonometrySlideLessons]);
+readSlideruleLessons ('tests', [logTests, trigonometrySlideTests]);
+sliderules . fixedHeight = 600;
+sliderules . mission = function () {
+  var ret = false;
+  if (checkCookieScores ([logTests, trigonometrySlideTests], trials, sliderules . name)) {addArtefact ('Hiram Abif Artefact'); ret = true;}
+  updateMissions ([logTests, trigonometrySlideTests], trials);
+  updateArtefacts ();
+  updateSeeker ();
+  return ret;
+};
+addArtefact ("Hiram Abif Artefact");
+</script>
+<script src="sliderule_application.js"></script>
+<script>
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+//changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+slideruleMission ();
+</script>
+</font>
+<br /><br /><br /><br />
+<br /><br /><br /><br />
+<br /><br /><br /><br />
+<br /><br /><br /><br />
+</div>
+<audio src="courage.mp3" autoplay />
+</body></html>
