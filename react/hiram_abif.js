@@ -17,7 +17,7 @@ r . scales . push (new scale_Chemical (24,
       'Be', 'Mo'
       ],
     {left: 'A~M', lines: [{left: Math . log10 (masses . H), right: Math . log10 (masses . Mo) - 1, height: 1}]}));
-r . scales . push (new spacer (4));
+//r . scales . push (new spacer (4));
 r . scales . push (new scale_Chemical (24,
     [{e: 'Sn', shift: -2}, {e: 'Sb', shift: 2}, 'Xe', 'N', 'NH', {e: 'NH2', v: 'NH\u2082'},
     {e: 'P2O7', v: 'P\u2082O\u2087', align: 'right'}, {e: 'NH4', v: 'NH\u2084', shift: -4}, {e: 'W', shift: 4},
