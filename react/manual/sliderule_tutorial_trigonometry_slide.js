@@ -146,7 +146,7 @@ trigonometrySlideLessons ['Calculate a using slide'] = function (message) {
   return [
     {action: function () {ensureSide (['C', 'D', 'S']); isolate (['C', 'D', 'S']); changeMarkings ('hairline', true); dimmm (255, 40, 8);}, delay: 100},
     {action: function () {message ("The task: c = " + c + ", \u03b1 = " + alpha + ", find a.");}, delay: 500},
-    {action: function () {message ("Move cursor to 8 on the D scale.");}, delay: 2000},
+    {action: function () {message ("Move cursor to " + c + " on the D scale.");}, delay: 2000},
     {action: function () {cursorTo ('D', c);}, delay: 1500},
     {action: function () {message ("Align 10 on the the C scale with cursor's hairline.");}, delay: 2000},
     {action: function () {slideTo ('C', 10);}, delay: 2000},

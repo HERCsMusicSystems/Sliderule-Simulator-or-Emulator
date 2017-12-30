@@ -46,7 +46,7 @@ div.lore {
 
 
 
-<body bgcolor=white style="margin: 0px; padding: 0px;" vlink=white link=white alink=blue >
+<body bgcolor=white style="margin: 0px; padding: 0px;" vlink=blue link=blue alink=blue >
 
 <font color=black>
 <div id = bg style="background-image: url(solomon_temple.jpg); background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0); width: 100%; background-repeat: repeat; background-size: 2400px; background-position: 0px 0px;">
@@ -98,7 +98,7 @@ You will now be introduced to several spectacular formulas and how they can be p
 Good luck!
 <br /><br />
 Some useful formulas:<br />
-<font size = "+1"  color = white>
+<font size = "+1"  color = blue>
 </i>
 &emsp;if <i>x</i> = e&#x207f then <i>x</i>&#x2071 = (e&#x207f)&#x2071 = <i>e</i>&#x207f&#x2071<br/>
 &emsp;<i>x</i>&#x207f &#x00d7 <i>x</i>&#x2071 = <i>x</i>&#x207f&#x207a&#x2071<br />
@@ -114,8 +114,8 @@ Some useful formulas:<br />
 
 <br />
 
-<div class = lore style="text-indent: 0px;">Your status now is: <font color=white><span id = seeker /></font></div><br/>
-<div class = lore style="text-indent: 0px;">Mission:<br /><font color=white><span id = mission /></font></div><br/>
+<div class = lore style="text-indent: 0px;">Your status now is: <font color=blue><span id = seeker /></font></div><br/>
+<div class = lore style="text-indent: 0px;">Mission:<br /><font color=blue><span id = mission /></font></div><br/>
 <div class = lore style="text-indent: 0px;">Your artefacts:<br /><font color=white><span id = artefacts /></font></div>
 <br />
 
@@ -161,11 +161,12 @@ Some useful formulas:<br />
 <script src="scales.js"></script>
 <script src="scales_chemical.js"></script>
 <script src="sliderule_ctrl.js"></script>
+<!--
 <script src="manual/sliderule_tutorial_log.js"></script>
 <script src="manual/sliderule_tutorial_trigonometry_slide.js"></script>
 <script src="manual/sliderule_test_log.js"></script>
 <script src="manual/sliderule_test_trigonometry_slide.js"></script>
-
+-->
 <script src="hiram_abif.js"></script>
 
 <script src="templars_artefacts.js"></script>
@@ -174,9 +175,10 @@ Some useful formulas:<br />
 
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
-readSlideruleLessons ('lessons', [logLessons, trigonometrySlideLessons]);
-readSlideruleLessons ('tests', [logTests, trigonometrySlideTests]);
+readSlideruleLessons ('lessons', []);
+readSlideruleLessons ('tests', []);
 sliderules . fixedHeight = 600;
+/*
 sliderules . mission = function () {
   var ret = false;
   if (checkCookieScores ([logTests, trigonometrySlideTests], trials, sliderules . name)) {addArtefact ('Hiram Abif Artefact'); ret = true;}
@@ -185,13 +187,14 @@ sliderules . mission = function () {
   updateSeeker ();
   return ret;
 };
+*/
 addArtefact ("Hiram Abif Artefact");
 </script>
 <script src="sliderule_application.js"></script>
 <script>
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
-//changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 slideruleMission ();
 </script>
 </font>
