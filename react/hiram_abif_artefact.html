@@ -161,12 +161,8 @@ Some useful formulas:<br />
 <script src="scales.js"></script>
 <script src="scales_chemical.js"></script>
 <script src="sliderule_ctrl.js"></script>
-<!--
-<script src="manual/sliderule_tutorial_log.js"></script>
-<script src="manual/sliderule_tutorial_trigonometry_slide.js"></script>
-<script src="manual/sliderule_test_log.js"></script>
-<script src="manual/sliderule_test_trigonometry_slide.js"></script>
--->
+<script src="manual/sliderule_tutorial_tabling.js"></script>
+<script src="manual/sliderule_test_tabling.js"></script>
 <script src="hiram_abif.js"></script>
 
 <script src="templars_artefacts.js"></script>
@@ -175,19 +171,18 @@ Some useful formulas:<br />
 
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
-readSlideruleLessons ('lessons', []);
-readSlideruleLessons ('tests', []);
+readSlideruleLessons ('lessons', [tablingLessons]);
+readSlideruleLessons ('tests', [tablingTests]);
 sliderules . fixedHeight = 600;
-/*
+
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([logTests, trigonometrySlideTests], trials, sliderules . name)) {addArtefact ('Hiram Abif Artefact'); ret = true;}
-  updateMissions ([logTests, trigonometrySlideTests], trials);
+  if (checkCookieScores ([tablingTests], trials, sliderules . name)) {addArtefact ('Hiram Abif Artefact'); ret = true;}
+  updateMissions ([tablingTests], trials);
   updateArtefacts ();
   updateSeeker ();
   return ret;
 };
-*/
 addArtefact ("Hiram Abif Artefact");
 </script>
 <script src="sliderule_application.js"></script>
