@@ -5,8 +5,13 @@ var sliderules = new Sliderules ();
 
 var s = new Sliderule (1200); sliderules . sliderules . push (s);
 
+s . cursors . push (new Cursor (HairlineS, 100, 124));
+s . cursors . push (new Cursor (HairlineS, 172, 196));
+s . cursors . push (new Cursor (HairlineD, 246, 294));
+
 var r = new Rule (); s . rules . push (r);
 
+r . scales . push (new spacer (4));
 r . scales . push (new scale_Chemical (24,
     ['H', {e: 'Ag', align: 'right'}, {e: 'B', align: 'left'}, 'Cd', 'C', 'I', 'Cs', 'Ba', {e: 'CH3', v: 'CH\u2083'}, 'O', 'OH', {e: 'H2O', v: 'H\u2082O'}, 'F',
       {e: 'Au', shift: -3}, {e: 'Hg', shift: 3}, 'Bi',
@@ -36,6 +41,7 @@ r = new Rule ({stator: 1}); s . rules . push (r);
 r . scales . push (new scale_DF (24, {left: "CF"}));
 r . scales . push (new scale_B (24, {left: "B"}));
 r . scales . push (new scale_CIF (24, {left: "DIF"}));
+r . scales . push (new spacer (2));
 r . scales . push (new scale_DI (24, {left: "CI"}));
 r . scales . push (new scale_C (24, {left: "C"}));
 
@@ -48,11 +54,15 @@ r . scales . push (new scale_TCTdec_down (24, {left: "T1"}));
 r . scales . push (new scale_TCT1dec_down (24, {left: "T2"}));
 r . scales . push (new scale_STdec_down (24, {left: "ST"}));
 
+r . scales . push (new spacer (4));
+
 //===========================
 
 s = new Sliderule (1200); sliderules . sliderules . push (s);
 
 r = new Rule (); s . rules . push (r);
+
+r . scales . push (new spacer (4));
 
 r . scales . push (new scale_L (24, {left: "L"}));
 r . scales . push (new scale_LL03 (24, {left: "LL03"}));
@@ -65,6 +75,7 @@ r = new Rule ({stator: 1}); s . rules . push (r);
 
 r . scales . push (new scale_W1 (24, {left: "W1"}));
 r . scales . push (new scale_Sdec (24, {left: "S"}));
+r . scales . push (new spacer (2));
 r . scales . push (new scale_Tdec_down (24, {left: "T"}));
 r . scales . push (new scale_C (24, {left: "C", draw_r: true, draw_q: true}));
 r . scales . push (new scale_R2 (24, {left: "W2"}));
@@ -77,4 +88,6 @@ r . scales . push (new scale_LL1_down (24, {left: "LL1"}));
 r . scales . push (new scale_LL2_down (24, {left: "LL2"}));
 r . scales . push (new scale_LL3_down (24, {left: "LL3"}));
 r . scales . push (new scale_LW12 (24, {left: "L"}));
+
+r . scales . push (new spacer (4));
 
