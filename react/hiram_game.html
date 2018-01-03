@@ -136,6 +136,7 @@ var opacity = 0.6;
 var templars = [
     "url('knights-templar.jpg')",
     "url('knights-templar_2.jpg')",
+    "url('knights-templar_7.jpg')",
     "url('knights-templar_4.jpg')",
     "url('knights-templar_5.jpg')",
     "url('knights-templar_3.jpg')",
@@ -154,6 +155,8 @@ var manipulateBackground = function () {
       style . backgroundImage = templars [templar_id];
       templar_id += 1;
       if (templar_id >= templars . length) templar_id = 0;
+      //var new_id = templar_id;
+      //while (new_id == templar_id) new_id = Math . floor (Math . random () * templars . length)
       size = 1800;
     }
   } else {
