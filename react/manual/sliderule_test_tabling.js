@@ -41,4 +41,19 @@ tablingTests ['Compounded multiplication test'] = function (message) {
   };
 };
 
+tablingTests ['Denarius to drachma conversion test'] = function (message) {
+  var conversion_rate = crnu (1.1323529411765, 5);
+  var denarius = 2 + Math . floor (Math . random () * 7);
+  var drachma = crnu (denarius * conversion_rate, 5);
+  message ("The task: if one roman denarius = " + conversion_rate + " greek drachmae, then how much drachmas you can buy for " + denarius + " denarii?");
+  sliderules . objective = function () {
+    if (checkValue ('C', denarius) && checkValue ('D', drachma)) {
+      message ("Mission accomplished! " + denarius + " roman denarii buys " + drachma + " greek drachmae.");
+      increaseCookieResult ('Denarius to drachma conversion test');
+      return true;
+    }
+    return false;
+  };
+};
+
 slideruleLessons . push (tablingTests);
