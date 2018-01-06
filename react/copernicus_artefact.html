@@ -111,7 +111,9 @@ Some useful formulas:<br />
 &emsp;<i>c</i> = <i>a</i> / <i>sin &#x03b1</i>
 &emsp;<i>a</i> = <i>c</i> &#x00d7 <i>sin &#x03b1</i><br />
 &emsp;<i>Area</i> = &#x03c0 &#x00d7 <i>r</i>&#x00b2
-&emsp;<i>Area</i> = <i>d</i>&#x00b2 &#x00d7 &#x03c0 / 4
+&emsp;<i>Area</i> = <i>d</i>&#x00b2 &#x00d7 &#x03c0 / 4<br />
+&emsp;1 Astronomical Unit (AU) = 149.5978707 million kilometers<br />
+&emsp;1 parsec = AU &#x00d7 60 &#x00d7 60 &#x00d7 180 / &#x03c0
 </font>
 <i>
 </div>
@@ -203,8 +205,10 @@ var manipulateBackground = function () {
 <script src="sliderule_ctrl.js"></script>
 <script src="manual/sliderule_tutorial_log.js"></script>
 <script src="manual/sliderule_tutorial_trigonometry_slide.js"></script>
+<script src="manual/sliderule_tutorial_astro.js"></script>
 <script src="manual/sliderule_test_log.js"></script>
 <script src="manual/sliderule_test_trigonometry_slide.js"></script>
+<script src="manual/sliderule_test_astro.js"></script>
 
 <script>
 var sliderules = new Sliderules ({name: "", manufacturer: "", made_in: ""});
@@ -231,13 +235,13 @@ sliderules . sliderules [0] . cursors = front_german_cursors;
 
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
-readSlideruleLessons ('lessons', [logLessons, trigonometrySlideLessons]);
-readSlideruleLessons ('tests', [logTests, trigonometrySlideTests]);
+readSlideruleLessons ('lessons', [logLessons, trigonometrySlideLessons, astroLessons]);
+readSlideruleLessons ('tests', [logTests, trigonometrySlideTests, astroTests]);
 sliderules . fixedHeight = 600;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([logTests, trigonometrySlideTests], trials, sliderules . name)) {addArtefact ('Hiram Abif Artefact'); ret = true;}
-  updateMissions ([logTests, trigonometrySlideTests], trials);
+  if (checkCookieScores ([logTests, trigonometrySlideTests, astroTests], trials, sliderules . name)) {addArtefact ('Hiram Abif Artefact'); ret = true;}
+  updateMissions ([logTests, trigonometrySlideTests, astroTests], trials);
   updateArtefacts ();
   updateSeeker ();
   return ret;
