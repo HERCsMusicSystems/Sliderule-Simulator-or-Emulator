@@ -31,5 +31,25 @@ astroTests ['Calculate light year test'] = function (message) {
   };
 };
 
+astroTests ['Parsec to light year conversion test'] = function (message) {
+  var au = 149597870.7;
+  var parsec = au * 60 * 60 * 180 / Math . PI;
+  var year = 60 * 60 * 24 * 365.25;
+  var light_speed = 299792.458;
+  var light_year = year * light_speed;
+  var conversion = crnu (parsec / light_year, 5);
+  var parsecs = 0;
+  while (parsecs < 1 || parsecs > 10) parsecs = crnu (Math . floor (Math . random () * 100) / 10);
+  message ("The task: convert " + parsecs + " parsecs to light years.");
+  sliderules . objective = function () {
+    if (checkValue ('CF', parsecs > 3 ? parsecs / 10 : parsecs) && checkValue ('D', conversion * parsecs * (parsecs > 3 ? 0.1 : 1))) {
+      message ("Mission accomplished! " + parsecs + " parsecs = " + crnu (conversion * parsecs, parsecs > 3 ? 4 : 5) + " light years.");
+      increaseCookieResult ('Parsec to light year conversion test');
+      return true;
+    }
+    return false;
+  };
+};
+
 slideruleLessons . push (astroTests);
 

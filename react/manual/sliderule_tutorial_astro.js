@@ -30,7 +30,7 @@ astroLessons ['Calculate parsec'] = function (message) {
 		{action: function () {message ("Move the cursor to " + crnu (auf, 5) + " on the C scale.");}, delay: 3000},
 		{action: function () {cursorTo ('C', auf);}, delay: 1000},
 		{action: function () {message ("Adjust the decimal point and read the result on the D scale. 1 parsec = " + pc + " million kilometers.");}, delay: 3000},
-		{action: function () {cursorTo ('D', 1); slideTo ('D', 1); isolate (); dimmm (40, 255, 8);
+		{action: function () {cursorTo ('D', 1); slideTo ('D', 1); dimmm (40, 255, 8);
 		sliderules . objective = function () {
 			if (checkValue ('D', pc / 10000000) && checkValue  ('C', auf)) {
 				message ("Mission accomplished! 1 parsec = " + pc + " million kilometers.");
@@ -39,7 +39,7 @@ astroLessons ['Calculate parsec'] = function (message) {
 			}
 			return false;
 		};}, delay: 6000},
-		{action: function () {message ("Try these instructions again.");}, delay: 1000}
+		{action: function () {isolate (); message ("Try these instructions again.");}, delay: 4000}
 	];
 };
 
@@ -73,7 +73,7 @@ astroLessons ['Calculate light year'] = function (message) {
   {action: function () {message ("Move the cursor to 2.99792 on the C scale.");}, delay: 3000},
   {action: function () {cursorTo ('C', 2.99792458);}, delay: 1000},
   {action: function () {message ("Adjust the decimal point and read the length of one light year = 9,460,730,000,000 kilometers.");}, delay: 3000},
-  {action: function () {cursorTo ('D', 1); slideTo ('D', 1); isolate (); dimmm (40, 255, 8);
+  {action: function () {cursorTo ('D', 1); slideTo ('D', 1); dimmm (40, 255, 8);
   sliderules . objective = function () {
     if (checkValue ('C', 2.99792) && checkValue ('D', 9.46073)) {
       message ("Mission accomplished! One light year = 9,460,730,000,000 kilometers.");
@@ -82,7 +82,38 @@ astroLessons ['Calculate light year'] = function (message) {
     }
     return false;
   };}, delay: 6000},
-  {action: function () {message ("Try these instructions again.");}, delay: 1000}
+  {action: function () {isolate (); message ("Try these instructions again.");}, delay: 4000}
+  ];
+};
+
+astroLessons ['Parsec to light year conversion'] = function (message) {
+  var au = 149597870.7;
+  var parsec = au * 60 * 60 * 180 / Math . PI;
+  var year = 60 * 60 * 24 * 365.25;
+  var light_speed = 299792.458;
+  var light_year = year * light_speed;
+  var conversion = crnu (parsec / light_year, 5);
+  var parsecs = 0;
+  while (parsecs < 1 || parsecs > 10) parsecs = crnu (Math . floor (Math . random () * 100) / 10);
+  return [
+  {action: function () {ensureSide (['CF', 'D']); isolate (['CF', 'D']); changeMarkings ('hairline', true); dimmm (255, 40, 8);}, delay: 100},
+  {action: function () {message ("The task: convert " + parsecs + " parsecs to light years.");}, delay: 500},
+  {action: function () {message ("Since one parsec = " + conversion + " light years, align 1 on the CF scale with " + conversion + " on the D scale.");}, delay: 3000},
+  {action: function () {cursorTo ('D', conversion);}, delay: 1000},
+  {action: function () {slideTo ('CF', 1);}, delay: 3000},
+  {action: function () {message ("Now move the cursor to " + parsecs + " parsecs on the CF scale....");}, delay: 3000},
+  {action: function () {cursorTo ('CF', parsecs > 3 ? parsecs / 10 : parsecs);}, delay: 1000},
+  {action: function () {message ("Read the result on the D scale. " + parsecs + " parsecs = " + crnu (conversion * parsecs, parsecs > 3 ? 4 : 5) + " light years.");}, delay: 3000},
+  {action: function () {cursorTo ('D', 1); slideTo ('C', 1); dimmm (40, 255, 8);
+  sliderules . objective = function () {
+    if (checkValue ('CF', parsecs > 3 ? parsecs / 10 : parsecs) && checkValue ('D', conversion * parsecs * (parsecs > 3 ? 0.1 : 1))) {
+      message ("Mission accomplished! " + parsecs + " parsecs = " + crnu (conversion * parsecs, parsecs > 3 ? 4 : 5) + " light years.");
+      increaseCookieResult ('Parsec to light year conversion');
+      return true;
+    }
+    return false;
+  };}, delay: 6000},
+  {action: function () {isolate (); message ("Try these instructions again.");}, delay: 4000}
   ];
 };
 
