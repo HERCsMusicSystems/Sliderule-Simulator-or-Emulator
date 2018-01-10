@@ -91,9 +91,9 @@ r . scales . push (new scale_DF (24, {left: "CF", right: "\u03c0X", rs: 0.07, le
 r . scales . push (new scale_CIF (24, {left: "CIF", right: "10/\u03c0X", rs: 0.07, left_extension: 0.042, right_extension: 0.056, marking_colour: 'red', indices: ['>>1<<']}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_DI (24, {left: "CI", right: "10/X", rs: 0.07, left_extension: 0.042, right_extension: 0.048, marking_colour: 'red'}));
-r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, left_extension: 0.048, right_extension: 0.042, draw_r: true, draw_q: true}));
+r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, left_extension: 0.048, right_extension: 0.042, draw_c: false}));
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_DLL0 (24, {left: "D", right: "X", rs: 0.07, centre: "e^0.001x", cs: 1.02, ca: 'left', cc: 'red', left_extension: 0.048, draw_r: true}));
+r . scales . push (new scale_DLL0 (24, {left: "D", right: "X", rs: 0.07, centre: "e^0.001x", cs: 1.02, ca: 'left', cc: 'red', left_extension: 0.048, draw_c: false}));
 r . markings . push (new Engraving ("LL", 'italic 12px arial', 'left', 'red', -0.08, 18));
 r . scales . push (new scale_LL1_down (24, {left: "LL1", right: "e^0.01x", rs: 0.02, left_extension: 0.05}));
 r . scales . push (new scale_LL2_down (24, {left: "LL2", right: "e^0.1x", rs: 0.02, left_extension: 0.046, right_extension: 0.014}));

@@ -34,31 +34,31 @@ r . scales . push (new scale_Chemical (24,
     'Ni', {e: 'NO3', v: 'NO\u2083'}, 'Zn', 'Se', 'Rb', {e: 'Zr', shift: -4}, {e: 'PO4', v: 'PO\u2084', shift: -6}, {e: 'SO4', v: 'SO\u2084', align: 'left'}
     ],
     {left: 'N~Z', lines: [{left: Math . log10 (masses . Sn) - 2, right: Math . log10 (masses . SO4) - 1, height: 1}]}));
-r . scales . push (new scale_P (24, {left: "P"}));
-r . scales . push (new scale_K (24, {left: "K"}));
-r . scales . push (new scale_A (24, {left: "A"}));
-r . scales . push (new scale_CF (24, {left: "DF"}));
+r . scales . push (new scale_P (24, {left: "P", right: "\u221a1-x\u00b2", rs: 0.07, left_extension: 0.05}));
+r . scales . push (new scale_K (24, {left: "K", right: "X\u00b3", rs: 0.07, left_extension: 0.052, right_extension: 0.04}));
+r . scales . push (new scale_A (24, {left: "A", right: "X\u00b2", rs: 0.07, left_extension: 0.05, right_extension: 0.042}));
+r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.07, left_extension: 0.05, right_extension: 0.048, indices: ['>>1<<']}));
 
 r = new Rule ({stator: 1}); s . rules . push (r);
 
 r . markings . push (new Logo (tc, -0.15, 5 * 12 + 1, 0.25));
 r . markings . push (new Logo (tc, 1.15, 5 * 12 + 1, 0.25));
 
-r . scales . push (new scale_DF (24, {left: "CF"}));
-r . scales . push (new scale_B (24, {left: "B"}));
-r . scales . push (new scale_CIF (24, {left: "DIF", colour: 'red'}));
+r . scales . push (new scale_DF (24, {left: "CF", right: "\u03c0X", rs: 0.07, left_extension: 0.05, right_extension: 0.048, indices: ['>>1<<']}));
+r . scales . push (new scale_B (24, {left: "B", right: "X\u00b2", rs: 0.07, left_extension: 0.05, right_extension: 0.042}));
+r . scales . push (new scale_CIF (24, {left: "DIF", right: "10/\u03c0X", rs: 0.07, left_extension: 0.042, right_extension: 0.056, marking_colour: 'red', indices: ['>>1<<']}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_DI (24, {left: "CI", colour: 'red'}));
-r . scales . push (new scale_C (24, {left: "C"}));
+r . scales . push (new scale_DI (24, {left: "CI", right: "10/X", rs: 0.07, left_extension: 0.042, right_extension: 0.048, marking_colour: 'red'}));
+r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, left_extension: 0.048, right_extension: 0.042}));
 
 r = new Rule (); s . rules . push (r);
 
-r . scales . push (new scale_D (24, {left: "D"}));
-r . scales . push (new scale_DI (24, {left: "DI", colour: 'red'}));
-r . scales . push (new scale_Sdec_down (24, {left: "S"}));
-r . scales . push (new scale_TCTdec_down (24, {left: "T1"}));
-r . scales . push (new scale_TCT1dec_down (24, {left: "T2"}));
-r . scales . push (new scale_STdec_down (24, {left: "ST"}));
+r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.07, left_extension: 0.048, right_extension: 0.042}));
+r . scales . push (new scale_DI (24, {left: "DI", right: "10/X", rs: 0.07, left_extension: 0.042, right_extension: 0.048, marking_colour: 'red'}));
+r . scales . push (new scale_Sdec_down (24, {left: "S", right: "sin X", rs: 0.07, left_extension: 0.06}));
+r . scales . push (new scale_TCTdec_down (24, {left: "T1", right: "tan X", rs: 0.07, left_extension: 0.06, right_extension: 0.061}));
+r . scales . push (new scale_TCT1dec_down (24, {left: "T2", right: "tan X", rs: 0.07, left_extension: 0.061, right_extension: 0.06}));
+r . scales . push (new scale_STdec_down (24, {left_extension: 0.061, right_extension: 0.058, left: "ST", right: "\u2222 arc 0.01X", rs: 0.07}));
 
 r . scales . push (new spacer (4));
 
