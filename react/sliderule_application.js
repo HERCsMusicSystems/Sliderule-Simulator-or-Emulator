@@ -62,6 +62,9 @@ var changeVersion = function (version) {
 	sliderules . requireRedraw = true;
 };
 
+var inactivateHairlines = function (inactive) {for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . hairlines_inactive = inactive;};
+var overrideSlides = function (override) {for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . slide_override = override;};
+
 var copyright = "Emulator / Simulator Copyright \u00a9 2017 - " + new Date () . getFullYear () + " Dr Robert Wolf @ http://www.hercsmusicsystems.com.au";
 var copyright_colours = ['blue', 'gray', 'yellow', 'lavender', 'green', 'olive', 'silver', 'tan', 'wheat', 'khaki'];
 var copyright_colour = copyright_colours [Math . floor (Math . random () * copyright_colours . length)];
@@ -77,7 +80,13 @@ var SlideruleApplication = React . createClass ({
   onMouseDown: function (event) {
   	sliderules . resetMovers ();
     var position = subvbc ({x: event . clientX, y: event . clientY}, this . refs . sliderule . getBoundingClientRect ());
-    if (event . button === 2) return sliderules . synchroniseTarget (addv (position, {x: 0.5, y: 0}));
+    if (event . button === 2) {
+      if (event . ctrlKey) inactivateHairlines (false);
+      if (event . shiftKey) overrideSlides (true);
+      var ret = sliderules . synchroniseTarget (addv (position, {x: 0.5, y: 0}));
+      if (event . ctrlKey) inactivateHairlines (true);
+      if (event . shiftKey) overrideSlides (false);
+    }
     this . dragging = true;
     this . mousePosition = position;
   },
