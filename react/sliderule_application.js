@@ -32,6 +32,21 @@ var changeMarkings = function (type, value) {
 	sliderules . requireRedraw = true;
 };
 
+var changeAndActivateMarkings = function (type, value) {
+	for (var ind in sliderules . sliderules) {
+		switch (type) {
+		case 'static': case 'stator': case 'rule': sliderules . sliderules [ind] . static_markings = value; break;
+		case 'cursor': case 'hairline': sliderules . sliderules [ind] . cursor_markings = value; break;
+		case 'cursors': case 'hairlines': case 'extras':
+      sliderules . sliderules [ind] . extra_cursor_markings = value;
+      sliderules . sliderules [ind] . hairlines_inactive = ! value;
+      break;
+		default: break;
+		}
+	}
+	sliderules . requireRedraw = true;
+};
+
 var changeSide = function (side) {
 	switch (side) {
 	case 'front': sliderules . sliderules [0] . inactive = false; sliderules . sliderules [1] . inactive = true; break;

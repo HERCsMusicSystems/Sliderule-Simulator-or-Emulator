@@ -1,11 +1,23 @@
 
-var sliderules = new Sliderules ();
+var sliderules = new Sliderules ({manufacturer: '', name: ''});
 
 var tc = new Image (); tc . src = "templar_cross.png"; tc . onload = function () {sliderules . requireRedraw = true;};
 
 //============================
 
-var s = new Sliderule (1200, {markings_colour: 'gold', markings_background: 'black', cursor_markings_shift: 0.002}); sliderules . sliderules . push (s);
+var s = new Sliderule (1200, {cursor_top_margin: 13, cursor_bottom_margin: 13, hairline_top: -10, hairline_bottom: -10, cursor_limit_left: 0.052, cursor_limit_right: 0.052, markings_background: 'gold', cursor_left_extension: 0.08, cursor_right_extension: 0.08, cursor_markings_shift: 0.005}); sliderules . sliderules . push (s);
+
+s . braces . push (new LeftBrace (2, 0.066, 8, 'gold', 'black', 74, 1));
+s . braces . push (new LeftBrace (4, 0.06, 8, 'tan', 'black', 76, 1));
+s . braces . push (new RightBrace (2, 0.066, 8, 'gold', 'black', 74, 1));
+s . braces . push (new RightBrace (4, 0.06, 8, 'tan', 'black', 76, 1));
+s . cursorGlassBraces . push (new DecilonCursorBrace (1, 0.08, 12, 8, 0.04, 18, 4, 'tan', 'black'));
+s . cursorBraces . push (new Engraving (sliderules . manufacturer, '12px arial', 'right', 'red', 0.07, 289));
+s . cursorBraces . push (new Engraving (sliderules . name, '12px arial', 'left', 'red', -0.07, 12));
+s . cursorBraces . push (new Screw (-0.06, -9, 6, Math . random () * Math . PI, 'gold', 'silver'));
+s . cursorBraces . push (new Screw (0.06, -9, 6, Math . random () * Math . PI, 'gold', 'silver'));
+s . cursorBraces . push (new Screw (-0.06, 427, 6, Math . random () * Math . PI, 'gold', 'silver'));
+s . cursorBraces . push (new Screw (0.06, 427, 6, Math . random () * Math . PI, 'gold', 'silver'));
 
 s . cursors . push (new Cursor (HairlineS, 100, 124, 'red', {marking_shift: 0.002}));
 s . cursors . push (new Cursor (HairlineS, 172, 196, 'red', {marking_shift: 0.002}));
@@ -64,39 +76,51 @@ r . scales . push (new spacer (4));
 
 //===========================
 
-s = new Sliderule (1200, {markings_colour: 'gold', markings_background: 'black', cursor_markings_shift: 0.002}); sliderules . sliderules . push (s);
+s = new Sliderule (1200, {cursor_top_margin: 13, cursor_bottom_margin: 13, hairline_top: -10, hairline_bottom: -10, cursor_limit_left: 0.052, cursor_limit_right: 0.052, markings_background: 'gold', cursor_left_extension: 0.08, cursor_right_extension: 0.08, cursor_markings_shift: 0.005}); sliderules . sliderules . push (s);
+
+s . braces . push (new LeftBrace (2, 0.066, 8, 'gold', 'black', 74, 1));
+s . braces . push (new LeftBrace (4, 0.06, 8, 'tan', 'black', 76, 1));
+s . braces . push (new RightBrace (2, 0.066, 8, 'gold', 'black', 74, 1));
+s . braces . push (new RightBrace (4, 0.06, 8, 'tan', 'black', 76, 1));
+s . cursorGlassBraces . push (new DecilonCursorBrace (1, 0.08, 12, 8, 0.04, 18, 4, 'tan', 'black'));
+s . cursorBraces . push (new Engraving (sliderules . manufacturer, '12px arial', 'right', 'red', 0.07, 289));
+s . cursorBraces . push (new Engraving (sliderules . name, '12px arial', 'left', 'red', -0.07, 12));
+s . cursorBraces . push (new Screw (-0.06, -9, 6, Math . random () * Math . PI, 'gold', 'silver'));
+s . cursorBraces . push (new Screw (0.06, -9, 6, Math . random () * Math . PI, 'gold', 'silver'));
+s . cursorBraces . push (new Screw (-0.06, 427, 6, Math . random () * Math . PI, 'gold', 'silver'));
+s . cursorBraces . push (new Screw (0.06, 427, 6, Math . random () * Math . PI, 'gold', 'silver'));
 
 r = new Rule (); s . rules . push (r);
 
 r . scales . push (new spacer (4));
 
-r . scales . push (new scale_L (24, {left: "L", colour: 'red'}));
-r . scales . push (new scale_LL03 (24, {left: "LL03", colour: 'red'}));
-r . scales . push (new scale_LL02 (24, {left: "LL02", colour: 'red'}));
-r . scales . push (new scale_LL01 (24, {left: "LL01", colour: 'red'}));
-r . scales . push (new scale_LL00 (24, {left: "LL00", colour: 'red'}));
-r . scales . push (new scale_R1 (24, {left: "W1"}));
+r . scales . push (new scale_L (24, {left: "L", right: "log X", rs: 0.07, left_extension: 0.05, right_extension: 0.05}));
+r . scales . push (new scale_LL03 (24, {left: "LL03", marking_colour: 'red', right: "e^-x", left_extension: 0.04, rs: 0.02}));
+r . scales . push (new scale_LL02 (24, {left: "LL02", marking_colour: 'red', right: "e^-0.1x", rs: 0.02, left_extension: 0.026, right_extension: 0.01}));
+r . scales . push (new scale_LL01 (24, {left: "LL01", marking_colour: 'red', right: "e^-0.01x", rs: 0.02, left_extension: 0.046}));
+r . scales . push (new scale_LL00 (24, {left: "LL00", marking_colour: 'red', right: "e^-0.001x", rs: 0.02, left_extension: 0.046, right_extension: 0.004}));
+r . scales . push (new scale_R1 (24, {left_extension: 0.092, right_extension: 0.09, left: "W1", ls: 0.13, right: "\u221aX", rs: 0.1, draw_q: true}));
 
 r = new Rule ({stator: 1}); s . rules . push (r);
 
 r . markings . push (new Logo (tc, -0.15, 5 * 12 + 1, 0.25));
 r . markings . push (new Logo (tc, 1.15, 5 * 12 + 1, 0.25));
 
-r . scales . push (new scale_W1 (24, {left: "W1"}));
-r . scales . push (new scale_Sdec (24, {left: "S"}));
+r . scales . push (new scale_W1 (24, {left_extension: 0.092, right_extension: 0.09, left: "W1", ls: 0.13, right: "\u221aX", rs: 0.1, draw_q: true}));
+r . scales . push (new scale_Sdec (24, {left: "S", right: "sin X", rs: 0.07, left_extension: 0.06}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_Tdec_down (24, {left: "T"}));
-r . scales . push (new scale_C (24, {left: "C", draw_r: true, draw_q: true}));
-r . scales . push (new scale_R2 (24, {left: "W2"}));
+r . scales . push (new scale_TCTdec_down (24, {left: "T", right: "tan X", rs: 0.07, left_extension: 0.06, right_extension: 0.046}));
+r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, left_extension: 0.048, right_extension: 0.042, draw_c: false, draw_r: true, draw_q: true}));
+r . scales . push (new scale_R2 (24, {left_extension: 0.106, ls: 0.13, right_extension: 0.084, left: "W2", right: "\u221a10 X\u00b3", rs: 0.1, draw_q: true}));
 
 r = new Rule (); s . rules . push (r);
 
-r . scales . push (new scale_W2 (24, {left: "W2"}));
-r . scales . push (new scale_DLL0 (24, {left: "D", draw_r: true, draw_q: true}));
-r . scales . push (new scale_LL1_down (24, {left: "LL1"}));
-r . scales . push (new scale_LL2_down (24, {left: "LL2"}));
-r . scales . push (new scale_LL3_down (24, {left: "LL3"}));
-r . scales . push (new scale_LW12 (24, {left: "L"}));
+r . scales . push (new scale_W2 (24, {left_extension: 0.106, ls: 0.13, right_extension: 0.084, left: "W2", right: "\u221a10 X\u00b3", rs: 0.1, draw_q: true}));
+r . scales . push (new scale_DLL0 (24, {left: "D", right: "X", rs: 0.07, centre: "e^0.001x", cs: 1.02, ca: 'left', cc: 'red', left_extension: 0.048, draw_c: false, draw_r: true, draw_q: true}));
+r . scales . push (new scale_LL1_down (24, {left: "LL1", right: "e^0.01x", rs: 0.02, left_extension: 0.05}));
+r . scales . push (new scale_LL2_down (24, {left: "LL2", right: "e^0.1x", rs: 0.02, left_extension: 0.046, right_extension: 0.014}));
+r . scales . push (new scale_LL3_down (24, {left: "LL3", right: "e^x", rs: 0.02, left_extension: 0.04, right_extension: 0.014}));
+r . scales . push (new scale_LW12 (24, {left_extension: 0.061, right_extension: 0.06, left: "L", right: "\u00bdlg X", rs: 0.07}));
 
 r . scales . push (new spacer (4));
 

@@ -122,7 +122,7 @@ Some useful formulas:<br />
 </i></font>
 <div class = lore style = "width: 100%;">
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings&nbsp;
-	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Other Markings&nbsp;
+	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Other Markings&nbsp;
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.&nbsp;
   <select id = lessons><option value = "Choose Lesson ====" >Choose Lesson ====</option></select>
   <input type = button value = "Play lesson" onclick = "javascript: playLesson ('lessons');" />&nbsp;&nbsp;
@@ -188,7 +188,7 @@ addArtefact ("Hiram Abif Artefact");
 <script src="sliderule_application.js"></script>
 <script>
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
-changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 slideruleMission ();
 </script>
