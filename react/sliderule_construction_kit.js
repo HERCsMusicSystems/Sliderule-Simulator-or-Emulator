@@ -2207,5 +2207,7 @@ var Sliderules = function (options) {
   	for (var ind in this . sliderules) {if (this . sliderules [ind] . changed ()) return false;}
   	return true;
   };
+  this . deactivateHairlines = function (inactive) {for (var ind in this . sliderules) this . sliderules [ind] . hairlines_inactive = inactive;};
+  this . overrideSlides = function (override) {for (var ind in this . sliderules) this . sliderules [ind] . slide_override = override;};
   for (var key in options) this [key] = options [key];
 };
