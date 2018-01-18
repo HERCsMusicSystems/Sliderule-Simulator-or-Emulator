@@ -204,9 +204,11 @@ var manipulateBackground = function () {
 <script src="scales.js"></script>
 <script src="scales_chemical.js"></script>
 <script src="sliderule_ctrl.js"></script>
+<script src="manual/sliderule_tutorial_tabling.js"></script>
 <script src="manual/sliderule_tutorial_log.js"></script>
 <script src="manual/sliderule_tutorial_trigonometry_slide.js"></script>
 <script src="manual/sliderule_tutorial_astro.js"></script>
+<script src="manual/sliderule_test_tabling.js"></script>
 <script src="manual/sliderule_test_log.js"></script>
 <script src="manual/sliderule_test_trigonometry_slide.js"></script>
 <script src="manual/sliderule_test_astro.js"></script>
@@ -236,13 +238,13 @@ sliderules . sliderules [0] . cursors = front_german_cursors;
 
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
-readSlideruleLessons ('lessons', [logLessons, trigonometrySlideLessons, astroLessons]);
-readSlideruleLessons ('tests', [logTests, trigonometrySlideTests, astroTests]);
+readSlideruleLessons ('lessons', [tablingLessons, logLessons, trigonometrySlideLessons, astroLessons]);
+readSlideruleLessons ('tests', [tablingTests, logTests, trigonometrySlideTests, astroTests]);
 sliderules . fixedHeight = 600;
 sliderules . mission = function () {
   var ret = false;
-  if (checkCookieScores ([logTests, trigonometrySlideTests, astroTests], trials, sliderules . name)) {addArtefact ('Hiram Abif Artefact'); ret = true;}
-  updateMissions ([logTests, trigonometrySlideTests, astroTests], trials);
+  if (checkCookieScores ([tablingTests, logTests, trigonometrySlideTests, astroTests], trials, sliderules . name)) {addArtefact ('Hiram Abif Artefact'); ret = true;}
+  updateMissions ([tablingTests, logTests, trigonometrySlideTests, astroTests], trials);
   updateArtefacts ();
   updateSeeker ();
   return ret;

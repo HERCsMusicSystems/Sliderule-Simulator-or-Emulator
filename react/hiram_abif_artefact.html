@@ -162,19 +162,21 @@ Some useful formulas:<br />
 <script src="scales.js"></script>
 <script src="scales_chemical.js"></script>
 <script src="sliderule_ctrl.js"></script>
+<!--
 <script src="manual/sliderule_tutorial_tabling.js"></script>
 <script src="manual/sliderule_test_tabling.js"></script>
+-->
 <script src="hiram_abif.js"></script>
 
 <script src="templars_artefacts.js"></script>
 
 <script>
-
+sliderules . fixedHeight = 600;
+/*
 var trials = Number (cook ('trials'));
 if (isNaN (trials)) trials = 2;
 readSlideruleLessons ('lessons', [tablingLessons]);
 readSlideruleLessons ('tests', [tablingTests]);
-sliderules . fixedHeight = 600;
 
 sliderules . mission = function () {
   var ret = false;
@@ -185,6 +187,7 @@ sliderules . mission = function () {
   return ret;
 };
 addArtefact ("Hiram Abif Artefact");
+*/
 </script>
 <script src="sliderule_application.js"></script>
 <script>

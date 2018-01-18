@@ -88,7 +88,7 @@ roman denarius = 0.28308823529412 greek tetradrachma
 roman denarius = 0.56617647058824 greek didrachma
 roman denarius = 1.13235294117648 greek drachma
 */
-
+/*
 tablingLessons ['Denarius to drachma conversion'] = function (message) {
   var conversion_rate = crnu (1.1323529411765, 5);
   var denarius = 2 + Math . floor (Math . random () * 7);
@@ -117,5 +117,5 @@ tablingLessons ['Denarius to drachma conversion'] = function (message) {
   {action: function () {isolate (); message ("Try these instructions again.");}, delay: 4000}
   ];
 };
-
+*/
 slideruleLessons . push (tablingLessons);

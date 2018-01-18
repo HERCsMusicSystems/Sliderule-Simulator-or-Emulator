@@ -40,7 +40,7 @@ tablingTests ['Compounded multiplication test'] = function (message) {
     return false;
   };
 };
-
+/*
 tablingTests ['Denarius to drachma conversion test'] = function (message) {
   var conversion_rate = crnu (1.1323529411765, 5);
   var denarius = 2 + Math . floor (Math . random () * 7);
@@ -55,5 +55,5 @@ tablingTests ['Denarius to drachma conversion test'] = function (message) {
     return false;
   };
 };
-
+*/
 slideruleLessons . push (tablingTests);
