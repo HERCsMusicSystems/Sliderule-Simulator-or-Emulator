@@ -11,7 +11,11 @@ userManual ['Moving Cursor'] = function (message) {
     {action: function () {cursorTo ("A", a);}, delay: 1000},
     {action: function () {cursorTo ("A", 1);
     sliderules . objective = function () {
-      if (checkValue ("A", a)) {message ("Mission accomplished!"); increaseCookieResult ('Moving Cursor'); return true;}
+      if (checkValue ("A", a)) {
+      	message ("Mission accomplished! The cursor is now at " + a + " on the A scale.");
+      	increaseCookieResult ('Moving Cursor');
+      	return true;
+      }
       return false;
     };}, delay: 6000},
     {action: function () {message ("Now try these instruction again.");}, dealy: 4000}
@@ -30,7 +34,11 @@ userManual ['Moving Slide'] = function (message) {
     {action: function () {slideTo ("B", a);}, delay: 2000},
     {action: function () {slideTo ("B", 10);
     sliderules . objective = function () {
-      if (checkValue ("B", a)) {message ("Mission accomplished!"); increaseCookieResult ('Moving Cursor'); return true;}
+      if (checkValue ("B", a) && checkValue ("A", 10)) {
+      	message ("Mission accomplished! The cursor is now at " + a + " on the B scale and at 10 on the A scale.");
+      	increaseCookieResult ('Moving Cursor');
+      	return true;
+      }
       return false;
     };}, delay: 6000},
     {action: function () {message ("Now try these instructions again.");}, delay: 4000}
@@ -41,16 +49,20 @@ userManual ['Moving Cursor by right-click'] = function (message) {
   var a = 1;
   while (a == 1 || a > 100) a = 1 + Math . floor (Math . random () * 100);
   return [
-    {action: function () {ensureSide (["A"]);}, delay: 0},
+    {action: function () {ensureSide (["A"]); isolate (['A']); changeMarkings ('hairline', true);}, delay: 0},
     {action: function () {message ("The task: move cursor to " + a + " on the A scale.");}, delay: 100},
     {action: function () {message ("Right-click on the cursor window over the A scale and enter " + a + ".");}, delay: 2000},
     {action: function () {cursorTo ("A", a);}, delay: 1000},
     {action: function () {cursorTo ("A", 1);
     sliderules . objective = function () {
-      if (checkValue ("A", a)) {message ("Mission accomplished!"); increaseCookieResult ('Moving Cursor by right-click'); return true;}
+      if (checkValue ("A", a)) {
+      	message ("Mission accomplished! The cursor is now at " + a + " on the A scale.");
+      	increaseCookieResult ('Moving Cursor by right-click');
+      	return true;
+      }
       return false;
     };}, delay: 6000},
-    {action: function () {message ("Now try these instruction again.");}, dealy: 4000}
+    {action: function () {isolate (); message ("Now try these instruction again.");}, dealy: 4000}
   ];
 };
 

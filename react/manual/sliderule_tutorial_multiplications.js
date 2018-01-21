@@ -18,7 +18,7 @@ multiplicationLessons ['Simple multiplication (A/B)'] = function (message) {
     {action: function () {cursorTo ("A", 1); slideTo ("B", 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
       if (checkValue ("A", a * b) && checkValue ("B", b)) {
-        message ("Mission accomplished!");
+        message ("Mission accomplished! " + a + " \u00d7 " + b + " = " + (a * b));
         increaseCookieResult ('Simple multiplication (A/B)');
         return true;
       }
@@ -45,7 +45,7 @@ multiplicationLessons ['Simple division (A/B)'] = function (message) {
     {action: function () {cursorTo ("A", 1); slideTo ("B", 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
       if (checkValue ("A", a) && checkValue ("B", 1)) {
-        message ("Mission accomplished!");
+        message ("Mission accomplished! " + ab + " / " + b + " = " + a);
         increaseCookieResult ('Simple division (A/B)');
         return true;
       }
@@ -71,7 +71,7 @@ multiplicationLessons ['Simple multiplication (C/D)'] = function (message) {
     {action: function () {cursorTo ("D", 1); slideTo ("C", 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
       if (checkValue ("D", a * b) && checkValue ("C", b)) {
-        message ("Mission accomplished!");
+        message ("Mission accomplished! " + a + " \u00d7 " + b + " = " + crnu (a * b));
         increaseCookieResult ('Simple multiplication (C/D)');
         return true;
       }
@@ -98,7 +98,7 @@ multiplicationLessons ['Simple division (C/D)'] = function (message) {
     {action: function () {cursorTo ("D", 1); slideTo ("C", 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
       if (checkValue ("D", a) && checkValue ("C", 1)) {
-        message ("Mission accomplished!");
+        message ("Mission accomplished! " + ab + " / " + b + " = " + a);
         increaseCookieResult ('Simple division (C/D)');
         return true;
       }
@@ -125,7 +125,7 @@ multiplicationLessons ['Wrap-around multiplication (C/D)'] = function (message) 
     {action: function () {cursorTo ("D", 1); slideTo ("C", 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
       if (checkValue ("D", a * b / 10) && checkValue ("C", b)) {
-        message ("Mission accomplished!");
+        message ("Mission accomplished! " + a + " \u00d7 " + b + " = " + crnu (a * b));
         increaseCookieResult ('Wrap-around multiplication (C/D)');
         return true;
       }

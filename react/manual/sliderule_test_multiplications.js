@@ -7,7 +7,7 @@ multiplicationTests ['Simple multiplication test (A/B)'] = function (message) {
   message ("The task : multiply " + a + " by " + b + " using A/B scales.");
   sliderules . objective = function () {
     if (checkValue ("A", a * b) && checkValue ("B", b)) {
-      message ("Mission accomplished!");
+      message ("Mission accomplished! " + a + " \u00d7 " + b + " = " + (a * b));
       increaseCookieResult ('Simple multiplication test (A/B)');
       return true;
     }
@@ -23,7 +23,7 @@ multiplicationTests ['Simple division test (A/B)'] = function (message) {
   message ("The task : divide " + ab + " by " + b + " using A/B scales.");
   sliderules . objective = function () {
     if (checkValue ("A", a) && checkValue ("B", 1)) {
-      message ("Mission accomplished!");
+      message ("Mission accomplished! " + ab + " / " + b + " = " + a);
       increaseCookieResult ('Simple division test (A/B)');
       return true;
     }
@@ -36,7 +36,7 @@ multiplicationTests ['Simple multiplication test (C/D)'] = function (message) {
   message ("The task: multiply " + a + " by " + b + " using C/D scales.");
   sliderules . objective = function () {
     if (checkValue ("D", a * b) && checkValue ("C", b)) {
-      message ("Mission accomplished!");
+      message ("Mission accomplished! " + a + " \u00d7 " + b + " = " + crnu (a * b));
       increaseCookieResult ('Simple multiplication test (C/D)');
       return true;
     }
@@ -52,7 +52,7 @@ multiplicationTests ['Simple division test (C/D)'] = function (message) {
   message ("The task: divide " + ab + " by " + b + " using C/D scales.");
   sliderules . objective = function () {
     if (checkValue ("D", a) && checkValue ("C", 1)) {
-      message ("Mission accomplished!");
+      message ("Mission accomplished! " + ab + " / " + b + " = " + a);
       increaseCookieResult ('Simple division test (C/D)');
       return true;
     }
@@ -66,7 +66,7 @@ multiplicationTests ['Wrap-around multiplication test (C/D)'] = function (messag
   message ("The task: multiply " + a + " by " + b + " using C/D scales.");
   sliderules . objective = function () {
     if (checkValue ("D", a * b / 10) && checkValue ("C", b)) {
-      message ("Mission accomplished!");
+      message ("Mission accomplished! " + a + " \u00d7 " + b + " = " + (a * b));
       increaseCookieResult ('Wrap-around multiplication test (C/D)');
       return true;
     }
