@@ -21,7 +21,7 @@ foldedMultiplicationLessons ['Folded-scale multiplication (CF/DF)'] = function (
     {action: function () {cursorTo ("DF", 1); slideTo ("CF", 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
       if (checkValue ("DF", a * b) && checkValue ("CF", b)) {
-        message ("Mission accomplished!");
+        message ("Mission accomplished! " + a + " \u00d7 " + b + " = " + crnu (a * b));
         increaseCookieResult ('Folded-scale multiplication (CF/DF)');
         return true;
       }
@@ -38,11 +38,12 @@ foldedMultiplicationLessons ['Folded-scale all numbers multiplication (CF/DF)'] 
   }
   var am = 1, bm = 1;
   while (am == 1 && bm == 1) {am = rndlist ([-3, -2, -1, 0, 1, 2, 3]); bm = rndlist ([-3, -2, -1, 0, 1, 2, 3]);}
+  var aam = crnu (a * Math . pow (10, am)), bbm = crnu (b * Math . pow (10, bm));
   return [
     {action: function () {ensureSide (["CF", "DF"]);}, delay: 100},
     {
       action: function () {
-        message ("The task: multiply " + crnu (a * Math . pow (10, am)) + " by " + crnu (b * Math . pow (10, bm)) + " using CF/DF scales.");
+        message ("The task: multiply " + aam + " by " + bbm + " using CF/DF scales.");
       },
       delay: 1000
     },
@@ -61,7 +62,7 @@ foldedMultiplicationLessons ['Folded-scale all numbers multiplication (CF/DF)'] 
     {action: function () {cursorTo ("DF", 1); slideTo ("CF", 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
       if (checkValue ("DF", a * b) && checkValue ("CF", b)) {
-        message ("Mission accomplished!");
+        message ("Mission accomplished! " + aam + " \u00d7 " + bbm + " = " + crnu (aam * bbm));
         increaseCookieResult ('Folded-scale all numbers multiplication (CF/DF)');
         return true;
       }
@@ -91,7 +92,7 @@ foldedMultiplicationLessons ['Folded-scale multiplication (C/D/CF/DF)'] = functi
     {action: function () {cursorTo ("D", 1); slideTo ("C", 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
       if (checkValue ("DF", a * b / 10) && checkValue ("CF", b / 10)) {
-        message ("Mission accomplished!");
+        message ("Mission accomplished! " + a + " \u00d7 " + b + " = " + crnu (a * b));
         increaseCookieResult ('Folded-scale multiplication (C/D/CF/DF)');
         return true;
       }

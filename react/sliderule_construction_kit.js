@@ -21,7 +21,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 
 var rndlist = function (list) {return list [Math . floor (Math . random () * list . length)];};
-var crnu = function (number, precision) {if (precision == undefined) precision = 12; return Number (number . toFixed (precision));};
+var crnu = function (number, precision) {if (precision == undefined) precision = 9; return Number (number . toFixed (precision));};
 
 var roundRect = function (ctx, left1, left2, top, right1, right2, bottom, radius) {
   var atan = Math . atan2 (left1 - left2, bottom - top - radius - radius);
