@@ -18,7 +18,7 @@ circleAreaLessons ['Area from radius'] = function (message) {
     {action: function () {cursorTo ('D', 1); slideTo ('B', 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
       if (checkValue ('A', area) && checkValue ('B', Math . PI)) {
-        message ("Mission accomplished!");
+        message ("Mission accomplished! area = " + area);
         increaseCookieResult ('Area from radius');
         return true;
       }
@@ -40,7 +40,11 @@ circleAreaLessons ['Area from diameter'] = function (message) {
     {action: function () {message ("Read the area = " + area + " on the A scale under the green hairline.");}, delay: 3000},
     {action: function () {cursorTo ('D', 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
-      if (checkValue ('A', d * d)) {message ("Mission accomplished!"); increaseCookieResult ('Area from diameter'); return true;}
+      if (checkValue ('A', d * d)) {
+        message ("Mission accomplished! area = " + area);
+        increaseCookieResult ('Area from diameter');
+        return true;
+      }
       return false;
     };}, delay: 6000},
     {action: function () {isolate (); message ("Try these instructions again.");}, delay: 3000}
@@ -59,7 +63,11 @@ circleAreaLessons ['Diameter from area'] = function (message) {
     {action: function () {message ("Read the diameter d = " + d + " on the D scale under the green hairline.");}, delay: 3000},
     {action: function () {cursorTo ('D', 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
-      if (checkValue ('D', Math . sqrt (area))) {message ("Mission accomplished!"); increaseCookieResult ('Diameter from area'); return true;}
+      if (checkValue ('D', Math . sqrt (area))) {
+        message ("Mission accomplished! diameter = " + d);
+        increaseCookieResult ('Diameter from area');
+        return true;
+      }
       return false;
     };}, delay: 6000},
     {action: function () {isolate (); message ("Try these instructions again.");}, delay: 3000}

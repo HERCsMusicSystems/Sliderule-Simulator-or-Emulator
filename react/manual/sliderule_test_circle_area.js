@@ -8,7 +8,7 @@ circleAreaTests ['Area from radius test'] = function (message) {
   message ("The task: r = " + r + ", find the area of the circle.");
   sliderules . objective = function () {
     if (checkValue ('A', area) && checkValue ('B', Math . PI)) {
-      message ("Mission accomplished!");
+      message ("Mission accomplished! area = " + area);
       increaseCookieResult ('Area from radius test');
       return true;
     }
@@ -22,7 +22,11 @@ circleAreaTests ['Area from diameter test'] = function (message) {
   var area = crnu (d * d * Math . PI / 4, 5);
   message ("The task: diameter d = " + d + ", find the area of the circle.");
   sliderules . objective = function () {
-    if (checkValue ('A', d * d)) {message ("Mission accomplished!"); increaseCookieResult ('Area from diameter test'); return true;}
+    if (checkValue ('A', d * d)) {
+      message ("Mission accomplished! area = " + area);
+      increaseCookieResult ('Area from diameter test');
+      return true;
+    }
     return false;
   };
 };
@@ -33,7 +37,11 @@ circleAreaTests ['Diameter from area test'] = function (message) {
   var d = crnu (Math . sqrt (area * 4 / Math . PI), 5);
   message ("The task: area = " + area + ", find the diameter of the circle.");
   sliderules . objective = function () {
-    if (checkValue ('D', Math . sqrt (area))) {message ("Mission accomplished!"); increaseCookieResult ('Diameter from area test'); return true;}
+    if (checkValue ('D', Math . sqrt (area))) {
+      message ("Mission accomplished! diameter = " + d);
+      increaseCookieResult ('Diameter from area test');
+      return true;
+    }
     return false;
   };
 };
