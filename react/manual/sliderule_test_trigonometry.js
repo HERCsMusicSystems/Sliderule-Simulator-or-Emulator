@@ -7,7 +7,11 @@ trigonometryTests ['Sine of an angle test'] = function (message) {
   var sine = crnu (Math . sin (angle * Math . PI / 180), 6);
   message ("The task: find sine of " + angle + " degrees.");
   sliderules . objective = function () {
-    if (checkValue ("S", angle)) {message ("Mission accomplished!"); increaseCookieResult ('Sine of an angle test'); return true;}
+    if (checkValue ("S", angle)) {
+      message ("Mission accomplished! sin(" + angle + "\u00b0) = " + sine);
+      increaseCookieResult ('Sine of an angle test');
+      return true;
+    }
     return false;
   };
 };
@@ -18,7 +22,11 @@ trigonometryTests ['Tangent of an angle test'] = function (message) {
   var tangent = crnu (Math . tan (angle * Math . PI / 180), 6);
   message ("The task: find tangent of " + angle + " degrees.");
   sliderules . objective = function () {
-    if (checkValue ("T", angle)) {message ("Mission accomplished!"); increaseCookieResult ('Tangent of an angle test'); return true;}
+    if (checkValue ("T", angle)) {
+      message ("Mission accomplished! tan(" + angle + "\u00b0) = " + tangent);
+      increaseCookieResult ('Tangent of an angle test');
+      return true;
+    }
     return false;
   };
 };
@@ -29,7 +37,11 @@ trigonometryTests ['Angle of a sine test'] = function (message) {
   var angle = crnu (Math . asin (sine) * 180 / Math . PI, 5);
   message ("The task: find an angle, which sine is " + sine + ".");
   sliderules . objective = function () {
-    if (checkValue ("D", sine * 10)) {message ("Mission accomplished!"); increaseCookieResult ('Angle of a sine test'); return true;}
+    if (checkValue ("D", sine * 10)) {
+      message ("Mission accomplished! sin(" + angle + "\u00b0) = " + sine);
+      increaseCookieResult ('Angle of a sine test');
+      return true;
+    }
     return false;
   };
 };
@@ -40,7 +52,11 @@ trigonometryTests ['Angle of a tangent test'] = function (message) {
   var angle = crnu (Math . atan (tangent) * 180 / Math . PI, 5);
   message ("The task: find an angle, which tangent is " + tangent + ".");
   sliderules . objective = function () {
-    if (checkValue ("D", tangent * 10)) {message ("Mission accomplished!"); increaseCookieResult ('Angle of a tangent test'); return true;}
+    if (checkValue ("D", tangent * 10)) {
+      message ("Mission accomplished! tan(" + angle + "\u00b0) = " + tangent);
+      increaseCookieResult ('Angle of a tangent test');
+      return true;
+    }
     return false;
   };
 };
@@ -51,7 +67,11 @@ trigonometryTests ['Small angle to radians conversion test'] = function (message
   var radians = crnu (angle * Math . PI / 180, 7);
   message ("The task: convert " + angle + " degrees to radians.");
   sliderules . objective = function () {
-    if (checkValue ("ST", angle)) {message ("Mission accomplished!"); increaseCookieResult ('Small angle to radians conversion test'); return true;}
+    if (checkValue ("ST", angle)) {
+      message ("Mission accomplished! " + angle + " degrees = " + radians + " radians");
+      increaseCookieResult ('Small angle to radians conversion test');
+      return true;
+    }
     return false;
   };
 };
@@ -66,7 +86,7 @@ trigonometryTests ['Calculate a test'] = function (message) {
   message ("The task: c = " + c + ", \u03b1 = " + alpha + ", find a.");
   sliderules . objective = function () {
     if (checkValue ('S', alpha) && checkValue ('C', a)) {
-      message ("Mission accomplished!");
+      message ("Mission accomplished! a = " + a);
       increaseCookieResult ('Calculate a test');
       return true;
     }
@@ -85,7 +105,7 @@ trigonometryTests ['Calculate c and \u03b1 test'] = function (message) {
   message ("The task: a = " + a + ", b = " + b + ", find c and \u03b1.");
   sliderules . objective = function () {
     if (checkValue ("S", alpha) && checkValue ("CI", c)) {
-      message ("Mission accomplished!");
+      message ("Mission accomplished! \u03b1 = " + alpha + "\u00b0 and c = " + c);
       increaseCookieResult ('Calculate c and \u03b1 test');
       return true;
     }

@@ -12,10 +12,14 @@ trigonometryLessons ['Sine of an angle'] = function (message) {
   {action: function () {message ("Move the cursor to " + angle + " on the S scale.");}, delay: 3000},
   {action: function () {cursorTo ("S", angle);}, delay: 3000},
   {action: function () {message ("Read the value of " + crnu (sine * 10) + " on the D scale.");}, delay: 3000},
-  {action: function () {message ("Adjust the decimal point to obtain value of " + crnu (sine, 5) + ".");}, delay: 2000},
+  {action: function () {message ("Adjust the decimal point to obtain value of " + sine + ".");}, delay: 2000},
   {action: function () {cursorTo ("D", 1); dimmm (80, 255, 8);
   sliderules . objective = function () {
-    if (checkValue ("S", angle)) {message ("Mission accomplished!"); increaseCookieResult ('Sine of an angle'); return true;}
+    if (checkValue ("S", angle)) {
+      message ("Mission accomplished! sin(" + angle + "\u00b0) = " + sine);
+      increaseCookieResult ('Sine of an angle');
+      return true;
+    }
     return false;
   }}, delay: 6000},
   {action: function () {isolate (); message ("Try these instruction again.");}, delay: 4000}
@@ -33,10 +37,14 @@ trigonometryLessons ['Tangent of an angle'] = function (message) {
   {action: function () {message ("Move the cursor to " + angle + " on the T scale.");}, delay: 3000},
   {action: function () {cursorTo ("T", angle);}, delay: 3000},
   {action: function () {message ("Read the value of " + crnu (tangent * 10) + " on the D scale.");}, delay: 3000},
-  {action: function () {message ("Adjust the decimal point to obtain value of " + crnu (tangent, 5) + ".");}, delay: 2000},
+  {action: function () {message ("Adjust the decimal point to obtain value of " + tangent + ".");}, delay: 2000},
   {action: function () {cursorTo ("D", 1); dimmm (80, 255, 8);
   sliderules . objective = function () {
-    if (checkValue ("T", angle)) {message ("Mission accomplished!"); increaseCookieResult ('Tangent of an angle'); return true;}
+    if (checkValue ("T", angle)) {
+      message ("Mission accomplished! tan(" + angle + "\u00b0) = " + tangent);
+      increaseCookieResult ('Tangent of an angle');
+      return true;
+    }
     return false;
   }}, delay: 6000},
   {action: function () {isolate (); message ("Try these instruction again.");}, delay: 4000}
@@ -57,7 +65,11 @@ trigonometryLessons ['Angle of a sine'] = function (message) {
   {action: function () {message ("Read the value of " + angle + " on the S scale.");}, delay: 3000},
   {action: function () {cursorTo ("D", 1); dimmm (80, 255, 8);
   sliderules . objective = function () {
-    if (checkValue ("D", sinec)) {message ("Mission accomplished!"); increaseCookieResult ('Angle of a sine'); return true;}
+    if (checkValue ("D", sinec)) {
+      message ("Mission accomplished! sin(" + angle + "\u00b0) = " + sine);
+      increaseCookieResult ('Angle of a sine');
+      return true;
+    }
     return false;
   }}, delay: 6000},
   {action: function () {isolate (); message ("Try these instruction again.");}, delay: 4000}
@@ -78,7 +90,11 @@ trigonometryLessons ['Angle of a tangent'] = function (message) {
   {action: function () {message ("Read the value of " + angle + " on the T scale.");}, delay: 3000},
   {action: function () {cursorTo ("D", 1); dimmm (80, 255, 8);
   sliderules . objective = function () {
-    if (checkValue ("D", tangentc)) {message ("Mission accomplished!"); increaseCookieResult ('Angle of a tangent'); return true;}
+    if (checkValue ("D", tangentc)) {
+      message ("Mission accomplished! tan(" + angle + "\u00b0) = " + tangent);
+      increaseCookieResult ('Angle of a tangent');
+      return true;
+    }
     return false;
   }}, delay: 6000},
   {action: function () {isolate (); message ("Try these instruction again.");}, delay: 4000}
@@ -98,13 +114,17 @@ trigonometryLessons ['Small angle to radians conversion'] = function (message) {
   {action: function () {message ("Move the cursor to " + angle + " on the ST scale.");}, delay: 3000},
   {action: function () {cursorTo ("ST", angle);}, delay: 3000},
   {action: function () {message ("Read the value of " + crnu (radians * 100) + " on the D scale.");}, delay: 3000},
-  {action: function () {message ("Adjust the decimal point to obtain the value of " + crnu (radians, 5) + ".");}, delay: 2000},
-  {action: function () {message ("Observe that: sine (" + angle + ") = " + sine + " and tangent (" + angle + ") = " + tangent + ".");}, delay: 2000},
-  {action: function () {message (sine + " < " + crnu (radians, 5) + " < " + tangent);}, delay: 1000},
-  {action: function () {message ("Since the angle is very small, " + crnu (radians, 5) + " is a good approximation of both sine and tangent.");}, delay: 1000},
+  {action: function () {message ("Adjust the decimal point to obtain the value of " + radians + ".");}, delay: 2000},
+  {action: function () {message ("Observe that: sine (" + angle + "\u00b0) = " + sine + " and tangent (" + angle + "\u00b0) = " + tangent + ".");}, delay: 2000},
+  {action: function () {message (sine + " < " + radians + " < " + tangent);}, delay: 1000},
+  {action: function () {message ("Since the angle is very small, " + radians + " is a good approximation of both sine and tangent.");}, delay: 1000},
   {action: function () {cursorTo ("D", 1); dimmm (80, 255, 8);
   sliderules . objective = function () {
-    if (checkValue ("ST", angle)) {message ("Mission accomplished!"); increaseCookieResult ('Small angle to radians conversion'); return true;}
+    if (checkValue ("ST", angle)) {
+      message ("Mission accomplished! " + angle + " degrees = " + radians + " radians");
+      increaseCookieResult ('Small angle to radians conversion');
+      return true;
+    }
     return false;
   }}, delay: 6000},
   {action: function () {isolate (); message ("Try these instruction again.");}, delay: 4000}
@@ -131,7 +151,7 @@ trigonometryLessons ['Calculate a'] = function (message) {
     {action: function () {cursorTo ('D', 1); slideTo ('C', 1); dimmm (80, 255, 8);
     sliderules . objective = function () {
       if (checkValue ('S', alpha) && checkValue ('C', a)) {
-        message ("Mission accomplished!");
+        message ("Mission accomplished! a = " + a);
         increaseCookieResult ('Calculate a');
         return true;
       }
@@ -168,7 +188,11 @@ trigonometryLessons ['Calculate c and \u03b1'] = function (message) {
     {action: function () {message ("The value of c is " + c + " and can be read from the CI scale.");}, delay: 2000},
     {action: function () {cursorTo ("D", 1); slideTo ("CI", 10); dimmm (80, 255, 8);
     sliderules . objective = function () {
-      if (checkValue ("S", alpha) && checkValue ("CI", c)) {message ("Mission accomplished!"); increaseCookieResult ('Calculate c and \u03b1'); return true;}
+      if (checkValue ("S", alpha) && checkValue ("CI", c)) {
+        message ("Mission accomplished! \u03b1 = " + alpha + "\u00b0 and c = " + c);
+        increaseCookieResult ('Calculate c and \u03b1');
+        return true;
+      }
       return false;
     }}, delay: 6000},
     {action: function () {isolate (); message ("Try these instructions again.");}, delay: 3000}
