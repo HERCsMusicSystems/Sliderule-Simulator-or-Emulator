@@ -10,7 +10,11 @@ reciprocalTests ['Divide using CI scale test'] = function (message) {
   }
   message ("The task: divide " + ab + " by " + b + " using CI scale.");
   sliderules . objective = function () {
-    if (checkValue ('D', a) && checkValue ('CI', b)) {message ("Mission accomplished!"); increaseCookieResult ('Divide using CI scale test'); return true;}
+    if (checkValue ('D', a) && checkValue ('CI', b)) {
+      message ("Mission accomplished! " + ab + " / " + b + " = " + a);
+      increaseCookieResult ('Divide using CI scale test');
+      return true;
+    }
     return false;
   };
 };
@@ -24,7 +28,11 @@ reciprocalTests ['Multiply using CI scale test'] = function (message) {
   }
   message ("The task: multiply " + a + " by " + b + " using CI scale.");
   sliderules . objective = function () {
-    if (checkValue ('CI', 1) && checkValue ('D', ab)) {message ("Mission accomplished!"); increaseCookieResult ('Multiply using CI scale test'); return true;}
+    if (checkValue ('CI', 1) && checkValue ('D', ab)) {
+      message ("Mission accomplished! " + a + " \u00d7 " + b + " = " + ab);
+      increaseCookieResult ('Multiply using CI scale test');
+      return true;
+    }
     return false;
   };
 };
@@ -40,7 +48,7 @@ reciprocalTests ['Divide by fraction using CI scale test'] = function (message) 
   message ("The task: divide " + a + " by " + bb + " starting from the CI scale.");
   sliderules . objective = function () {
     if (checkValue ('CI', ab) && checkValue ('D', b)) {
-      message ("Mission accomplished!");
+      message ("Mission accomplished! " + a + " / " + bb + " = " + ab);
       increaseCookieResult ('Divide by fraction using CI scale test');
       return true;
     }

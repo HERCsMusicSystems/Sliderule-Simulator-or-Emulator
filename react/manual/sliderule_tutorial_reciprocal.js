@@ -20,7 +20,11 @@ reciprocalLessons ['Divide using CI scale'] = function (message) {
     {action: function () {message ("Read the result of " + a + " on the D scale.");}, delay: 3000},
     {action: function () {cursorTo ('D', 1); slideTo ('CI', 10); dimmm (80, 255, 8);
       sliderules . objective = function () {
-        if (checkValue ('D', a) && checkValue ('CI', b)) {message ("Mission accomplished!"); increaseCookieResult ('Divide using CI scale'); return true;}
+        if (checkValue ('D', a) && checkValue ('CI', b)) {
+          message ("Mission accomplished! " + ab + " / " + b + " = " + a);
+          increaseCookieResult ('Divide using CI scale');
+          return true;
+        }
         return false;
       };}, delay: 6000},
     {action: function () {isolate (); message ("Try these instructions again.");}, delay: 4000}
@@ -46,7 +50,11 @@ reciprocalLessons ['Multiply using CI scale'] = function (message) {
     {action: function () {message ("Read the result of " + ab + " on the D scale.");}, delay: 3000},
     {action: function () {cursorTo ('D', 1); slideTo ('CI', 10); dimmm (80, 255, 8);
       sliderules . objective = function () {
-        if (checkValue ('CI', 1) && checkValue ('D', ab)) {message ("Mission accomplished!"); increaseCookieResult ('Multiply using CI scale'); return true;}
+        if (checkValue ('CI', 1) && checkValue ('D', ab)) {
+          message ("Mission accomplished! " + a + " \u00d7 " + b + " = " + ab);
+          increaseCookieResult ('Multiply using CI scale');
+          return true;
+        }
         return false;
       };}, delay: 6000},
     {action: function () {isolate (); message ("Try these instructions again.");}, delay: 4000}
@@ -74,7 +82,7 @@ reciprocalLessons ['Divide by fraction using CI scale'] = function (message) {
     {action: function () {cursorTo ('D', 1); slideTo ('CI', 10); dimmm (80, 255, 8);
       sliderules . objective = function () {
         if (checkValue ('CI', ab) && checkValue ('D', b)) {
-          message ("Mission accomplished!");
+          message ("Mission accomplished! " + a + " / " + bb + " = " + ab);
           increaseCookieResult ('Divide by fraction using CI scale');
           return true;
         }
