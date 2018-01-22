@@ -17,7 +17,7 @@ pythagoreanLessons ['Find b on the P scale'] = function (message) {
       if (checkValue ('P', b)) {message ("Mission accomplished! b = " + b); increaseCookieResult ('Find b on the P scale'); return true;}
       return false;
     };}, delay: 6000},
-    {action: function () {message ("Try these instructions again.");}, delay: 4000}
+    {action: function () {isolate (); message ("Try these instructions again.");}, delay: 4000}
   ];
 };
 
@@ -39,7 +39,7 @@ pythagoreanLessons ['Find b on the D scale'] = function (message) {
       if (checkValue ('D', bb)) {message ("Mission accomplished! b = " + b); increaseCookieResult ('Find b on the D scale'); return true;}
       return false;
     };}, delay: 6000},
-    {action: function () {message ("Try these instructions again.");}, delay: 4000}
+    {action: function () {isolate (); message ("Try these instructions again.");}, delay: 4000}
   ];
 };
 
