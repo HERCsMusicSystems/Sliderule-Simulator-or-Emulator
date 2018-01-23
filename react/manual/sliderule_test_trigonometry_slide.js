@@ -8,7 +8,7 @@ trigonometrySlideTests ['Sine of an angle using slide test'] = function (message
   message ("The task: find sine of " + angle + " degrees.");
   sliderules . objective = function () {
     if (checkValue ("S", angle)) {
-      message ("Mission accomplished! Sine of " + angle + " = " + crnu (sine, 5) + ".");
+      message ("Mission accomplished! sin(" + angle + "\u00b0) = " + sine);
       increaseCookieResult ('Sine of an angle using slide test');
       return true;
     }
@@ -23,7 +23,7 @@ trigonometrySlideTests ['Tangent of an angle using slide test'] = function (mess
   message ("The task: find tangent of " + angle + " degrees.");
   sliderules . objective = function () {
     if (checkValue ("T", angle)) {
-      message ("Mission accomplished! Tangent of " + angle + " degrees = " + crnu (tangent, 5) + ".");
+      message ("Mission accomplished! tan(" + angle + "\u00b0) = " + tangent);
       increaseCookieResult ('Tangent of an angle using slide test');
       return true;
     }
@@ -39,7 +39,7 @@ trigonometrySlideTests ['Angle of a sine using slide test'] = function (message)
   message ("The task: find an angle, which sine is " + sine + ".");
   sliderules . objective = function () {
     if (checkValue ("C", sinec)) {
-      message ("Mission accomplished! " + sine + " is the sine of " + angle + " degrees.");
+      message ("Mission accomplished! sin(" + angle + "\u00b0) = " + sine);
       increaseCookieResult ('Angle of a sine using slide test');
       return true;
     }
@@ -55,7 +55,7 @@ trigonometrySlideTests ['Angle of a tangent using slide test'] = function (messa
   message ("The task: find an angle, which tangent is " + tangent + ".");
   sliderules . objective = function () {
     if (checkValue ("C", tangentc)) {
-      message ("Mission accomplished! " + tangent + " is the tangent of " + angle + " degrees.");
+      message ("Mission accomplished! tan(" + angle + "\u00b0) = " + tangent);
       increaseCookieResult ('Angle of a tangent using slide test');
       return true;
     }
@@ -90,7 +90,7 @@ trigonometrySlideTests ['Calculate a using slide test'] = function (message) {
   message ("The task: c = " + c + ", \u03b1 = " + alpha + ", find a.");
   sliderules . objective = function () {
     if (checkValue ('S', alpha) && checkValue ('D', a)) {
-      message ("Mission accomplished! a = " + a + ".");
+      message ("Mission accomplished! a = " + a);
       increaseCookieResult ('Calculate a using slide test');
       return true;
     }
@@ -109,7 +109,7 @@ trigonometrySlideTests ['Calculate c and \u03b1 using slide test'] = function (m
   message ("The task: a = " + a + ", b = " + b + ", find c and \u03b1.");
   sliderules . objective = function () {
     if (checkValue ("S", alpha) && checkValue ("DI", c)) {
-      message ("Mission accomplished! c = " + c + " and \u03b1 = " + alpha + ".");
+      message ("Mission accomplished! \u03b1 = " + alpha + "\u00b0 and c = " + c);
       increaseCookieResult ('Calculate c and \u03b1 using slide test');
       return true;
     }

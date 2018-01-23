@@ -68,7 +68,7 @@ trigonometryTests ['Small angle to radians conversion test'] = function (message
   message ("The task: convert " + angle + " degrees to radians.");
   sliderules . objective = function () {
     if (checkValue ("ST", angle)) {
-      message ("Mission accomplished! " + angle + " degrees = " + radians + " radians");
+      message ("Mission accomplished! " + angle + " degrees = " + radians + " radians.");
       increaseCookieResult ('Small angle to radians conversion test');
       return true;
     }

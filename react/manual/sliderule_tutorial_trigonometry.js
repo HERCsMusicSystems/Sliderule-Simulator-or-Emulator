@@ -121,7 +121,7 @@ trigonometryLessons ['Small angle to radians conversion'] = function (message) {
   {action: function () {cursorTo ("D", 1); dimmm (80, 255, 8);
   sliderules . objective = function () {
     if (checkValue ("ST", angle)) {
-      message ("Mission accomplished! " + angle + " degrees = " + radians + " radians");
+      message ("Mission accomplished! " + angle + " degrees = " + radians + " radians.");
       increaseCookieResult ('Small angle to radians conversion');
       return true;
     }

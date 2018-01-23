@@ -16,7 +16,7 @@ trigonometrySlideLessons ['Sine of an angle using slide'] = function (message) {
   {action: function () {cursorTo ("C", 1); dimmm (40, 255, 8);
   sliderules . objective = function () {
     if (checkValue ("S", angle)) {
-      message ("Mission accomplished! Sine of " + angle + " = " + crnu (sine, 5) + ".");
+      message ("Mission accomplished! sin(" + angle + "\u00b0) = " + sine);
       increaseCookieResult ('Sine of an angle using slide');
       return true;
     }
@@ -41,7 +41,7 @@ trigonometrySlideLessons ['Tangent of an angle using slide'] = function (message
   {action: function () {cursorTo ("D", 1); dimmm (40, 255, 8);
   sliderules . objective = function () {
     if (checkValue ("T", angle)) {
-      message ("Mission accomplished! Tangent of " + angle + " degrees = " + crnu (tangent, 5) + ".");
+      message ("Mission accomplished! tan(" + angle + "\u00b0) = " + tangent);
       increaseCookieResult ('Tangent of an angle using slide');
       return true;
     }
@@ -66,7 +66,7 @@ trigonometrySlideLessons ['Angle of a sine using slide'] = function (message) {
   {action: function () {cursorTo ("D", 1); dimmm (40, 255, 8);
   sliderules . objective = function () {
     if (checkValue ("C", sinec)) {
-      message ("Mission accomplished! " + sine + " is the sine of " + angle + " degrees.");
+      message ("Mission accomplished! sin(" + angle + "\u00b0) = " + sine);
       increaseCookieResult ('Angle of a sine using slide');
       return true;
     }
@@ -91,7 +91,7 @@ trigonometrySlideLessons ['Angle of a tangent using slide'] = function (message)
   {action: function () {cursorTo ("D", 1); dimmm (40, 255, 8);
   sliderules . objective = function () {
     if (checkValue ("C", tangentc)) {
-      message ("Mission accomplished! " + tangent + " is the tangent of " + angle + " degrees.");
+      message ("Mission accomplished! tan(" + angle + "\u00b0) = " + tangent);
       increaseCookieResult ('Angle of a tangent using slide');
       return true;
     }
@@ -156,7 +156,7 @@ trigonometrySlideLessons ['Calculate a using slide'] = function (message) {
     {action: function () {cursorTo ('D', 1); slideTo ('C', 1); dimmm (40, 255, 8);
     sliderules . objective = function () {
       if (checkValue ('S', alpha) && checkValue ('D', a)) {
-        message ("Mission accomplished! a = " + a + ".");
+        message ("Mission accomplished! a = " + a);
         increaseCookieResult ('Calculate a using slide');
         return true;
       }
@@ -194,7 +194,7 @@ trigonometrySlideLessons ['Calculate c and \u03b1 using slide'] = function (mess
     {action: function () {cursorTo ("DI", 10); slideTo ("C", 1); dimmm (40, 255, 8);
     sliderules . objective = function () {
       if (checkValue ("S", alpha) && checkValue ("DI", c)) {
-        message ("Mission accomplished! c = " + c + " and \u03b1 = " + alpha + ".");
+        message ("Mission accomplished! \u03b1 = " + alpha + "\u00b0 and c = " + c);
         increaseCookieResult ('Calculate c and \u03b1 using slide');
         return true;
       }
