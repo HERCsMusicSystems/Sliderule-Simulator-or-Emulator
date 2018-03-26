@@ -607,7 +607,7 @@ var scale_SINH1rad = function (height, options) {
 	return s;
 };
 var scale_SINH1rad_down = function (height, options) {
-	var s = new scale_SINH2rad (height, options);
+	var s = new scale_SINH1rad (height, options);
 	s . draw = function (ctx, length) {draw_sinh1_rad (ctx, length, - s . height, s);};
 	return s;
 };
