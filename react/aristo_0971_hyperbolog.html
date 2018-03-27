@@ -128,16 +128,16 @@ back_us_braces . push (new Engraving ("kW", '10px arial', 'right', 'red', -0.006
 back_us_braces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
 back_us_braces . push (new Screw (0, -7, 6, 0.5, '#b5a642', '#605321'));
 
-s . braces . push (new LeftBrace (2, 0.07, 8, '#ffffc2', 'black', 100, 0.8));
-s . braces . push (new LeftBrace (4, 0.063, 8, '#ffffc2', 'black', 100, 0.8));
+s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 100, 0.8));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 100, 0.8));
 s . braces . push (new BraceSupport (0.05, 4, 280, 36, 4, 'white', 'black'));
 s . braces . push (new BraceSupport (0.054, 44 - 20, 44 + 20, 16, 4, '#83737c', '#83737c'));
 s . braces . push (new BraceSupport (0.052, 44 - 18, 44 + 18, 8, 2, '#b6b6b4', '#b6b6b4'));
 s . braces . push (new BraceSupport (0.054, 240 - 20, 240 + 20, 16, 4, '#83737c', '#83737c'));
 s . braces . push (new BraceSupport (0.052, 240 - 18, 240 + 18, 8, 2, '#b6b6b4', '#b6b6b4'));
 s . braces . push (new Engraving ("ARISTO", '18px arial', 'center', '#dddddd', 0.05, 142, Math . PI * 0.5));
-s . braces . push (new RightBrace (2, 0.07, 8, '#ffffc2', 'black', 100, 0.8));
-s . braces . push (new RightBrace (4, 0.063, 8, '#ffffc2', 'black', 100, 0.8));
+s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 100, 0.8));
+s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 100, 0.8));
 s . braces . push (new BraceSupport (1.35, 4, 280, 36, 4, 'white', 'black'));
 s . braces . push (new BraceSupport (1.346, 44 - 20, 44 + 20, 16, 4, '#83737c', '#83737c'));
 s . braces . push (new BraceSupport (1.348, 44 - 18, 44 + 18, 8, 2, '#b6b6b4', '#b6b6b4'));
@@ -152,21 +152,21 @@ r . scales . push (new scale_TANHrad (20, {left: "Th", ls: 0.095, right: "\u2222
 r . scales . push (new spacer (2));
 r . scales . push (new scale_K (20, {left: "K", ls: 0.095, right: "X\u00b3", rs: 0.09, indices: [1, 1, 1, 1]}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_A (20, {left: "A", ls: 0.095, right: "X\u00b2", rs: 0.09, left_extension: 0.05, alt: 'black', marking_alt: 'red', right_extension: 0.06, indices: [1, 1, 1]}));
+r . scales . push (new scale_A (20, {left: "A", ls: 0.095, right: "X\u00b2", rs: 0.09, left_extension: 0.05, alt: 'black', marking_alt: 'red', right_extension: 0.063, indices: [1, 1, 1]}));
 
 r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_B (20, {left: "B", ls: 0.095, right: "X\u00b2", rs: 0.09, left_extension: 0.05, alt: 'black', marking_alt: 'red', right_extension: 0.06, indices: [1, 1, 1]}));
+r . scales . push (new scale_B (20, {left: "B", ls: 0.095, right: "X\u00b2", rs: 0.09, left_extension: 0.05, alt: 'black', marking_alt: 'red', right_extension: 0.063, indices: [1, 1, 1]}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_Tdec (20, {left: "T", ls: 0.095, right: "\u2222 tan", rs: 0.09, left_extension: 0.02}));
+r . scales . push (new scale_CTTdec (20, {left: "T", ls: 0.095, right: "\u2222 tan", rs: 0.09, left_extension: 0.02}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_STdec (20, {left: "ST", ls: 0.095, right: "\u2222 arc", rs: 0.09, left_extension: 0.02, right_extension: 0.022, draw_st_corrections: false}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_CSdec (20, {left: "S", ls: 0.095, right: "\u2222 sin", rs: 0.09, centre: "\u2222 cos", ca: 'right', cs: 1.08, cc: 'red', left_extension: 0.02}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_C (20, {left: "C", ls: 0.095, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.062, alt: 'black', marking_alt: 'red'}));
+r . scales . push (new scale_C (20, {left: "C", ls: 0.095, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.065, alt: 'black', marking_alt: 'red'}));
 
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (20, {left: "D", ls: 0.095, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.062, alt: 'black', marking_alt: 'red'}));
+r . scales . push (new scale_D (20, {left: "D", ls: 0.095, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.065, alt: 'black', marking_alt: 'red'}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_DI (20, {left: "DI", ls: 0.095, right: "1/X", rs: 0.09, marking_colour: 'red'}));
 r . scales . push (new spacer (2));
