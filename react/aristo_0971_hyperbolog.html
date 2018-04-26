@@ -47,7 +47,7 @@
 var sliderules = new Sliderules ({background_colour: '#99f'});
 var s = new Sliderule (1200,
   {markings_colour: 'gold', markings_background: 'black',
-  cursor_rounding: 8, cursor_left_extension: 0.11, cursor_right_extension: 0.11, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
+  cursor_rounding: 8, cursor_top_margin: 10, cursor_bottom_margin: 10, cursor_left_extension: 0.075, cursor_right_extension: 0.075, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
 sliderules . sliderules . push (s);
 
 s . backBraces . push (new LeftBrace (2, 0.07, 8, '#ffffc2', 'black', 100, 0.8));
@@ -55,14 +55,14 @@ s . backBraces . push (new RightBrace (2, 0.07, 8, '#ffffc2', 'black', 100, 0.8)
 
 var HairlineLeft = HairlineD - HairlinePS - HairlinePS;
 var HairlineRight = HairlineLeft - Math . log10 (Math . log (2));
-var h2pi = (1 - Math . log10 (Math . PI * 2)) / 2;
-s . cursors . push (new Cursor (Hairline360, 86, 150, 'red', {marking_shift: 0.006}));
-s . cursors . push (new Cursor (h2pi, 18, 150, 'red'));
-s . cursors . push (new Cursor (- h2pi, 86, 150, 'red'));
-s . cursors . push (new Cursor (h2pi, 186, 250, 'red'));
-s . cursors . push (new Cursor (- h2pi, 186, 250, 'red'));
-s . cursorBraces . push (new Engraving ("ARISTO", '10px arial', 'left', 'black', 0.055, 324));
-s . cursorBraces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
+s . cursors . push (new Cursor (Hairline360, 68, 108, 'red', {marking_shift: 0.006}));
+s . cursorBraces . push (new Screw (0, -8, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+s . cursorBraces . push (new Screw (0, 292, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+s . cursorBraces . push (new Engraving ("ARISTO", '14px arial', 'center', 'black', -0.037, -4));
+s . cursorBraces . push (new Engraving ("DBGM", '14px arial', 'center', 'black', 0.037, -4));
+s . cursorBraces . push (new Engraving ("\u27f5", '14px arial', 'left', 'black', -0.06, 298));
+s . cursorBraces . push (new Engraving ("\u27f6", '14px arial', 'right', 'black', 0.06, 298));
+s . cursorGlassBraces . push (new CursorBrace (0.084, 0.084, 20, -2, 8, 'lightgray'));
 
 var r = new Rule (); s . rules . push (r);
 r . markings . push (new BraceSupport (- 0.146, 44 - 16, 44 + 16, 20, 4, '#83737c', '#83737c'));
@@ -79,11 +79,9 @@ r . scales . push (new spacer (2));
 r . scales . push (new scale_CF (20, {left: "DF", ls: 0.09, right: "\u03c0X", rs: 0.09, left_extension: 0.022, right_extension: 0.06, indices: ['>>1<<']}));
 
 r = new Rule ({stator: 1}); s . rules . push (r);
-r . markings . push (new Engraving ("ARISTO", '16px arial', 'center', 'red', -0.14, 61 - 9 + 7));
-r . markings . push (new Engraving ("HYPERLOG", '16px arial', 'center', 'red', -0.14, 61 + 9 + 7));
-r . markings . push (new Engraving ("ARISTO", '16px arial', 'center', 'black', 1.14, 61, Math . PI * 1.5));
-r . markings . push (new Engraving ("0972", '16px arial', 'center', 'black', 1.153, 61, Math . PI * 1.5));
-r . markings . push (new Engraving ("GERMANY", '8px arial', 'center', 'black', 1.16, 61, Math . PI * 1.5));
+r . markings . push (new Engraving ("ARISTO", '16px arial', 'center', 'black', 1.065, 61, Math . PI * 1.5));
+r . markings . push (new Engraving ("Nr. 0971", '14px arial', 'center', 'black', 1.078, 61, Math . PI * 1.5));
+r . markings . push (new Engraving ("MADE IN GERMANY", '8px arial', 'center', 'black', 1.085, 61, Math . PI * 1.5));
 r . scales . push (new scale_DF (20, {left: "CF", ls: 0.09, right: "\u03c0X", rs: 0.09, left_extension: 0.022, right_extension: 0.06, indices: ['>>1<<']}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_DIF (20, {left: "CIF", ls: 0.09, right: "1/\u03c0X", rs: 0.09, left_extension: 0.018, right_extension: 0.028, marking_colour: 'red'}));
@@ -92,14 +90,14 @@ r . scales . push (new scale_L (20, {left: "L", ls: 0.09, right: "lg X", rs: 0.0
 r . scales . push (new spacer (2));
 r . scales . push (new scale_CI (20, {left: "CI", ls: 0.09, right: "1/X", rs: 0.09, marking_colour: 'red', indices: [1, 1]}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_C (20, {left: "C", ls: 0.09, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.066, alt: 'black'}));
+r . scales . push (new scale_C (20, {left: "C", ls: 0.09, right: "X", rs: 0.09, alt: 'black'}));
 
 r = new Rule (); s . rules . push (r);
 r . markings . push (new BraceSupport (- 0.146, 44 - 16, 44 + 16, 20, 4, '#83737c', '#83737c'));
 r . markings . push (new BraceSupport (- 0.148, 44 - 12, 44 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
 r . markings . push (new BraceSupport (1.146, 44 - 16, 44 + 16, 20, 4, '#83737c', '#83737c'));
 r . markings . push (new BraceSupport (1.148, 44 - 12, 44 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
-r . scales . push (new scale_D (20, {left: "D", ls: 0.09, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.066, alt: 'black'}));
+r . scales . push (new scale_D (20, {left: "D", ls: 0.09, right: "X", rs: 0.09, alt: 'black'}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_LL3_down (20, {left: "LL3", ls: 0.09, right: "e^X", rs: 0.09, left_extension: 0.04, right_extension: 0.064}));
 r . scales . push (new spacer (2));
@@ -109,24 +107,33 @@ r . scales . push (new scale_LL1_down (20, {left: "LL1", ls: 0.09, right: "e^0.0
 r . scales . push (new spacer (2));
 
 s = new Sliderule (1200,
-  {markings_colour: 'gold', markings_background: 'black', cursor_rounding: 8, cursor_left_extension: 0.11, cursor_right_extension: 0.11, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
+  {markings_colour: 'gold', markings_background: 'black', cursor_rounding: 8, cursor_top_margin: 10, cursor_bottom_margin: 10, cursor_left_extension: 0.075, cursor_right_extension: 0.075, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
 sliderules . sliderules . push (s);
 
 var back_german_braces = [], back_german_cursors = [], back_us_braces = [], back_us_cursors = [];
-back_german_cursors . push (new Cursor (HairlineS, 66, 146, 'red', {marking_align: 'right', marking_shift: -0.01}));
-back_german_cursors . push (new Cursor (HairlineD, 210, 270, 'red'));
-back_german_cursors . push (new Cursor (HairlinePS, 66, 146, 'red'));
-back_german_braces . push (new Engraving ("PS", '10px arial', 'center', 'red', HairlinePS, 62));
-back_german_braces . push (new Engraving ("kW", '10px arial', 'right', 'red', -0.006, 46));
-back_german_braces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
-back_german_braces . push (new Screw (0, -7, 6, 0.5, '#b5a642', '#605321'));
-back_us_cursors . push (new Cursor (HairlineS, 66, 146, 'red', {marking_align: 'right', marking_shift: -0.01}));
-back_us_cursors . push (new Cursor (HairlineD, 210, 270, 'red'));
-back_us_cursors . push (new Cursor (HairlineHPUS, 66, 146, 'red'));
-back_us_braces . push (new Engraving ("HP", '10px arial', 'center', 'red', HairlineHPUS, 62));
-back_us_braces . push (new Engraving ("kW", '10px arial', 'right', 'red', -0.006, 46));
-back_us_braces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
-back_us_braces . push (new Screw (0, -7, 6, 0.5, '#b5a642', '#605321'));
+back_german_cursors . push (new Cursor (HairlineS, 56, 104, 'red', {marking_align: 'right', marking_shift: -0.01}));
+back_german_cursors . push (new Cursor (HairlineD, 180, 228, 'red'));
+back_german_cursors . push (new Cursor (HairlinePS, 56, 104, 'red'));
+back_german_braces . push (new Engraving ("HP", '12px arial', 'center', 'red', HairlinePS, 52));
+back_german_braces . push (new Engraving ("kW", '12px arial', 'center', 'black', 0, -4));
+back_german_braces . push (new Engraving ("ARISTO", '14px arial', 'center', 'black', 0, 298));
+back_german_braces . push (new Screw (0.06, -8, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+back_german_braces . push (new Screw (-0.06, -8, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+back_german_braces . push (new Screw (0.06, 292, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+back_german_braces . push (new Screw (-0.06, 292, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+
+back_us_cursors . push (new Cursor (HairlineS, 56, 104, 'red', {marking_align: 'right', marking_shift: -0.01}));
+back_us_cursors . push (new Cursor (HairlineD, 180, 228, 'red'));
+back_us_cursors . push (new Cursor (HairlineHPUS, 56, 104, 'red'));
+back_us_braces . push (new Engraving ("HP", '12px arial', 'center', 'red', HairlineHPUS, 52));
+back_us_braces . push (new Engraving ("kW", '12px arial', 'center', 'black', 0, -4));
+back_us_braces . push (new Engraving ("ARISTO", '14px arial', 'center', 'black', 0, 298));
+back_us_braces . push (new Screw (0.06, -8, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+back_us_braces . push (new Screw (-0.06, -8, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+back_us_braces . push (new Screw (0.06, 292, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+back_us_braces . push (new Screw (-0.06, 292, 6, Math . random () * Math . PI, '#b5a642', '#605321'));
+
+s . cursorGlassBraces . push (new CursorBrace (0.084, 0.084, 20, -2, 8, 'lightgray'));
 
 s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 100, 0.8));
 s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 100, 0.8));
@@ -161,7 +168,7 @@ r . scales . push (new scale_CTTdec (20, {left: "T", ls: 0.095, right: "\u2222 t
 r . scales . push (new spacer (2));
 r . scales . push (new scale_STdec (20, {left: "ST", ls: 0.095, right: "\u2222 arc", rs: 0.09, left_extension: 0.02, right_extension: 0.022, draw_st_corrections: false}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_CSdec (20, {left: "S", ls: 0.095, right: "\u2222 sin", rs: 0.09, centre: "\u2222 cos", ca: 'right', cs: 1.08, cc: 'red', left_extension: 0.02}));
+r . scales . push (new scale_CSdec (20, {left: "S", ls: 0.095, right: "\u2222 sin", rs: 0.09, left_extension: 0.02}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_C (20, {left: "C", ls: 0.095, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.065, alt: 'black', marking_alt: 'red'}));
 
