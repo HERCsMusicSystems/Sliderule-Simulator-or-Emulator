@@ -1637,7 +1637,7 @@ var CursorBrace = function (left, right, top, bottom, radius, colour) {
 		ctx . translate (0, s . height ());
 		ctx . beginPath ();
 		ctx . moveTo (r, - bottom); ctx . arc (r - radius, top - radius, radius, 0, Math . PI * 0.5);
-		ctx . arc (l + radius, top - radius, radius, Math . PI * 0.5, Math . PI); ctx . lineTo (l, bottom);
+		ctx . arc (l + radius, top - radius, radius, Math . PI * 0.5, Math . PI); ctx . lineTo (l, - bottom);
 		ctx . closePath ();
 		ctx . fill ();
 	}
