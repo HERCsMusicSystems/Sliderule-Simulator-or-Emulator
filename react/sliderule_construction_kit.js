@@ -1185,7 +1185,6 @@ var draw_tanh_rad = function (ctx, length, height, s) {
 
 var spacer = function (height, options) {
   this . height = height;
-  this . indices = ['1', '10', '100', '1000', '10000', '100000'];
   this . draw_c = true;
   this . draw_pi = true;
   this . draw_e = true;
@@ -1260,6 +1259,8 @@ var spacer = function (height, options) {
   };
   for (var key in options) this [key] = options [key];
 };
+
+spacer . prototype . indices = ['1', '10', '100', '1000', '10000', '100000'];
 
 var RuleBars = function (shift, direction, top, bottom, bars, step, width, colour) {
   this . draw = function (ctx, rule) {
