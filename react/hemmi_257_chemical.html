@@ -1,3 +1,4 @@
+<meta charset="UTF-8"/>
 <!--
 ///////////////////////////////////////////////////////////////////////////////////
 //                     Copyright (C) 2017 Dr Robert P. Wolf                      //
@@ -44,6 +45,7 @@
 <script src="scales.js"></script>
 <script src="scales_chemical.js"></script>
 <script src="scales_temperature.js"></script>
+<script src="scales_pressure.js"></script>
 
 <script>
 
@@ -117,7 +119,9 @@ r . scales . push (new scale_Centigrade_down (24));
 r . scales . push (new scale_Kelvin (24));
 r . scales . push (new spacer (24));
 r = new Rule ({left_margin: 0.15, right_margin: 0.15}); s . rules . push (r);
-r . scales . push (new spacer (24));
+r . scales . push (new scale_Pressure_Atmosphere (24));
+r . scales . push (new scale_Pressure_KgPerCm2 (24, {marking_limit: 5}));
+r . scales . push (new scale_D (24));
 r . scales . push (new spacer (24));
 r . scales . push (new spacer (24));
 r . scales . push (new spacer (24));

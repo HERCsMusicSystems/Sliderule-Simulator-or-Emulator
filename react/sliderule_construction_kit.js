@@ -151,14 +151,15 @@ var draw_005L = function (ctx, fn, length, from, to, limit, height) {draw_XL (ct
 var draw_002L = function (ctx, fn, length, from, to, limit, height) {draw_XL (ctx, fn, length, from, to, limit, height, 0.1, 0.02, 0.1);};
 var draw_001L = function (ctx, fn, length, from, to, limit, height) {draw_XL (ctx, fn, length, from, to, limit, height, 0.05, 0.01, 0.05);};
 var draw_0001L = function (ctx, fn, length, from, to, limit, height) {draw_XL (ctx, fn, length, from, to, limit, height, 0.005, 0.001, 0.005);};
-var draw_MR = function (ctx, fn, length, from, to, limit, height) {draw_MRS (ctx, fn, length, from, to, 1, limit, height);};
-var draw_MRS = function (ctx, fn, length, from, to, step, limit, height) {
+var draw_MR = function (ctx, fn, length, from, to, limit, height, marking_limit) {draw_MRS (ctx, fn, length, from, to, 1, limit, height, marking_limit);};
+var draw_MRS = function (ctx, fn, length, from, to, step, limit, height, marking_limit) {
+  if (marking_limit === undefined) marking_limit = to;
   var esc = true; var location;
   to += 0.0000001;
   for (var ind = from; esc && ind <= to; ind += step) {
     location = fn (ind);
     if (location > limit) esc = false;
-    else mark (ctx, Number (ind . toFixed (4)), length * location, height);
+    else mark (ctx, ind > marking_limit ? '' : Number (ind . toFixed (4)), length * location, height);
   }
 };
 var draw_MRSF = function (ctx, fn, length, from, to, step, fixed, limit, height) {
@@ -215,7 +216,7 @@ var draw_log_1R = function (ctx, length, height, extension, scale) {
   var location;
   var abs_length = Math . abs (length);
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
-  draw_MR (ctx, Math . log10, length, 2, 9, extension, h5);
+  draw_MR (ctx, Math . log10, length, 2, 9, extension, h5, scale . marking_limit);
   if (abs_length >= 800) draw_MRS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
   if (scale . draw_pi) {location = Math . log10 (Math . PI); if (location < extension) smark (ctx, '\u03c0', length * location, h2, h5);}
   if (scale . draw_e) {location = Math . log10 (Math . E); if (location < extension) smark (ctx, 'e', length * location, h2, h5);}
