@@ -1187,8 +1187,6 @@ var draw_tanh_rad = function (ctx, length, height, s) {
 var spacer = function (height, options) {
   this . height = height;
   this . lines = [];
-  this . ruleHeight = function () {return this . height;};
-  this . hitTest = function (y) {return false;};
   this . la = 'left'; this . ra = 'left'; this . ca = 'center';
   this . ls = 0.1; this . rs = 0.1; this . cs = 0.5;
   this . colour = 'black'; this . alt = 'red';
@@ -1201,6 +1199,8 @@ spacer . prototype . draw_c = true;
 spacer . prototype . draw_pi = true;
 spacer . prototype . draw_e = true;
 spacer . prototype . indices = ['1', '10', '100', '1000', '10000', '100000'];
+spacer . prototype . ruleHeight = function () {return this . height;};
+spacer . prototype . hitTest = function (y) {return false;};
 spacer . prototype . value = function (location) {return null;};
 spacer . prototype . location = function (value) {return NaN;};
 spacer . prototype . draw = function (ctx, length) {};
