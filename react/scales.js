@@ -288,23 +288,17 @@ var scale_Sgrad_down = function (height, options) {
 	s . draw = function (ctx, length) {draw_sine_dec (ctx, length, - s . height, s);};
 	return s;
 };
-var scale_STdec = function (height, options) {
-  var s = new spacer (height, options);
-  if (! options || options . draw_halves == undefined) s . draw_halves = true;
-  if (! options || options . draw_st_corrections == undefined) s . draw_st_corrections = true;
-  if (! options || options . draw_c == undefined) s . draw_c = false;
-  if (! options || options . draw_pi == undefined) s . draw_pi = false;
-  if (! options || options . draw_e == undefined) s . draw_e = false;
-  s . value = function (location) {return Math . pow (10, location) * 1.8 / Math . PI;};
-  s . location = function (value) {return Math . log10 (value * Math . PI / 1.8);};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_small_sine_dec (ctx, length, s . height, s);};
-  return s;
-};
-var scale_STdec_down = function (height, options) {
-  var s = new scale_STdec (height, options);
-  s . draw = function (ctx, length) {draw_small_sine_dec (ctx, length, - s . height, s);};
-  return s;
-};
+var scale_STdec = function (height, options) {spacer . call (this, height, options);}; inherit (scale_STdec, spacer);
+scale_STdec . prototype . draw_c = false;
+scale_STdec . prototype . draw_pi = false;
+scale_STdec . prototype . draw_e = false;
+scale_STdec . prototype . draw_halves = true;
+scale_STdec . prototype . draw_st_corrections = true;
+scale_STdec . prototype . value = function (location) {return Math . pow (10, location) * 1.8 / Math . PI;};
+scale_STdec . prototype . location = function (value) {return Math . log10 (value * Math . PI / 1.8);};
+scale_STdec . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_small_sine_dec (ctx, length, this . height, this);};
+var scale_STdec_down = function (height, options) {scale_STdec . call (this, height, options);}; inherit (scale_STdec_down, scale_STdec);
+scale_STdec_down . prototype . draw = function (ctx, length) {draw_small_sine_dec (ctx, length, - this . height, this);};
 var scale_ST = function (height, options) {
   var s = new scale_STdec (height, options);
   s . display = function (location, precision) {return toDeg (this . value (location));};

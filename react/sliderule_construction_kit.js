@@ -20,6 +20,7 @@
 // THE SOFTWARE.                                                                 //
 ///////////////////////////////////////////////////////////////////////////////////
 
+var inherit = function (from, to) {from . prototype = Object . create (to . prototype); from . prototype . constructor = from;};
 var rndlist = function (list) {return list [Math . floor (Math . random () * list . length)];};
 var crnu = function (number, precision) {if (precision == undefined) precision = 9; return Number (number . toFixed (precision));};
 
@@ -1185,9 +1186,6 @@ var draw_tanh_rad = function (ctx, length, height, s) {
 
 var spacer = function (height, options) {
   this . height = height;
-  this . draw_c = true;
-  this . draw_pi = true;
-  this . draw_e = true;
   this . lines = [];
   this . ruleHeight = function () {return this . height;};
   this . hitTest = function (y) {return false;};
@@ -1196,71 +1194,74 @@ var spacer = function (height, options) {
   this . colour = 'black'; this . alt = 'red';
   this . left_extension = 0; this . right_extension = 0;
   this . highlight_left = 0; this . highlight_right = 0;
-  this . draw = function (ctx, length) {};
-  this . display = function (location, precision) {
-    var v = this . value (location);
-    if (v == null) return null;
-    return v . toFixed (precision);
-  };
-  this . value = function (location) {return null;};
-  this . location = function (value) {return NaN;};
-  this . sub_draw = function (ctx, length) {
-    if (this . highlight) {ctx . fillStyle = this . highlight; ctx . fillRect (length * - this . highlight_left, 0, length * (1 + this . highlight_left + this . highlight_right), this . height);}
-    ctx . fillStyle = this . marking_colour ? this . marking_colour : this . colour;
-    ctx . strokeStyle = this . colour;
-    ctx . font = (this . height * 0.5) + 'px arial';
-    ctx . textAlign = 'center';
-    ctx . save ();
-    this . draw (ctx, length);
-    ctx . restore ();
-    for (var line in this . lines) {
-    	ctx . beginPath ();
-    	ctx . moveTo (this . lines [line] . left * length, this . height * this . lines [line] . height);
-    	ctx . lineTo (this . lines [line] . right * length, this . height * this . lines [line] . height);
-    	ctx . stroke ();
-    }
-    if (this . font) ctx . font = this . font;
-    var textBase = this . height * 0.75;
-    if (this . baseline !== undefined) textBase = this . baseline;
-    if (this . textBaseline !== undefined) ctx . textBaseline = this . textBaseline;
-    if (this . left !== undefined) {ctx . textAlign = this . la; ctx . fillText (this . left, - length * this . ls, textBase);}
-    if (this . right !== undefined) {ctx . textAlign = this . ra; ctx . fillText (this . right, length * (1 + this . rs), textBase);}
-    if (this . cc !== undefined) ctx . fillStyle = this . cc;
-    if (this . cf !== undefined) ctx . font = this . cf;
-    if (this . centre !== undefined) {ctx . textAlign = this . ca; ctx . fillText (this . centre, length * this . cs, textBase);}
-  };
-  this . read = function (position) {return null;};
-  this . examine = function (position) {
-    if (position . y < 0 || position . y > this . height) return null;
-    var p = prompt ('Value for: ' + (this . left ? this . left : '') + ' ' + (this . right ? this . right : '') , '0.0000');
-    if (p === null) return null;
-    var re = this . read (p);
-    if (re != null) return re;
-    switch (p) {
-      case 'pi': p = Math . PI; break;
-      case 'pi0': p = Math . PI / 10; break;
-      case 'pi1': p = Math . PI * 10; break;
-      case 'e': p = Math . E; break;
-      case 'e1': p = Math . E * 10; break;
-      case 'c': p = Math . sqrt (4 / Math . PI); break;
-      case 'c1': p = Math . sqrt (40 / Math . PI); break;
-      case 'q': p = Math . PI / 1.8; break;
-      case 'r': p = 18 / Math . PI; break;
-      case 'r0': p = 1.8 / Math . PI; break;
-      case 'r1': p = 180 / Math . PI; break;
-      default:
-        var pp = p . split (":");
-        var divisor = 1;
-        p = 0;
-        for (var ind in pp) {p += Number (pp [ind]) / divisor; divisor *= 60;}
-        break;
-    }
-    return p;
-  };
   for (var key in options) this [key] = options [key];
 };
 
+spacer . prototype . draw_c = true;
+spacer . prototype . draw_pi = true;
+spacer . prototype . draw_e = true;
 spacer . prototype . indices = ['1', '10', '100', '1000', '10000', '100000'];
+spacer . prototype . value = function (location) {return null;};
+spacer . prototype . location = function (value) {return NaN;};
+spacer . prototype . draw = function (ctx, length) {};
+spacer . prototype . display = function (location, precision) {
+  var v = this . value (location);
+  if (v == null) return null;
+  return v . toFixed (precision);
+};
+spacer . prototype . sub_draw = function (ctx, length) {
+  if (this . highlight) {ctx . fillStyle = this . highlight; ctx . fillRect (length * - this . highlight_left, 0, length * (1 + this . highlight_left + this . highlight_right), this . height);}
+  ctx . fillStyle = this . marking_colour ? this . marking_colour : this . colour;
+  ctx . strokeStyle = this . colour;
+  ctx . font = (this . height * 0.5) + 'px arial';
+  ctx . textAlign = 'center';
+  ctx . save ();
+  this . draw (ctx, length);
+  ctx . restore ();
+  for (var line in this . lines) {
+    ctx . beginPath ();
+    ctx . moveTo (this . lines [line] . left * length, this . height * this . lines [line] . height);
+    ctx . lineTo (this . lines [line] . right * length, this . height * this . lines [line] . height);
+    ctx . stroke ();
+  }
+  if (this . font) ctx . font = this . font;
+  var textBase = this . height * 0.75;
+  if (this . baseline !== undefined) textBase = this . baseline;
+  if (this . textBaseline !== undefined) ctx . textBaseline = this . textBaseline;
+  if (this . left !== undefined) {ctx . textAlign = this . la; ctx . fillText (this . left, - length * this . ls, textBase);}
+  if (this . right !== undefined) {ctx . textAlign = this . ra; ctx . fillText (this . right, length * (1 + this . rs), textBase);}
+  if (this . cc !== undefined) ctx . fillStyle = this . cc;
+  if (this . cf !== undefined) ctx . font = this . cf;
+  if (this . centre !== undefined) {ctx . textAlign = this . ca; ctx . fillText (this . centre, length * this . cs, textBase);}
+};
+spacer . prototype . read = function (position) {return null;};
+spacer . prototype . examine = function (position) {
+  if (position . y < 0 || position . y > this . height) return null;
+  var p = prompt ('Value for: ' + (this . left ? this . left : '') + ' ' + (this . right ? this . right : '') , '0.0000');
+  if (p === null) return null;
+  var re = this . read (p);
+  if (re != null) return re;
+  switch (p) {
+    case 'pi': p = Math . PI; break;
+    case 'pi0': p = Math . PI / 10; break;
+    case 'pi1': p = Math . PI * 10; break;
+    case 'e': p = Math . E; break;
+    case 'e1': p = Math . E * 10; break;
+    case 'c': p = Math . sqrt (4 / Math . PI); break;
+    case 'c1': p = Math . sqrt (40 / Math . PI); break;
+    case 'q': p = Math . PI / 1.8; break;
+    case 'r': p = 18 / Math . PI; break;
+    case 'r0': p = 1.8 / Math . PI; break;
+    case 'r1': p = 180 / Math . PI; break;
+    default:
+      var pp = p . split (":");
+      var divisor = 1;
+      p = 0;
+      for (var ind in pp) {p += Number (pp [ind]) / divisor; divisor *= 60;}
+      break;
+  }
+  return p;
+};
 
 var RuleBars = function (shift, direction, top, bottom, bars, step, width, colour) {
   this . draw = function (ctx, rule) {
