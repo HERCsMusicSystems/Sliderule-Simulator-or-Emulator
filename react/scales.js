@@ -53,19 +53,16 @@ var toDeg = function (value) {
   if (sec < 10) sec = "0" + sec;
   return deg  + ":" + min + ":" + sec;
 };
-var scale_A = function (height, options) {
-  var s = new spacer (height, options);
-  if (! options || options . draw_c == undefined) s . draw_c = false;
-  s . value = function (location) {return Math . pow (10, location + location);};
-  s . location = function (value) {return Math . log10 (value) * 0.5;};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_log_log (ctx, length, height, s, s . left_extension, s . right_extension);};
-  return s;
+var scale_A = function (height, options) {spacer . call (this, height, options);}; inherit (scale_A, spacer);
+scale_A . prototype . draw_c = false;
+scale_A . prototype . value = function (location) {return Math . pow (10, location + location);};
+scale_A . prototype . location = function (value) {return Math . log10 (value) * 0.5;};
+scale_A . prototype . draw = function (ctx, length) {
+  ctx . translate (0, this . height);
+  draw_log_log (ctx, length, this . height, this, this . left_extension, this . right_extension);
 };
-var scale_B = function (height, options) {
-  var s = new scale_A (height, options);
-  s . draw = function (ctx, length) {draw_log_log (ctx, length, - s . height, s, s . left_extension, s . right_extension);};
-  return s;
-};
+var scale_B = function (height, options) {scale_A . call (this, height, options);}; inherit (scale_B, scale_A);
+scale_B . prototype . draw = function (ctx, length) {draw_log_log (ctx, length, - this . height, this, this . left_extension, this . right_extension);};
 var scale_AI = function (height, options) {
   var s = new spacer (height, options);
   if (! options || options . draw_c == undefined) s . draw_c = false;
