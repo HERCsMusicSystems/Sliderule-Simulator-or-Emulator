@@ -63,18 +63,17 @@ scale_A . prototype . draw = function (ctx, length) {
 };
 var scale_B = function (height, options) {scale_A . call (this, height, options);}; inherit (scale_B, scale_A);
 scale_B . prototype . draw = function (ctx, length) {draw_log_log (ctx, length, - this . height, this, this . left_extension, this . right_extension);};
-var scale_AI = function (height, options) {
-  var s = new spacer (height, options);
-  if (! options || options . draw_c == undefined) s . draw_c = false;
-  s . value = function (location) {return Math . pow (10, 2 - location - location);};
-  s . location = function (value) {return 1 - Math . log10 (value) * 0.5;};
-  s . draw = function (ctx, length) {ctx . translate (length, s . height); draw_log_log (ctx, - length, height, s, s . right_extension, s . left_extension);};
-  return s;
+var scale_AI = function (height, options) {spacer . call (this, height, options);}; inherit (scale_AI, spacer);
+scale_AI . prototype . draw_c = false;
+scale_AI . prototype . value = function (location) {return Math . pow (10, 2 - location - location);};
+scale_AI . prototype . location = function (value) {return 1 - Math . log10 (value) * 0.5;};
+scale_AI . prototype . draw = function (ctx, length) {
+  ctx . translate (length, this . height);
+  draw_log_log (ctx, - length, this . height, this, this . right_extension, this . left_extension);
 };
-var scale_BI = function (height, options) {
-  var s = new scale_AI (height, options);
-  s . draw = function (ctx, length) {ctx . translate (length, 0); draw_log_log (ctx, - length, - s . height, s, s . right_extension, s . left_extension);};
-  return s;
+var scale_BI = function (height, options) {scale_AI . call (this, height, options);}; inherit (scale_BI, scale_AI);
+scale_BI . prototype . draw = function (ctx, length) {
+  ctx . translate (length, 0); draw_log_log (ctx, - length, - this . height, this, this . right_extension, this . left_extension);
 };
 var scale_C = function (height, options) {
   var s = new spacer (height, options);
