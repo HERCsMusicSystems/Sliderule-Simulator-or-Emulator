@@ -151,19 +151,16 @@ var scale_DIF = function (height, options) {
   };
   return s;
 };
-var scale_K = function (height, options) {
-  var s = new spacer (height, options);
-  if (! options || options . draw_c == undefined) s . draw_c = false;
-  s . value = function (location) {return Math . pow (10, location * 3);};
-  s . location = function (value) {return Math . log10 (value) / 3;};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_log_log_log (ctx, length, s . height, s, s . left_extension, s . right_extension);};
-  return s;
+var scale_K = function (height, options) {spacer . call (this, height, options);}; inherit (scale_K, spacer);
+scale_K . prototype . draw_c = false;
+scale_K . prototype . value = function (location) {return Math . pow (10, location * 3);};
+scale_K . prototype . location = function (value) {return Math . log10 (value) / 3;};
+scale_K . prototype . draw = function (ctx, length) {
+  ctx . translate (0, this . height);
+  draw_log_log_log (ctx, length, this . height, this, this . left_extension, this . right_extension);
 };
-var scale_J = function (height, options) {
-  var s = new scale_K (height, options);
-  s . draw = function (ctx, length) {draw_log_log_log (ctx, length, - s . height, s, s . left_extension, s . right_extension);};
-  return s;
-};
+var scale_J = function (height, options) {scale_K . call (this, height, options);}; inherit (scale_J, scale_K);
+scale_J . prototype . draw = function (ctx, length) {draw_log_log_log (ctx, length, - this . height, this, this . left_extension, this . right_extension);};
 var scale_R1 = function (height, options) {
 	var s = new spacer (height, options);
 	s . value = function (location) {return Math . pow (10, location * 0.5);};
