@@ -38,16 +38,28 @@ scale_Pressure_Atmosphere_mmHg . prototype . location = function () {
 		return location < threshold ? (Math . log10 (value * 0.0013595100263597) + 3) / 6 : (Math . log10 (value * 1.03323) + 3) / 6;
 	};
 } ();
-scale_Pressure_Atmosphere_mmHg . prototype . draw = function (ctx, length) {
-	ctx . translate (0, this . height);
+scale_Pressure_Atmosphere_mmHg . prototype . draw_mmhg = function (ctx, length, height) {
+	ctx . save ();
 	ctx . translate (length * this . location (1, 1), 0);
-	length = length * (this . location (10, 1) - this . location (1, 1));
-	mark (ctx, this . indices [3], 0, this . height * 0.5); draw_log_1R (ctx, length, this . height, 1, this); ctx . translate (length, 0);
-	mark (ctx, this . indices [4], 0, this . height * 0.5); draw_log_1R (ctx, length, this . height, 1, this); ctx . translate (length, 0);
-	mark (ctx, this . indices [5], 0, this . height * 0.5); draw_log_1R (ctx, length, this . height, 1, this); ctx . translate (length, 0);
-	mark (ctx, this . indices [6], 0, this . height * 0.5);
+	var lgth = length * (this . location (10, 1) - this . location (1, 1));
+	mark (ctx, this . indices [3], 0, height * 0.5); draw_log_1R (ctx, lgth, height, 1, this); ctx . translate (lgth, 0);
+	mark (ctx, this . indices [4], 0, height * 0.5); draw_log_1R (ctx, lgth, height, 1, this); ctx . translate (lgth, 0);
+	mark (ctx, this . indices [5], 0, height * 0.5); draw_log_1R (ctx, lgth, height, 1, this); ctx . translate (lgth, 0);
+	mark (ctx, this . indices [6], 0, height * 0.5);
+	ctx . restore ();
+	ctx . translate (length * this . location (1, 0), 0);
+	lgth = length * (this . location (10, 0) - this . location (1, 0));
+	ctx . fillStyle = this . marking_alt ? this . marking_alt : this . alt;
+	mark (ctx, this . indices [0], 0, height * 0.5); draw_log_1R (ctx, lgth, height, 1, this); ctx . translate (lgth, 0);
+	mark (ctx, this . indices [1], 0, height * 0.5); draw_log_1R (ctx, lgth, height, 1, this); ctx . translate (lgth, 0);
+	mark (ctx, this . indices [2], 0, height * 0.5); draw_log_1R (ctx, lgth, height, 0.87, this);
 };
-scale_Pressure_Atmosphere_mmHg . prototype . indices = ['.001', '.01', '.1', '1', '10', '100', '1000'];
+scale_Pressure_Atmosphere_mmHg . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); this . draw_mmhg (ctx, length, this . height);};
+scale_Pressure_Atmosphere_mmHg . prototype . indices = ['1', '10', '100', '1', '10', '100', '1000'];
+
+var scale_Pressure_Atmosphere_mmHg_down = function (height, options) {scale_Pressure_Atmosphere_mmHg . call (this, height, options);};
+inherit (scale_Pressure_Atmosphere_mmHg_down, scale_Pressure_Atmosphere_mmHg);
+scale_Pressure_Atmosphere_mmHg_down . prototype . draw = function (ctx, length) {this . draw_mmhg (ctx, length, - this . height);};
 
 var scale_Pressure_KgPerCm2 = function (height, options) {spacer . call (this, height, options);}; inherit (scale_Pressure_KgPerCm2, spacer);
 scale_Pressure_KgPerCm2 . prototype . draw_pi = false;
@@ -55,19 +67,21 @@ scale_Pressure_KgPerCm2 . prototype . draw_e = false;
 scale_Pressure_KgPerCm2 . prototype . draw_c = false;
 scale_Pressure_KgPerCm2 . prototype . value = function (location) {return Math . pow (10, location * 6 - 3);};
 scale_Pressure_KgPerCm2 . prototype . location = function (value) {return (Math . log10 (value) + 3) / 6;};
-scale_Pressure_KgPerCm2 . prototype . draw = function (ctx, length) {
-	ctx . translate (0, this . height);
+scale_Pressure_KgPerCm2 . prototype . draw_kgpercm2 = function (ctx, length, height) {
 	length /= 6;
 	ctx . fillStyle = this . marking_alt ? this . marking_alt : this . alt;
-	mark (ctx, this . indices [0], 0, this . height * 0.5); draw_log_1R (ctx, length, this . height, 1, this); ctx . translate (length, 0);
-	mark (ctx, this . indices [1], 0, this . height * 0.5); draw_log_1R (ctx, length, this . height, 1, this); ctx . translate (length, 0);
-	mark (ctx, this . indices [2], 0, this . height * 0.5); draw_log_1R (ctx, length, this . height, 1, this); ctx . translate (length, 0);
+	mark (ctx, this . indices [0], 0, height * 0.5); draw_log_1R (ctx, length, height, 1, this); ctx . translate (length, 0);
+	mark (ctx, this . indices [1], 0, height * 0.5); draw_log_1R (ctx, length, height, 1, this); ctx . translate (length, 0);
+	mark (ctx, this . indices [2], 0, height * 0.5); draw_log_1R (ctx, length, height, 1, this); ctx . translate (length, 0);
 	ctx . fillStyle = this . marking_colour ? this . marking_colour : this . colour;
-	mark (ctx, this . indices [3], 0, this . height * 0.5); draw_log_1R (ctx, length, this . height, 1, this); ctx . translate (length, 0);
-	mark (ctx, this . indices [4], 0, this . height * 0.5); draw_log_1R (ctx, length, this . height, 1, this); ctx . translate (length, 0);
-	mark (ctx, this . indices [5], 0, this . height * 0.5); draw_log_1R (ctx, length, this . height, 1, this); ctx . translate (length, 0);
-	mark (ctx, this . indices [6], 0, this . height * 0.5);
+	mark (ctx, this . indices [3], 0, height * 0.5); draw_log_1R (ctx, length, height, 1, this); ctx . translate (length, 0);
+	mark (ctx, this . indices [4], 0, height * 0.5); draw_log_1R (ctx, length, height, 1, this); ctx . translate (length, 0);
+	mark (ctx, this . indices [5], 0, height * 0.5); draw_log_1R (ctx, length, height, 1, this); ctx . translate (length, 0);
+	mark (ctx, this . indices [6], 0, height * 0.5);
 };
-
+scale_Pressure_KgPerCm2 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); this . draw_kgpercm2 (ctx, length, this . height);};
 scale_Pressure_KgPerCm2 . prototype . indices = ['.001', '.01', '.1', '1', '10', '100', '1000'];
 
+var scale_Pressure_KgPerCm2_down = function (height, options) {scale_Pressure_KgPerCm2 . call (this, height, options);};
+inherit (scale_Pressure_KgPerCm2_down, scale_Pressure_KgPerCm2);
+scale_Pressure_KgPerCm2_down . prototype . draw = function (ctx, length) {this . draw_kgpercm2 (ctx, length, - this . height);};
