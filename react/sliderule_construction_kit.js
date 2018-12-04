@@ -1336,7 +1336,7 @@ var Rule = function (options) {
     ctx . restore ();
     for (var mark in this . markings) {ctx . save (); ctx . translate (this . shift * length, 0); this . markings [mark] . draw (ctx, sliderule); ctx . restore ();}
   };
-  this . examine = function (position) {
+  this . examine = function (position, relative_location) {
     if (position . y < 0 || position . y > this . ruleHeight ()) return null;
     var value;
     for (var ind in this . scales) {
@@ -1344,7 +1344,7 @@ var Rule = function (options) {
       if (! scale . dimm) {
         value = scale . examine (position);
         if (value != null) {
-          var location = scale . location (value);
+          var location = scale . location (value, relative_location);
           if (isNaN (location)) location = null;
           if (location != null) {
             track . push ({scale: scale . left, location: location, value: value});
@@ -2084,9 +2084,10 @@ var Sliderule = function (length, options) {
     var is_cursor = adjusted_x_position - this . cursor_position;
     is_cursor = (is_cursor < this . cursor_right_extension && is_cursor > - this . cursor_left_extension);
     if (this . slide_override) is_cursor = false;
+    var relative_location = position . x / this . length;
     var value, target, delta;
     for (var ind in this . rules) {
-      value = this . rules [ind] . examine (position);
+      value = this . rules [ind] . examine (position, relative_location);
       if (value !== null) {
         if (is_cursor || this . rules [ind] . stator == 0) {
           target = value + this . rules [ind] . shift - eca;
