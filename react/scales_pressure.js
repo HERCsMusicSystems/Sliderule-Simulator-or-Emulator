@@ -32,9 +32,12 @@ scale_Pressure_Atmosphere_mmHg . prototype . value = function (location) {
 	ret = Math . pow (10, location * 6 - 3) / 1.03323;
 	return ret < 1 ? Math . pow (10, location * 6 - 3) / 0.0013595100263597 : ret;
 };
-scale_Pressure_Atmosphere_mmHg . prototype . location = function (value, location) {
-	return location < (Math . log10 (1.03323) + 3) / 6 ? (Math . log10 (value * 0.0013595100263597) + 3) / 6 : (Math . log10 (value * 1.03323) + 3) / 6;
-};
+scale_Pressure_Atmosphere_mmHg . prototype . location = function () {
+	var threshold = (Math . log10 (1.03323) + 3) / 6;
+	return function (value, location) {
+		return location < threshold ? (Math . log10 (value * 0.0013595100263597) + 3) / 6 : (Math . log10 (value * 1.03323) + 3) / 6;
+	};
+} ();
 scale_Pressure_Atmosphere_mmHg . prototype . draw = function (ctx, length) {
 	ctx . translate (0, this . height);
 	ctx . translate (length * this . location (1, 1), 0);
