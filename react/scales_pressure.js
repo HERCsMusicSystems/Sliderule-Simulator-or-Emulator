@@ -105,11 +105,13 @@ scale_Pressure_PSIG_InHgVac . prototype . location = function () {
 } ();
 scale_Pressure_PSIG_InHgVac . prototype . draw_psiginhgvac = function (ctx, length, height) {
 	var h5 = height * 0.5, h4 = height * 0.4, h3 = height * 0.3, h2 = height * 0.2;
-	draw_XR (ctx, this . psi_location, length, 0, 30, 1, h4, 10, 5, 10);
-	draw_XR (ctx, this . psi_location, length, 0, 30, 1, h2, 5, 1, 5);
-	draw_XR (ctx, this . psi_location, length, 30, 50, 1, h2, 10, 2, 10);
+	draw_XR (ctx, this . psi_location, length, 0, 10, 1, h4, 10, 5, 10);
+	draw_XR (ctx, this . psi_location, length, 0, 10, 1, h2, 5, 1, 5);
 	for (var multiplier = 1; multiplier < 1000; multiplier *= 10) {
-		draw_XR (ctx, this . psi_location, length, 50 * multiplier, 100 * multiplier, 1, h2, 10 * multiplier, 5 * multiplier, 10);
+		draw_XR (ctx, this . psi_location, length, 50 * multiplier, 100 * multiplier, 1, h2, 10 * multiplier, 5 * multiplier, 10 * multiplier);
+		draw_XR (ctx, this . psi_location, length, 10 * multiplier, 30 * multiplier, 1, h4, 10 * multiplier, 5 * multiplier, 10 * multiplier);
+		draw_XR (ctx, this . psi_location, length, 10 * multiplier, 30 * multiplier, 1, h2, 5 * multiplier, multiplier, 5 * multiplier);
+		draw_XR (ctx, this . psi_location, length, 30 * multiplier, 50 * multiplier, 1, h2, 10 * multiplier, 2 * multiplier, 10 * multiplier);
 		mark (ctx, 10 * multiplier, length * this . psi_location (10 * multiplier), h5);
 		mark (ctx, '2', length * this . psi_location (20 * multiplier), h5);
 		mark (ctx, '3', length * this . psi_location (30 * multiplier), h5);
