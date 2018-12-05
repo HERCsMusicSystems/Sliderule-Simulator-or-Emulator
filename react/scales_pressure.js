@@ -91,17 +91,15 @@ scale_Pressure_PSIG_InHgVac . prototype . draw_c = false;
 scale_Pressure_PSIG_InHgVac . prototype . value = function () {
 	var threshold = (Math . log10 (1.03323) + 3) / 6;
 	return function (location) {
-		if (location < threshold) return 0;
+		if (location < threshold) return (1 - Math . pow (10, location * 6 - 3) / 1.03323) * 29.921255354893;
 		return (Math . pow (10, location * 6 - 3) / 1.03323 - 1) * 14.695950254;
 	};
 } ();
 scale_Pressure_PSIG_InHgVac . prototype . psi_location = function (value) {return (Math . log10 ((value / 14.695950254 + 1) * 1.03323) + 3) / 6;};
+scale_Pressure_PSIG_InHgVac . prototype . inHgVac_location = function (value) {return (Math . log10 ((1 - value / 29.921255354893) * 1.03323) + 3) / 6;};
 scale_Pressure_PSIG_InHgVac . prototype . location = function () {
 	var threshold = (Math . log10 (1.03323) + 3) / 6;
-	return function (value, location) {
-		if (location < threshold) return 0;
-		return (Math . log10 ((value / 14.695950254 + 1) * 1.03323) + 3) / 6;
-	};
+	return function (value, location) {return location < threshold ? this . inHgVac_location (value) : this . psi_location (value);};
 } ();
 scale_Pressure_PSIG_InHgVac . prototype . draw_psiginhgvac = function (ctx, length, height) {
 	var h5 = height * 0.5, h4 = height * 0.4, h3 = height * 0.3, h2 = height * 0.2;
@@ -126,6 +124,16 @@ scale_Pressure_PSIG_InHgVac . prototype . draw_psiginhgvac = function (ctx, leng
 	for (var ind = 11000; ind < 15000; ind += 1000) tick (ctx, length * this . psi_location (ind), h2);
 	ctx . fillStyle = this . marking_alt ? this . marking_alt : this . alt;
 	mark (ctx, '0', length * this . psi_location (0), h5);
+	mark (ctx, '10', length * this . inHgVac_location (10), h5);
+	mark (ctx, '20', length * this . inHgVac_location (20), h5);
+	mark (ctx, '25', length * this . inHgVac_location (25), h5);
+	mark (ctx, '29', length * this . inHgVac_location (29), h5);
+	mark (ctx, '29.5', length * this . inHgVac_location (29.5), h5);
+	draw_XR (ctx, this . inHgVac_location, length, 0, 20, 1, h4, 10, 5, 10);
+	draw_XR (ctx, this . inHgVac_location, length, 0, 25, 1, h2, 5, 1, 5);
+	tick (ctx, length * this . inHgVac_location (26), h2);
+	tick (ctx, length * this . inHgVac_location (27), h2);
+	tick (ctx, length * this . inHgVac_location (28), h2);
 };
 scale_Pressure_PSIG_InHgVac . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); this . draw_psiginhgvac (ctx, length, this . height);};
 scale_Pressure_PSIG_InHgVac . prototype . indices = ['0', '10', '100', '1000', '10000'];
