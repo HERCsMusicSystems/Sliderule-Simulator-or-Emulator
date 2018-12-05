@@ -91,6 +91,9 @@ s . braces . push (new LTopRightBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 'red'
 s . braces . push (new LTopRightBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
 r = new Rule ({rule_colour: wood}); s . rules . push (r);
 r . markings . push (new Engraving ("Ch", '24px arial', 'left', 'black', -0.07, 56));
+r . scales . push (new scale_Pressure_PSIG_InHgVac (24, {marking_limit: 5}));
+r . scales . push (new scale_Pressure_Atmosphere_mmHg_down (24, {marking_limit: 5, right: "atm.", rs: 0.025}));
+r . scales . push (new scale_Pressure_KgPerCm2_down (24, {marking_limit: 5}));
 r . scales . push (new spacer (20));
 r . scales . push (new scale_Chemical (24,
     ['H', {e: 'Ag', align: 'right'}, {e: 'B', align: 'left'}, 'Cd', 'C', 'I', 'Cs', 'Ba', {e: 'CH3', v: 'CH\u2083'}, 'O', 'OH', {e: 'H2O', v: 'H\u2082O'}, 'F',
