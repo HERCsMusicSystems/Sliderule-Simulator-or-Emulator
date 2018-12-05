@@ -124,14 +124,8 @@ scale_Pressure_PSIG_InHgVac . prototype . draw_psiginhgvac = function (ctx, leng
 	}
 	mark (ctx, '10000', length * this . psi_location (10000), h5);
 	for (var ind = 11000; ind < 15000; ind += 1000) tick (ctx, length * this . psi_location (ind), h2);
-};
-scale_Pressure_PSIG_InHgVac . prototype . draw_psiginhgvacc = function (ctx, length, height) {
-	ctx . save ();
-	ctx . translate (length * this . location (10, 1), 0);
-	var lgth = length * (this . location (99, 1) - this . location (9, 1));
-	mark (ctx, this . indices [1], 0, height * 0.5);// draw_log_1R (ctx, lgth, height, 1, this); ctx . translate (lgth, 0);
-	ctx . restore ();
-	mark (ctx, '2', length * this . location (20, 1), height * 0.5);
+	ctx . fillStyle = this . marking_alt ? this . marking_alt : this . alt;
+	mark (ctx, '0', length * this . psi_location (0), h5);
 };
 scale_Pressure_PSIG_InHgVac . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); this . draw_psiginhgvac (ctx, length, this . height);};
 scale_Pressure_PSIG_InHgVac . prototype . indices = ['0', '10', '100', '1000', '10000'];
