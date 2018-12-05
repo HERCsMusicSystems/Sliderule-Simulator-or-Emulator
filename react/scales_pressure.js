@@ -135,3 +135,8 @@ scale_Pressure_PSIG_InHgVac . prototype . draw_psiginhgvacc = function (ctx, len
 };
 scale_Pressure_PSIG_InHgVac . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); this . draw_psiginhgvac (ctx, length, this . height);};
 scale_Pressure_PSIG_InHgVac . prototype . indices = ['0', '10', '100', '1000', '10000'];
+
+var scale_Pressure_PSIG_InHgVac_down = function (height, options) {scale_Pressure_PSIG_InHgVac . call (this, height, options);};
+inherit (scale_Pressure_PSIG_InHgVac_down, scale_Pressure_PSIG_InHgVac);
+scale_Pressure_PSIG_InHgVac_down . prototype . draw = function (ctx, length) {this . draw_psiginhgvac (ctx, length, - this . height);};
+
