@@ -142,3 +142,82 @@ var scale_Pressure_PSIG_InHgVac_down = function (height, options) {scale_Pressur
 inherit (scale_Pressure_PSIG_InHgVac_down, scale_Pressure_PSIG_InHgVac);
 scale_Pressure_PSIG_InHgVac_down . prototype . draw = function (ctx, length) {this . draw_psiginhgvac (ctx, length, - this . height);};
 
+var pressure = function (T) {
+	if (T < 0) return 0.61115 * Math . exp ((23.036 - T / 333.7) * (T / (279.82 + T))) / 98.0665;
+	return 0.61121 * Math . exp ((18.678 - T / 234.5) * (T / (257.14 + T))) / 98.0665;
+};
+
+var vapour_pressures_of_water = [];
+for (var ind = 0; ind <= 400; ind++) vapour_pressures_of_water . push (pressure (ind));
+var ice_pressures_of_water = [];
+for (var ind = 0; ind <= 30; ind++) ice_pressures_of_water . push (pressure (- ind));
+var press = function (T) {
+	if (T < 0) {
+		if (T <= -30) return ice_pressures_of_water [30];
+		T = - T;
+		var ind = Math . floor (T); T -= ind;
+		return ice_pressures_of_water [ind] * (1 - T) + ice_pressures_of_water [ind + 1] * T;
+	}
+	if (T >= 400) return vapour_pressures_of_water [ind];
+	var ind = Math . floor (T); T -= ind;
+	return vapour_pressures_of_water [ind] * (1 - T) + vapour_pressures_of_water [ind + 1] * T;
+};
+var inverpress = function (L) {
+	var ind = 0;
+	if (L < vapour_pressures_of_water [0]) {
+		while (ind < ice_pressures_of_water . length) {
+			if (ice_pressures_of_water [ind] < L) {
+				if (ind === 0) return 0;
+				var d1 = ice_pressures_of_water [ind - 1], d2 = ice_pressures_of_water [ind];
+				var T = (d1 - L) / (d1 - d2), TL = (L - d2) / (d1 - d2);
+				return - (ind * T + (ind - 1) * TL);
+			}
+			ind ++;
+		}
+		return - ice_pressures_of_water . length;
+	}
+	while (ind < vapour_pressures_of_water . length) {
+		if (vapour_pressures_of_water [ind] > L) {
+			if (ind === 0) return 0;
+			var d1 = vapour_pressures_of_water [ind - 1], d2 = vapour_pressures_of_water [ind];
+			var T = (L - d1) / (d2 - d1), TL = (d2 - L) / (d2 - d1);
+			return (ind - 1) * TL + ind * T;
+		}
+		ind ++;
+	}
+	return vapour_pressures_of_water . length;
+};
+
+var scale_Tw = function (height, options) {spacer . call (this, height, options);}; inherit (scale_Tw, spacer);
+scale_Tw . prototype . location = function (value) {return (Math . log10 (press (value)) + 3) / 6;};
+scale_Tw . prototype . value = function (location) {
+	return inverpress (Math . pow (10, location * 6 - 3));
+};
+scale_Tw . prototype . draw = function (ctx, length) {
+	var h5 = this . height * 0.5, h4 = this . height * 0.4, h2 = this . height * 0.2;
+	draw_XR (ctx, this . location, length, -20, 200, 1, h4, 10, 5, 10);
+	draw_XR (ctx, this . location, length, -20, 200, 1, h2, 5, 1, 5);
+	mark (ctx, '-20', length * this . location (-20), h5);
+	mark (ctx, '-10', length * this . location (-10), h5);
+	mark (ctx, '0', length * this . location (0), h5);
+	mark (ctx, '10', length * this . location (10), h5);
+	mark (ctx, '2', length * this . location (20), h5);
+	mark (ctx, '3', length * this . location (30), h5);
+	mark (ctx, '4', length * this . location (40), h5);
+	mark (ctx, '5', length * this . location (50), h5);
+	mark (ctx, '6', length * this . location (60), h5);
+	mark (ctx, '7', length * this . location (70), h5);
+	mark (ctx, '8', length * this . location (80), h5);
+	mark (ctx, '9', length * this . location (90), h5);
+	mark (ctx, '100', length * this . location (100), h5);
+	tick (ctx, length * this . location (110), h5);
+	tick (ctx, length * this . location (120), h5);
+	tick (ctx, length * this . location (130), h5);
+	tick (ctx, length * this . location (140), h5);
+	mark (ctx, '150', length * this . location (150), h5);
+	tick (ctx, length * this . location (160), h5);
+	tick (ctx, length * this . location (170), h5);
+	tick (ctx, length * this . location (180), h5);
+	tick (ctx, length * this . location (190), h5);
+	mark (ctx, '2', length * this . location (200), h5);
+};
