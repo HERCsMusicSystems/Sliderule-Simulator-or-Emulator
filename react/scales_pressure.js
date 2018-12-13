@@ -255,3 +255,21 @@ scale_Tw . prototype . draw = function (ctx, length) {ctx . translate (0, this .
 
 var scale_Tw_down = function (height, options) {scale_Tw . call (this, height, options);}; inherit (scale_Tw_down, scale_Tw);
 scale_Tw_down . prototype . draw = function (ctx, length) {this . drawTw (ctx, length, - this . height);};
+
+var scale_M1 = function (height, options) {spacer . call (this, height, options);}; inherit (scale_M1, spacer);
+scale_M1 . prototype . value = function (location) {
+	var value = Math . pow (10, location * 4 - 2);
+	return value / (1 + value);
+};
+scale_M1 . prototype . location = function (value, location) {return (Math . log10 (value / (1 - value)) + 2) / 4;};
+scale_M1 . prototype . draw = function (ctx, length) {
+	var height = this . height;
+	var h5 = height * 0.5, h4 = height * 0.4, h3 = height * 0.3, h2 = height * 0.2;
+	mark (ctx, '.01', length * this . location (0.01), h5);
+	mark (ctx, '.05', length * this . location (0.05), h5);
+	mark (ctx, '.1', length * this . location (0.1), h5);
+	mark (ctx, '.5', length * this . location (0.5), h5);
+	mark (ctx, '.9', length * this . location (0.9), h5);
+	mark (ctx, '.95', length * this . location (0.95), h5);
+	mark (ctx, '.99', length * this . location (0.99), h5);
+};
