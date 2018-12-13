@@ -257,19 +257,62 @@ var scale_Tw_down = function (height, options) {scale_Tw . call (this, height, o
 scale_Tw_down . prototype . draw = function (ctx, length) {this . drawTw (ctx, length, - this . height);};
 
 var scale_M1 = function (height, options) {spacer . call (this, height, options);}; inherit (scale_M1, spacer);
-scale_M1 . prototype . value = function (location) {
-	var value = Math . pow (10, location * 4 - 2);
+scale_M1 . prototype . value_m1 = function (location) {
+	var value = Math . pow (10, location * 8 - 5.16);
 	return value / (1 + value);
 };
-scale_M1 . prototype . location = function (value, location) {return (Math . log10 (value / (1 - value)) + 2) / 4;};
-scale_M1 . prototype . draw = function (ctx, length) {
-	var height = this . height;
+scale_M1 . prototype . value_log = function (location) {return Math . pow (10, location * 8);};
+scale_M1 . prototype . value = function (location) {return location <= 0.25 ? this . value_log (location) : this . value_m1 (location);};
+scale_M1 . prototype . location_m1 = function (value) {return (Math . log10 (value / (1 - value)) + 5.16) / 8;};
+scale_M1 . prototype . location_log = function (value) {return Math . log10 (value) / 8;};
+scale_M1 . prototype . location = function (value, location) {return location <= 0.25 ? this . location_log (value) : this . location_m1 (value);}
+scale_M1 . prototype . draw_m1 = function (ctx, length, height) {
 	var h5 = height * 0.5, h4 = height * 0.4, h3 = height * 0.3, h2 = height * 0.2;
-	mark (ctx, '.01', length * this . location (0.01), h5);
-	mark (ctx, '.05', length * this . location (0.05), h5);
-	mark (ctx, '.1', length * this . location (0.1), h5);
-	mark (ctx, '.5', length * this . location (0.5), h5);
+	draw_XR (ctx, this . location_m1, length, 0.001, 0.01, 1, h2, 0.001, 0.0005, 0.001);
+	draw_XR (ctx, this . location_m1, length, 0, 0.01, 1, h5, 0.005, 0.001, 0.005);
+	draw_XR (ctx, this . location_m1, length, 0.01, 0.1, 1, h2, 0.01, 0.005, 0.01);
+	draw_XR (ctx, this . location_m1, length, 0, 0.1, 1, h5, 0.05, 0.01, 0.05);
+	mmark (ctx, '.001', length * this . location (0.001), h5);
+	mark (ctx, '5', length * this . location (0.005), h5);
+	mmark (ctx, '.01', length * this . location (0.01), h5);
+	mark (ctx, '5', length * this . location (0.05), h5);
+	mmark (ctx, '.1', length * this . location (0.1), h5);
+	mark (ctx, '5', length * this . location (0.5), h5);
 	mark (ctx, '.9', length * this . location (0.9), h5);
 	mark (ctx, '.95', length * this . location (0.95), h5);
 	mark (ctx, '.99', length * this . location (0.99), h5);
+	mark (ctx, '.995', length * this . location (0.995), h5);
+	mark (ctx, '.999', length * this . location (0.999), h5);
+	ctx . fillStyle = this . marking_alt ? this . marking_alt : this . alt;
+	draw_XR (ctx, this . location_log, length, 1, 2, 1, h4, 1, 0.5, 1);
+	draw_XR (ctx, this . location_log, length, 1, 2, 1, h2, 0.5, 0.1, 0.5);
+	draw_XR (ctx, this . location_log, length, 2, 4, 1, h2, 1, 0.2, 1);
+	draw_XR (ctx, this . location_log, length, 4, 10, 1, h2, 1, 0.5, 1);
+	mark (ctx, '1', 0, h5);
+	mark (ctx, '2', length * this . location_log (2), h5);
+	mark (ctx, '3', length * this . location_log (3), h5);
+	mark (ctx, '4', length * this . location_log (4), h5);
+	mark (ctx, '5', length * this . location_log (5), h5);
+	tick (ctx, length * this . location_log (6), h5);
+	tick (ctx, length * this . location_log (7), h5);
+	tick (ctx, length * this . location_log (8), h5);
+	tick (ctx, length * this . location_log (9), h5);
+	draw_XR (ctx, this . location_log, length, 10, 20, 10, h4, 10, 5, 10);
+	draw_XR (ctx, this . location_log, length, 10, 20, 10, h2, 5, 1, 5);
+	draw_XR (ctx, this . location_log, length, 20, 40, 10, h2, 10, 2, 10);
+	draw_XR (ctx, this . location_log, length, 40, 100, 10, h2, 10, 5, 10);
+	mark (ctx, '1', length * this . location_log (10), h5);
+	mark (ctx, '2', length * this . location_log (20), h5);
+	mark (ctx, '3', length * this . location_log (30), h5);
+	mark (ctx, '4', length * this . location_log (40), h5);
+	mark (ctx, '5', length * this . location_log (50), h5);
+	tick (ctx, length * this . location_log (60), h5);
+	tick (ctx, length * this . location_log (70), h5);
+	tick (ctx, length * this . location_log (80), h5);
+	tick (ctx, length * this . location_log (90), h5);
+	mark (ctx, '1', length * this . location_log (100), h5);
 };
+scale_M1 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); this . draw_m1 (ctx, length, this . height);};
+var scale_M2 = function (height, options) {scale_M1 . call (this, height, options);}; inherit (scale_M2, scale_M1);
+scale_M2 . prototype . draw = function (ctx, length) {this . draw_m1 (ctx, length, - this . height);};
+
