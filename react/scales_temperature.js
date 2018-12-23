@@ -28,9 +28,8 @@ var scale_Kelvin = function (height, options) {spacer . call (this, height, opti
 scale_Kelvin . prototype . indices = [100, 1000];
 scale_Kelvin . prototype . value = function (location) {return Math . pow (10, location + 2);};
 scale_Kelvin . prototype . location = function (value) {return Math . log10 (value) - 2;};
-scale_Kelvin . prototype . draw = function (ctx, length) {
-	ctx . translate (0, this . height);
-	var h5 = this . height * 0.5, h25 = this . height * 0.25;
+scale_Kelvin . prototype . draw_kelvin = function (ctx, length, height) {
+	var h5 = height * 0.5, h25 = height * 0.25;
 	smark (ctx, 'F', length * this . location (268), h25, h5);
 	stick (ctx, length * this . location (198.6), h25, h5);
 	mmark (ctx, 'R\u2081', length * this . location (196), h5);
@@ -39,8 +38,9 @@ scale_Kelvin . prototype . draw = function (ctx, length) {
 	smark (ctx, 'V\u2080', length * this . location (224.14), h25, h5);
 	smark (ctx, '\u{1D4DA}', length * this . location (359.421053), h25, h5);
 	smark (ctx, 'J', length * this . location (418.5), h25, h5);
-	draw_log (ctx, length, this . height, this, this . left_extension, this . right_extension);
+	draw_log (ctx, length, height, this, this . left_extension, this . right_extension);
 };
+scale_Kelvin . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); this . draw_kelvin (ctx, length, this . height);};
 scale_Kelvin . prototype . draw_pi = false;
 scale_Kelvin . prototype . draw_e = false;
 scale_Kelvin . prototype . draw_c = false;
@@ -57,13 +57,8 @@ scale_Kelvin . prototype . read = function (position) {
 	}
 };
 
-var scale_Kelvin_down = function (height, options) {
-  var s = new scale_D (height, options);
-  s . indices = [100, 1000];
-  s . value = function (location) {return Math . pow (10, location + 2);};
-  s . location = function (value) {return Math . log10 (value) - 2;};
-  return s;
-};
+var scale_Kelvin_down = function (height, options) {scale_Kelvin . call (this, height, options);}; inherit (scale_Kelvin_down, scale_Kelvin);
+scale_Kelvin_down . prototype . draw = function (ctx, length) {this . draw_kelvin (ctx, length, - this . height);};
 
 var draw_fahrenheits = function (ctx, length, height, s) {
   var h5 = height * 0.5, h4 = height * 0.4, h3 = height * 0.3, h2 = height * 0.2;
@@ -80,19 +75,13 @@ var draw_fahrenheits = function (ctx, length, height, s) {
   draw_XL (ctx, s . location, length, -1000, 100, limit, h2, 10, 2, 10);
 };
 
-var scale_Fahrenheit = function (height, options) {
-  var s = new spacer (height, options);
-  s . value = function (location) {return Math . pow (10, location + 2) * 1.8 - 459.67;};
-  s . location = function (value) {return Math . log10 ((value + 459.67) / 1.8) - 2;};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_fahrenheits (ctx, length, s . height, s);};
-  return s;
-};
+var scale_Fahrenheit = function (height, options) {spacer . call (this, height, options);}; inherit (scale_Fahrenheit, spacer);
+scale_Fahrenheit . prototype . value = function (location) {return Math . pow (10, location + 2) * 1.8 - 459.67;};
+scale_Fahrenheit . prototype . location = function (value) {return Math . log10 ((value + 459.67) / 1.8) - 2;};
+scale_Fahrenheit . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_fahrenheits (ctx, length, this . height, this);};
 
-var scale_Fahrenheit_down = function (height, options) {
-  var s = new scale_Fahrenheit (height, options);
-  s . draw = function (ctx, length) {draw_fahrenheits (ctx, length, - s . height, s);};
-  return s;
-};
+var scale_Fahrenheit_down = function (height, options) {scale_Fahrenheit . call (this, height, options);}; inherit (scale_Fahrenheit_down, scale_Fahrenheit);
+scale_Fahrenheit_down . prototype . draw = function (ctx, length) {draw_fahrenheits (ctx, length, - this . height, this);};
 
 var draw_centigrades = function (ctx, length, height, s) {
   var h5 = height * 0.5, h4 = height * 0.4, h3 = height * 0.3, h2 = height * 0.2;
@@ -109,16 +98,11 @@ var draw_centigrades = function (ctx, length, height, s) {
   draw_XL (ctx, s . location, length, -1000, -100, limit, h2, 5, 1, 5);
 };
 
-var scale_Centigrade = function (height, options) {
-  var s = new spacer (height, options);
-  s . value = function (location) {return Math . pow (10, location + 2) - 273.15;};
-  s . location = function (value) {return Math . log10 (value + 273.15) - 2;};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_centigrades (ctx, length, s . height, s);};
-  return s;
-};
+var scale_Centigrade = function (height, options) {spacer . call (this, height, options);}; inherit (scale_Centigrade, spacer);
+scale_Centigrade . prototype . value = function (location) {return Math . pow (10, location + 2) - 273.15;};
+scale_Centigrade . prototype . location = function (value) {return Math . log10 (value + 273.15) - 2;};
+scale_Centigrade . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_centigrades (ctx, length, this . height, this);};
 
-var scale_Centigrade_down = function (height, options) {
-  var s = new scale_Centigrade (height, options);
-  s . draw = function (ctx, length) {draw_centigrades (ctx, length, - s . height, s);};
-  return s;
-};
+var scale_Centigrade_down = function (height, options) {scale_Centigrade . call (this, height, options);}; inherit (scale_Centigrade_down, scale_Centigrade);
+scale_Centigrade_down . prototype . draw = function (ctx, length) {draw_centigrades (ctx, length, - this . height, this);};
+
