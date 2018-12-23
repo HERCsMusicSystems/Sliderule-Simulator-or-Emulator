@@ -210,46 +210,46 @@ var getMolecularMass = function (el) {
 };
 
 var scale_Chemical = function (height, elements, options) {
-  var s = new spacer (height, options);
-  s . elements = [];
-  for (var ind in elements) {
-    var e = elements [ind];
-    if (typeof (e) == 'string') e = {e: e, mass: masses [e], align: 'center'};
-    else e . mass = masses [e . e];
-    if (! e . v) e . v = e . e;
-    if (! e . align) e . align = 'center';
-    if (! e . shift) e . shift = 0;
-    if (e . mass < 10) e . decoration = 'underline';
-    else if (e . mass < 100) e . mass /= 10;
-    else {e . mass /= 100; e . decoration = 'overline';}
-    s . elements . push (e);
-  }
-  s . value = function (location) {return Math . pow (10, location + 1);};
-  s . location = function (value) {return Math . log10 (value) - 1;};
-  s . read = function (position) {
-    var mass = masses [position];
-    if (mass == undefined) mass = masses [position . toLowerCase ()];
-    if (mass != undefined) {
-      while (mass > 100) mass /= 10;
-      while (mass < 10) mass *= 10;
-      return mass;
-    }
-    return null;
-  };
-  s . draw = function (ctx, length) {
-    var h5 = s . height * 0.5;
-    ctx . translate (0, s . height);
-    for (var ind in s . elements) {
-      var e = s . elements [ind];
-      var location = Math . log10 (e . mass);
-      while (location > 1) location -= 1;
-      location *= length;
-      ctx . textAlign = e . align;
-      mmark (ctx, e . v, location + e . shift, h5);
-      tick (ctx, location, h5);
-      if (e . decoration == 'underline') mmark (ctx, '_' . repeat (e . v . length), location + e . shift, h5);
-      if (e . decoration == 'overline') mmark (ctx, '\u00af' . repeat (e . v . length), location + e . shift, h5 + 1);
-    }
-  };
-  return s;
+	spacer . call (this, height, options);
+	this . elements = [];
+	for (var ind in elements) {
+		var e = elements [ind];
+		if (typeof (e) == 'string') e = {e: e, mass: masses [e], align: 'center'};
+		else e . mass = masses [e . e];
+		if (! e . v) e . v = e . e;
+		if (! e . align) e . align = 'center';
+		if (! e . shift) e . shift = 0;
+		if (e . mass < 10) e . decoration = 'underline';
+		else if (e . mass < 100) e . mass /= 10;
+		else {e . mass /= 100; e . decoration = 'overline';}
+		this . elements . push (e);
+	}
+}; inherit (scale_Chemical, spacer);
+scale_Chemical . prototype . value = function (location) {return Math . pow (10, location + 1);};
+scale_Chemical . prototype . location = function (value) {return Math . log10 (value) - 1;};
+scale_Chemical . prototype . read = function (position) {
+	var mass = masses [position];
+	if (mass == undefined) mass = masses [position . toLowerCase ()];
+	if (mass != undefined) {
+		while (mass > 100) mass /= 10;
+		while (mass < 10) mass *= 10;
+		return mass;
+	}
+	return null;
 };
+scale_Chemical . prototype . draw = function (ctx, length) {
+	var h5 = this . height * 0.5;
+	ctx . translate (0, this . height);
+	for (var ind in this . elements) {
+		var e = this . elements [ind];
+		var location = Math . log10 (e . mass);
+		while (location > 1) location -= 1;
+		location *= length;
+		ctx . textAlign = e . align;
+		mmark (ctx, e . v, location + e . shift, h5);
+		tick (ctx, location, h5);
+		if (e . decoration == 'underline') mmark (ctx, '_' . repeat (e . v . length), location + e . shift, h5);
+		if (e . decoration == 'overline') mmark (ctx, '\u00af' . repeat (e . v . length), location + e . shift, h5 + 1);
+	}
+};
+
