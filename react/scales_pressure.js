@@ -22,6 +22,12 @@
 
 //////////////////////////////////////////////////////////////////////////////
 // Pressure_Atmosphere(_down)
+// Pressure_KgPerCm2(_down)
+// Pressure_KgPerCm2(_down)
+// Pressure_PSIG_InHgVac(_down)
+// Tw(_down)
+// M1 M2
+// adiabatic(_down)
 //////////////////////////////////////////////////////////////////////////////
 
 var scale_Pressure_Atmosphere_mmHg = function (height, options) {spacer . call (this, height, options);}; inherit (scale_Pressure_Atmosphere_mmHg, spacer);
@@ -365,4 +371,7 @@ scale_adiabatic . prototype . draw_adiabatic = function (ctx, length, height) {
 	mark (ctx, '500', length * this . location_co2 (500), h5);
 };
 scale_adiabatic . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); this . draw_adiabatic (ctx, length, this . height);};
+
+var scale_adiabatic_down = function (height, options) {scale_adiabatic . call (this, height, options);}; inherit (scale_adiabatic_down, scale_adiabatic);
+scale_adiabatic_down . prototype . draw = function (ctx, length) {this . draw_adiabatic (ctx, length, - this . height);};
 
