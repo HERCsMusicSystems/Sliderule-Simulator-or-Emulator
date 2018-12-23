@@ -323,3 +323,46 @@ scale_M1 . prototype . draw = function (ctx, length) {ctx . translate (0, this .
 var scale_M2 = function (height, options) {scale_M1 . call (this, height, options);}; inherit (scale_M2, scale_M1);
 scale_M2 . prototype . draw = function (ctx, length) {this . draw_m1 (ctx, length, - this . height);};
 
+var scale_adiabatic = function (height, options) {spacer . call (this, height, options);}; inherit (scale_adiabatic, spacer);
+scale_adiabatic . prototype . value_air = function (location) {return Math . pow (10, location * 6 * 0.285714286 + 2.1) - 273.16;};
+scale_adiabatic . prototype . location_air = function (value) {return (Math . log10 (value + 273.16) - 2.12) / 6 / 0.285714286;};
+scale_adiabatic . prototype . value_co2 = function (location) {return Math . pow (10, location * 6 * 0.2122 + 1.6) - 273.16;};
+scale_adiabatic . prototype . location_co2 = function (value) {return (Math . log10 (value + 273.16) - 1.6) / 6 / 0.2122;};
+scale_adiabatic . prototype . value = function (location) {return location <= 0.5 ? this . value_air (location) : this . value_co2 (location);};
+scale_adiabatic . prototype . location = function (value, location) {return location <= 0.5 ? this . location_air (value) : this . location_co2 (value);};
+scale_adiabatic . prototype . draw_adiabatic = function (ctx, length, height) {
+	var h5 = height * 0.5, h4 = height * 0.4, h3 = height * 0.3, h2 = height * 0.2;
+	draw_XR (ctx, this . location_air, length, -100, 200, 1, h4, 50, 10, 50);
+	draw_XR (ctx, this . location_air, length, -100, 50, 1, h2, 10, 2, 10);
+	draw_XR (ctx, this . location_air, length, 50, 200, 1, h2, 10, 5, 10);
+	tick (ctx, length * this . location_air (150), h5);
+	draw_XR (ctx, this . location_air, length, 200, 500, 1, h4, 100, 50, 100);
+	draw_XR (ctx, this . location_air, length, 200, 500, 1, h2, 50, 10, 50);
+	mark (ctx, '-100', length * this . location_air (-100), h5);
+	mark (ctx, '-50', length * this . location_air (-50), h5);
+	mark (ctx, '0', length * this . location_air (0), h5);
+	mark (ctx, '50', length * this . location_air (50), h5);
+	mark (ctx, '100', length * this . location_air (100), h5);
+	mark (ctx, '2', length * this . location_air (200), h5);
+	mark (ctx, '3', length * this . location_air (300), h5);
+	mark (ctx, '4', length * this . location_air (400), h5);
+	mark (ctx, '500', length * this . location_air (500), h5);
+	draw_XR (ctx, this . location_co2, length, -90, -50, 1, h4, 40, 10, 40);
+	draw_XR (ctx, this . location_co2, length, -50, 200, 1, h4, 50, 10, 50);
+	draw_XR (ctx, this . location_co2, length, -90, 50, 1, h2, 10, 2, 10);
+	draw_XR (ctx, this . location_co2, length, 50, 200, 1, h2, 10, 5, 10);
+	tick (ctx, length * this . location_co2 (150), h5);
+	draw_XR (ctx, this . location_co2, length, 200, 500, 2, h4, 100, 50, 100);
+	draw_XR (ctx, this . location_co2, length, 200, 500, 2, h2, 50, 10, 50);
+	mark (ctx, '-90', length * this . location_co2 (-90), h5);
+	mark (ctx, '-50', length * this . location_co2 (-50), h5);
+	mark (ctx, '0', length * this . location_co2 (0), h5);
+	mark (ctx, '50', length * this . location_co2 (50), h5);
+	mark (ctx, '100', length * this . location_co2 (100), h5);
+	mark (ctx, '2', length * this . location_co2 (200), h5);
+	mark (ctx, '3', length * this . location_co2 (300), h5);
+	mark (ctx, '4', length * this . location_co2 (400), h5);
+	mark (ctx, '500', length * this . location_co2 (500), h5);
+};
+scale_adiabatic . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); this . draw_adiabatic (ctx, length, this . height);};
+

@@ -24,12 +24,37 @@
 // Kelvin(_down), Centigrade(_down), Fahrenheit(_down)
 //////////////////////////////////////////////////////////////////////////////
 
-var scale_Kelvin = function (height, options) {
-  var s = new scale_C (height, options);
-  s . indices = [100, 1000];
-  s . value = function (location) {return Math . pow (10, location + 2);};
-  s . location = function (value) {return Math . log10 (value) - 2;};
-  return s;
+var scale_Kelvin = function (height, options) {spacer . call (this, height, options);}; inherit (scale_Kelvin, spacer);
+scale_Kelvin . prototype . indices = [100, 1000];
+scale_Kelvin . prototype . value = function (location) {return Math . pow (10, location + 2);};
+scale_Kelvin . prototype . location = function (value) {return Math . log10 (value) - 2;};
+scale_Kelvin . prototype . draw = function (ctx, length) {
+	ctx . translate (0, this . height);
+	var h5 = this . height * 0.5, h25 = this . height * 0.25;
+	smark (ctx, 'F', length * this . location (268), h25, h5);
+	stick (ctx, length * this . location (198.6), h25, h5);
+	mmark (ctx, 'R\u2081', length * this . location (196), h5);
+	smark (ctx, 'R\u2082', length * this . location (623.6), h25, h5);
+	smark (ctx, 'R\u2083', length * this . location (820.5), h25, h5);
+	smark (ctx, 'V\u2080', length * this . location (224.14), h25, h5);
+	smark (ctx, '\u{1D4DA}', length * this . location (359.421053), h25, h5);
+	smark (ctx, 'J', length * this . location (418.5), h25, h5);
+	draw_log (ctx, length, this . height, this, this . left_extension, this . right_extension);
+};
+scale_Kelvin . prototype . draw_pi = false;
+scale_Kelvin . prototype . draw_e = false;
+scale_Kelvin . prototype . draw_c = false;
+scale_Kelvin . prototype . read = function (position) {
+	switch (position . toLowerCase ()) {
+		case 'r1': return 198.6;
+		case 'r2': return 623.6;
+		case 'r3': return 820.5;
+		case 'f': return 268;
+		case 'v0': return 224.14;
+		case 'k': return 359.421053;
+		case 'j': return 418.5;
+		default: return null;
+	}
 };
 
 var scale_Kelvin_down = function (height, options) {
