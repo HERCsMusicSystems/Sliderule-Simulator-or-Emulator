@@ -121,6 +121,8 @@ r . markings . push (new Engraving ("M\u2081", '12px arial', 'right', 'red', -0.
 r = new Rule ({rule_colour: 'ivory', stator: 1}); s . rules . push (r);
 r . markings . push (new Engraving ("T", '24px arial', 'left', 'black', -0.07, 68));
 r . markings . push (new Engraving ("M\u2082", '12px arial', 'right', 'red', -0.02, 18));
+r . markings . push (new Engraving ("(AIR)", '12px arial', 'left', 'black', 0.025, 112));
+r . markings . push (new Engraving ("(CO\u2082)", '12px arial', 'left', 'black', 0.48, 112));
 r . scales . push (new scale_M2 (24, {right: 'X', rs: 0.04}));//, {left: 'M2', ls: 0.03, marking_colour: 'red'}));
 r . scales . push (new scale_Fahrenheit (24, {left: '\u00b0F', ls: 0.02, la: 'right', lines: [{left: 0, right: 1, height: 1}]}));
 r . scales . push (new scale_Centigrade_down (24, {left: '\u00b0C', ls: 0.02, la: 'right'}));
