@@ -330,7 +330,7 @@ var scale_M2 = function (height, options) {scale_M1 . call (this, height, option
 scale_M2 . prototype . draw = function (ctx, length) {this . draw_m1 (ctx, length, - this . height);};
 
 var scale_adiabatic = function (height, options) {spacer . call (this, height, options);}; inherit (scale_adiabatic, spacer);
-scale_adiabatic . prototype . value_air = function (location) {return Math . pow (10, location * 6 * 0.285714286 + 2.1) - 273.16;};
+scale_adiabatic . prototype . value_air = function (location) {return Math . pow (10, location * 6 * 0.285714286 + 2.12) - 273.16;};
 scale_adiabatic . prototype . location_air = function (value) {return (Math . log10 (value + 273.16) - 2.12) / 6 / 0.285714286;};
 scale_adiabatic . prototype . value_co2 = function (location) {return Math . pow (10, location * 6 * 0.2212 + 1.6) - 273.16;};
 scale_adiabatic . prototype . location_co2 = function (value) {return (Math . log10 (value + 273.16) - 1.6) / 6 / 0.2212;};
