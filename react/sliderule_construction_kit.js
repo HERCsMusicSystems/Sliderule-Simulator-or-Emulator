@@ -2130,7 +2130,7 @@ var Sliderules = function (options) {
   this . background_translation = {x: 0, y: 0};
   this . sliderules = [];
   this . name = 'generic';
-  this . synchronise = function (rule, delta) {
+  this . synchronise = function (rule, delta, adjustShift) {
     if (! rule) return;
     var ind, sub, r;
     if (rule . stator) {
@@ -2139,7 +2139,7 @@ var Sliderules = function (options) {
           r = this . sliderules [ind] . rules [sub];
           if (r != rule && ! r . noSync) {
           	if (r . stator == rule . stator) {r . target = rule . target; r . shift = rule . shift; this . requireRedraw = true;}
-          	if (r . stator > rule . stator) {r . target += delta; r . shift += delta; this . requireRedraw = true;}
+          	if (r . stator > rule . stator) {r . target += delta; if (adjustShift) r . shift += delta; this . requireRedraw = true;}
           }
         }
       }
@@ -2158,7 +2158,7 @@ var Sliderules = function (options) {
   };
   this . synchroniseMove = function (delta, position) {
     var esc = this . move (scalv (delta, 1 / this . scale), scalv (position, 1 / this . scale));
-    if (esc) this . synchronise (esc . rule, esc . delta);
+    if (esc) this . synchronise (esc . rule, esc . delta, true);
     else this . position = addv (this . position, scalv (delta, 1 / this . scale));
     this . requireRedraw = true;
   };
