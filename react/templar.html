@@ -27,7 +27,7 @@
   <head>
     <title>Templar</title>
   </head>
-<body>
+<body background = knights-templar_4.jpg style = "background-size: 100%;">
 <div>
 	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
@@ -81,7 +81,7 @@ var outback = new Image ();
 outback . src = templars [Math . floor (Math . random () * templars . length)];
 outback . onload = function () {sliderules . requireRedraw = true;};
 
-var sliderules = new Sliderules ({background: outback, background_colour: 'black', name: 'RAVEN', manufacturer: 'HERCs', made_in: "Made in Australia"});
+var sliderules = new Sliderules ({name: 'RAVEN', manufacturer: 'HERCs', made_in: "Made in Australia"});
 
 </script>
 
