@@ -48,8 +48,8 @@ r . scales . push (new scale_P (24, {left: "P", right: "\u221a1-x\u00b2", rs: 0.
 r . scales . push (new scale_K (24, {left: "K", right: "X\u00b3", rs: 0.07, left_extension: 0.052, right_extension: 0.04, indices: ['1', '10', '100', '1000']}));
 r . scales . push (new scale_A (24, {left: "A", right: "X\u00b2", rs: 0.07, left_extension: 0.05, right_extension: 0.042, indices: ['1', '10', '100']}));
 r = new Rule ({stator: 1, left_margin: 0.21, right_margin: 0.21}); s . rules . push (r);
-r . markings . push (new RuleBars (-0.204, 1, 4, 96, 9, 6, 4, 'tan'));
-r . markings . push (new RuleBars (1.204, -1, 4, 96, 9, 6, 4, 'tan'));
+r . markings . push (new RuleBars (-0.204, 1, 4, 94, 9, 6, 4, 'tan'));
+r . markings . push (new RuleBars (1.204, -1, 4, 94, 9, 6, 4, 'tan'));
 r . scales . push (new scale_B (24, {left: "B", right: "X\u00b2", rs: 0.07, left_extension: 0.05, right_extension: 0.042, indices: ['1', '10', '100']}));
 r . scales . push (new scale_SCdec (24, {left: "S", right: "sin X", rs: 0.07, left_extension: 0.06}));
 r . scales . push (new spacer (2));
@@ -85,8 +85,8 @@ r . scales . push (new scale_LL03 (24, {left: "LL03", marking_colour: 'red', rig
 r . scales . push (new scale_LL02 (24, {left: "LL02", marking_colour: 'red', right: "e^-0.1x", rs: 0.02, left_extension: 0.026, right_extension: 0.01}));
 r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.07, left_extension: 0.05, right_extension: 0.048, indices: ['>>1<<']}));
 r = new Rule ({stator: 1, left_margin: 0.21, right_margin: 0.21}); s . rules . push (r);
-r . markings . push (new RuleBars (-0.204, 1, 4, 96, 9, 6, 4, 'tan'));
-r . markings . push (new RuleBars (1.204, -1, 4, 96, 9, 6, 4, 'tan'));
+r . markings . push (new RuleBars (-0.204, 1, 4, 94, 9, 6, 4, 'tan'));
+r . markings . push (new RuleBars (1.204, -1, 4, 94, 9, 6, 4, 'tan'));
 r . scales . push (new scale_DF (24, {left: "CF", right: "\u03c0X", rs: 0.07, left_extension: 0.05, right_extension: 0.048, indices: ['>>1<<'], draw_r: true, draw_q: true}));
 r . scales . push (new scale_CIF (24, {left: "CIF", right: "10/\u03c0X", rs: 0.07, left_extension: 0.042, right_extension: 0.056, marking_colour: 'red', indices: ['>>1<<']}));
 r . scales . push (new spacer (2));

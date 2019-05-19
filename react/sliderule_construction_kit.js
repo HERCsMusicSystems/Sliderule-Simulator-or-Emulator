@@ -1472,16 +1472,16 @@ var drawStaedtlerBrace = function (ctx, radius, width, dent, left1, left2, top, 
     ctx . fill ();
 };
 
-var StaedtlerLeftBrace = function (radius, width, dent, left1, left2, top, bottom, dbottom, background, colour) {
+var StaedtlerLeftBrace = function (radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, vShift) {
   this . draw = function (ctx, s) {
-    ctx . translate (s . length * s . left_margin, 0);
+    ctx . translate (s . length * s . left_margin, vShift === undefined ? 0 : vShift);
     drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s);
   };
 };
 
-var StaedtlerRightBrace = function (radius, width, dent, left1, left2, top, bottom, dbottom, background, colour) {
+var StaedtlerRightBrace = function (radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, vShift) {
   this . draw = function (ctx, s) {
-    ctx . translate (s . length * (1 + s . left_margin), 0);
+    ctx . translate (s . length * (1 + s . left_margin), vShift === undefined ? 0 : vShift);
     ctx . scale (-1, 1);
     drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s);
   };
