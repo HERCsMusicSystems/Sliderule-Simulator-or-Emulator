@@ -33,8 +33,8 @@
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
-	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
-	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+<!--	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.-->
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 800 : 1200);" />Short/Long
   <br/>
   <select id = lessons><option value = "Choose Lesson ====" >Choose Lesson ====</option></select>
   <input type = button value = "Play lesson" onclick = "javascript: playLesson ('lessons');" />&nbsp;&nbsp;&nbsp;
@@ -76,7 +76,8 @@
 readSlideruleLessons ('lessons', [userManual, multiplicationLessons, foldedMultiplicationLessons, reciprocalLessons, trigonometrySlideLessons, tablingLessons, astroLessons]);
 readSlideruleLessons ('tests', [userTrial, multiplicationTests, foldedMultiplicationTests, reciprocalTests, trigonometrySlideTests, tablingTests, astroTests]);
 
-var sliderules = new Sliderules ({name: 'Hiram Abiff', manufacturer: 'HERCs', made_in: "Inventa est in templum fecerat Salomon rex Israel A. D. MCXX"});
+var sliderules = new Sliderules ({name: 'Hiram Abiff', manufacturer: 'HERCs', made_in: "Et inventum est in Templo Salomonis in MCXX annis."});
+//"Inventa est in templum fecerat Salomon rex Israel A. D. MCXX"});
 
 </script>
 
@@ -89,7 +90,7 @@ changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
-changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+changeVersion ('german');
 changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
 </script>
 
