@@ -77,6 +77,16 @@ var changeVersion = function (version) {
 	sliderules . requireRedraw = true;
 };
 
+var changeMovementSpeed = function (speed) {
+    for (var ind in sliderules . sliderules) {
+        var sliderule = sliderules . sliderules [ind];
+        sliderule . cursor_motion = speed;
+        for (var sub in sliderule . rules) {
+            sliderule . rules [sub] . rule_motion = speed;
+        }
+    }
+};
+
 var copyright = "Emulator / Simulator Copyright \u00a9 2017 - " + new Date () . getFullYear () + " Dr Robert Wolf @ http://www.hercsmusicsystems.com.au";
 var copyright_colours = ['blue', 'gray', 'yellow', 'lavender', 'green', 'olive', 'silver', 'tan', 'wheat', 'khaki'];
 var copyright_colour = copyright_colours [Math . floor (Math . random () * copyright_colours . length)];

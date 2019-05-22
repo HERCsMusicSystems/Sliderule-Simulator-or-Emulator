@@ -1,3 +1,4 @@
+<meta charset="UTF-8"/>
 <!--
 ///////////////////////////////////////////////////////////////////////////////////
 //                     Copyright (C) 2017 Dr Robert P. Wolf                      //
@@ -34,6 +35,13 @@
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
 	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
 	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+	<br />Motion speed:
+	<input type = radio name = speed id = speed1 onchange = "javascript: changeMovementSpeed (0.125);" />&#x00d7;0.125 (z)
+	<input type = radio name = speed id = speed2 onchange = "javascript: changeMovementSpeed (0.25);" />&#x00d7;0.25 (x)
+	<input type = radio name = speed id = speed3 onchange = "javascript: changeMovementSpeed (0.5);" checked />&#x00d7;0.5 (c)
+	<input type = radio name = speed id = speed4 onchange = "javascript: changeMovementSpeed (1);" />&#x00d7;1 (v)
+	<input type = radio name = speed id = speed5 onchange = "javascript: changeMovementSpeed (2);" />&#x00d7;2 (b)
+	<input type = radio name = speed id = speed6 onchange = "javascript: changeMovementSpeed (4);" />&#x00d7;4 (n)
 </div>
 <div id="root"></div>
 
@@ -185,6 +193,24 @@ changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
 changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+
+document . onkeydown = function (e) {
+    switch (e . key) {
+    case 'z': document . getElementById ('speed1') . checked = true; changeMovementSpeed (0.125); break;
+    case 'x': document . getElementById ('speed2') . checked = true; changeMovementSpeed (0.25); break;
+    case 'c': document . getElementById ('speed3') . checked = true; changeMovementSpeed (0.5); break;
+    case 'v': document . getElementById ('speed4') . checked = true; changeMovementSpeed (1); break;
+    case 'b': document . getElementById ('speed5') . checked = true; changeMovementSpeed (2); break;
+    case 'n': document . getElementById ('speed6') . checked = true; changeMovementSpeed (4); break;
+    default: break;
+    }
+};
+if (document . getElementById ('speed1') . checked) changeMovementSpeed (0.125);
+if (document . getElementById ('speed2') . checked) changeMovementSpeed (0.25);
+if (document . getElementById ('speed3') . checked) changeMovementSpeed (0.5);
+if (document . getElementById ('speed4') . checked) changeMovementSpeed (1);
+if (document . getElementById ('speed5') . checked) changeMovementSpeed (2);
+if (document . getElementById ('speed6') . checked) changeMovementSpeed (4);
 </script>
 
 </body></html>
