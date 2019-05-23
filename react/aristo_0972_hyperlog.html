@@ -42,6 +42,16 @@
 	<input type = radio name = speed id = speed4 onchange = "javascript: changeMovementSpeed (1);" />&#x00d7;1 (v)
 	<input type = radio name = speed id = speed5 onchange = "javascript: changeMovementSpeed (2);" />&#x00d7;2 (b)
 	<input type = radio name = speed id = speed6 onchange = "javascript: changeMovementSpeed (4);" />&#x00d7;4 (n)
+	On mouse release change speed back to:
+	<select id=onmouseupaction >
+	    <option value=0>Inactive</option>
+	    <option value=0.125>&#x00d7;0.125</option>
+	    <option value=0.25>&#x00d7;0.25</option>
+	    <option value=0.5>&#x00d7;0.5</option>
+	    <option value=1>&#x00d7;1</option>
+	    <option value=2>&#x00d7;2</option>
+	    <option value=4>&#x00d7;4</option>
+	</select>
 </div>
 <div id="root"></div>
 
@@ -211,6 +221,25 @@ if (document . getElementById ('speed3') . checked) changeMovementSpeed (0.5);
 if (document . getElementById ('speed4') . checked) changeMovementSpeed (1);
 if (document . getElementById ('speed5') . checked) changeMovementSpeed (2);
 if (document . getElementById ('speed6') . checked) changeMovementSpeed (4);
+
+var mouseBack = function (value) {
+    console . log (value);
+    switch (value) {
+    case 0: break;
+    case 0.125: document . getElementById ("speed1") . checked = true; changeMovementSpeed (0.125); break;
+    case 0.25: document . getElementById ("speed2") . checked = true; changeMovementSpeed (0.25); break;
+    case 0.5: document . getElementById ("speed3") . checked = true; changeMovementSpeed (0.5); break;
+    case 1: document . getElementById ("speed4") . checked = true; changeMovementSpeed (1); break;
+    case 2: document . getElementById ("speed5") . checked = true; changeMovementSpeed (2); break;
+    case 4: document . getElementById ("speed6") . checked = true; changeMovementSpeed (4); break;
+    default: break;
+    }
+};
+
+document . getElementById ('sliderule_canvas') . onmouseup = function (e) {
+    mouseBack (Number (document . getElementById ('onmouseupaction') . value));
+};
+
 </script>
 
 </body></html>
