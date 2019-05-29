@@ -64,8 +64,14 @@ s . braces . push (new LBottomLeftBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 're
 s . braces . push (new LBottomLeftBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
 s . braces . push (new LBottomRightBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 'red'));
 s . braces . push (new LBottomRightBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
+s . braces . push (new Screw (0.075, 38, 12, Math . random () * Math . PI, '#2E5894', '#41a187'));
+s . braces . push (new Bolt (0.08, 250, 8,  '#2E5894', '#41a187'));
+s . braces . push (new Bolt (0.02, 290, 8,  '#2E5894', '#41a187'));
+s . braces . push (new Screw (1.325, 38, 12, Math . random () * Math . PI, '#2E5894', '#41a187'));
+s . braces . push (new Bolt (1.32, 250, 8,  '#2E5894', '#41a187'));
+s . braces . push (new Bolt (1.38, 290, 8,  '#2E5894', '#41a187'));
 var r = new Rule ({rule_colour: 'ivory', left_margin: 0.15, right_margin: 0.15}); s . rules . push (r);
-r . scales . push (new spacer (24, {centre: "\u263c SUN \u263c   HEMMI     JAPAN     No. 257", cs: 1, ca: 'right'}));
+r . scales . push (new spacer (24, {centre: "\u263c SUN \u263c     HEMMI     JAPAN           No. 257", cs: 1.02, ca: 'right'}));
 r . scales . push (new scale_L (24, {left: 'L', ls: 0.02, la: 'right'}));
 r . scales . push (new scale_A (24, {left: 'A', ls: 0.02, la: 'right'}));
 r . scales . push (new scale_CF (24, {left: 'DF', ls: 0.02, la: 'right'}));
@@ -94,6 +100,12 @@ s . braces . push (new LTopLeftBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 'red')
 s . braces . push (new LTopLeftBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
 s . braces . push (new LTopRightBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 'red'));
 s . braces . push (new LTopRightBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
+s . braces . push (new Screw (0.075, 312 - 38, 12, Math . random () * Math . PI, '#2E5894', '#41a187'));
+s . braces . push (new Bolt (0.08, 312 - 250, 8,  '#2E5894', '#41a187'));
+s . braces . push (new Bolt (0.02, 312 - 290, 8,  '#2E5894', '#41a187'));
+s . braces . push (new Screw (1.325, 312 - 38, 12, Math . random () * Math . PI, '#2E5894', '#41a187'));
+s . braces . push (new Bolt (1.32, 312 - 250, 8,  '#2E5894', '#41a187'));
+s . braces . push (new Bolt (1.38, 312 - 290, 8,  '#2E5894', '#41a187'));
 r = new Rule ({rule_colour: 'ivory'}); s . rules . push (r);
 r . markings . push (new Engraving ("Ch", '24px arial', 'left', 'black', -0.07, 56));
 r . scales . push (new spacer (20));
