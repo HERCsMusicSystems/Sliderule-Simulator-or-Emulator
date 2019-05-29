@@ -330,10 +330,15 @@ var scale_M2 = function (height, options) {scale_M1 . call (this, height, option
 scale_M2 . prototype . draw = function (ctx, length) {this . draw_m1 (ctx, length, - this . height);};
 
 var scale_adiabatic = function (height, options) {spacer . call (this, height, options);}; inherit (scale_adiabatic, spacer);
-scale_adiabatic . prototype . value_air = function (location) {return Math . pow (10, location * 6 * 0.285714286 + 2.12) - 273.16;};
-scale_adiabatic . prototype . location_air = function (value) {return (Math . log10 (value + 273.16) - 2.12) / 6 / 0.285714286;};
-scale_adiabatic . prototype . value_co2 = function (location) {return Math . pow (10, location * 6 * 0.2212 + 1.6) - 273.16;};
-scale_adiabatic . prototype . location_co2 = function (value) {return (Math . log10 (value + 273.16) - 1.6) / 6 / 0.2212;};
+/*
+p1 / p2 = t1^KK / t2^KK
+Where KK is really K / (K - 1)
+Where K = 1 + 2/5 for Air or K = 1 + 2/7 for CO2
+*/
+scale_adiabatic . prototype . value_air = function (location) {return Math . pow (10, location * 6 / 3.5 + 2.12) - 273.16;};
+scale_adiabatic . prototype . location_air = function (value) {return (Math . log10 (value + 273.16) - 2.12) / 6 * 3.5;};
+scale_adiabatic . prototype . value_co2 = function (location) {return Math . pow (10, location * 6 / 4.5 + 1.6) - 273.16;};
+scale_adiabatic . prototype . location_co2 = function (value) {return (Math . log10 (value + 273.16) - 1.6) / 6 * 4.5;};
 scale_adiabatic . prototype . value = function (location) {return location <= 0.5 ? this . value_air (location) : this . value_co2 (location);};
 scale_adiabatic . prototype . location = function (value, location) {return location <= 0.5 ? this . location_air (value) : this . location_co2 (value);};
 scale_adiabatic . prototype . draw_adiabatic = function (ctx, length, height) {
