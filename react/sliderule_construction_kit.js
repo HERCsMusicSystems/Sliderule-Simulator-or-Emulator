@@ -785,7 +785,9 @@ var draw_pt = function (ctx, length, height, s) {
 	mark (ctx, 0, length * s . location (0), h5);
 	tick (ctx, length * s . location (0.1), h5);
 	tick (ctx, length * s . location (0.15), h3);
-	draw_XL (ctx, s . location, length, 0.2, 0.5, limit, h2, 0.1, 0.02, 0.01);
+	tick (ctx, length * s . location (0.3), h5);
+	tick (ctx, length * s . location (0.4), h5);
+	draw_XL (ctx, s . location, length, 0.2, 0.5, limit, h2, 0.1, 0.02, 0.1);
 };
 
 var draw_LL3 = function (ctx, length, height, s) {
