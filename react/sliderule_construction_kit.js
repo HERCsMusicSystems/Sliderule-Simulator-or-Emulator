@@ -766,6 +766,22 @@ var draw_ph2 = function (ctx, length, height, s) {
 	draw_XL (ctx, s . location, length, 1.1, 2, limit, h2, 0.05, 0.01, 0.05);
 };
 
+var draw_pt = function (ctx, length, height, s) {
+	var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+	var limit = 1 + s . right_extension;
+	draw_MRS (ctx, s . location, length, 1, 3.5, 0.5, limit, h5);
+	draw_MR (ctx, s . location, length, 4, 10, limit, h5);
+	draw_XR (ctx, s . location, length, 4, 10, limit, h4, 1, 0.5, 1);
+	draw_XR (ctx, s . location, length, 4, 10, limit, h3, 0.5, 0.1, 0.5);
+	draw_XR (ctx, s . location, length, 4, 10, limit, h2, 0.1, 0.05, 0.1);
+	draw_XR (ctx, s . location, length, 1, 4, limit, h3, 0.5, 0.1, 0.5);
+	draw_XR (ctx, s . location, length, 1, 4, limit, h2, 0.1, 0.02, 0.1);
+	limit = - s . left_extension;
+	draw_MLS (ctx, s . location, length, 0.5, 1, 0.1, limit, h5);
+	draw_XL (ctx, s . location, length, 0.5, 1, limit, h3, 0.1, 0.05, 0.1);
+	draw_XL (ctx, s . location, length, 0.5, 1, limit, h2, 0.05, 0.01, 0.05);
+};
+
 var draw_LL3 = function (ctx, length, height, s) {
 	var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
 	var esc; var limit = 1 + s . right_extension;

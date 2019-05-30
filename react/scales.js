@@ -468,6 +468,18 @@ var scale_PH2_down = function (height, options) {
 	s . draw = function (ctx, length) {draw_ph2 (ctx, length, - s . height, s);};
 	return s;
 };
+var scale_PT = function (height, options) {
+	var s = new scale_PH2 (height, options);
+	s . value = function (location) {var x = Math . pow (10, location); x *= x; x -= 1; return Math . sqrt (x);};
+	s . location = function (value) {return Math . log10 (Math . sqrt (1 + value * value));};
+	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_pt (ctx, length, s . height, s);};
+	return s;
+};
+var scale_PT_down = function (height, options) {
+	var s = new scale_PT (height, options);
+	s . draw = function (ctx, length) {draw_ph2 (ctx, length, - s . height, s);};
+	return s;
+};
 var scale_LL3 = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location));};
