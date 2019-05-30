@@ -777,9 +777,15 @@ var draw_pt = function (ctx, length, height, s) {
 	draw_XR (ctx, s . location, length, 1, 4, limit, h3, 0.5, 0.1, 0.5);
 	draw_XR (ctx, s . location, length, 1, 4, limit, h2, 0.1, 0.02, 0.1);
 	limit = - s . left_extension;
-	draw_MLS (ctx, s . location, length, 0.5, 1, 0.1, limit, h5);
+	draw_XL (ctx, s . location, length, 0.5, 1, limit, h5, 0.5, 0.1, 0.5);
 	draw_XL (ctx, s . location, length, 0.5, 1, limit, h3, 0.1, 0.05, 0.1);
 	draw_XL (ctx, s . location, length, 0.5, 1, limit, h2, 0.05, 0.01, 0.05);
+	mark (ctx, '.5', length * s . location (0.5), h5);
+	mark (ctx, '.2', length * s . location (0.2), h5);
+	mark (ctx, 0, length * s . location (0), h5);
+	tick (ctx, length * s . location (0.1), h5);
+	tick (ctx, length * s . location (0.15), h3);
+	draw_XL (ctx, s . location, length, 0.2, 0.5, limit, h2, 0.1, 0.02, 0.01);
 };
 
 var draw_LL3 = function (ctx, length, height, s) {
