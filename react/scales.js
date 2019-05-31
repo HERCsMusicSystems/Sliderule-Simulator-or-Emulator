@@ -32,7 +32,8 @@
 // Tdec(_down), T1dec(_down), TCTdec(_down), CTTdec(_down), TCT1dec(_down), CTT1dec(_down)
 // T(_down), T1(_down)
 // Tgrad(_down)
-// P(_down), PH(_down), PH2(_down)
+// P(_down), PH(_down), PH2(_down), PT(_down)
+// ISTd(_down)
 // LL3(_down), LL2(_down), LL1(_down), LL0(_down), CLL0, DLL0
 // LL03(_down), LL02(_down), LL01(_down), LL00(_down)
 // Metric(_down) => step, scale, shift
@@ -432,6 +433,75 @@ var scale_CSdec_down = function (height, options) {
   s . draw = function (ctx, length) {draw_sine_cosine_dec (ctx, length, - s . height, s, 'cs');};
   return s;
 };
+var scale_ISTd = function (height, options) {spacer . call (this, height, options);}; inherit (scale_ISTd, spacer);
+scale_ISTd . prototype . locationSd = function (value) {
+	if (value === 0) return Math . log10 (180 / Math . PI) - 1;
+	return Math . log10 (value * 0.1 / Math . sin (value * Math . PI / 180));
+};
+scale_ISTd . prototype . locationISd = function (value) {
+    return 1.0 - Math . log10 (18 * Math . asin (value) / Math . PI / value);
+};
+scale_ISTd . prototype . locationTd = function (value) {
+    var tangent = Math . tan (value * Math . PI / 180);
+    return Math . log10 (value * 0.1 / tangent);
+};
+scale_ISTd . prototype . locationITd = function (value) {
+    var alpha = Math . atan (value) * 18 / Math . PI;
+    return 1.0 - Math . log10 (alpha / value);
+};
+scale_ISTd . prototype . value = function (location) {
+    if (location > Math . log10 (9) || location < Math . log10 (18 / Math . PI)) return null;
+    var from = 0, to = 90;
+    var v;
+    while (to - from > 0.00001) {
+        var point = (from + to) / 2;
+        v = this . locationSd (point);
+        if (v < location) from = point; else to = point;
+    }
+    return from;
+};
+scale_ISTd . prototype . location = function (value) {return this . locationSd (value);};
+/*	virtual double getLocation (double x) {
+		if (x == 0.0) return log10 (180.0 / _PI);
+		if (x < 0.0) {
+			x = -x;
+			if (x < 2.0) {double alpha = atan (x); alpha *= 18.0 / _PI; return 1.0 - log10 (alpha / x);}
+			double tangent = tan (x * _PI / 180.0);
+			return log10 (x * 0.1 / tangent);
+		}
+		if (x <= 1.0) {double alpha = asin (x); alpha *= 18.0 / _PI; return 1.0 - log10 (alpha / x);}
+		double sine = sin (x * _PI / 180.0); return log10 (x * 0.1 / sine);
+	}*/
+scale_ISTd . prototype . drawISTd = function (ctx, length, height) {
+	var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+	mark (ctx, 90, this . locationSd (90) * length, h5);
+	mark (ctx, 80, this . locationSd (80) * length, h5);
+	mark (ctx, 70, this . locationSd (70) * length, h5);
+	mark (ctx, 60, this . locationSd (60) * length, h5);
+	mark (ctx, 50, this . locationSd (50) * length, h5);
+	mark (ctx, 40, this . locationSd (40) * length, h5);
+	mark (ctx, 30, this . locationSd (30) * length, h5);
+	mark (ctx, 20, this . locationSd (20) * length, h5);
+	mark (ctx, 0, this . locationSd (0) * length, h5);
+	mark (ctx, 0.6, this . locationISd (0.6) * length, h5);
+	mark (ctx, 0.7, this . locationISd (0.7) * length, h5);
+	mark (ctx, 0.8, this . locationISd (0.8) * length, h5);
+	mark (ctx, 0.9, this . locationISd (0.9) * length, h5);
+	mark (ctx, 0.95, this . locationISd (0.95) * length, h5);
+	mark (ctx, 1, this . locationISd (1) * length, h5);
+	mark (ctx, 20, this . locationTd (20) * length, h5);
+	mark (ctx, 30, this . locationTd (30) * length, h5);
+	mark (ctx, 40, this . locationTd (40) * length, h5);
+	mark (ctx, '.3', this . locationITd (0.3) * length, h5);
+	mark (ctx, '.4', this . locationITd (0.4) * length, h5);
+	mark (ctx, '.5', this . locationITd (0.5) * length, h5);
+	mark (ctx, '.6', this . locationITd (0.6) * length, h5);
+};
+scale_ISTd . prototype . draw = function (ctx, length) {ctx . translate (0, s . height); this . drawISTd (ctx, length, this . height);};
+
+var scale_ISTd_down = function (height, options) {scale_ISTd . call (this, height, options);}; inherit (scale_ISTd_down, scale_ISTd);
+scale_ISTd_down . prototype . draw = function (ctx, length) {this . drawISTd (ctx, length, - this . height);};
+
 var scale_P = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {var ret = Math . pow (10, location - 1); return Math . sqrt (1 - ret * ret);};

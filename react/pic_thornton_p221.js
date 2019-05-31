@@ -40,7 +40,7 @@ r = new Rule ({stator: 1}); s . rules . push (r);
 r . scales . push (new scale_DF (24));
 r . scales . push (new scale_CI (24));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_Sdec_down (24));
+r . scales . push (new scale_ISTd_down (24));
 r . scales . push (new scale_C (24));
 
 r = new Rule (); s . rules . push (r);
