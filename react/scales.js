@@ -446,6 +446,7 @@ scale_ISTd . prototype . locationTd = function (value) {
     return Math . log10 (value * 0.1 / tangent);
 };
 scale_ISTd . prototype . locationITd = function (value) {
+    if (value === 0) return Math . log10 (Math . PI / 1.8);
     var alpha = Math . atan (value) * 18 / Math . PI;
     return 1.0 - Math . log10 (alpha / value);
 };
@@ -453,7 +454,7 @@ scale_ISTd . prototype . value = function (location) {
     if (location > Math . log10 (9) || location < Math . log10 (18 / Math . PI)) return null;
     var from = 0, to = 90;
     var v;
-    while (to - from > 0.00001) {
+    while (to - from > 0.000001) {
         var point = (from + to) / 2;
         v = this . locationSd (point);
         if (v < location) from = point; else to = point;
@@ -474,7 +475,10 @@ scale_ISTd . prototype . location = function (value) {return this . locationSd (
 	}*/
 scale_ISTd . prototype . drawISTd = function (ctx, length, height) {
 	var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
-	mark (ctx, 90, this . locationSd (90) * length, h5);
+	draw_XR (ctx, this . locationSd, length, 40, 90, 1, h3, 10, 5, 10);
+	draw_XR (ctx, this . locationSd, length, 40, 90, 1, h2, 5, 1, 5);
+	draw_XR (ctx, this . locationSd, length, 20, 40, 1, h2, 10, 2, 10);
+	mark (ctx, '90\u00b0', this . locationSd (90) * length, h5);
 	mark (ctx, 80, this . locationSd (80) * length, h5);
 	mark (ctx, 70, this . locationSd (70) * length, h5);
 	mark (ctx, 60, this . locationSd (60) * length, h5);
@@ -482,20 +486,69 @@ scale_ISTd . prototype . drawISTd = function (ctx, length, height) {
 	mark (ctx, 40, this . locationSd (40) * length, h5);
 	mark (ctx, 30, this . locationSd (30) * length, h5);
 	mark (ctx, 20, this . locationSd (20) * length, h5);
-	mark (ctx, 0, this . locationSd (0) * length, h5);
-	mark (ctx, 0.6, this . locationISd (0.6) * length, h5);
-	mark (ctx, 0.7, this . locationISd (0.7) * length, h5);
-	mark (ctx, 0.8, this . locationISd (0.8) * length, h5);
-	mark (ctx, 0.9, this . locationISd (0.9) * length, h5);
-	mark (ctx, 0.95, this . locationISd (0.95) * length, h5);
-	mark (ctx, 1, this . locationISd (1) * length, h5);
-	mark (ctx, 20, this . locationTd (20) * length, h5);
-	mark (ctx, 30, this . locationTd (30) * length, h5);
-	mark (ctx, 40, this . locationTd (40) * length, h5);
+	tick (ctx, this . locationSd (10) * length, h5);
+	tick (ctx, this . locationSd (15) * length, h2);
+	smark (ctx, 0, this . locationSd (0) * length, h3, h5);
+	smark (ctx, 0, this . locationITd (0) * length, h4, h5);
+	tick (ctx, this . locationITd (0.1) * length, h3);
+	tick (ctx, this . locationITd (0.15) * length, h2);
+	tick (ctx, this . locationITd (0.2) * length, h3);
+	tick (ctx, this . locationITd (0.25) * length, h2);
 	mark (ctx, '.3', this . locationITd (0.3) * length, h5);
 	mark (ctx, '.4', this . locationITd (0.4) * length, h5);
 	mark (ctx, '.5', this . locationITd (0.5) * length, h5);
 	mark (ctx, '.6', this . locationITd (0.6) * length, h5);
+	mark (ctx, '.7', this . locationITd (0.7) * length, h5);
+	mark (ctx, '.8', this . locationITd (0.8) * length, h5);
+	mark (ctx, '.9', this . locationITd (0.9) * length, h5);
+	mark (ctx, '1.0', this . locationITd (1) * length, h5);
+	mark (ctx, '1.1', this . locationITd (1.1) * length, h5);
+	mark (ctx, '1.2', this . locationITd (1.2) * length, h5);
+	mark (ctx, '1.3', this . locationITd (1.3) * length, h5);
+	mark (ctx, '1.4', this . locationITd (1.4) * length, h5);
+	mark (ctx, '1.5', this . locationITd (1.5) * length, h5);
+	mark (ctx, '1.6', this . locationITd (1.6) * length, h5);
+	mark (ctx, '1.7', this . locationITd (1.7) * length, h5);
+	draw_XR (ctx, this . locationITd, length, 0.3, 1.7, 1, h2, 0.1, 0.02, 0.1);
+	tick (ctx, this . locationITd (1.72) * length, h2);
+	tick (ctx, this . locationITd (1.74) * length, h2);
+	tick (ctx, this . locationITd (1.76) * length, h2);
+	ctx . fillStyle = this . marking_alt ? this . marking_alt : this . alt; ctx . strokeStyle = this . alt;
+	tick (ctx, this . locationISd (0.1) * length, h3);
+	tick (ctx, this . locationISd (0.2) * length, h3);
+	tick (ctx, this . locationISd (0.25) * length, h2);
+	tick (ctx, this . locationISd (0.3) * length, h3);
+	tick (ctx, this . locationISd (0.35) * length, h2);
+	mark (ctx, '.4', this . locationISd (0.4) * length, h5);
+	tick (ctx, this . locationISd (0.45) * length, h2);
+	mark (ctx, '.5', this . locationISd (0.5) * length, h5);
+	mark (ctx, '.6', this . locationISd (0.6) * length, h5);
+	mark (ctx, '.7', this . locationISd (0.7) * length, h5);
+	mark (ctx, '.8', this . locationISd (0.8) * length, h5);
+	mark (ctx, '.9', this . locationISd (0.9) * length, h5);
+	mark (ctx, '.95', this . locationISd (0.95) * length, h5);
+	mark (ctx, '.99', this . locationISd (0.99) * length, h5);
+	mark (ctx, '1.0', this . locationISd (1) * length, h5);
+	tick (ctx, this . locationISd (0.995) * length, h3);
+	draw_XR (ctx, this . locationISd, length, 0.99, 1, 1, h2, 0.005, 0.001, 0.005);
+	draw_XR (ctx, this . locationISd, length, 0.9, 0.99, 1, h3, 0.05, 0.01, 0.05);
+	draw_XR (ctx, this . locationISd, length, 0.9, 0.99, 1, h2, 0.01, 0.005, 0.01);
+	draw_XR (ctx, this . locationISd, length, 0.7, 0.9, 1, h3, 0.1, 0.05, 0.1);
+	draw_XR (ctx, this . locationISd, length, 0.7, 0.9, 1, h2, 0.05, 0.01, 0.05);
+	draw_XR (ctx, this . locationISd, length, 0.5, 0.7, 1, h2, 0.1, 0.02, 0.1);
+	mark (ctx, 20, this . locationTd (20) * length, h5);
+	mark (ctx, 30, this . locationTd (30) * length, h5);
+	mark (ctx, 40, this . locationTd (40) * length, h5);
+	mark (ctx, 50, this . locationTd (50) * length, h5);
+	mark (ctx, '60\u00b0', this . locationTd (60) * length, h5);
+	draw_XR (ctx, this . locationTd, length, 40, 60, 1, h4, 10, 5, 10);
+	draw_XR (ctx, this . locationTd, length, 40, 60, 1, h3, 5, 1, 5);
+	draw_XR (ctx, this . locationTd, length, 40, 60, 1, h2, 1, 0.5, 1);
+	draw_XR (ctx, this . locationTd, length, 20, 40, 1, h3, 10, 5, 10);
+	draw_XR (ctx, this . locationTd, length, 20, 40, 1, h2, 5, 1, 5);
+	draw_XR (ctx, this . locationTd, length, 10, 20, 1, h2, 10, 2, 10);
+	tick (ctx, this . locationTd (10) * length, h5);
+	tick (ctx, this . locationTd (5) * length, h2);
 };
 scale_ISTd . prototype . draw = function (ctx, length) {ctx . translate (0, s . height); this . drawISTd (ctx, length, this . height);};
 
