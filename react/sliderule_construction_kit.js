@@ -1368,7 +1368,7 @@ var Rule = function (options) {
       if (! scale . dimm) {
         value = scale . examine (position);
         if (value != null) {
-          var location = scale . location (value, relative_location);
+          var location = scale . location (value, relative_location - this . shift);
           if (isNaN (location)) location = null;
           if (location != null) {
             track . push ({scale: scale . left, location: location, value: value});

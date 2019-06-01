@@ -439,6 +439,7 @@ scale_ISTd . prototype . locationSd = function (value) {
 	return Math . log10 (value * 0.1 / Math . sin (value * Math . PI / 180));
 };
 scale_ISTd . prototype . locationISd = function (value) {
+    if (value === 0) return Math . log10 (Math . PI / 1.8);
     return 1.0 - Math . log10 (18 * Math . asin (value) / Math . PI / value);
 };
 scale_ISTd . prototype . locationTd = function (value) {
@@ -450,8 +451,7 @@ scale_ISTd . prototype . locationITd = function (value) {
     var alpha = Math . atan (value) * 18 / Math . PI;
     return 1.0 - Math . log10 (alpha / value);
 };
-scale_ISTd . prototype . value = function (location) {
-    if (location > Math . log10 (9) || location < Math . log10 (18 / Math . PI)) return null;
+scale_ISTd . prototype . valueSd = function (location) {
     var from = 0, to = 90;
     var v;
     while (to - from > 0.000001) {
@@ -461,7 +461,50 @@ scale_ISTd . prototype . value = function (location) {
     }
     return from;
 };
-scale_ISTd . prototype . location = function (value) {return this . locationSd (value);};
+scale_ISTd . prototype . valueTd = function (location) {
+    var from = 0, to = 90;
+    var v;
+    while (to - from > 0.000001) {
+        var point = (from + to) / 2;
+        v = this . locationTd (point);
+        if (v > location) from = point; else to = point;
+    }
+    return from;
+};
+scale_ISTd . prototype . valueITd = function (location) {
+    var from = 0, to = 1.8;
+    var v;
+    while (to - from > 0.000001) {
+        var point = (from + to) / 2;
+        v = this . locationITd (point);
+        if (v < location) from = point; else to = point;
+    }
+    return from;
+};
+scale_ISTd . prototype . valueISd = function (location) {
+    var from = 0, to = 1;
+    var v;
+    while (to - from > 0.000001) {
+        var point = (from + to) / 2;
+        v = this . locationISd (point);
+        if (v > location) from = point; else to = point;
+    }
+    return from;
+};
+scale_ISTd . prototype . value = function (location) {
+    if (location >= Math . log10 (18 / Math . PI) && location <= Math . log10 (9)) return this . valueSd (location);
+    if (location >= this . locationTd (61) && location < Math . log10 (18 / Math . PI)) return this . valueTd (location);
+    if (location >= this . locationITd (0) && location < this . locationITd (1.8)) return this . valueITd (location);
+    if (location > 0 && location < this . locationISd (0)) return this . valueISd (location);
+    return null;
+};
+scale_ISTd . prototype . location = function (value, location) {
+	if (value > 60) return this . locationSd (value);
+	if (location >= Math . log10 (18 / Math . PI)) return this . locationSd (value);
+	if (value > 1.8 || location > this . locationTd (61)) return this . locationTd (value);
+	if (location >= Math . log10 (Math . PI / 1.8)) return this . locationITd (value);
+	return this . locationISd (value);
+};
 /*	virtual double getLocation (double x) {
 		if (x == 0.0) return log10 (180.0 / _PI);
 		if (x < 0.0) {
