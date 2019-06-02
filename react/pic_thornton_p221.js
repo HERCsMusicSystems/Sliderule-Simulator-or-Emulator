@@ -1,29 +1,29 @@
 
-var sliderules = new Sliderules ();
+var la = sliderules . la;
 
 var s = new Sliderule (1200); sliderules . sliderules . push (s);
 
 var r = new Rule (); s . rules . push (r);
 r . scales . push (new spacer (2));
-r . scales . push (new scale_Sdec_down (24));
-r . scales . push (new scale_STdec (24));
+r . scales . push (new scale_Sdec_down (24, {left: 'S', ls: 0.025, la: la}));
+r . scales . push (new scale_STdec (24, {left: 'ST', ls: 0.025, la: la}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_Tdec_down (24));
-r . scales . push (new scale_A (24));
+r . scales . push (new scale_Tdec_down (24, {left: 'T', ls: 0.025, la: la}));
+r . scales . push (new scale_A (24, {left: 'A', ls: 0.025, la: la}));
 
 r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_B (24));
-r . scales . push (new scale_L (24));
+r . scales . push (new scale_B (24, {left: 'B', ls: 0.025, la: la}));
+r . scales . push (new scale_L (24, {left: 'L', ls: 0.025, la: la}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_J (24));
-r . scales . push (new scale_C (24));
+r . scales . push (new scale_J (24, {left: 'K', ls: 0.025, la: la}));
+r . scales . push (new scale_C (24, {left: 'C', ls: 0.025, la: la}));
 
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (24));
-r . scales . push (new scale_CI (24));
+r . scales . push (new scale_D (24, {left: 'D', ls: 0.025, la: la}));
+r . scales . push (new scale_CI (24, {left: 'DI', ls: 0.025, la: la}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_P_down (24));
-r . scales . push (new scale_PT (24, {right_extension: 0.01}));
+r . scales . push (new scale_P_down (24, {left: 'Ps', ls: 0.025, la: la, marking_colour: 'red'}));
+r . scales . push (new scale_PT (24, {left: 'Pt', ls: 0.025, la: la, marking_colour: 'red', right_extension: 0.01}));
 r . scales . push (new spacer (2));
 
 s = new Sliderule (1200); sliderules . sliderules . push (s);
