@@ -51,16 +51,15 @@ var leftBrace = function (ctx, left, top, right, bottom, radius, braceRadius, an
   ctx . lineTo (left, top + radius); ctx . arc (left + radius, top + radius, radius, step + step, - step);
 };
 
-var rightBrace = function (ctx, left, top, right, bottom, radius, braceRadius, angle) {
-  var step = Math . PI * 0.5; ctx . moveTo (left + radius, top); ctx . lineTo (right - radius, top); ctx . arc (right - radius, top + radius, radius, -step, 0);
+var bezierBrace = function (ctx, left, top, right, bottom, radius, margin, dent, tensor1, tensor2) {
+  var step = Math . PI * 0.5;
+  ctx . moveTo (left, top + margin); ctx . lineTo (left, top + radius); ctx . arc (left + radius, top + radius, radius, step * 2, step * 3);
+  ctx . lineTo (right - radius, top); ctx . arc (right - radius, top + radius, radius, - step, 0);
+  ctx . lineTo (right, bottom - radius); ctx . arc (right - radius, bottom - radius, radius, 0, step); ctx . lineTo (left + radius, bottom);
+  ctx . arc (left + radius, bottom - radius, radius, step, step + step); ctx . lineTo (left, bottom - margin);
   var half = (top + bottom) * 0.5;
-  ctx . lineTo (right, half - braceRadius);
-  ctx . arc (right + Math . cos (angle) * braceRadius, half, braceRadius, Math . PI + angle, Math . PI - angle, true);
-  ctx . lineTo (right, bottom - radius);
-  ctx . arc (right - radius, bottom - radius, radius, 0, step); ctx . lineTo (left + radius, bottom);
-  ctx . arc (left + radius, bottom - radius, radius, step, step + step);
-  ctx . lineTo (left, half - braceRadius);
-  ctx . lineTo (left, top + radius); ctx . arc (left + radius, top + radius, radius, step + step, - step);
+  ctx . bezierCurveTo (left, bottom - margin - tensor1, left + dent, half + tensor2, left + dent, half);
+  ctx . bezierCurveTo (left + dent, half - tensor2, left, top + margin + tensor1, left, top + margin);
 };
 
 var doubleBrace = function (ctx, left, top, right, bottom, radius, braceRadius, angle) {
@@ -1426,6 +1425,17 @@ var CursorHPEurope = CursorHP;
 var CursorHPJapan = CursorHP;
 var CursorPS = CursorHP;
 var Cursor360 = function (from, to, colour, options) {return new Cursor (Math . log10 (3.60 / Math . PI), from, to, colour, options);};
+
+var BezierBraces = function (margin, width, radius, background, colour, bar, dent, tensor1, tensor2) {
+  this . draw = function (ctx, s) {
+    ctx . beginPath ();
+    bezierBrace (ctx, margin, margin, width * s . length, s . height () - margin, radius, bar, dent * s . length, tensor1, tensor2);
+    ctx . fillStyle = background; ctx . fill (); ctx . strokeStyle = colour; ctx . stroke ();
+    ctx . translate (s . length * (1 + s . left_margin + s . right_margin), 0); ctx . scale (-1, 1);
+    bezierBrace (ctx, margin, margin, width * s . length, s . height () - margin, radius, bar, dent * s . length, tensor1, tensor2);
+    ctx . fill (); ctx . stroke ();
+  };
+};
 
 var LeftBrace = function (margin, width, radius, background, colour, braceRadius, braceAngle, verticalShift) {
   this . draw = function (ctx, s) {

@@ -2,6 +2,7 @@
 var la = sliderules . la;
 
 var s = new Sliderule (1200); sliderules . sliderules . push (s);
+s . braces . push (new BezierBraces (2, 0.1, 8, 'gold', 'black', 12, 0.08, 40, 140));
 
 var r = new Rule (); s . rules . push (r);
 r . scales . push (new spacer (2));
