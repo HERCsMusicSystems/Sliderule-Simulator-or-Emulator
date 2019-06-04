@@ -1484,40 +1484,42 @@ var drawDecilonBrace = function (ctx, radius, one, two, three, four, margin, l1,
 	ctx . fill ();
 };
 
-var drawStaedtlerBrace = function (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s) {
+var drawStaedtlerBrace = function (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s, bend) {
+    if (bend === undefined) bend = 0;
     ctx . strokeStyle = colour;
     var delta = {x: s . length * (left2 - dent), y: dbottom - bottom};
-    var atan = Math . atan2 (s . length * (left2 - left1), bottom - top);
+    var atan = Math . atan2 (s . length * (left2 - left1), bottom - top - bend);
     var btan = Math . atan2 (delta . y, delta . x);
+    var bdtan = Math . atan2 (bend, s . length * (left1 - width));
     var r = 0.5 * Math . sqrt (delta . x * delta . x + delta . y * delta . y);
     btan -= Math . asin (radius / r);
     ctx . beginPath ();
-    ctx . arc (- s . length * width, top, radius, Math . PI * 1.5, 0);
-    ctx . arc (- s . length * width, s . height () - top, radius, 0, Math . PI * 0.5);
-    ctx . arc (- s . length * left1, s . height () - top, radius, Math . PI * 0.5, Math . PI - atan);
+    ctx . arc (- s . length * width, top, radius, Math . PI * 1.5 - bdtan, 0);
+    ctx . arc (- s . length * width, s . height () - top, radius, 0, Math . PI * 0.5 + bdtan);
+    ctx . arc (- s . length * left1, s . height () - top - bend, radius, Math . PI * 0.5 + bdtan, Math . PI - atan);
     ctx . arc (- s . length * left2, s . height () - bottom, radius, Math . PI - atan, Math . PI * 1.5 - btan);
     ctx . arc (- s . length * dent, s . height () - dbottom, radius, Math . PI * 0.5 - btan, 0, true);
     ctx . arc (- s . length * dent, dbottom, radius, 0, Math . PI * 1.5 + btan, true);
     ctx . arc (- s . length * left2, bottom, radius, Math . PI * 0.5 + btan, Math . PI + atan);
-    ctx . arc (- s . length * left1, top, radius, Math . PI + atan, Math . PI * 1.5);
+    ctx . arc (- s . length * left1, top + bend, radius, Math . PI + atan, Math . PI * 1.5 - bdtan);
     ctx . closePath ();
     ctx . stroke ();
     ctx . fillStyle = background;
     ctx . fill ();
 };
 
-var StaedtlerLeftBrace = function (radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, vShift) {
+var StaedtlerLeftBrace = function (radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, vShift, bend) {
   this . draw = function (ctx, s) {
     ctx . translate (s . length * s . left_margin, vShift === undefined ? 0 : vShift);
-    drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s);
+    drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s, bend);
   };
 };
 
-var StaedtlerRightBrace = function (radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, vShift) {
+var StaedtlerRightBrace = function (radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, vShift, bend) {
   this . draw = function (ctx, s) {
     ctx . translate (s . length * (1 + s . left_margin), vShift === undefined ? 0 : vShift);
     ctx . scale (-1, 1);
-    drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s);
+    drawStaedtlerBrace (ctx, radius, width, dent, left1, left2, top, bottom, dbottom, background, colour, s, bend);
   };
 };
 
