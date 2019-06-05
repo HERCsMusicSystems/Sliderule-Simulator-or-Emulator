@@ -1,14 +1,34 @@
 
 var la = sliderules . la;
+var model = sliderules . model;
 
-var s = new Sliderule (1200, {left_margin: 0.22, right_margin: 0.22}); sliderules . sliderules . push (s);
+var front_german_cursors = [], front_us_cursors = [];
+
+var s = new Sliderule (1200, {left_margin: 0.22, right_margin: 0.22, cursor_top_margin: 16, cursor_bottom_margin: 16, cursor_left_extension: 0.075, cursor_right_extension: 0.075, cursor_rounding: 0, cursorHairline: 'black', hairline_top: -2, hairline_bottom: -2, cursor_limit_left: 0.035, cursor_limit_right: 0.035}); sliderules . sliderules . push (s);
 s . braces . push (new BraceSupport (0.09, 0, 298, 40, 8, 'tan', 'black'));
 s . braces . push (new BraceSupport (1.35, 0, 298, 40, 8, 'tan', 'black'));
 s . braces . push (new BezierBraces (0, 0.09, 8, 'gold', 'black', 12, 0.05, 50, 60));
+switch (model) {
+case 'pic':
+    front_german_cursors . push (new Cursor (HairlineS, 76, 124, 'black'));
+    front_german_cursors . push (new Cursor (HairlinePS, 76, 124, 'black'));
+    front_us_cursors . push (new Cursor (HairlineS, 76, 124, 'black'));
+    front_us_cursors . push (new Cursor (HairlineHPUS, 76, 124, 'black'));
+    break;
+case 'thornton':
+    s . cursorGlassBraces . push (new CursorAngledBrace (0.076, 0.076, 18, -2, 0, 'gray'));
+    console . log ("Joker!");
+case 'british thornton': s . cursors . push (new Cursor (HairlineS, 76, 124, 'black')); break;
+};
 
 var r = new Rule ({left_margin: 0.13, right_margin: 0.13}); s . rules . push (r);
-r . markings . push (new Engraving ("BRITISH", '11px times', 'left', 'black', -0.1, 18));
-r . markings . push (new Engraving ("THORNTON", '11px times', 'left', 'black', -0.1, 28));
+switch (model) {
+case 'british thornton':
+    r . markings . push (new Engraving ("BRITISH", '11px times', 'left', 'black', -0.1, 18));
+    r . markings . push (new Engraving ("THORNTON", '11px times', 'left', 'black', -0.1, 28));
+    break;
+case 'thornton': r . markings . push (new Engraving ("THORNTON", '11px times', 'left', 'black', -0.1, 18)); break;
+}
 r . scales . push (new spacer (2));
 r . scales . push (new scale_Sdec_down (24, {left: 'S', ls: 0.03, la: la, right: 'sin', rs: 0.02}));
 r . scales . push (new scale_STdec (24, {left: 'ST', ls: 0.03, la: la, right: 'sin tan', rs: 0.02, draw_st_corrections: false}));
@@ -31,15 +51,23 @@ r . scales . push (new scale_P_down (24, {left: 'Ps', ls: 0.03, la: la, marking_
 r . scales . push (new scale_PT (24, {left: 'Pt', ls: 0.03, la: la, right_extension: 0.01, right: '\u221a1+t\u00b2', rs: 0.02}));
 r . scales . push (new spacer (2));
 
-s = new Sliderule (1200, {left_margin: 0.22, right_margin: 0.22}); sliderules . sliderules . push (s);
+s = new Sliderule (1200, {left_margin: 0.22, right_margin: 0.22, cursor_top_margin: 16, cursor_bottom_margin: 16, cursor_left_extension: 0.075, cursor_right_extension: 0.075, cursor_rounding: 0, cursorHairline: 'black', hairline_top: -2, hairline_bottom: -2, cursor_limit_left: 0.035, cursor_limit_right: 0.035}); sliderules . sliderules . push (s);
 s . braces . push (new BraceSupport (0.09, 0, 298, 40, 8, 'tan', 'black'));
 s . braces . push (new BraceSupport (1.35, 0, 298, 40, 8, 'tan', 'black'));
 s . braces . push (new BezierBraces (0, 0.09, 8, 'gold', 'black', 12, 0.05, 50, 60));
 
 r = new Rule ({left_margin: 0.13, right_margin: 0.13}); s . rules . push (r);
-r . markings . push (new Engraving ("BRITISH", '11px times', 'left', 'black', -0.1, 18));
-r . markings . push (new Engraving ("THORNTON", '11px times', 'left', 'black', -0.1, 28));
-r . markings . push (new Engraving ("AA 010", '11px arial', 'left', 'black', -0.1, 86));
+switch (model) {
+case 'british thornton':
+    r . markings . push (new Engraving ("BRITISH", '11px times', 'left', 'black', -0.1, 18));
+    r . markings . push (new Engraving ("THORNTON", '11px times', 'left', 'black', -0.1, 28));
+    r . markings . push (new Engraving ("AA 010", '11px arial', 'left', 'black', -0.1, 86));
+    break;
+case 'thornton':
+    r . markings . push (new Engraving ("THORNTON", '11px times', 'left', 'black', -0.1, 18));
+    r . markings . push (new Engraving ("No P 221", '11px arial', 'left', 'black', -0.1, 86));
+    break;
+}
 r . markings . push (new Engraving ("COMPREHENSIVE", '8px arial', 'left', 'black', -0.1, 96));
 r . scales . push (new spacer (2));
 

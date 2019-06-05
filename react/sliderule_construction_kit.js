@@ -1653,6 +1653,19 @@ var Logo = function (logo, location, top, scaling, rotation) {
 	};
 };
 
+var HLine = function (position, from, to, colour) {
+    this . draw = function (ctx, s) {
+        ctx . beginPath (); ctx . moveTo (from * s . length, position); ctx . lineTo (to * s . length, position); ctx . strokeStyle = colour; ctx . stroke ();
+    };
+};
+
+var VLine = function (position, from, to, colour) {
+    this . draw = function (ctx, s) {
+        var location = position * s . length;
+        ctx . beginPath (); ctx . moveTo (location, from); ctx . lineTo (location, to); ctx . strokeStyle = colour; ctx . stroke ();
+    };
+};
+
 var Engraving = function (text, font, align, colour, location, top, rotation) {
 	this . draw = function (ctx, s) {
 		ctx . fillStyle = colour;
