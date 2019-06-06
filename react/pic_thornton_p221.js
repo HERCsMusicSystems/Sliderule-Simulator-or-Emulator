@@ -1,11 +1,13 @@
 
 var la = sliderules . la;
 var model = sliderules . model;
+var sk;
 
 var front_german_cursors = [], front_us_cursors = [];
 
 var s = new Sliderule (1200, {left_margin: 0.22, right_margin: 0.22, cursor_top_margin: model === 'pic' ? 0 : 16, cursor_bottom_margin: model === 'pic' ? 0 : 16, cursor_left_extension: 0.075, cursor_right_extension: 0.075, cursor_rounding: 0, cursorHairline: 'black', hairline_top: -2, hairline_bottom: -2, cursor_limit_left: 0.035, cursor_limit_right: 0.035}); sliderules . sliderules . push (s);
 if (model === 'pic') {
+    s . cursor_limit_left = 0.045; s . cursor_limit_right = 0.045;
 	s . braces . push (new StaedtlerLeftBrace (4, 0.125, 0.18, 0.22, 0.22, 2, 65, 90, 'tan', 'red', 0, 8));
 //	s . braces . push (new StaedtlerLeftBrace (4, 0.133, 0.16, 0.168, 0.188, 12, 78, 90, '#ddddff', 'red'));
 	s . braces . push (new StaedtlerRightBrace (4, 0.125, 0.18, 0.22, 0.22, 2, 65, 90, 'tan', 'red', 0, 8));
@@ -62,10 +64,27 @@ r . scales . push (new scale_B (24, {left: 'B', ls: 0.03, la: la, right: 'X\u00b
 r . scales . push (new scale_L (24, {left: 'L', ls: 0.03, la: la, right: 'log x', rs: 0.02}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_J (24, {left: 'K', ls: 0.03, la: la, right: 'X\u00b3', rs: 0.02, draw_e: false}));
-r . scales . push (new scale_C (24, {left: 'C', ls: 0.03, la: la, right: 'X', rs: 0.02, draw_e: false}));
+sk = new scale_C (24, {left: 'C', ls: 0.03, la: la, right: 'X', rs: 0.02, draw_e: false, alt: 'black', marking_alt: 'red'});
+if (model === 'pic') {
+    sk . left_extension = 0.048;
+    sk . right_extension = 0.045;
+    sk . ls = 0.072;
+    sk . rs = 0.06;
+    s . rules [0] . scales [1] . right += ' \u03b1';
+    s . rules [0] . scales [2] . right += ' \u03b1';
+    s . rules [0] . scales [4] . right += ' \u03b1';
+}
+r . scales . push (sk);
 
 r = new Rule ({left_margin: 0.13, right_margin: 0.13}); s . rules . push (r);
-r . scales . push (new scale_D (24, {left: 'D', ls: 0.03, la: la, right: 'X', rs: 0.02, draw_e: false}));
+sk = new scale_D (24, {left: 'D', ls: 0.03, la: la, right: 'X', rs: 0.02, draw_e: false, alt: 'black', marking_alt: 'red'});
+if (model === 'pic') {
+    sk . left_extension = 0.048;
+    sk . right_extension = 0.045;
+    sk . ls = 0.072;
+    sk . rs = 0.06;
+}
+r . scales . push (sk);
 r . scales . push (new scale_CI (24, {left: 'DI', ls: 0.03, la: la, right: '1/x', rs: 0.02, marking_colour: 'red', draw_e: false}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_P_down (24, {left: 'Ps', ls: 0.03, la: la, marking_colour: 'red', right: '\u221a1-s\u00b2', rs: 0.02}));
@@ -74,6 +93,7 @@ r . scales . push (new spacer (2));
 
 s = new Sliderule (1200, {left_margin: 0.22, right_margin: 0.22, cursor_top_margin: model === 'pic' ? 0 : 16, cursor_bottom_margin: model === 'pic' ? 0 : 16, cursor_left_extension: 0.075, cursor_right_extension: 0.075, cursor_rounding: 0, cursorHairline: 'black', hairline_top: -2, hairline_bottom: -2, cursor_limit_left: 0.035, cursor_limit_right: 0.035}); sliderules . sliderules . push (s);
 if (model === 'pic') {
+    s . cursor_limit_left = 0.045; s . cursor_limit_right = 0.045;
 	s . braces . push (new StaedtlerLeftBrace (4, 0.125, 0.18, 0.22, 0.22, 2, 65, 90, 'tan', 'red', 0, 8));
 //	s . braces . push (new StaedtlerLeftBrace (4, 0.133, 0.16, 0.168, 0.188, 12, 78, 90, '#ddddff', 'red'));
 	s . braces . push (new StaedtlerRightBrace (4, 0.125, 0.18, 0.22, 0.22, 2, 65, 90, 'tan', 'red', 0, 8));
@@ -132,14 +152,27 @@ r . markings . push (new Engraving ('ISd', '12px arial', 'left', 'red', 0.02, 68
 r . markings . push (new Engraving ('ITd', '12px arial', 'left', 'black', 0.47, 68));
 r . markings . push (new Engraving ('Td', '12px arial', 'left', 'red', 0.515, 68));
 r . markings . push (new Engraving ('Sd', '12px arial', 'left', 'black', 0.97, 68));
-r . scales . push (new scale_C (24, {left: 'C', ls: 0.03, la: la, right: 'X', rs: 0.02}));
+sk = new scale_C (24, {left: 'C', ls: 0.03, la: la, right: 'X', rs: 0.02, alt: 'black', marking_alt: 'red'});
+if (model === 'pic') {
+    sk . left_extension = 0.048;
+    sk . right_extension = 0.045;
+    sk . ls = 0.072;
+    sk . rs = 0.06;
+}
+r . scales . push (sk);
 
 r = new Rule ({left_margin: 0.13, right_margin: 0.13}); s . rules . push (r);
+sk = new scale_D (24, {left: 'D', ls: 0.03, la: la, right: 'X', rs: 0.02, alt: 'black', marking_alt: 'red'});
 if (model != 'pic') {
 	r . markings . push (new Engraving ("MADE IN ENGLAND", '8px arial', 'left', 'black', -0.1, 96));
 	r . markings . push (new Engraving ("\u24d2", '18px arial', 'left', 'black', 1.07, 90));
+} else {
+    sk . left_extension = 0.048;
+    sk . right_extension = 0.045;
+    sk . ls = 0.072;
+    sk . rs = 0.06;
 }
-r . scales . push (new scale_D (24, {left: 'D', ls: 0.03, la: la, right: 'X', rs: 0.02}));
+r . scales . push (sk);
 r . scales . push (new scale_LL3 (24, {left: 'LL\u2083', ls: 0.03, la: la, right: 'e^x', rs: 0.02}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_LL2_down (24, {left: 'LL\u2082', ls: 0.03, la: la, right: 'e^0.1x', rs: 0.02}));
