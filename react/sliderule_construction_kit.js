@@ -1264,6 +1264,7 @@ spacer . prototype . examine = function (position) {
   if (p === null) return null;
   var re = this . read (p);
   if (re != null) return re;
+  p = p . replace (',', '.');
   switch (p) {
     case 'pi': p = Math . PI; break;
     case 'pi0': p = Math . PI / 10; break;
