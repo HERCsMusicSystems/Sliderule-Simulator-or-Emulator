@@ -31,9 +31,9 @@
 <div>
 	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
-	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+<!--	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.-->
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
-	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
+<!--	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.-->
 	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
 </div>
 <div id="root"></div>
@@ -73,21 +73,22 @@ s . braces . push (new Bolt (1.38, 290, 8,  '#2E5894', '#41a187'));
 var r = new Rule ({rule_colour: 'ivory', left_margin: 0.15, right_margin: 0.15}); s . rules . push (r);
 r . scales . push (new spacer (24, {centre: "\u263c SUN \u263c     HEMMI     JAPAN           No. 257", cs: 1.02, ca: 'right'}));
 r . scales . push (new scale_L (24, {left: 'L', ls: 0.02, la: 'right'}));
-r . scales . push (new scale_A (24, {left: 'A', ls: 0.02, la: 'right'}));
-r . scales . push (new scale_CF (24, {left: 'DF', ls: 0.02, la: 'right'}));
+r . scales . push (new scale_A (24, {left: 'A', ls: 0.02, la: 'right', draw_pi: false, draw_e: false}));
+r . scales . push (new scale_CF (24, {left: 'DF', ls: 0.02, la: 'right', draw_c: false, draw_e: false, right_extension: 0.001}));
 r = new Rule ({rule_colour: 'ivory', stator: 1}); s . rules . push (r);
-r . scales . push (new scale_DF (24, {left: 'CF', ls: 0.02, la: 'right'}));
+r . markings . push (new Engraving ('3.1', '12px arial', 'center', 'red', 1.012, 51));
+r . scales . push (new scale_DF (24, {left: 'CF', ls: 0.02, la: 'right', draw_c: false, draw_e: false, right_extension: 0.001}));
 r . scales . push (new spacer (6));
-r . scales . push (new scale_DIF (24, {left: 'CIF', ls: 0.02, la: 'right', marking_colour: 'red'}));
+r . scales . push (new scale_DIF (24, {left: 'CIF', ls: 0.02, la: 'right', marking_colour: 'red', draw_pi: false, draw_e: false, draw_c: false, left_extension: 0.005, right_extension: 0.012}));
 r . scales . push (new spacer (12));
-r . scales . push (new scale_CI (24, {left: 'CI', ls: 0.02, la: 'right', marking_colour: 'red'}));
+r . scales . push (new scale_CI (24, {left: 'CI', ls: 0.02, la: 'right', marking_colour: 'red', draw_pi: false, draw_e: false, draw_c: false}));
 r . scales . push (new spacer (6));
-r . scales . push (new scale_C (24, {left: 'C', ls: 0.02, la: 'right'}));
+r . scales . push (new scale_C (24, {left: 'C', ls: 0.02, la: 'right', draw_e: false, draw_pi: false}));
 r = new Rule ({rule_colour: 'ivory'}); s . rules . push (r);
-r . scales . push (new scale_D (24, {left: 'D', ls: 0.02, la: 'right'}));
+r . scales . push (new scale_D (24, {left: 'D', ls: 0.02, la: 'right', draw_e: false, draw_pi: false, draw_c: false}));
 r . scales . push (new scale_LL3_down (24, {left: 'LL3', ls: 0.02, la: 'right'}));
-r . scales . push (new scale_LL2_down (24, {left: 'LL2', ls: 0.02, la: 'right'}));
-r . scales . push (new scale_LL1_down (24, {left: 'LL1', ls: 0.02, la: 'right'}));
+r . scales . push (new scale_LL2_down (24, {left: 'LL2', ls: 0.02, la: 'right', left_extension: 0.002}));
+r . scales . push (new scale_LL1_down (24, {left: 'LL1', ls: 0.02, la: 'right', left_extension: 0.005}));
 
 s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_top_margin: 20, cursor_bottom_margin: 20, cursor_limit_left: 0.03, cursor_limit_right: 0.03});
 sliderules . sliderules . push (s);
@@ -108,6 +109,7 @@ s . braces . push (new Bolt (1.32, 312 - 250, 8,  '#2E5894', '#41a187'));
 s . braces . push (new Bolt (1.38, 312 - 290, 8,  '#2E5894', '#41a187'));
 r = new Rule ({rule_colour: 'ivory'}); s . rules . push (r);
 r . markings . push (new Engraving ("Ch", '24px arial', 'left', 'black', -0.07, 56));
+r . markings . push (new VLine (1, 44, 32, 'black'));
 r . scales . push (new spacer (20));
 r . scales . push (new scale_Chemical (24,
     ['H', {e: 'Ag', align: 'right'}, {e: 'B', align: 'left'}, 'Cd', 'C', 'I', 'Cs', 'Ba', {e: 'CH3', v: 'CH\u2083'}, 'O', 'OH', {e: 'H2O', v: 'H\u2082O'}, 'F',
@@ -135,6 +137,8 @@ r . markings . push (new Engraving ("T", '24px arial', 'left', 'black', -0.07, 6
 r . markings . push (new Engraving ("M\u2082", '12px arial', 'right', 'red', -0.02, 18));
 r . markings . push (new Engraving ("(AIR)", '12px arial', 'left', 'black', 0.025, 112));
 r . markings . push (new Engraving ("(CO\u2082)", '12px arial', 'left', 'black', 0.464, 112));
+r . markings . push (new VLine (0, 48 - 12, 48 + 12, 'black'));
+r . markings . push (new VLine (1, 48 - 12, 48 + 12, 'black'));
 r . scales . push (new scale_M2 (24, {right: 'X', rs: 0.04}));//, {left: 'M2', ls: 0.03, marking_colour: 'red'}));
 r . scales . push (new scale_Fahrenheit (24, {left: '\u00b0F', ls: 0.02, la: 'right', lines: [{left: 0, right: 1, height: 1}]}));
 r . scales . push (new scale_Centigrade_down (24, {left: '\u00b0C', ls: 0.02, la: 'right'}));
@@ -142,6 +146,7 @@ r . scales . push (new scale_Kelvin (24, {left: '\u00b0K', ls: 0.02, la: 'right'
 r . scales . push (new scale_adiabatic (24, {left: 'F(t)', ls: 0.02, la: 'right'}));
 r = new Rule ({rule_colour: 'ivory', left_margin: 0.15, right_margin: 0.15}); s . rules . push (r);
 r . markings . push (new Engraving ("P", '24px arial', 'left', 'black', -0.09, 40));
+r . markings . push (new VLine (1, 96 - 24, 94 - 12, 'black'));
 r . scales . push (new scale_Pressure_KgPerCm2_down (24, {left: 'Kg/cm\u2082', ls: 0.02, la: 'right', marking_limit: 5}));
 r . scales . push (new scale_Pressure_Atmosphere_mmHg_down (24, {marking_limit: 5, right: "Atm.", rs: 0.025}));
 r . scales . push (new scale_Pressure_PSIG_InHgVac_down (24, {right: "Lbs/in\u00b2 Gage", rs: 0.005}));
@@ -157,9 +162,9 @@ r . markings . push (new Engraving ("in. Hg Vac.", '12px arial', 'right', 'red',
 <script>
 changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
-changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+//changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
-changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+//changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
 changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
 </script>
 
