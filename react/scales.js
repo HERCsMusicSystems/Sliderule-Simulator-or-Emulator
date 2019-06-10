@@ -26,9 +26,9 @@
 // CF, DF, CIF, DIF
 // K, J
 // R1, R2, W1, W2
-// L, M, LR12, LW12
+// L, M, Ln, Mn, LR12, LW12
 // Sdec(_down), S(_down), SCdec(_down), CSdec(_down), Sgrad(_down)
-// STdec(_down), ST(_down)
+// STdec(_down), ST(_down), STCTdec(_down)
 // Tdec(_down), T1dec(_down), TCTdec(_down), CTTdec(_down), TCT1dec(_down), CTT1dec(_down)
 // T(_down), T1(_down)
 // Tgrad(_down)
@@ -236,6 +236,25 @@ var scale_M = function (height, options) {
   s . draw = function (ctx, length) {draw_lin (ctx, length, - s . height, s);};
   return s;
 };
+var draw_ln = function (ctx, length, height, scale) {
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+  var limit = 1 + scale . right_extension;
+  draw_MRS (ctx, scale . location, length, 0, 4, 0.1, limit, h5);
+  draw_XR (ctx, scale . location, length, 0, 4, limit, h2, 0.05, 0.01, 0.05);
+  draw_XR (ctx, scale . location, length, 0, 4, limit, h3, 0.1, 0.05, 0.1);
+};
+var scale_Ln = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return location * Math . log (10);};
+  s . location = function (value) {return value === 0 ? 0 : value / Math . log (10);};
+  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_ln (ctx, length, s . height, s);};
+  return s;
+};
+var scale_Mn = function (height, options) {
+  var s = new scale_Ln (height, options);
+  s . draw = function (ctx, length) {draw_ln (ctx, length, - s . height, s);};
+  return s;
+};
 var scale_LR12 = function (height, options) {
 	var s = new spacer (height, options);
 	s . value = function (location) {return location * 5;};
@@ -299,6 +318,10 @@ var scale_ST = function (height, options) {
   s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_small_sine_deg (ctx, length, s . height, s);};
   return s;
 };
+var scale_STCTdec = function (height, options) {scale_STdec . call (this, height, options);}; inherit (scale_STCTdec, scale_STdec);
+scale_STCTdec . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_small_sine_tan_dec (ctx, length, this . height, this);};
+var scale_STCTdec_down = function (height, options) {scale_STCTdec . call (this, height, options);}; inherit (scale_STCTdec_down, scale_STCTdec);
+scale_STCTdec_down . prototype . draw = function (ctx, length) {draw_small_sine_tan_dec (ctx, length, - this . height, this);};
 var scale_ST_down = function (height, options) {
   var s = new scale_ST (height, options);
   s . draw = function (ctx, length) {draw_small_sine_deg (ctx, length, - s . height, s);};

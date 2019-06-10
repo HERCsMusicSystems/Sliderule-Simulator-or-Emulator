@@ -437,7 +437,7 @@ var draw_sine_dec = function (ctx, length, height, scale) {
   draw_MLS (ctx, scale . location, length, 4, 9, 1, - scale . left_extension, h5);
   draw_MLS (ctx, scale . location, length, 10, 19, 1, - scale . left_extension, h5);
   draw_MRS (ctx, scale . location, length, 20, 35, 5, 1, h5);
-  draw_MRS (ctx, scale . location, length, 40, grad ? 80 : 90, 10, 1, h5);
+  draw_MRS (ctx, scale . location, length, 40, grad ? 80 : 70, 10, 1, h5);
   draw_XR (ctx, scale . location, length, 60, 80, 1, h3, 10, 5, 10);
   draw_XR (ctx, scale . location, length, 60, 80, 1, h2, 5, 1, 5);
   draw_XR (ctx, scale . location, length, 40, 60, 1, h4, 10, 5, 10);
@@ -449,8 +449,12 @@ var draw_sine_dec = function (ctx, length, height, scale) {
   if (grad) {
   	mark (ctx, "100", length, h5);
   	draw_XR (ctx, scale . location, length, 80, 90, 1, h2, 10, 2, 10);
-  	tick (ctx, scale . location (90) * length, h3);
-  } else tick (ctx, scale . location (85) * length, h3);
+  	tick (ctx, scale . location (90) * length, h5);
+  } else {
+  	mark (ctx, 90, length, h5);
+  	tick (ctx, length * fn_sin_dec (80), h5);
+  	tick (ctx, scale . location (85) * length, h3);
+  }
 };
 var draw_sine_deg = function (ctx, length, height, scale) {
   draw_MRS (ctx, fn_sin_dec, length, 20, 35, 5, 1, height * 0.5);
@@ -468,7 +472,9 @@ var draw_sine_cosine_dec = function (ctx, length, height, scale, type) {
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   draw_MLS (ctx, fn_sin_dec, length, 4, 9, 1, - scale . left_extension, h5);
   draw_MLS (ctx, fn_sin_dec, length, 11, 19, 1, - scale . left_extension, h5);
-  draw_MRS (ctx, fn_sin_dec, length, 80, 90, 10, 1, h5);
+//  draw_MRS (ctx, fn_sin_dec, length, 80, 90, 10, 1, h5);
+  mark (ctx, 90, length, h5);
+  tick (ctx, length * fn_sin_dec (80), h5);
   tick (ctx, length * fn_sin_dec (85), h3);
   draw_MRS (ctx, fn_sin_dec, length, 25, 35, 10, 1, h5);
   for (var degree = 10; degree <= 70; degree += 10) tick (ctx, length * fn_sin_dec (degree), h5);
@@ -495,6 +501,26 @@ var draw_small_sine_dec = function (ctx, length, height, s) {
   draw_log_1R (ctx, length, height, 1 + s . right_extension - shift, s);
   ctx . translate (- length, 0);
   draw_log_1L (ctx, length, height, 1 - shift - s . left_extension, s);
+};
+var draw_small_sine_tan_dec = function (ctx, length, height, s) {
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+  var limit = 1 + s . right_extension;
+  var degree = 1;
+  var location = s . location (degree);
+  while (location <= limit) {
+    location *= length;
+    tick (ctx, location, h5);
+    ctx . textAlign = 'left'; ctx . fillStyle = s . alt; mmark (ctx, 90 - degree, location + 1, h5);
+    ctx . textAlign = 'right'; ctx . fillStyle = s . colour; mmark (ctx, degree, location - 1, h5);
+    degree += 1;
+    location = s . location (degree);
+  }
+  ctx . textAlign = 'center';
+  draw_XR (ctx, s . location, length, 1, 10, limit, h2, 0.1, 0.02, 0.1);
+  draw_XR (ctx, s . location, length, 1, 10, limit, h3, 0.5, 0.1, 0.5);
+  draw_XR (ctx, s . location, length, 1, 10, limit, h4, 1, 0.5, 1);
+  draw_MLS (ctx, s . location, length, 0, 0.9, 0.1, s . left_extension, h5);
+  draw_XL (ctx, s . location, length, 0, 1, - s . left_extension, h2, 0.1, 0.02, 0.1);
 };
 var draw_small_sine_deg = function (ctx, length, height, s) {
   var shift = s . location (1);
