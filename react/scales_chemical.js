@@ -154,6 +154,7 @@ var compound_table = [
   {name: 'Amonium', formulae: 'NH4', elements: [{element: 'N', count: 1}, {element: 'H', count: 4}], mass: 18.03846},
   {name: 'Cyanide', formulae: 'CN', elements: [{element: 'C', count: 1}, {element: 'N', count: 1}], mass: 26.02},
   {name: 'Carbon monoxide', formulae: 'CO', elements: [{element: 'C', count: 1}, {element: 'O', count: 1}], mass: 28.01},
+  {name: 'Carbon dioxide', formulae: 'CO2', elements: [{element: 'C', count: 1}, {element: 'O', count: 2}], mass:44.009},
   {name: 'Air', formulae: 'Air', elements: [{element: 'N', count: 8}, {element: 'O', count: 2}], mass: 28.97},
   {name: 'Air', formulae: 'N8O2', elements: [{element: 'N', count: 8}, {element: 'O', count: 2}], mass: 28.97},
   {name: 'Ethyl radical', formulae: 'C2H5', elements: [{element: 'C', count: 2}, {element: 'H', count: 5}], mass: 30.07},

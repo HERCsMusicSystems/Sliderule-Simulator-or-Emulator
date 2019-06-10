@@ -1453,13 +1453,19 @@ var CursorHPJapan = CursorHP;
 var CursorPS = CursorHP;
 var Cursor360 = function (from, to, colour, options) {return new Cursor (Math . log10 (3.60 / Math . PI), from, to, colour, options);};
 
-var BezierBraces = function (margin, width, radius, background, colour, bar, dent, tensor1, tensor2) {
+var BezierBraces = function (margin, width, radius, background, colour, bar, dent, tensor1, tensor2, horizontalShift) {
+  this . background = null;
   this . draw = function (ctx, s) {
+    if (this . background === null) {
+      if (typeof (background) == 'string') this . background = background;
+      else this . background = ctx . createPattern (background, 'repeat');
+    }
+    var hs = horizontalShift === undefined ? 0 : horizontalShift * s . length;
     ctx . beginPath ();
-    bezierBrace (ctx, margin, margin, width * s . length, s . height () - margin, radius, bar, dent * s . length, tensor1, tensor2);
-    ctx . fillStyle = background; ctx . fill (); ctx . strokeStyle = colour; ctx . stroke ();
+    bezierBrace (ctx, hs + margin, margin, hs + width * s . length, s . height () - margin, radius, bar, dent * s . length, tensor1, tensor2);
+    ctx . fillStyle = this . background; ctx . fill (); ctx . strokeStyle = colour; ctx . stroke ();
     ctx . translate (s . length * (1 + s . left_margin + s . right_margin), 0); ctx . scale (-1, 1);
-    bezierBrace (ctx, margin, margin, width * s . length, s . height () - margin, radius, bar, dent * s . length, tensor1, tensor2);
+    bezierBrace (ctx, hs + margin, margin, hs + width * s . length, s . height () - margin, radius, bar, dent * s . length, tensor1, tensor2);
     ctx . fill (); ctx . stroke ();
   };
 };
@@ -1467,7 +1473,7 @@ var BezierBraces = function (margin, width, radius, background, colour, bar, den
 var LeftBrace = function (margin, width, radius, background, colour, braceRadius, braceAngle, verticalShift) {
   this . draw = function (ctx, s) {
     ctx . beginPath ();
-    leftBrace (ctx, margin, margin, width * s . length, s . height () - margin, 8, braceRadius, braceAngle, verticalShift);
+    leftBrace (ctx, margin, margin, width * s . length, s . height () - margin, radius, braceRadius, braceAngle, verticalShift);
     ctx . fillStyle = background;
     ctx . fill ();
     ctx . strokeStyle = colour;
@@ -1480,7 +1486,7 @@ var RightBrace = function (margin, width, radius, background, colour, braceRadiu
     ctx . beginPath ();
     ctx . translate (s . length * (1 + s . left_margin + s . right_margin), 0);
     ctx . scale (-1, 1);
-    leftBrace (ctx, margin, margin, width * s . length, s . height () - margin, 8, braceRadius, braceAngle, verticalShift);
+    leftBrace (ctx, margin, margin, width * s . length, s . height () - margin, radius, braceRadius, braceAngle, verticalShift);
     ctx . fillStyle = background;
     ctx . fill ();
     ctx . strokeStyle = colour;
