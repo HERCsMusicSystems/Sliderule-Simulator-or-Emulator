@@ -1,0 +1,172 @@
+<meta charset="UTF-8"/>
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Hemmi/Post 1460 Versalog II</title>
+  </head>
+<body>
+<div>
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+<!--	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.-->
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+<!--	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.-->
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+</div>
+<div id="root"></div>
+
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+<script src="scales_chemical.js"></script>
+<script src="scales_temperature.js"></script>
+<script src="scales_pressure.js"></script>
+
+<script>
+
+var sliderules = new Sliderules ();
+
+var wood = new Image (); wood . src = 'oak.png'; wood . onload = function () {sliderules . requireRedraw = true;};
+var logo = new Image (); logo . src = 'Post_logo_red.png'; logo . onload = function () {sliderules . requireRedraw = true;};
+
+var s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_top_margin: 20, cursor_bottom_margin: 20, cursor_limit_left: 0.03, cursor_limit_right: 0.03});
+sliderules . sliderules . push (s);
+s . cursorBraces . push (new HemmiWindow (8, 0.072, 0.07, 24, -5, '#9498a1', 'black'));
+s . cursorBraces . push (new Screw (0.055, -12, 7, Math . random () * Math . PI, '#9498a1', 'white'));
+s . cursorBraces . push (new Screw (-0.055, -12, 7, Math . random () * Math . PI, '#9498a1', 'white'));
+s . cursorBraces . push (new Screw (0.055, 300, 7, Math . random () * Math . PI, '#9498a1', 'white'));
+s . cursorBraces . push (new Screw (-0.055, 300, 7, Math . random () * Math . PI, '#9498a1', 'white'));
+s . braces . push (new LBottomLeftBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 'red'));
+s . braces . push (new LBottomLeftBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
+s . braces . push (new LBottomRightBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 'red'));
+s . braces . push (new LBottomRightBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
+s . braces . push (new Screw (0.075, 38, 12, Math . random () * Math . PI, '#2E5894', '#41a187'));
+s . braces . push (new Bolt (0.08, 250 - 24, 8,  '#2E5894', '#41a187'));
+s . braces . push (new Bolt (0.02, 290 - 24, 8,  '#2E5894', '#41a187'));
+s . braces . push (new Screw (1.325, 38, 12, Math . random () * Math . PI, '#2E5894', '#41a187'));
+s . braces . push (new Bolt (1.32, 250 - 24, 8,  '#2E5894', '#41a187'));
+s . braces . push (new Bolt (1.38, 290 - 24, 8,  '#2E5894', '#41a187'));
+var r = new Rule ({rule_colour: 'ivory', left_margin: 0.15, right_margin: 0.15}); s . rules . push (r);
+r . markings . push (new Engraving ('e\u207b\u02e3', '12px arial', 'right', 'red', -0.06, 18));
+r . markings . push (new Engraving ('X\u00b3', '12px arial', 'right', 'black', -0.06, 42));
+r . markings . push (new Engraving ('X\u00b2', '12px arial', 'right', 'black', -0.06, 66));
+r . markings . push (new Engraving ('\u03c0X', '12px arial', 'right', 'black', -0.06, 90));
+r . markings . push (new Engraving ('-0.001 \u2190 -0.01', '12px arial', 'center', 'red', 1.054, 18));
+r . markings . push (new Engraving ('VERSALOG', '14px arial', 'left', 'black', 1.02, 64));
+r . markings . push (new Engraving ('1460', '14px arial', 'left', 'black', 1.03, 82));
+r . scales . push (new scale_LL00 (24, {left: 'LL/0', la: 'right', ls: 0.02, marking_colour: 'red', right_extension: 0.005}));
+r . scales . push (new scale_K (24, {left: 'K', ls: 0.02, la: 'right'}));
+r . scales . push (new scale_A (24, {left: 'A', ls: 0.02, la: 'right'}));
+r . scales . push (new scale_CF (24, {left: 'DF', ls: 0.02, la: 'right', right_extension: 0.001}));
+r = new Rule ({rule_colour: 'ivory', stator: 1}); s . rules . push (r);
+r . markings . push (new Engraving ('\u03c0X', '12px arial', 'right', 'black', -0.06, 18));
+r . markings . push (new Engraving ('1/\u03c0X', '12px arial', 'right', 'red', -0.06, 42));
+r . markings . push (new Engraving ('1/X', '12px arial', 'right', 'red', -0.06, 66));
+r . markings . push (new Engraving ('X', '12px arial', 'right', 'black', -0.06, 90));
+r . markings . push (new Engraving ('3.1', '12px arial', 'center', 'red', 1.012, 45));
+r . markings . push (new Logo (logo, 1.06, 48, 0.25));
+r . scales . push (new scale_DF (24, {left: 'CF', ls: 0.02, la: 'right', right_extension: 0.001}));
+r . scales . push (new scale_DIF (24, {left: 'CIF', ls: 0.02, la: 'right', marking_colour: 'red', draw_pi: false, draw_c: false, left_extension: 0.005, right_extension: 0.012}));
+r . scales . push (new scale_CI (24, {left: 'CI', ls: 0.02, la: 'right', marking_colour: 'red', indices: [1, 1, 1, 1]}));
+r . scales . push (new scale_C (24, {left: 'C', ls: 0.02, la: 'right', draw_c: false, indices: [1, 1, 1, 1]}));
+r = new Rule ({rule_colour: 'ivory'}); s . rules . push (r);
+r . markings . push (new Engraving ('X', '12px arial', 'right', 'black', -0.06, 18));
+r . markings . push (new Engraving ('\u221aX', '12px arial', 'right', 'black', -0.06, 54));
+r . markings . push (new Engraving ('e\u02e3', '12px arial', 'right', 'black', -0.06, 90));
+r . markings . push (new Engraving ('0.001 \u2192 0.01', '12px arial', 'center', 'black', 1.054, 90));
+r . markings . push (new Engraving ('FREDERICK', '14px arial', 'left', 'black', 1.01, 24));
+r . markings . push (new Engraving ('POST', '14px arial', 'left', 'black', 1.016, 42));
+r . scales . push (new scale_D (24, {left: 'D', ls: 0.02, la: 'right', indices: [1, 1, 1, 1]}));
+r . scales . push (new scale_W1 (24, {left: 'R1', ls: 0.02, la: 'right', draw_c: false, draw_e: false, draw_pi: false, right_extension: 0.003}));
+r . scales . push (new scale_W2 (24, {left: 'R2', ls: 0.02, la: 'right', draw_c: false, draw_e: false, left_extension: 0.005}));
+r . scales . push (new scale_LL0_down (24, {left: 'LL0', ls: 0.02, la: 'right'}));
+
+s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_top_margin: 20, cursor_bottom_margin: 20, cursor_limit_left: 0.03, cursor_limit_right: 0.03});
+sliderules . sliderules . push (s);
+s . cursorBraces . push (new HemmiWindow (8, 0.072, 0.07, 24, -5, '#9498a1', 'black'));
+s . cursorBraces . push (new Screw (0.055, -12, 7, Math . random () * Math . PI, '#9498a1', 'white'));
+s . cursorBraces . push (new Screw (-0.055, -12, 7, Math . random () * Math . PI, '#9498a1', 'white'));
+s . cursorBraces . push (new Screw (0.055, 300, 7, Math . random () * Math . PI, '#9498a1', 'white'));
+s . cursorBraces . push (new Screw (-0.055, 300, 7, Math . random () * Math . PI, '#9498a1', 'white'));
+s . braces . push (new LTopLeftBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 'red'));
+s . braces . push (new LTopLeftBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
+s . braces . push (new LTopRightBrace (6, 14, 0.05, 0.1, 96, 4, '#c4c7ce', 'red'));
+s . braces . push (new LTopRightBrace (4, 16, 0.05, 0.1, 96, 6, '#c4c7ce', 'red'));
+s . braces . push (new Screw (0.075, 312 - 38 - 24, 12, Math . random () * Math . PI, '#2E5894', '#41a187'));
+s . braces . push (new Bolt (0.08, 312 - 250, 8,  '#2E5894', '#41a187'));
+s . braces . push (new Bolt (0.02, 312 - 290, 8,  '#2E5894', '#41a187'));
+s . braces . push (new Screw (1.325, 312 - 38 - 24, 12, Math . random () * Math . PI, '#2E5894', '#41a187'));
+s . braces . push (new Bolt (1.32, 312 - 250, 8,  '#2E5894', '#41a187'));
+s . braces . push (new Bolt (1.38, 312 - 290, 8,  '#2E5894', '#41a187'));
+r = new Rule ({rule_colour: 'ivory'}); s . rules . push (r);
+r . markings . push (new Engraving ('HEMMI', '14px arial', 'center', 'black', 1.05, 20));
+r . markings . push (new Engraving ('-0.01 \u2190 -0.1', '12px arial', 'center', 'red', 1.048, 42));
+r . markings . push (new Engraving ('-0.1 \u2190 -1.0', '12px arial', 'center', 'red', 1.05, 66));
+r . markings . push (new Engraving ('-1.0 \u2190 -10.0', '12px arial', 'center', 'red', 1.053, 90));
+r . scales . push (new scale_L (24, {left: 'LogX     L', la: 'right', ls: 0.02}));
+r . scales . push (new scale_LL01 (24, {left: 'LL/1', la: 'right', ls: 0.02, marking_colour: 'red'}));
+r . scales . push (new scale_LL02 (24, {left: 'e\u207b\u02e3   LL/2', la: 'right', ls: 0.02, marking_colour: 'red', left_extension: 0.001}));
+r . scales . push (new scale_LL03 (24, {left: 'LL/3', la: 'right', ls: 0.02, marking_colour: 'red'}));
+r = new Rule ({rule_colour: 'ivory', stator: 1}); s . rules . push (r);
+r . markings . push (new Engraving ('0.1 \u2192 1.0', '12px arial', 'center', 'black', 1.05, 12));
+r . markings . push (new Engraving ('10.0 \u2190 1.0', '12px arial', 'center', 'red', 1.047, 24));
+r . markings . push (new Engraving ('0.01 \u2192 0.1', '12px arial', 'center', 'black', 1.048, 36));
+r . markings . push (new Engraving ('100.0 \u2190 10.0', '12px arial', 'center', 'red', 1.048, 48));
+r . markings . push (new Engraving ('0.1 \u21c4 1.0', '12px arial', 'center', 'black', 1.05, 60));
+r . markings . push (new Engraving ('T', '12px arial', 'right', 'red', -0.03, 18));
+r . markings . push (new Engraving ('SecT', '12px arial', 'right', 'red', -0.045, 42));
+r . markings . push (new Engraving ('Cos', '12px arial', 'right', 'green', -0.03, 66));
+r . scales . push (new scale_TCTdec (24, {left: 'T', la: 'right', ls: 0.02, left_extension: 0.005}));
+r . scales . push (new scale_STCTdec (24, {left: 'SRT', la: 'right', ls: 0.02, right_extension: 0.002}));
+r . scales . push (new scale_SCdec (24, {left: 'S', la: 'right', ls: 0.02, alt: 'green', left_extension: 0.005}));
+r . scales . push (new scale_C (24, {left: 'X        C', la: 'right', ls: 0.02, indices: [1, 1, 1, 1]}));
+r = new Rule ({rule_colour: 'ivory', left_margin: 0.15, right_margin: 0.15}); s . rules . push (r);
+r . markings . push (new Engraving ('JAPAN', '14px arial', 'center', 'black', 1.05, 20));
+r . markings . push (new Engraving ('1.0 \u2192 10.0', '12px arial', 'center', 'black', 1.053, 42));
+r . markings . push (new Engraving ('0.1 \u2192 1.0', '12px arial', 'center', 'black', 1.05, 66));
+r . markings . push (new Engraving ('0.01 \u2192 0.1', '12px arial', 'center', 'black', 1.048, 90));
+r . scales . push (new scale_D (24, {left: 'X        D', la: 'right', ls: 0.02, indices: [1, 1, 1, 1]}));
+r . scales . push (new scale_LL3_down (24, {left: 'LL3', la: 'right', ls: 0.02}));
+r . scales . push (new scale_LL2_down (24, {left: 'e\u02e3   LL2', la: 'right', ls: 0.02, left_extension: 0.002}));
+r . scales . push (new scale_LL1_down (24, {left: 'LL1', la: 'right', ls: 0.02, left_extension: 0.005}));
+
+</script>
+
+<script src="sliderule_application.js"></script>
+
+<script> changeSide ('front'); </script>
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+//changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+//changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+</script>
+
+</body></html>
