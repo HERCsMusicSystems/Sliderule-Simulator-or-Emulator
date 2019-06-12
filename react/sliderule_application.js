@@ -108,8 +108,7 @@ var SlideruleApplication = React . createClass ({
       var ret = sliderules . synchroniseTarget (addv (position, {x: 0.5, y: 0}));
       if (event . ctrlKey) sliderules . deactivateHairlines (true);
       if (event . shiftKey) sliderules . overrideSlides (false);
-    }
-    this . dragging = true;
+    } else this . dragging = true;
     this . mousePosition = position;
   },
   onMouseMove: function (event) {
