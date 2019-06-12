@@ -94,6 +94,10 @@ var copyright_colour = copyright_colours [Math . floor (Math . random () * copyr
 var slideruleMission = function () {if (sliderules . mission) if (sliderules . mission ()) delete sliderules . mission;};
 var slideruleObjective = function () {if (sliderules . objective) if (sliderules . objective ()) {delete sliderules . objective; slideruleMission ();}};
 
+sliderules . checkRequired = false;
+sliderules . dragging = false;
+sliderules . mousePosition = {x: 0, y: 0};
+
 var SlideruleApplication = React . createClass ({
   checkRequired: false,
   dragging: false,
@@ -218,7 +222,75 @@ var SlideruleApplication = React . createClass ({
   }
 });
 
+var rootDiv = document . getElementById ('root');
+var rootRootDiv = document . createElement ('div');
+rootRootDiv . id = 'rooter';
+rootRootDiv . setAttribute ("style", "align: center;");
+rootRootDiv . oncontextmenu = function (event) {event . preventDefault ();};
+rootRootDiv . onmousedown = function (event) {
+	sliderules . resetMovers ();
+	var position = subvbc ({x: event . clientX, y: event . clientY}, slideruleCanvas . getBoundingClientRect ());
+	if (event . button === 2) {
+		if (event . ctrlKey) sliderules . deactivateHairlines (false);
+		if (event . shiftKey) sliderules . overrideSlides (true);
+		var ret = sliderules . synchroniseTarget (addv (position, {x: 0.5, y: 0}));
+		if (event . ctrlKey) sliderules . deactivateHairlines (true);
+		if (event . shiftKey) sliderules . overrideSlides (false);
+	} else sliderules . dragging = true;
+	sliderules . mousePosition = position;
+};
+rootRootDiv . onmousemove = function (event) {
+	if (! sliderules . dragging) return;
+	var position = subvbc ({x: event . clientX, y: event . clientY}, slideruleCanvas . getBoundingClientRect ());
+	var delta = subv (position, sliderules . mousePosition);
+	sliderules . synchroniseMove (delta, position, sliderules . mousePosition);
+	sliderules . mousePosition = position;
+};
+rootRootDiv . onmouseup = function (event) {sliderules . dragging = false;};
+rootRootDiv . onwheel = function (event) {
+	event . preventDefault ();
+	var delta;
+	if (event . deltaY < 0) delta = sliderules . scale * sliderules . scaling_factor;
+	if (event . deltaY > 0) delta = sliderules . scale / sliderules . scaling_factor;
+	var point = subvbc ({x: event . clientX, y: event . clientY}, slideruleCanvas . getBoundingClientRect ());
+	point = scalv (point, 1 / sliderules . scale);
+	var offset = scalv (point, delta - sliderules . scale);
+	sliderules . position = subv (sliderules . position, scalv (offset, 1 / delta));
+	sliderules . scale = delta;
+	sliderules . requireRedraw = true;
+};
+rootDiv . appendChild (rootRootDiv);
+var slideruleCanvas = document . createElement ('canvas');
+slideruleCanvas . id = 'sliderule_canvas';
+rootRootDiv . appendChild (slideruleCanvas);
+
+var ctx = slideruleCanvas . getContext ('2d');
+
+var drawSliderule = function () {
+	var width = window . innerWidth, height = window . innerHeight;
+	var bound = slideruleCanvas . getBoundingClientRect ();
+	var new_width = width - bound . left * 4, new_height = height - bound . top * 1.5;
+	if (sliderules . fixedHeight) new_height = sliderules . fixedHeight;
+//	console . log (width, height, new_width, new_height, bound);
+	slideruleCanvas . width = new_width;
+	slideruleCanvas . height = new_height;
+	if (width !== new_width || height !== new_height) sliderules . requireRedraw = true;
+	if (sliderules . noChange ()) {
+		if (sliderules . checkRequired) {slideruleObjective (); sliderules . checkRequired = false;}
+		return;
+	}
+	sliderules . checkRequired = true;
+	ctx . save ();
+	sliderules . draw (ctx, new_width, new_height);
+	ctx . restore ();
+	ctx . fillStyle = copyright_colour;
+	ctx . textAlign = 'right';
+	ctx . fillText (copyright, new_width - 4, new_height - 4);
+};
+
+setInterval (drawSliderule, 20);
+
 'use strict';
 
-ReactDOM.render(React.createElement(SlideruleApplication, null), document.getElementById('root'));
+//ReactDOM.render(React.createElement(SlideruleApplication, null), document.getElementById('root'));
 
