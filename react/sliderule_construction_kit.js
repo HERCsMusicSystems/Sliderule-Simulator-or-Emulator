@@ -1800,29 +1800,45 @@ var FlatFloor = function (left, right, top, bottom, rounding, colour, background
 };
 
 var VintageFloor = function (left, right, top, bottom, rounding, colour, background, left_top, left_bottom, left_dent, right_top, right_bottom, right_dent) {
+	this . scales = [];
+	this . markings = [];
 	this . draw = function (ctx, s) {
 		var le = s . length * (s . left_margin - left); var re = s . length * (s . right_margin + 1 + right);
 		var bt = s . height () - bottom;
 		var mid = (top + bt) * 0.5;
-    var left_dent_location = (left_top + left_bottom) * 0.5, left_radius = (left_bottom - left_top) * 0.5;
-		ctx . beginPath ();
-		ctx . arc (le + rounding, top + rounding, rounding, Math . PI, Math . PI * 1.5);
-		ctx . arc (re - rounding, top + rounding, rounding, Math . PI * 1.5, 0);
-		ctx . arc (re - rounding, bt - rounding, rounding, 0, Math . PI * 0.5);
-		ctx . arc (le + rounding, bt - rounding, rounding, Math . PI * 0.5, Math . PI);
-    ctx . arc (le + rounding, left_bottom + rounding, rounding, Math . PI, Math . PI * 1.5);
-    ctx . arc (le + left_dent * s . length, left_dent_location, left_radius, Math . PI * 0.5, Math . PI * -0.5, true);
-    ctx . arc (le + rounding, left_top - rounding, rounding, Math . PI * 0.5, Math . PI);
-		ctx . closePath ();
-    if (this . pattern) ctx . fillStyle = this . pattern;
-    else {
-      if (typeof (background) == 'string') this . pattern = background;
-      else this . pattern = ctx . createPattern (background, 'repeat');
-      ctx . fillStyle = this . pattern;
-    }
-		ctx . fill ();
+    	var left_dent_location = (left_top + left_bottom) * 0.5, left_radius = (left_bottom - left_top) * 0.5;
+    	var region = new Path2D ();
+		//region . beginPath ();
+		region . arc (le + rounding, top + rounding, rounding, Math . PI, Math . PI * 1.5);
+		region . arc (re - rounding, top + rounding, rounding, Math . PI * 1.5, 0);
+		region . arc (re - rounding, bt - rounding, rounding, 0, Math . PI * 0.5);
+		region . arc (le + rounding, bt - rounding, rounding, Math . PI * 0.5, Math . PI);
+    	region . arc (le + rounding, left_bottom + rounding, rounding, Math . PI, Math . PI * 1.5);
+    	region . arc (le + left_dent * s . length, left_dent_location, left_radius, Math . PI * 0.5, Math . PI * -0.5, true);
+   		region . arc (le + rounding, left_top - rounding, rounding, Math . PI * 0.5, Math . PI);
+		region . closePath ();
+		if (this . pattern) ctx . fillStyle = this . pattern;
+		else {
+		  if (typeof (background) == 'string') this . pattern = background;
+		  else this . pattern = ctx . createPattern (background, 'repeat');
+		  ctx . fillStyle = this . pattern;
+		}
+		ctx . fill (region);
 		ctx . strokeStyle = colour;
-		ctx . stroke ();
+		ctx . stroke (region);
+		ctx . fillStyle = 'green';
+		ctx . clip (region);
+		for (var scale in this . scales) {
+			ctx . save ();
+			ctx . translate (this . scales [scale] . x, this . scales [scale] . y);
+			this . scales [scale] . scale . sub_draw (ctx, s . length);
+			ctx . restore ();
+		}
+		for (var mark in this . markings) {
+			ctx . save ();
+			this . markings [mark] . draw (ctx, s);
+			ctx . restore ();
+		}
 	};
 };
 

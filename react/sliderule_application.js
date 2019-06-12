@@ -142,15 +142,20 @@ rootRootDiv . appendChild (slideruleCanvas);
 
 var ctx = slideruleCanvas . getContext ('2d');
 
+var previous_width = 0, previous_height = 0;
 var drawSliderule = function () {
 	var width = window . innerWidth, height = window . innerHeight;
 	var bound = slideruleCanvas . getBoundingClientRect ();
 	var new_width = width - bound . left * 4, new_height = height - bound . top * 1.5;
 	if (sliderules . fixedHeight) new_height = sliderules . fixedHeight;
 //	console . log (width, height, new_width, new_height, bound);
-	slideruleCanvas . width = new_width;
-	slideruleCanvas . height = new_height;
-	if (width !== new_width || height !== new_height) sliderules . requireRedraw = true;
+	if (previous_width !== new_width || previous_height !== new_height) {
+		slideruleCanvas . width = new_width;
+		slideruleCanvas . height = new_height;
+		previous_width = new_width;
+		previous_height = new_height;
+		sliderules . requireRedraw = true;
+	}
 	if (sliderules . noChange ()) {
 		if (sliderules . checkRequired) {slideruleObjective (); sliderules . checkRequired = false;}
 		return;

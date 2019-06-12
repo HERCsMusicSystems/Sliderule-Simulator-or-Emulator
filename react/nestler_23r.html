@@ -50,7 +50,10 @@ var sliderules = new Sliderules ();
 
 var s = new Sliderule (1200, {left_margin: 0.05, right_margin: 0.1}); sliderules . sliderules . push (s);
 
-s . backBraces . push (new VintageFloor (0.06, 0.06, -4, -4, 10, 'blue', 'red', 60, 90, 0.1));
+var floor = new VintageFloor (0.06, 0.06, -4, -4, 10, 'blue', 'red', 60, 90, 0.1);
+floor . scales . push ({x: 0, y: 75, scale: new scale_C (24)});
+floor . markings . push (new Engraving ('Nestler', '24px arial', 'left', 'black', 0.1, 100));
+s . backBraces . push (floor);
 
 var r = new Rule ({left_margin: 0.05, right_margin: 0.1}); s . rules . push (r);
 r . scales . push (new spacer (2));
