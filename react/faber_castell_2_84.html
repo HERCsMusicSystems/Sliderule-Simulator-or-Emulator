@@ -50,6 +50,7 @@ var v1 = Math . log10 (Math . pow (Math . E, Math . log (10) - 140 * Math . PI /
 var v2 = Math . log10 (Math . pow (Math . E, (Math . log (10) - 2.2)));
 var sliderules = new Sliderules ({background: faber_castell, background_colour: 'green', position: {x: 32.5, y: 46.5}});
 var s = new Sliderule (1200, {cursorHairline: false, cursor_left_extension: 0.22, cursor_right_extension: 0.22, left_margin: 0.3, right_margin: 0.3, cursor_top_margin: 10, cursor_bottom_margin: 10, cursor_limit_left: 0.08, cursor_limit_right: 0.08}); sliderules . sliderules . push (s);
+s . backBraces . push (new Floor (0.3, 0.3, 74, 74, 6, 48, [{left: -0.03, right: 0.03}, {left: 0.96, right: 1.04}], 'red', '#ffffdd'));
 s . cursorGlassBraces . push (new CursorBrace (0.222, 0.222, 16, 0, 4, '#ffe8b7'));
 s . cursorBraces . push (new Engraving ("2\u03c0", '12px arial', 'center', 'red', Math . log10 (2 * Math . PI / 10) / 2, -4));
 s . cursorBraces . push (new Engraving ("\u03c0/4", '12px arial', 'center', 'red', HairlineS, -4));

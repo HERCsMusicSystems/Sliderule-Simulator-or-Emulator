@@ -48,11 +48,11 @@
 
 var sliderules = new Sliderules ();
 
-var s = new Sliderule (1200); sliderules . sliderules . push (s);
+var s = new Sliderule (1200, {left_margin: 0.05, right_margin: 0.1}); sliderules . sliderules . push (s);
 
-s . backBraces . push (new FlatFloor (0.21, 0.21, -4, -4, 10, 'blue', 'red'));
+s . backBraces . push (new VintageFloor (0.06, 0.06, -4, -4, 10, 'blue', 'red', 60, 90, 0.1));
 
-var r = new Rule (); s . rules . push (r);
+var r = new Rule ({left_margin: 0.05, right_margin: 0.1}); s . rules . push (r);
 r . scales . push (new spacer (2));
 r . scales . push (new scale_J (24, {lines: [{left: 0, right: 1, height: 0.2}]}));
 r . scales . push (new scale_A (24));
