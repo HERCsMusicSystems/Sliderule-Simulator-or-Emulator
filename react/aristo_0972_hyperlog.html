@@ -99,7 +99,7 @@ r . markings . push (new Engraving ("HYPERLOG", '16px arial', 'center', 'red', -
 r . markings . push (new Engraving ("ARISTO", '16px arial', 'center', 'black', 1.14, 61, Math . PI * 1.5));
 r . markings . push (new Engraving ("0972", '16px arial', 'center', 'black', 1.153, 61, Math . PI * 1.5));
 r . markings . push (new Engraving ("GERMANY", '8px arial', 'center', 'black', 1.16, 61, Math . PI * 1.5));
-r . scales . push (new scale_DF (20, {left: "CF", ls: 0.09, right: "\u03c0X", rs: 0.09, left_extension: 0.022, right_extension: 0.06, indices: ['>>1<<'], highlight: 'yellow', highlight_left: 0.19, highlight_right: 0.19}));
+r . scales . push (new scale_DF (20, {left: "CF", ls: 0.09, right: "\u03c0X", rs: 0.09, left_extension: 0.022, right_extension: 0.06, indices: ['>>1<<'], highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2}));
 r . scales . push (new spacer (4));
 r . scales . push (new scale_CIF (20, {left: "CIF", ls: 0.09, right: "1/\u03c0X", rs: 0.09, left_extension: 0.018, right_extension: 0.028, marking_colour: 'red'}));
 r . scales . push (new spacer (4));
@@ -107,7 +107,7 @@ r . scales . push (new scale_L (20, {left: "L", ls: 0.09, right: "lg X", rs: 0.0
 r . scales . push (new spacer (12));
 r . scales . push (new scale_DI (20, {left: "CI", ls: 0.09, right: "1/X", rs: 0.09, marking_colour: 'red', indices: [1, 1]}));
 r . scales . push (new spacer (4));
-r . scales . push (new scale_C (20, {left: "C", ls: 0.09, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.066, alt: 'black', highlight: 'yellow', highlight_left: 0.19, highlight_right: 0.19}));
+r . scales . push (new scale_C (20, {left: "C", ls: 0.09, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.066, alt: 'black', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2}));
 
 r = new Rule (); s . rules . push (r);
 r . markings . push (new BraceSupport (- 0.146, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
@@ -171,14 +171,14 @@ r . scales . push (new scale_J (20, {left: "K", ls: 0.095, right: "X\u00b3", rs:
 r . scales . push (new scale_A (20, {left: "A", ls: 0.095, right: "X\u00b2", rs: 0.09, left_extension: 0.05, alt: 'black', marking_alt: 'red', right_extension: 0.06}));
 
 r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_B (20, {left: "B", ls: 0.095, right: "X\u00b2", rs: 0.09, left_extension: 0.05, alt: 'black', marking_alt: 'red', right_extension: 0.06, highlight: 'yellow', highlight_left: 0.19, highlight_right: 0.19}));
+r . scales . push (new scale_B (20, {left: "B", ls: 0.095, right: "X\u00b2", rs: 0.09, left_extension: 0.05, alt: 'black', marking_alt: 'red', right_extension: 0.06, highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2}));
 r . scales . push (new scale_Tdec (20, {left: "T", ls: 0.095, right: "\u2222 tan", rs: 0.09, left_extension: 0.02}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_STdec_down (20, {left: "ST", ls: 0.095, right: "\u2222 arc", rs: 0.09, left_extension: 0.02, right_extension: 0.022, draw_st_corrections: false}));
 r . scales . push (new scale_CSdec (20, {left: "S", ls: 0.095, right: "\u2222 sin", rs: 0.09, centre: "\u2222 cos", ca: 'right', cs: 1.08, cc: 'red', left_extension: 0.02}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_P_down (20, {left: "P", ls: 0.095, right: "\u221a1-X\u00b2", rs: 0.09, marking_colour: 'red'}));
-r . scales . push (new scale_C (20, {left: "C", ls: 0.095, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.062, alt: 'black', marking_alt: 'red', highlight: 'yellow', highlight_left: 0.19, highlight_right: 0.19}));
+r . scales . push (new scale_C (20, {left: "C", ls: 0.095, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.062, alt: 'black', marking_alt: 'red', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2}));
 
 r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_D (20, {left: "D", ls: 0.095, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.062, alt: 'black', marking_alt: 'red'}));
@@ -220,7 +220,6 @@ if (document . getElementById ('speed5') . checked) changeMovementSpeed (2);
 if (document . getElementById ('speed6') . checked) changeMovementSpeed (4);
 
 var mouseBack = function (value) {
-    console . log (value);
     switch (value) {
     case 0: break;
     case 0.125: document . getElementById ("speed1") . checked = true; changeMovementSpeed (0.125); break;

@@ -1244,7 +1244,6 @@ var spacer = function (height, options) {
   this . colour = 'black'; this . alt = 'red';
   this . left_extension = 0; this . right_extension = 0;
   this . highlight_left = 0; this . highlight_right = 0;
-  this . changed = function () {return false;};
   for (var key in options) this [key] = options [key];
 };
 
@@ -1256,6 +1255,7 @@ spacer . prototype . ruleHeight = function () {return this . height;};
 spacer . prototype . hitTest = function (y) {return false;};
 spacer . prototype . value = function (location) {return null;};
 spacer . prototype . location = function (value) {return NaN;};
+spacer . prototype . changed = function () {return false;};
 spacer . prototype . draw = function (ctx, length) {};
 spacer . prototype . display = function (location, precision) {
   var v = this . value (location);
@@ -1376,9 +1376,10 @@ var Rule = function (options) {
         ctx . fillStyle = this . rule_pattern;
       }
       ctx . lineWidth = 1;
-      ctx . beginPath ();
-      roundRect (ctx, 0, length * (this . left_margin - this . alt_left_margin), 0, (1 + this . left_margin + this . right_margin) * length, (1 + this . left_margin + this . alt_right_margin) * length, this . ruleRealHeight (), this . rounding);
-      ctx . fill (); ctx . strokeStyle = this . border_colour; ctx . stroke ();
+      var region = new Path2D ();
+      roundRect (region, 0, length * (this . left_margin - this . alt_left_margin), 0, (1 + this . left_margin + this . right_margin) * length, (1 + this . left_margin + this . alt_right_margin) * length, this . ruleRealHeight (), this . rounding);
+      ctx . fill (region); ctx . strokeStyle = this . border_colour; ctx . stroke (region);
+      ctx . clip (region);
     }
     ctx . translate (this . left_margin * length, 0);
     for (var bm in this . backMarkings) {ctx . save (); this . backMarkings [bm] . draw (ctx, sliderule); ctx . restore ();}

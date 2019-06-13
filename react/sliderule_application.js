@@ -123,6 +123,8 @@ rootRootDiv . onmousemove = function (event) {
 	sliderules . mousePosition = position;
 };
 rootRootDiv . onmouseup = function (event) {sliderules . dragging = false;};
+rootRootDiv . onmouseleave = function (event) {sliderules . dragging = false;};
+rootRootDiv . onmouseout = function (event) {sliderules . dragging = false;};
 rootRootDiv . onwheel = function (event) {
 	event . preventDefault ();
 	var delta;
