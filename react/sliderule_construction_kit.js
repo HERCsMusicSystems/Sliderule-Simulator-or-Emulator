@@ -1244,6 +1244,7 @@ var spacer = function (height, options) {
   this . colour = 'black'; this . alt = 'red';
   this . left_extension = 0; this . right_extension = 0;
   this . highlight_left = 0; this . highlight_right = 0;
+  this . changed = function () {return false;};
   for (var key in options) this [key] = options [key];
 };
 
@@ -2146,7 +2147,7 @@ var Sliderule = function (length, options) {
     var h; var hh; var description; var measure; var rs;
     for (var ind in this . rules) {
       for (var sub in this . rules [ind] . scales) {
-        h = this . rules [ind] . scales [sub] . height;
+        h = this . rules [ind] . scales [sub] . height * this . rules [ind] . v_scaling;
         hh = h * 0.5;
         if (this . rules [ind] . scales [sub] . dimm) description = null;
         else description = this . rules [ind] . scales [sub] . display (this . cursor_position - this . rules [ind] . shift, this . precision);
@@ -2180,7 +2181,7 @@ var Sliderule = function (length, options) {
     var h; var hh; var description; var measure;
     for (var ind in this . rules) {
       for (var sub in this . rules [ind] . scales) {
-        h = this . rules [ind] . scales [sub] . height;
+        h = this . rules [ind] . scales [sub] . height * this . rules [ind] . v_scaling;
         hh = h * 0.5;
         for (var esc in this . cursors) {
           var offset = this . cursors [esc] . shift - (this . cursors [esc] . static ? this . cursor_position : 0);
