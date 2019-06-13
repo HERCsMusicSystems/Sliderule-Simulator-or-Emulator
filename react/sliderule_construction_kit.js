@@ -1340,6 +1340,7 @@ var Rule = function (options) {
   this . scales = [];
   this . markings = [];
   this . backMarkings = [];
+  this . v_scaling = 1;
   this . move = function (delta, length) {
     delta *= this . rule_motion; delta /= length;
     this . target += delta;
@@ -1348,7 +1349,8 @@ var Rule = function (options) {
     this . shift = this . target;
     return delta;
   };
-  this . ruleHeight = function () {var h = 0; for (var ind in this . scales) h += this . scales [ind] . height; return h;};
+  this . ruleRealHeight = function () {var h = 0; for (var ind in this . scales) h += this . scales [ind] . height; return h;};
+  this . ruleHeight = function () {return this . ruleRealHeight () * this . v_scaling;};
   this . hitTest = function (y) {return this . stator != 0 && y >= 0 && y <= this . ruleHeight ();};
   this . animate = function () {
     if (this . target < this . shift) {
@@ -1364,6 +1366,7 @@ var Rule = function (options) {
     this . animate ();
     ctx . save ();
     ctx . translate (length * (this . shift - this . left_margin), 0);
+    ctx . scale (1, this . v_scaling);
     if (this . rule_colour) {
       if (this . rule_pattern) ctx . fillStyle = this . rule_pattern;
       else {
@@ -1373,7 +1376,7 @@ var Rule = function (options) {
       }
       ctx . lineWidth = 1;
       ctx . beginPath ();
-      roundRect (ctx, 0, length * (this . left_margin - this . alt_left_margin), 0, (1 + this . left_margin + this . right_margin) * length, (1 + this . left_margin + this . alt_right_margin) * length, this . ruleHeight (), this . rounding);
+      roundRect (ctx, 0, length * (this . left_margin - this . alt_left_margin), 0, (1 + this . left_margin + this . right_margin) * length, (1 + this . left_margin + this . alt_right_margin) * length, this . ruleRealHeight (), this . rounding);
       ctx . fill (); ctx . strokeStyle = this . border_colour; ctx . stroke ();
     }
     ctx . translate (this . left_margin * length, 0);
@@ -1387,7 +1390,10 @@ var Rule = function (options) {
       ctx . translate (0, this . scales [ind] . height);
     }
     ctx . restore ();
+    ctx . save ();
+    ctx . scale (1, this . v_scaling);
     for (var mark in this . markings) {ctx . save (); ctx . translate (this . shift * length, 0); this . markings [mark] . draw (ctx, sliderule); ctx . restore ();}
+    ctx . restore ();
   };
   this . examine = function (position, relative_location) {
     if (position . y < 0 || position . y > this . ruleHeight ()) return null;
