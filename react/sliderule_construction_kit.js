@@ -1695,15 +1695,17 @@ var Logo = function (logo, location, top, scaling, rotation) {
 	};
 };
 
-var HLine = function (position, from, to, colour) {
+var HLine = function (position, from, to, colour, width) {
     this . draw = function (ctx, s) {
+        if (width !== undefined) ctx . lineWidth = width;
         ctx . beginPath (); ctx . moveTo (from * s . length, position); ctx . lineTo (to * s . length, position); ctx . strokeStyle = colour; ctx . stroke ();
     };
 };
 
-var VLine = function (position, from, to, colour) {
+var VLine = function (position, from, to, colour, width) {
     this . draw = function (ctx, s) {
         var location = position * s . length;
+        if (width !== undefined) ctx . lineWidth = width;
         ctx . beginPath (); ctx . moveTo (location, from); ctx . lineTo (location, to); ctx . strokeStyle = colour; ctx . stroke ();
     };
 };
