@@ -1817,16 +1817,23 @@ var VintageFloor = function (left, right, top, bottom, rounding, colour, backgro
 		var le = s . length * (s . left_margin - left); var re = s . length * (s . right_margin + 1 + right);
 		var bt = s . height () - bottom;
 		var mid = (top + bt) * 0.5;
-    	var left_dent_location = (left_top + left_bottom) * 0.5, left_radius = (left_bottom - left_top) * 0.5;
-    	var region = new Path2D ();
+    var left_dent_location = (left_top + left_bottom) * 0.5, left_radius = (left_bottom - left_top) * 0.5;
+    if (right_top === undefined) right_top = left_top;
+    if (right_bottom === undefined) right_bottom = left_bottom;
+    if (right_dent === undefined) right_dent = left_dent;
+    var right_dent_location = (right_top + right_bottom) * 0.5, right_radius = (right_bottom - right_top) * 0.5;
+    var region = new Path2D ();
 		//region . beginPath ();
 		region . arc (le + rounding, top + rounding, rounding, Math . PI, Math . PI * 1.5);
 		region . arc (re - rounding, top + rounding, rounding, Math . PI * 1.5, 0);
+    region . arc (re - rounding, right_top - rounding, rounding, 0, Math . PI * 0.5);
+    region . arc (re - right_dent * s . length, right_dent_location, right_radius, Math . PI * 1.5, Math . PI * 0.5, true);
+    region . arc (re - rounding, right_bottom + rounding, rounding, Math . PI * -0.5, 0);
 		region . arc (re - rounding, bt - rounding, rounding, 0, Math . PI * 0.5);
 		region . arc (le + rounding, bt - rounding, rounding, Math . PI * 0.5, Math . PI);
-    	region . arc (le + rounding, left_bottom + rounding, rounding, Math . PI, Math . PI * 1.5);
-    	region . arc (le + left_dent * s . length, left_dent_location, left_radius, Math . PI * 0.5, Math . PI * -0.5, true);
-   		region . arc (le + rounding, left_top - rounding, rounding, Math . PI * 0.5, Math . PI);
+    region . arc (le + rounding, left_bottom + rounding, rounding, Math . PI, Math . PI * 1.5);
+    region . arc (le + left_dent * s . length, left_dent_location, left_radius, Math . PI * 0.5, Math . PI * -0.5, true);
+    region . arc (le + rounding, left_top - rounding, rounding, Math . PI * 0.5, Math . PI);
 		region . closePath ();
 		if (this . pattern) ctx . fillStyle = this . pattern;
 		else {
@@ -1835,10 +1842,9 @@ var VintageFloor = function (left, right, top, bottom, rounding, colour, backgro
 		  ctx . fillStyle = this . pattern;
 		}
 		ctx . fill (region);
-		ctx . strokeStyle = colour;
-		ctx . stroke (region);
-		ctx . fillStyle = 'green';
+    ctx . save ();
 		ctx . clip (region);
+    ctx . translate (s . length * s . left_margin, 0);
 		for (var scale in this . scales) {
 			ctx . save ();
 			ctx . translate (this . scales [scale] . x, this . scales [scale] . y);
@@ -1850,6 +1856,9 @@ var VintageFloor = function (left, right, top, bottom, rounding, colour, backgro
 			this . markings [mark] . draw (ctx, s);
 			ctx . restore ();
 		}
+    ctx . restore ();
+    ctx . strokeStyle = colour;
+		ctx . stroke (region);
 	};
 };
 
