@@ -50,10 +50,10 @@
 var sliderules = new Sliderules ();
 var oak = new Image (); oak . src = 'oak.png'; oak . onload = function () {sliderules . requireRedraw = true;};
 
-var s = new Sliderule (1200, {left_margin: 0.08, right_margin: 0.08, cursor_left_extension: 0.08, cursor_right_extension: 0.08, cursor_limit_left: 0, cursor_limit_right: 0, cursor_top_margin: -14, hairline_top: -10, cursor_markings_shift: 0.005}); sliderules . sliderules . push (s);
+var s = new Sliderule (1200, {left_margin: 0.089, right_margin: 0.089, cursor_left_extension: 0.089, cursor_right_extension: 0.089, cursor_limit_left: 0, cursor_limit_right: 0, cursor_top_margin: -14, cursorHairline: 'black', hairline_top: -10, cursor_markings_shift: 0.005}); sliderules . sliderules . push (s);
 
-var floor = new VintageFloor (0.08, 0.08, -4, -4, 10, 'blue', oak, 60, 90, 0.1);
-floor . scales . push ({x: 0, y: 50 + 72, scale: new scale_Metric (24, {scale: 25})});
+var floor = new VintageFloor (0.0895, 0.0895, -4, -4, 10, 'blue', oak, 60, 90, 0.1);
+floor . scales . push ({x: -1.2685, y: 50 + 24 + 24, scale: new scale_Metric_down (24, {scale: 25, right_extension: 2})});
 floor . markings . push (new Engraving ('Nestler', '24px arial', 'left', 'black', 0.1, 100));
 floor . markings . push (new HLine (110, 0, 1, 'green', 4));
 s . backBraces . push (floor);
@@ -61,16 +61,17 @@ s . cursorBraces . push (new CursorWindow (8, 4, 'silver', 'black'));
 s . cursors . push (new Cursor (HairlineS, 14, 186, 'red', {marking_shift: 0.005}));
 s . cursors . push (new Cursor (HairlineD, 14, 186, 'red', {marking_shift: 0.005}));
 
-var r = new Rule ({left_margin: 0.08, right_margin: 0.08, rounding: 8, rule_colour: '#ffffe0', v_scaling: 0.6}); s . rules . push (r);
-r . markings . push (new Screw (-0.065, 12, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
-r . markings . push (new Screw (1.065, 12, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+var r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rounding: 8, rule_colour: '#ffffe0', v_scaling: 0.5}); s . rules . push (r);
+r . markings . push (new Screw (-0.0725, 18, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.0725, 18, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
 r . scales . push (new scale_Metric_down (24, {scale: 25, shift: -1, right_extension: 0.04}));
+r . scales . push (new spacer (12));
 
 s . rules . push (new spacer (2));
 
-r = new Rule ({left_margin: 0.08, right_margin: 0.08, rule_colour: '#ffffe0'}); s . rules . push (r);
-r . markings . push (new Screw (-0.065, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
-r . markings . push (new Screw (1.065, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); s . rules . push (r);
+r . markings . push (new Screw (-0.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_J (24, {lines: [{left: 0, right: 1, height: 0.2}], draw_e: false, draw_pi: false}));
 r . scales . push (new scale_A (24, {left_extension: 0.053, right_extension: 0.055, draw_e: false, lines: [{left: 0, right: 1, height: 0.8}]}));
@@ -82,8 +83,8 @@ var acStack = [
 ];
 
 var acMarkings = [
-  new Screw (-0.065, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver'),
-  new Screw (1.065, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver')
+  new Screw (-0.0725, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver'),
+  new Screw (1.0725, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver')
 ];
 
 var stStack = [
@@ -93,19 +94,19 @@ var stStack = [
 ];
 
 var stMarkings = [
-  new Screw (-0.065, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver'),
-  new Screw (1.065, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver'),
+  new Screw (-0.0725, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver'),
+  new Screw (1.0725, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver'),
   new VLine (0, 0, 72, 'black'),
   new VLine (1, 0, 72, 'black')
 ];
 
-r = new Rule ({stator: 1, left_margin: 0.08, right_margin: 0.08, rule_colour: '#ffffe0'}); s . rules . push (r);
+r = new Rule ({stator: 1, left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); s . rules . push (r);
 r . markings = acMarkings;
 r . scales = acStack;
 
-r = new Rule ({left_margin: 0.08, right_margin: 0.08, rule_colour: '#ffffe0'}); s . rules . push (r);
-r . markings . push (new Screw (-0.065, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
-r . markings . push (new Screw (1.065, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); s . rules . push (r);
+r . markings . push (new Screw (-0.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
 r . scales . push (new scale_D (24, {left_extension: 0.053, right_extension: 0.053, draw_e: false, lines: [{left: 0, right: 1, height: 0.2}]}));
 r . scales . push (new scale_L (24, {lines: [{left: 0, right: 1, height: 0.8}]}));
 r . scales . push (new spacer (2));
