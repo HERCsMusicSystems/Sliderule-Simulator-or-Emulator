@@ -33,6 +33,7 @@
 	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+  <input type = checkbox id = on_swap onchange = "javascript: scale_swap (this . checked);" />Slide reversed.
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
 	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
 	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
@@ -47,27 +48,63 @@
 <script>
 
 var sliderules = new Sliderules ();
+var oak = new Image (); oak . src = 'oak.png'; oak . onload = function () {sliderules . requireRedraw = true;};
 
-var s = new Sliderule (1200, {left_margin: 0.05, right_margin: 0.1}); sliderules . sliderules . push (s);
+var s = new Sliderule (1200, {left_margin: 0.08, right_margin: 0.08, cursor_left_extension: 0.08, cursor_right_extension: 0.08, cursor_limit_left: 0, cursor_limit_right: 0, cursor_top_margin: -14}); sliderules . sliderules . push (s);
 
-var floor = new VintageFloor (0.06, 0.06, -4, -4, 10, 'blue', 'red', 60, 90, 0.1);
-floor . scales . push ({x: 0, y: 75, scale: new scale_C (24)});
+var floor = new VintageFloor (0.08, 0.08, -4, -4, 10, 'blue', oak, 60, 90, 0.1);
+floor . scales . push ({x: 0, y: 50 + 72, scale: new scale_Metric (24, {scale: 25})});
 floor . markings . push (new Engraving ('Nestler', '24px arial', 'left', 'black', 0.1, 100));
+floor . markings . push (new HLine (110, 0, 1, 'green', 4));
 s . backBraces . push (floor);
+s . cursorBraces . push (new CursorWindow (8, 4, 'silver', 'black'));
 
-var r = new Rule ({left_margin: 0.05, right_margin: 0.1}); s . rules . push (r);
+var r = new Rule ({left_margin: 0.08, right_margin: 0.08, rounding: 8, rule_colour: '#ffffe0', v_scaling: 0.6}); s . rules . push (r);
+r . markings . push (new Screw (-0.065, 12, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.065, 12, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . scales . push (new scale_Metric_down (24, {scale: 25, shift: -1, right_extension: 0.04}));
+
+r = new Rule ({left_margin: 0.08, right_margin: 0.08, rule_colour: '#ffffe0'}); s . rules . push (r);
+r . markings . push (new Screw (-0.065, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.065, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_J (24, {lines: [{left: 0, right: 1, height: 0.2}]}));
-r . scales . push (new scale_A (24));
+r . scales . push (new scale_J (24, {lines: [{left: 0, right: 1, height: 0.2}], draw_e: false, draw_pi: false}));
+r . scales . push (new scale_A (24, {left_extension: 0.053, right_extension: 0.055, draw_e: false, lines: [{left: 0, right: 1, height: 0.8}]}));
 
-r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_B (24));
-r . scales . push (new scale_CI (24));
-r . scales . push (new scale_C (24));
+var acStack = [
+  new scale_B (24, {left_extension: 0.053, right_extension: 0.055, draw_e: false, lines: [{left: 0, right: 1, height: 0.2}]}),
+  new scale_DI (24, {left_extension: 0.053, right_extension: 0.053, draw_c: false, colour: 'red', lines: [{left: 0, right: 1, height: 0.2}, {left: 0, right: 1, height: 0}]}),
+  new scale_C (24, {left_extension: 0.053, right_extension: 0.053, draw_e: false, lines: [{left: 0, right: 1, height: 0.8}]})
+];
 
-r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (24));
-r . scales . push (new scale_L (24));
+var acMarkings = [
+  new Screw (-0.065, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver'),
+  new Screw (1.065, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver')
+];
+
+var stStack = [
+  new scale_S_down (24, {lines: [{left: 0, right: 1, height: 0.2}]}),
+  new scale_ST (24, {draw_c: false, lines: [{left: 0, right: 1, height: 0.8}, {left: 0, right: 1, height: 1}]}),
+  new scale_T (24, {lines: [{left: 0, right: 1, height: 0.8}]})
+];
+
+var stMarkings = [
+  new Screw (-0.065, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver'),
+  new Screw (1.065, 36, 6, Math . random () * Math . PI, '#b7410e', 'silver'),
+  new VLine (0, 0, 72, 'black'),
+  new VLine (1, 0, 72, 'black')
+];
+
+r = new Rule ({stator: 1, left_margin: 0.08, right_margin: 0.08, rule_colour: '#ffffe0'}); s . rules . push (r);
+r . markings = acMarkings;
+r . scales = acStack;
+
+r = new Rule ({left_margin: 0.08, right_margin: 0.08, rule_colour: '#ffffe0'}); s . rules . push (r);
+r . markings . push (new Screw (-0.065, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . markings . push (new Screw (1.065, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
+r . scales . push (new scale_D (24, {left_extension: 0.053, right_extension: 0.053, draw_e: false, lines: [{left: 0, right: 1, height: 0.2}]}));
+r . scales . push (new scale_L (24, {lines: [{left: 0, right: 1, height: 0.8}]}));
+r . scales . push (new spacer (2));
 
 
 s = new Sliderule (1200); sliderules . sliderules . push (s);
@@ -77,12 +114,18 @@ s = new Sliderule (1200); sliderules . sliderules . push (s);
 <script src="sliderule_application.js"></script>
 
 <script>
+var scale_swap = function (st) {
+  sliderules . sliderules [0] . rules [2] . scales = st ? stStack : acStack;
+  sliderules . sliderules [0] . rules [2] . markings = st ? stMarkings: acMarkings;
+  sliderules . requireRedraw = true;
+};
 changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 //changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 changeVersion ('german');
 //changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
+scale_swap (document . getElementById ('on_swap') . checked);
 </script>
 
 
