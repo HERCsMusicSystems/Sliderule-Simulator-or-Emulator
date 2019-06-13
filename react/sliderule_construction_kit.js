@@ -458,13 +458,16 @@ var draw_sine_dec = function (ctx, length, height, scale) {
 };
 var draw_sine_deg = function (ctx, length, height, scale) {
   draw_MRS (ctx, fn_sin_dec, length, 20, 35, 5, 1, height * 0.5);
-  draw_MRS (ctx, fn_sin_dec, length, 40, 90, 10, 1, height * 0.5);
+  draw_MRS (ctx, fn_sin_dec, length, 40, 70, 10, 1, height * 0.5);
+  mark (ctx, 90, length, height * 0.5);
+  tick (ctx, length * fn_sin_dec (80), height * 0.5);
+  tick (ctx, length * fn_sin_dec (85), height * 0.3);
   draw_MLS (ctx, fn_sin_dec, length, 4, 15, 1, - scale . left_extension, height * 0.5);
   draw_10R (ctx, fn_sin_dec, length, 40, 80, 1, height * 0.2);
   draw_10R (ctx, fn_sin_dec, length, 15, 40, 1, height * 0.3);
   draw_XR (ctx, fn_sin_dec, length, 15, 40, 1, height * 0.2, 1, 1 / 3, 1);
   draw_10R (ctx, fn_sin_dec, length, 10, 15, 1, height * 0.5);
-  draw_50R (ctx, fn_sin_dec, length, 40, 90, 1, height * 0.5);
+  draw_50R (ctx, fn_sin_dec, length, 40, 80, 1, height * 0.5);
   draw_05L (ctx, fn_sin_dec, length, 3, 15, - scale . left_extension, height * 0.3);
   draw_XL (ctx, fn_sin_dec, length, 3, 15, - scale . left_extension, height * 0.2, 0.5, 1 / 6, 0.5);
 };
