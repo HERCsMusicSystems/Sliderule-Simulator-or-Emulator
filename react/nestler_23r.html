@@ -52,10 +52,12 @@ var oak = new Image (); oak . src = 'oak.png'; oak . onload = function () {slide
 
 var s = new Sliderule (1200, {left_margin: 0.089, right_margin: 0.089, cursor_left_extension: 0.089, cursor_right_extension: 0.089, cursor_limit_left: 0, cursor_limit_right: 0, cursor_top_margin: -14, cursorHairline: 'black', hairline_top: -10, cursor_markings_shift: 0.005}); sliderules . sliderules . push (s);
 
-var floor = new VintageFloor (0.0895, 0.0895, -4, -4, 10, 'blue', oak, 60, 90, 0.1);
-floor . scales . push ({x: -1.2685, y: 50 + 24 + 24, scale: new scale_Metric_down (24, {scale: 25, right_extension: 2})});
+var floor = new VintageFloor (0.0895, 0.0895, -4, -4, 10, 'blue', oak, 70, 70 + 36 + 8, 0.1);
+floor . backMarkings . push (new RuleSupport (0.5, 74, 70 + 36 - 4, 1.4, 8, '#efefd0', 'black'));
+floor . backMarkings . push (new RuleSupport (0.5, 70 + 36 + 4, 70 + 72 - 4, 1.4, 8, '#efefd0', 'black'));
 floor . markings . push (new Engraving ('Nestler', '24px arial', 'left', 'black', 0.1, 100));
-floor . markings . push (new HLine (110, 0, 1, 'green', 4));
+floor . scales . push ({x: -1.2685, y: 70 + 36 + 4, scale: new scale_Metric_down (24, {scale: 25, right_extension: 2})});
+//floor . markings . push (new HLine (110, 0, 1, 'green', 4));
 s . backBraces . push (floor);
 s . cursorBraces . push (new CursorWindow (8, 4, 'silver', 'black'));
 s . cursors . push (new Cursor (HairlineS, 14, 186, 'red', {marking_shift: 0.005}));

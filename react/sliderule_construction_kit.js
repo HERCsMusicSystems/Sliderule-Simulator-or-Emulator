@@ -1687,6 +1687,24 @@ var BraceSupport = function (location, top, bottom, width, radius, background, c
   };
 };
 
+var RuleSupport = function (location, top, bottom, width, radius, background, colour) {
+  this . draw = function (ctx, s) {
+    var position = location * s . length;
+    var h = s . height ();
+    var w = width * 0.5 * s . length;
+    ctx . beginPath ();
+    ctx . arc (position + w - radius, bottom - radius, radius, 0, Math . PI * 0.5);
+    ctx . arc (position - w + radius, bottom - radius, radius, Math . PI * 0.5, Math . PI);
+    ctx . arc (position - w + radius, top + radius, radius, Math . PI, Math . PI * 1.5);
+    ctx . arc (position + w - radius, top + radius, radius, Math . PI * 1.5, 0);
+    ctx . closePath ();
+    ctx . fillStyle = background;
+    ctx . strokeStyle = colour;
+    ctx . fill ();
+    ctx . stroke ();
+  };
+};
+
 var Logo = function (logo, location, top, scaling, rotation) {
 	this . draw = function (ctx, s) {
 		ctx . translate (location * s . length, top);
@@ -1815,6 +1833,7 @@ var FlatFloor = function (left, right, top, bottom, rounding, colour, background
 var VintageFloor = function (left, right, top, bottom, rounding, colour, background, left_top, left_bottom, left_dent, right_top, right_bottom, right_dent) {
 	this . scales = [];
 	this . markings = [];
+	this . backMarkings = [];
 	this . draw = function (ctx, s) {
 		var le = s . length * (s . left_margin - left); var re = s . length * (s . right_margin + 1 + right);
 		var bt = s . height () - bottom;
@@ -1847,6 +1866,11 @@ var VintageFloor = function (left, right, top, bottom, rounding, colour, backgro
     ctx . save ();
     ctx . clip (region);
     ctx . translate (s . length * s . left_margin, 0);
+    for (var mark in this . backMarkings) {
+        ctx . save ();
+        this . backMarkings [mark] . draw (ctx, s);
+        ctx . restore ();
+    }
     for (var scale in this . scales) {
         ctx . save ();
         ctx . translate (this . scales [scale] . x * s . length, this . scales [scale] . y);
