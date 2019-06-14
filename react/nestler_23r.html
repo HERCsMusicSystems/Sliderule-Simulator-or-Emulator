@@ -116,6 +116,11 @@ r . scales . push (new spacer (2));
 
 s = new Sliderule (1200); sliderules . sliderules . push (s);
 
+s = new Sliderule (1200, {position: {x: 0, y: 10}, left_margin: 0.089, right_margin: 0.089}); sliderules . sliderules . push (s);
+r = new Rule ({stator: 2, left_margin: 0.0895, right_margin: 0.0895}); s . rules . push (r);
+r . scales . push (new scale_C (24));
+r . scales . push (new scale_Metric_down (24, {scale: 25 / 4, shift: 0, right_extension: 0.04}));
+
 </script>
 
 <script src="sliderule_application.js"></script>
