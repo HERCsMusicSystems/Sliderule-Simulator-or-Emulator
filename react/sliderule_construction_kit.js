@@ -1256,6 +1256,7 @@ spacer . prototype . hitTest = function (y) {return false;};
 spacer . prototype . value = function (location) {return null;};
 spacer . prototype . location = function (value) {return NaN;};
 spacer . prototype . changed = function () {return false;};
+spacer . prototype . animate = function () {};
 spacer . prototype . draw = function (ctx, length) {};
 spacer . prototype . display = function (location, precision) {
   var v = this . value (location);
@@ -1670,7 +1671,12 @@ var RightBraceBar = function (location, top, bottom, radius, background, colour)
 };
 
 var BraceSupport = function (location, top, bottom, width, radius, background, colour) {
+  this . pattern = null;
   this . draw = function (ctx, s) {
+    if (this . pattern === null) {
+      if (typeof (background) == 'string') this . pattern = background;
+      else this . pattern = ctx . createPattern (background, 'repeat');
+    }
     var position = location * s . length;
     var h = s . height ();
     var w = width * 0.5;
@@ -1680,7 +1686,7 @@ var BraceSupport = function (location, top, bottom, width, radius, background, c
     ctx . arc (position - w + radius, top + radius, radius, Math . PI, Math . PI * 1.5);
     ctx . arc (position + w - radius, top + radius, radius, Math . PI * 1.5, 0);
     ctx . closePath ();
-    ctx . fillStyle = background;
+    ctx . fillStyle = this . pattern;
     ctx . strokeStyle = colour;
     ctx . fill ();
     ctx . stroke ();
@@ -1688,7 +1694,12 @@ var BraceSupport = function (location, top, bottom, width, radius, background, c
 };
 
 var RuleSupport = function (location, top, bottom, width, radius, background, colour) {
+  this . pattern = null;
   this . draw = function (ctx, s) {
+    if (this . pattern === null) {
+      if (typeof (background) == 'string') this . pattern = background;
+      else this . pattern = ctx . createPattern (background, 'repeat');
+    }
     var position = location * s . length;
     var h = s . height ();
     var w = width * 0.5 * s . length;
@@ -1698,7 +1709,7 @@ var RuleSupport = function (location, top, bottom, width, radius, background, co
     ctx . arc (position - w + radius, top + radius, radius, Math . PI, Math . PI * 1.5);
     ctx . arc (position + w - radius, top + radius, radius, Math . PI * 1.5, 0);
     ctx . closePath ();
-    ctx . fillStyle = background;
+    ctx . fillStyle = this . pattern;
     ctx . strokeStyle = colour;
     ctx . fill ();
     ctx . stroke ();
