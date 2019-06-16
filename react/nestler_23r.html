@@ -59,7 +59,7 @@ var floor = new VintageFloor (0.0895, 0.0895, -4, 0, 4, 'blue', oak, 76, 70 + 36
 // well is 72 => from 70 => to 142
 floor . backMarkings . push (new RuleSupport (0.5, 72, 70 + 36 - 4, 1.4, 8, '#efefd0', 'black'));
 floor . backMarkings . push (new RuleSupport (0.5, 70 + 36 + 4, 70 + 72 - 2, 1.4, 8, '#efefd0', 'black'));
-floor . markings . push (new Engraving ('SYSTEM RIETZ NO 23 R        ALBERT NESTLER     A,-G    LAHR    i/B      D.R.PATENT', '12px arial', 'center', 'black', 0.5, 96));
+floor . markings . push (new Engraving ('SYSTEM RIETZ \u2116 23 R        ALBERT NESTLER     A,-G    LAHR    i/B      D.R.G.M.      D.R.PATENT', '12px arial', 'center', 'black', 0.5, 96));
 floor . scales . push ({x: -1.2685, y: 70 + 36 + 4, scale: new scale_Metric_down (24, {scale: 25, right_extension: 2})});
 s . backBraces . push (floor);
 s . cursorBraces . push (new CursorWindow (8, 4, 'silver', 'black'));
@@ -93,9 +93,9 @@ var acMarkings = [
 ];
 
 var stStack = [
-  new scale_S_down (24, {lines: [{left: 0, right: 1, height: 0.2}]}),
-  new scale_ST (24, {draw_c: false, lines: [{left: 0, right: 1, height: 0.8}, {left: 0, right: 1, height: 1}]}),
-  new scale_T (24, {lines: [{left: 0, right: 1, height: 0.8}]})
+  new scale_S_down (24, {right: 'S', rs: 0.015, lines: [{left: 0, right: 1, height: 0.2}]}),
+  new scale_ST (24, {right: 'S&T', rs: 0.015, draw_c: false, lines: [{left: 0, right: 1, height: 0.8}, {left: 0, right: 1, height: 1}]}),
+  new scale_T (24, {right: 'T', rs: 0.015, lines: [{left: 0, right: 1, height: 0.8}]})
 ];
 
 var stMarkings = [
@@ -122,16 +122,18 @@ r . scales . push (new spacer (6));
 
 //===============================
 
-s = new Sliderule (1200, {left_margin: 0.089, right_margin: 0.089, cursor_left_extension: 0.0825, cursor_right_extension: 0.0825, cursor_limit_left: 0.0075, cursor_limit_right: 0.0075, cursor_top_margin: -14, cursorHairline: 'black', hairline_top: -10, cursor_markings_shift: 0.005}); sliderules . sliderules . push (s);
+s = new Sliderule (1200, {left_margin: 0.089, right_margin: 0.089, cursor_left_extension: 0.0825, cursor_right_extension: 0.0825, cursor_limit_left: 0.0075, cursor_limit_right: 0.0075, cursor_top_margin: -14, cursorHairline: 'black', hairline_top: -10, cursor_markings_shift: 0.005, cursorGlass: false, cursorFrame: false, cursorHairline: false}); sliderules . sliderules . push (s);
 // well is 72 => from 58 => to 130
 var floor = new VintageFloor (0.0895, 0.0895, -4, 0, 4, 'blue', oak, 88, 124, 0.102, 64, 100, 0.102);
-floor . backMarkings . push (new RuleSupport (0.5, 60, 90, 1.4, 8, '#efefd0', 'black'));
-floor . backMarkings . push (new RuleSupport (0.5, 98, 128, 1.4, 8, '#efefd0', 'black'));
-floor . markings . push (new Engraving ('SYSTEM RIETZ NO 23 R        ALBERT NESTLER     Ar6.    LAHR    I/B      D.R.PATENT', '24px arial', 'center', 'black', 0.5, 100));
-floor . scales . push ({x: -1.2685, y: 70 + 36 + 4, scale: new scale_Metric_down (24, {scale: 25, right_extension: 2})});
+floor . backMarkings . push (new RuleSupport (0.5, 0, 90, 1.17, 8, '#efefd0', 'black'));
+floor . backMarkings . push (new RuleSupport (0.5, 98, 196, 1.17, 8, '#efefd0', 'black'));
+floor . backMarkings . push (new RuleSupport (0.5, 4, 30, 1.17, 8, oak, 'black'));
+floor . backMarkings . push (new RuleSupport (0.5, 150, 190, 1.17, 8, oak, 'black'));
 
 s . braces . push (floor);
-s . cursors . push (new Cursor (0, 98, 196, 'blue', {main: true, static: true}));
+s . cursors . push (new Cursor (0, 84, 128, 'blue', {main: true, static: true}));
+s . cursors . push (new Cursor (1, 60, 104, 'blue', {main: true, static: true}));
+s . cursorBraces . push (new RuleSupport (0, -12, -4, 0.165, 4, 'silver', 'black'));
 
 
 r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0', rounding: 0}); s . rules . push (r);
@@ -142,9 +144,9 @@ s . rules . push (new spacer (2));
 r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); s . rules . push (r);
 r . markings . push (new Screw (-0.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
 r . markings . push (new Screw (1.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
-r . scales . push (new scale_D (24, {left_extension: 0.053, right_extension: 0.053, draw_e: false, lines: [{left: 0, right: 1, height: 0.2}]}));
-r . scales . push (new scale_L (24, {lines: [{left: 0, right: 1, height: 0.8}]}));
 r . scales . push (new spacer (2));
+r . scales . push (new scale_L (24, {lines: [{left: 0, right: 1, height: 0.8}]}));
+r . scales . push (new scale_D (24, {left_extension: 0.053, right_extension: 0.053, draw_e: false, lines: [{left: 0, right: 1, height: 0.2}]}));
 
 r = new Rule ({stator: 1, left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); s . rules . push (r);
 r . markings = stMarkings;
@@ -153,17 +155,17 @@ r . scales = stStack;
 r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rule_colour: '#ffffe0'}); s . rules . push (r);
 r . markings . push (new Screw (-0.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
 r . markings . push (new Screw (1.0725, 25, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
-r . scales . push (new spacer (2));
-r . scales . push (new scale_J (24, {lines: [{left: 0, right: 1, height: 0.2}], draw_e: false, draw_pi: false}));
 r . scales . push (new scale_A (24, {left_extension: 0.053, right_extension: 0.055, draw_e: false, lines: [{left: 0, right: 1, height: 0.8}]}));
+r . scales . push (new scale_J (24, {lines: [{left: 0, right: 1, height: 0.2}], draw_e: false, draw_pi: false}));
+r . scales . push (new spacer (2));
 
 s . rules . push (new spacer (2));
 
 r = new Rule ({left_margin: 0.0895, right_margin: 0.0895, rounding: 8, rule_colour: '#ffffe0', v_scaling: 0.5}); s . rules . push (r);
 r . markings . push (new Screw (-0.0725, 18, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
 r . markings . push (new Screw (1.0725, 18, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
-r . scales . push (new scale_Metric_down (24, {scale: 25, shift: -1, right_extension: 0.04}));
 r . scales . push (new spacer (12));
+r . scales . push (new scale_Metric_down (24, {scale: 25, shift: -1, right_extension: 0.04}));
 
 //===============================
 
@@ -178,7 +180,7 @@ r . markings . push (new Engraving ('1:25', '12px arial', 'left', 'black', -0.06
 r . markings . push (new Screw (-0.0725, 18, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
 r . markings . push (new Screw (1.0725, 18, 6, Math . random () * Math . PI, '#b7410e', 'silver'));
 r . scales . push (new spacer (12));
-r . scales . push (new scale_Metric (24, {scale: 25 / 4, shift: -1 / 4, right_extension: 0.05}));
+r . scales . push (new scale_Metric (24, {scale: 25 / 4, shift: -1 / 4, right_extension: 0.05, metric_25: true}));
 
 </script>
 
