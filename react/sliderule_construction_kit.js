@@ -403,6 +403,26 @@ var draw_metric_25 = function (ctx, length, height, scale) {
   draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, scale . step * 0.5, scale . step * 0.1, scale . step * 0.5);
   draw_XR (ctx, scale . location, length, 0, high_value, limit, h2, scale . step * 0.1, scale . step * 0.02, scale . step * 0.1);
 };
+var draw_studymate = function (ctx, length, height, scale) {
+  var h8 = height * 0.8, h7 = height * 0.7, h6 = height * 0.6, h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+  var limit = 1 + scale . right_extension;
+  var high_value = scale . step * 100;
+//  var draw_MRS = function (ctx, fn, length, from, to, step, limit, height, marking_limit) {
+  draw_XR (ctx, scale . location, length, 0, high_value, limit, height, high_value, 1, high_value);
+  draw_XR (ctx, scale . location, length, 0, high_value, limit, h8, 1, 0.5, 1);                  // 1/2
+  draw_XR (ctx, scale . location, length, 0, high_value, limit, h6, 0.5, 0.25, 0.5);             // 1/4
+  draw_XR (ctx, scale . location, length, 0, high_value, limit, h5, 0.25, 0.125, 0.25);          // 1/8
+  draw_XR (ctx, scale . location, length, 0, high_value, limit, h4, 0.125, 0.0625, 0.125);       // 1/16
+  draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, 0.0625, 0.03125, 0.0625);    // 1/32
+  if (scale . draw_64)
+    draw_XR (ctx, scale . location, length, scale . draw_64 . from, scale . draw_64 . to, limit, h2, 0.03125, 0.015625, 0.03125); // 1/32
+  ctx . textAlign = 'right';
+  var ind = 1, position = scale . location (1);
+  while (position <= limit) {
+    mmark (ctx, ind, position * length - 1, h5);
+    ind += 1; position = scale . location (ind);
+  }
+};
 var fn_lin = function (value) {return value * 0.1;};
 var draw_lin = function (ctx, length, height, scale) {
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;

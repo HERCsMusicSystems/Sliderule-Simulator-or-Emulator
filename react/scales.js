@@ -37,6 +37,7 @@
 // LL3(_down), LL2(_down), LL1(_down), LL0(_down), CLL0, DLL0
 // LL03(_down), LL02(_down), LL01(_down), LL00(_down)
 // Metric(_down) => step, scale, shift
+// StudyMate(_down) => step, scale, shift
 // SINH1dec(_down), SINH2dec(_down), SINH1grad(_down), SINH2grad(_down), SINH1rad(_down), SINH2rad(_down);
 // COSHdec(_down), COSHgrad(_down), COSHrad(_down)
 // TANHdec(_down), TANHgrad(_down), TANHrad(_down)
@@ -232,6 +233,19 @@ var scale_Metric_down = function (height, options) {
 	};
 	return s;
 };
+var scale_StudyMate = function (height, options) {
+  spacer . call (this, height, options);
+  var self = this;
+  this . value = function (location) {return location * self . scale - self . shift;};
+  this . location = function (value) {return value / self . scale + self . shift / self . scale;};
+};
+inherit (scale_StudyMate, spacer);
+scale_StudyMate . prototype . step = 1;
+scale_StudyMate . prototype . scale = 10;
+scale_StudyMate . prototype . shift = 0;
+scale_StudyMate . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_studymate (ctx, length, this . height, this);};
+var scale_StudyMate_down = function (height, options) {scale_StudyMate . call (this, height, options);}; inherit (scale_StudyMate_down, scale_StudyMate);
+scale_StudyMate_down . prototype . draw = function (ctx, length) {draw_studymate (ctx, length, - this . height, this);};
 var scale_L = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return location * 10;};
