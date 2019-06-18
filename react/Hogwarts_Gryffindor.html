@@ -27,7 +27,7 @@
   <head>
     <title>Gryffindor</title>
   </head>
-<body background=Hogwarts.jpg style="background-size: 100%;">
+<body background=GryffindorCommonRoom.jpg style="background-size: cover;">
 <style>
 @font-face
 {
@@ -60,12 +60,12 @@ var sliderules = new Sliderules ();
 var Hogwarts = new Image (); Hogwarts . src = 'Hogwarts.jpg'; Hogwarts . onload = function () {sliderules . requireRedraw = true;};
 var oak = new Image (); oak . src = 'oak.png'; oak . onload = function () {sliderules . requireRedraw = true;};
 
-var s = new Sliderule (1200);
+var s = new Sliderule (1200, {hairline_top: -24});
 sliderules . sliderules . push (s);
 var floor = new VintageFloor (0.125, 0.125, 1, 1, 4, 'blue', oak, 76, 70 + 36 + 6, 0.102, 100, 136, 0.102);
 s . backBraces . push (floor);
 s . cursorBraces . push (new DecilonWindow (8, 0.091, 0.09, 0.08, -2, -4, -30, 'gold', 'red'));
-s . cursorBraces . push (new RuleSupport (0, 12, 30, 0.2, 4, 'silver', 'gold'));
+s . cursorGlassBraces . push (new RuleSupport (0, 14, 22, 0.18, 4, 'silver', 'gold'));
 s . cursorBraces . push (new Engraving ('Gryffindor', '20px snell', 'right', 'gold', -0.001, 38));
 var r = new Rule ({v_scaling: 0.5, rule_colour: '#111111', left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
 r . scales . push (new scale_Metric_down (24, {colour: 'gold', scale: 25.4, shift: -2.54, right_extension: 0.1008}));
