@@ -408,6 +408,7 @@ var draw_studymate = function (ctx, length, height, scale) {
   var limit = 1 + scale . right_extension;
   var high_value = scale . step * 100;
 //  var draw_MRS = function (ctx, fn, length, from, to, step, limit, height, marking_limit) {
+  tick (ctx, scale . location (0) * length, height);
   draw_XR (ctx, scale . location, length, 0, high_value, limit, height, high_value, 1, high_value);
   draw_XR (ctx, scale . location, length, 0, high_value, limit, h8, 1, 0.5, 1);                  // 1/2
   draw_XR (ctx, scale . location, length, 0, high_value, limit, h6, 0.5, 0.25, 0.5);             // 1/4
