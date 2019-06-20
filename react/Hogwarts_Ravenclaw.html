@@ -1,3 +1,4 @@
+<meta charset="UTF-8"/>
 <!--
 ///////////////////////////////////////////////////////////////////////////////////
 //                     Copyright (C) 2017 Dr Robert P. Wolf                      //
@@ -24,24 +25,23 @@
 -->
 <html>
   <head>
-    <title>Raven</title>
+    <title>Gryffindor</title>
   </head>
-<body>
+<body background=RavenclawCommonRoom.jpg style="background-size: cover;">
+<style>
+@font-face
+{
+font-family: snell;
+src: url('snellbt-regular.otf'),
+url('snellbt-regular.eot');
+}
+</style>
+<font face="snell" color="yellow" size="+2">
 <div>
-	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
-	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
-	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
-	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
-  <br/>
-  <select id = lessons />
-  <input type = button id = play value = Play onclick = "javascript: playLesson ();" />&nbsp;&nbsp;&nbsp;
-  <input type = button id = clear_instructions onclick = "javascript: document . getElementById ('info') . innerHTML = '';" value = "Clear instructions." />
-  <div style = "display: block; position: fixed; background-color: white; border-color: black; border-style: solid; border-width: 1px;">
-    <font color = red ><span id = info /></font>
-  </div>
 </div>
+</font>
 <div id="root"></div>
 
 <script src="sliderule_construction_kit.js"></script>
@@ -49,117 +49,23 @@
 <script src="folded_scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
 
+
 <script>
 
-var message = function (info) {
-  if (info == "") {document . getElementById ('info') . innerHTML = ""; return;}
-  document . getElementById ('info') . innerHTML += info + "<br />";// alert (info);
-};
-var playLesson = function () {
-  document . getElementById ('info') . innerHTML = "";
-  var lesson = multiplicationLessons [document . getElementById ('lessons') . value];
-  if (lesson == null) {alert ("Lesson not found."); return;}
-  sequencer (lesson (message));
-};
+var wood_floor = new Image (); wood_floor . src = 'wood/wood_1.jpg'; wood_floor . onload = function () {sliderules . requireRedraw = true;};
+var wood = new Image (); wood . src = 'wood/wood_7.png'; wood . onload = function () {sliderules . requireRedraw = true;};
 
+var house_logo = new Image (); house_logo . src = 'hogwart/Ravenclaw_ClearBG2.png'; house_logo . onload = function () {sliderules . requireRedraw = true;};
 
-var outback = new Image (); outback . src = 'outback.jpg'; outback . onload = function () {sliderules . requireRedraw = true;};
-var sliderules = new Sliderules ({background: outback, background_translation: {x: 0, y: -360}, background_colour: 'black'});
-var s = new Sliderule (1200, {cursor_top_margin: 13, cursor_bottom_margin: 13, hairline_top: -10, hairline_bottom: -10, cursor_limit_left: 0.028, cursor_limit_right: 0.028, markings_background: 'yellow'}); sliderules . sliderules . push (s);
-s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 74, 1));
-s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 76, 1));
-s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 74, 1));
-s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 76, 1));
-s . cursorGlassBraces . push (new DecilonCursorBrace (1, 0.1, 12, 8, 0.04, 18, 4, 'tan', 'black'));
-s . cursorBraces . push (new Engraving ('HERCs', '12px arial', 'right', 'red', 0.09, 289));
-s . cursorBraces . push (new Screw (-0.07, -9, 6, Math . random () * Math . PI, 'gold', 'silver'));
-s . cursorBraces . push (new Screw (0.07, -9, 6, Math . random () * Math . PI, 'gold', 'silver'));
-s . cursorBraces . push (new Screw (-0.07, 303, 6, Math . random () * Math . PI, 'gold', 'silver'));
-s . cursorBraces . push (new Screw (0.07, 303, 6, Math . random () * Math . PI, 'gold', 'silver'));
-s . cursors . push (new Cursor (HairlinePS, 74, 122, 'red'));
-s . cursors . push (new Cursor (HairlineS, 74, 122, 'red'));
-s . cursors . push (new Cursor (HairlineD, 172, 220, 'red', {marking_align: 'right', marking_shift: -0.01}));
-var r = new Rule (); s . rules . push (r);
-r . markings . push (new Engraving ('RAVEN', '16px arial', 'left', 'red', 0, 20));
-r . markings . push (new Engraving ('Made in Australia', '12px arial', 'right', 'black', 1, 16));
-r . scales . push (new spacer (26));
-r . scales . push (new scale_P (24, {left: "P"}));
-r . scales . push (new scale_K (24, {left: "K", right: "X\u00b3", rs: 0.07, indices: ['1', '10', '100', '1000']}));
-r . scales . push (new scale_A (24, {left: "A", right: "X\u00b2", rs: 0.07, indices: ['1', '10', '100']}));
-r = new Rule ({stator: 1}); s . rules . push (r);
-r . markings . push (new RuleBars (-0.194, 1, 4, 96, 9, 6, 4, 'tan'));
-r . markings . push (new RuleBars (1.194, -1, 4, 96, 9, 6, 4, 'tan'));
-r . scales . push (new scale_B (24, {left: "B", right: "X\u00b2", rs: 0.07, indices: ['1', '10', '100']}));
-r . scales . push (new scale_SCdec (24, {left: "S", right: "sin X", rs: 0.07}));
-r . scales . push (new spacer (2));
-r . scales . push (new scale_TCTdec_down (24, {left: "T", right: "tan X", rs: 0.07}));
-r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, draw_st_corrections: true, draw_r: true}));
-r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.07, draw_r: true}));
-r . scales . push (new scale_M (24, {left: "L"}));
-r . scales . push (new scale_LL01_down (24, {left: "LL01"}));
-r . scales . push (new scale_LL00_down (24, {left: "LL00"}));
-r . scales . push (new spacer (2));
-
-
-var s = new Sliderule (1200, {cursor_top_margin: 13, cursor_bottom_margin: 13, hairline_top: -10, hairline_bottom: -10, cursor_limit_left: 0.028, cursor_limit_right: 0.028, markings_background: 'yellow'}); sliderules . sliderules . push (s);
-s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 74, 1));
-s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 76, 1));
-s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 74, 1));
-s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 76, 1));
-s . cursorGlassBraces . push (new DecilonCursorBrace (1, 0.1, 12, 8, 0.04, 18, 4, 'tan', 'black'));
-s . cursorBraces . push (new Engraving ('HERCs', '12px arial', 'right', 'red', 0.09, 289));
-s . cursorBraces . push (new Screw (-0.07, -9, 6, Math . random () * Math . PI, 'gold', 'silver'));
-s . cursorBraces . push (new Screw (0.07, -9, 6, Math . random () * Math . PI, 'gold', 'silver'));
-s . cursorBraces . push (new Screw (-0.07, 303, 6, Math . random () * Math . PI, 'gold', 'silver'));
-s . cursorBraces . push (new Screw (0.07, 303, 6, Math . random () * Math . PI, 'gold', 'silver'));
-s . cursors . push (new Cursor (Hairline360, 74, 122, 'red'));
-var r = new Rule (); s . rules . push (r);
-r . markings . push (new Engraving ('RAVEN', '16px arial', 'left', 'red', 0, 20));
-r . markings . push (new Engraving ('Made in Australia', '12px arial', 'right', 'black', 1, 16));
-r . scales . push (new spacer (26));
-r . scales . push (new scale_LL03 (24, {left: "LL03"}));
-r . scales . push (new scale_LL02 (24, {left: "LL02"}));
-r . scales . push (new scale_CF (24, {left: "DF", right: "\u03c0X", rs: 0.07, indices: ['>>1<<']}));
-r = new Rule ({stator: 1}); s . rules . push (r);
-r . markings . push (new RuleBars (-0.194, 1, 4, 96, 9, 6, 4, 'tan'));
-r . markings . push (new RuleBars (1.194, -1, 4, 96, 9, 6, 4, 'tan'));
-r . scales . push (new scale_DF (24, {left: "CF", right: "\u03c0X", rs: 0.07, indices: ['>>1<<'], draw_r: true, draw_q: true}));
-r . scales . push (new scale_CIF (24, {left: "CIF", right: "10/\u03c0X", rs: 0.07, marking_colour: 'red', indices: ['>>1<<']}));
-r . scales . push (new spacer (2));
-r . scales . push (new scale_DI (24, {left: "CI", right: "10/X", rs: 0.07, marking_colour: 'red'}));
-r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07, draw_r: true, draw_q: true}));
-r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_DLL0 (24, {left: "D", right: "X", rs: 0.07, draw_r: true}));
-r . scales . push (new scale_LL1_down (24, {left: "LL1"}));
-r . scales . push (new scale_LL2_down (24, {left: "LL2"}));
-r . scales . push (new scale_LL3_down (24, {left: "LL3"}));
-r . scales . push (new spacer (2));
-
-var training = function () {
-  sequencer ([
-    {action: function () {isolate (["A", "B"]); changeMarkings ('hairline', true);}, delay: 1500},
-    {action: function () {alert ('Slide cursor to 2 on "A"'); cursorTo ("A", 2);}, delay: 1500},
-    {action: function () {alert ('Align 1 on "B" with the cursor'); slideTo ("B", 1);}, delay: 1500},
-    {action: function () {alert ('Slide cursor to 3 on "B"'); cursorTo ("B", 3);}, delay: 1500},
-    {action: function () {alert ('Now read "6" on the "A" scale');}, delay: 1500},
-    {action: function () {isolate (); cursorTo ("A", 1); slideTo ("B", 1);}, delay: 2000}
-  ]);
-};
+var sliderules = new Sliderules ({wood_floor: wood_floor, wood: wood, house_logo: house_logo, house: 'Gryffindor', motto: 'You might belong in Gryffindor, Where dwell the brave at heart, Their daring, nerve and chivalry Set Gryffindor appart'});
 
 </script>
-
+<script src=hogwarts_student.js></script>
 <script src="sliderule_application.js"></script>
 
-<script src="sliderule_tutorial_multiplications.js"></script>
-
 <script>
-changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
-changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
-changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
-changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
 </script>
 
 </body></html>
