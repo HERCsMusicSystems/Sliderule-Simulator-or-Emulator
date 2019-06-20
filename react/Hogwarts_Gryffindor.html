@@ -38,12 +38,8 @@ url('snellbt-regular.eot');
 </style>
 <font face="snell" color="yellow" size="+2">
 <div>
-	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
-	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
-	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
-	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
 </div>
 </font>
 <div id="root"></div>
@@ -59,11 +55,29 @@ url('snellbt-regular.eot');
 var sliderules = new Sliderules ();
 var Hogwarts = new Image (); Hogwarts . src = 'Hogwarts.jpg'; Hogwarts . onload = function () {sliderules . requireRedraw = true;};
 var oak = new Image (); oak . src = 'oak.png'; oak . onload = function () {sliderules . requireRedraw = true;};
+var wood_1 = new Image (); wood_1 . src = 'wood/wood_1.jpg'; wood_1 . onload = function () {sliderules . requireRedraw = true;};
+//var wood_2 = new Image (); wood_2 . src = 'wood/wood_2.jpg'; wood_2 . onload = function () {sliderules . requireRedraw = true;};
+//var wood_3 = new Image (); wood_3 . src = 'wood/wood_3.jpg'; wood_3 . onload = function () {sliderules . requireRedraw = true;};
+//var wood_4 = new Image (); wood_4 . src = 'wood/wood_4_cherry.jpg'; wood_4 . onload = function () {sliderules . requireRedraw = true;};
+//var wood_5 = new Image (); wood_5 . src = 'wood/wood_5.jpg'; wood_5 . onload = function () {sliderules . requireRedraw = true;};
+//var wood_6 = new Image (); wood_6 . src = 'wood/wood_6.jpg'; wood_6 . onload = function () {sliderules . requireRedraw = true;};
+var wood_7 = new Image (); wood_7 . src = 'wood/wood_7.png'; wood_7 . onload = function () {sliderules . requireRedraw = true;};
+//var wood_8 = new Image (); wood_8 . src = 'wood/wood_8.jpg'; wood_8 . onload = function () {sliderules . requireRedraw = true;};
+//var wood_9 = new Image (); wood_9 . src = 'wood/wood_9.jpg'; wood_9 . onload = function () {sliderules . requireRedraw = true;};
+//var wood_10 = new Image (); wood_10 . src = 'wood/wood_10.jpeg'; wood_10 . onload = function () {sliderules . requireRedraw = true;};
+
+var wood = wood_7;
+var wood_floor = wood_1;
+
 var gryffindor = new Image (); gryffindor . src = 'hogwart/Gryffindor_ClearBG2.png'; gryffindor . onload = function () {sliderules . requireRedraw = true;};
 
-var s = new Sliderule (1200, {hairline_top: -5, hairline_bottom: -5, cursor_left_extension: 0.08, cursor_right_extension: 0.08, cursorGlass: '#ffff0022'});
+var s = new Sliderule (1200, {hairline_top: -5, hairline_bottom: -5, cursor_left_extension: 0.08, cursor_right_extension: 0.08, cursorGlass: '#ffff0022', cursor_limit_left: 0.1 + HairlineS, cursor_limit_right: 0.1 + HairlineS, markings_background: '#ff2400', markings_colour: 'gold', cursor_markings_shift: 0.005});
 sliderules . sliderules . push (s);
-var floor = new VintageFloor (0.125, 0.125, 1, 1, 4, 'blue', oak, 128 - 24, 128 + 24, 0.05, 128 - 24, 128 + 24, 0.05);
+var floor = new VintageFloor (0.125, 0.125, 1, 1, 4, '#00000000', wood_floor, 128 - 24, 128 + 24, 0.01);
+floor . scales . push ({x: -0.125, y: 132, scale: new scale_StudyMate (24, {colour: 'gold', shift: -12.5, right_extension: 0.15})});
+floor . markings . push (new Logo (gryffindor, -0.06, 128, 0.5));
+floor . markings . push (new Logo (gryffindor, 1.06, 128, 0.5));
+floor . markings . push (new Engraving ('You might belong in Gryffindor, Where dwell the brave at heart, Their daring, nerve and chivalry Set Gryffindor appart', '20px snell', 'center', '#ff2400', 0.5, 120))
 s . backBraces . push (floor);
 s . cursorBraces . push (new DecilonWindow (8, 0.08, 0.076, 0.06, -2, -4, -30, 'gold', 'red'));
 //s . cursorGlassBraces . push (new RuleSupport (0, 14, 22, 0.18, 4, 'silver', 'gold'));
@@ -81,23 +95,23 @@ s . cursorBraces . push (new HLine (236, 0.08, 0.06, 'red'));
 s . cursorBraces . push (new HLine (239, -0.06, 0.06, 'lime'));
 s . cursorBraces . push (new HLine (235, -0.06, 0.06, 'lime'));
 s . cursorBraces . push (new Engraving ('Gryffindor', '18px snell', 'right', 'gold', 0, 38));
-s . cursors . push (new Cursor (HairlineS, 5, 16, 'red'));
-s . cursors . push (new Cursor (HairlineS, 240, 251, 'red'));
-s . cursors . push (new Cursor (HairlineS, 20 + 48 + 2, 20 + 48 + 48 - 2, 'lime'));
-s . cursors . push (new Cursor (HairlineS, 46, 66, 'red'));
-s . cursors . push (new Cursor (HairlineS, 118, 230, 'red'));
-s . cursors . push (new Cursor (HairlineD, 5, 16, 'red'));
-s . cursors . push (new Cursor (HairlineD, 240, 251, 'red'));
-s . cursors . push (new Cursor (HairlineD, 20 + 72 + 48 + 2, 20 + 72 + 96 - 2, 'lime'));
-s . cursors . push (new Cursor (HairlineD, 46, 138, 'red'));
-s . cursors . push (new Cursor (HairlineD, 190, 230, 'red'));
-var r = new Rule ({v_scaling: 0.5, rule_colour: '#111111', left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
+s . cursors . push (new Cursor (HairlineS, 5, 16, 'red', {marking_shift: -0.005, marking_align: 'right'}));
+s . cursors . push (new Cursor (HairlineS, 240, 251, 'red', {marking_shift: -0.005, marking_align: 'right'}));
+s . cursors . push (new Cursor (HairlineS, 20 + 48 + 2, 20 + 48 + 48 - 2, 'lime', {marking_shift: -0.005, marking_align: 'right'}));
+s . cursors . push (new Cursor (HairlineS, 46, 66, 'red', {marking_shift: -0.005, marking_align: 'right'}));
+s . cursors . push (new Cursor (HairlineS, 118, 230, 'red', {marking_shift: -0.005, marking_align: 'right'}));
+s . cursors . push (new Cursor (HairlineD, 5, 16, 'red', {marking_shift: 0.005}));
+s . cursors . push (new Cursor (HairlineD, 240, 251, 'red', {marking_shift: 0.005}));
+s . cursors . push (new Cursor (HairlineD, 20 + 72 + 48 + 2, 20 + 72 + 96 - 2, 'lime', {marking_shift: 0.005}));
+s . cursors . push (new Cursor (HairlineD, 46, 138, 'red', {marking_shift: 0.005}));
+s . cursors . push (new Cursor (HairlineD, 190, 230, 'red', {marking_shift: 0.005}));
+var r = new Rule ({v_scaling: 0.5, rule_colour: wood, left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
 r . scales . push (new scale_Metric_down (24, {colour: 'gold', scale: 25.4, shift: -2.54, right_extension: 0.1008}));
 r . scales . push (new spacer (12));
 
 s . rules . push (new spacer (2));
 
-r = new Rule ({rule_colour: '#111111', left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
+r = new Rule ({rule_colour: wood, left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
 r . markings . push (new Engraving ('Gryffindor House', '24px snell', 'center', '#ff2400', 0.5, 20));
 r . scales . push (new spacer (24));
 //r . scales . push (new scale_L (24, {colour: 'gold'}));
@@ -105,13 +119,14 @@ r . scales . push (new spacer (24));
 r . scales . push (new scale_K (24, {colour: 'gold', left_extension: 0.076, right_extension: 0.069, alt: 'green', marking_alt: 'red'}));
 r . scales . push (new scale_A (24, {colour: 'gold', left_extension: 0.08, right_extension: 0.076, alt: 'green', marking_alt: 'red'}));
 
-r = new Rule ({stator: 1, rule_colour: '#111111', left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
+r = new Rule ({stator: 1, rule_colour: wood, left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
 r . scales . push (new scale_B (24, {colour: 'gold', left_extension: 0.08, right_extension: 0.076, alt: 'green', marking_alt: 'red'}));
 r . scales . push (new scale_CI (24, {colour: 'gold', left_extension: 0.08, right_extension: 0.078, marking_colour: 'red', alt: 'green', marking_alt: 'red'}));
 r . scales . push (new scale_C (24, {colour: 'gold', left_extension: 0.078, right_extension: 0.08, alt: 'green', marking_alt: 'red', draw_q: true, draw_r: true, draw_st_corrections: true}));
 
-r = new Rule ({rule_colour: '#111111', left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
-r . markings . push (new Logo (gryffindor, 1.03, 46, 0.32));
+r = new Rule ({rule_colour: wood, left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
+r . markings . push (new Logo (gryffindor, 1.1, 46, 0.32));
+r . markings . push (new Logo (gryffindor, -0.1, 46, 0.32));
 r . scales . push (new scale_D (24, {colour: 'gold', left_extension: 0.078, right_extension: 0.08, alt: 'green', marking_alt: 'red'}));
 r . scales . push (new scale_SCdec_down (24, {colour: 'gold', left_extension: 0.08}));
 r . scales . push (new scale_TCTdec_down (24, {colour: 'gold', left_extension: 0.08}));
@@ -119,7 +134,7 @@ r . scales . push (new scale_TCTdec_down (24, {colour: 'gold', left_extension: 0
 
 s . rules . push (new spacer (2));
 
-r = new Rule ({rule_colour: '#111111', v_scaling: 0.5, left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
+r = new Rule ({rule_colour: wood, v_scaling: 0.5, left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
 r . scales . push (new spacer (12));
 r . scales . push (new scale_StudyMate (24, {colour: 'gold', shift: -1, right_extension: 0.1}));
 
@@ -203,12 +218,8 @@ r . scales . push (new spacer (2));
 <script src="sliderule_application.js"></script>
 
 <script>
-changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
-changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
-changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
-changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
 </script>
 
 </body></html>
