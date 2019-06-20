@@ -1,4 +1,4 @@
-var s = new Sliderule (1200, {hairline_top: -5, hairline_bottom: -5, cursor_left_extension: 0.08, cursor_right_extension: 0.08, cursorGlass: '#ffff0022', cursor_limit_left: 0.1 + HairlineS, cursor_limit_right: 0.1 + HairlineS, markings_background: '#ff2400', markings_colour: 'gold', cursor_markings_shift: 0.005, cursor_top_margin: -10, cursor_bottom_margin: -10, cursor_rounding: 8});
+var s = new Sliderule (1200, {hairline_top: -5, hairline_bottom: -5, cursor_left_extension: 0.08, cursor_right_extension: 0.08, cursorGlass: '#ffff0022', cursor_limit_left: 0.1 + HairlineS, cursor_limit_right: 0.1 + HairlineS, markings_background: sliderules . c1, markings_colour: sliderules . c2, cursor_markings_shift: 0.005, cursor_top_margin: -10, cursor_bottom_margin: -10, cursor_rounding: 8});
 sliderules . sliderules . push (s);
 var floor = new VintageFloor (0.125, 0.125, 1, 1, 4, '#00000000', sliderules . wood_floor, 128 - 24, 128 + 24, 0.01);
 floor . scales . push ({x: -0.125, y: 132, scale: new scale_StudyMate (24, {colour: sliderules . c2, shift: -12.5, right_extension: 0.15})});
