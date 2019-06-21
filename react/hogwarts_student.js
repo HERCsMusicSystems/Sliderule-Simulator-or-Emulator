@@ -33,6 +33,7 @@ s . cursors . push (new Cursor (HairlineD, 20 + 72 + 48 + 2, 20 + 72 + 96 - 2, '
 s . cursors . push (new Cursor (HairlineD, 46, 138, 'red', {marking_shift: 0.005}));
 s . cursors . push (new Cursor (HairlineD, 190, 230, 'red', {marking_shift: 0.005}));
 var r = new Rule ({v_scaling: 0.5, rule_colour: sliderules . wood, left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
+r . markings . push (new Engraving ('CENTIMETRES', '12px arial', 'left', sliderules . c2, 1.02, 32));
 r . scales . push (new scale_Metric_down (24, {colour: sliderules . c2, scale: 25.4, shift: -2.54, right_extension: 0.1008}));
 r . scales . push (new spacer (12));
 
@@ -43,24 +44,25 @@ r . markings . push (new Engraving (sliderules . house + ' House', '24px snell',
 r . scales . push (new spacer (24));
 //r . scales . push (new scale_L (24, {colour: 'gold'}));
 //r . scales . push (new scale_P (24, {colour: 'gold'}));
-r . scales . push (new scale_K (24, {colour: sliderules . c2, left_extension: 0.076, right_extension: 0.069, alt: 'green', marking_alt: 'red'}));
-r . scales . push (new scale_A (24, {colour: sliderules . c2, left_extension: 0.08, right_extension: 0.076, alt: 'green', marking_alt: 'red'}));
+r . scales . push (new scale_K (24, {right: '\u{1d465}\u00b3', rs: 0.09, colour: sliderules . c2, left_extension: 0.076, right_extension: 0.069, alt: 'green', marking_alt: 'red'}));
+r . scales . push (new scale_A (24, {right: '\u{1d465}\u00b2', rs: 0.09, colour: sliderules . c2, left_extension: 0.08, right_extension: 0.076, alt: 'green', marking_alt: 'red'}));
 
 r = new Rule ({stator: 1, rule_colour: sliderules . wood, left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
-r . scales . push (new scale_B (24, {colour: sliderules . c2, left_extension: 0.08, right_extension: 0.076, alt: 'green', marking_alt: 'red'}));
-r . scales . push (new scale_CI (24, {colour: sliderules . c2, left_extension: 0.08, right_extension: 0.078, marking_colour: 'red', alt: 'green', marking_alt: 'red'}));
-r . scales . push (new scale_C (24, {colour: sliderules . c2, left_extension: 0.078, right_extension: 0.08, alt: 'green', marking_alt: 'red', draw_q: true, draw_r: true, draw_st_corrections: true}));
+r . scales . push (new scale_B (24, {right: '\u{1d465}\u00b2', rs: 0.09, colour: sliderules . c2, left_extension: 0.08, right_extension: 0.076, alt: 'green', marking_alt: 'red'}));
+r . scales . push (new scale_CI (24, {right: '1/\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.08, right_extension: 0.078, marking_colour: 'red', alt: 'green', marking_alt: 'red'}));
+r . scales . push (new scale_C (24, {right: '\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.078, right_extension: 0.08, alt: 'green', marking_alt: 'red', draw_q: true, draw_r: true, draw_st_corrections: true}));
 
 r = new Rule ({rule_colour: sliderules . wood, left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
 r . markings . push (new Logo (sliderules . house_logo, 1.1, 46, 0.32));
 r . markings . push (new Logo (sliderules . house_logo, -0.1, 46, 0.32));
-r . scales . push (new scale_D (24, {colour: sliderules . c2, left_extension: 0.078, right_extension: 0.08, alt: 'green', marking_alt: 'red'}));
-r . scales . push (new scale_SCdec_down (24, {colour: sliderules . c2, left_extension: 0.08}));
-r . scales . push (new scale_TCTdec_down (24, {colour: sliderules . c2, left_extension: 0.08}));
+r . scales . push (new scale_D (24, {right: '\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.078, right_extension: 0.08, alt: 'green', marking_alt: 'red'}));
+r . scales . push (new scale_SCdec_down (24, {right: 'sin \u{1d465}', rs: 0.01, colour: sliderules . c2, left_extension: 0.08}));
+r . scales . push (new scale_TCTdec_down (24, {right: 'tan \u{1d465}', rs: 0.01, colour: sliderules . c2, left_extension: 0.08}));
 //r . scales . push (new scale_ST (24, {colour: 'gold'}));
 
 s . rules . push (new spacer (2));
 
 r = new Rule ({rule_colour: sliderules . wood, v_scaling: 0.5, left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
+r . markings . push (new Engraving ('INCHES', '12px arial', 'left', sliderules . c2, 1.05, 12));
 r . scales . push (new spacer (12));
 r . scales . push (new scale_StudyMate (24, {colour: sliderules . c2, shift: -1, right_extension: 0.1}));
