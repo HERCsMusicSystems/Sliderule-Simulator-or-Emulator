@@ -20,7 +20,12 @@
 // THE SOFTWARE.                                                                 //
 ///////////////////////////////////////////////////////////////////////////////////
 
-var inherit = function (from, to) {from . prototype = Object . create (to . prototype); from . prototype . constructor = from;};
+var inherit = function (from, to) {
+  if (to === undefined) {to = from; from = function () {to . apply (this, arguments);}}
+  from . prototype = Object . create (to . prototype);
+  from . prototype . constructor = from;
+  return from;
+};
 var rndlist = function (list) {return list [Math . floor (Math . random () * list . length)];};
 var crnu = function (number, precision) {if (precision == undefined) precision = 9; return Number (number . toFixed (precision));};
 

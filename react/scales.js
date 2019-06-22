@@ -55,7 +55,7 @@ var toDeg = function (value) {
   if (sec < 10) sec = "0" + sec;
   return deg  + ":" + min + ":" + sec;
 };
-var scale_A = function (height, options) {spacer . call (this, height, options);}; inherit (scale_A, spacer);
+var scale_A = inherit (spacer);
 scale_A . prototype . draw_c = false;
 scale_A . prototype . value = function (location) {return Math . pow (10, location + location);};
 scale_A . prototype . location = function (value) {return Math . log10 (value) * 0.5;};
@@ -63,9 +63,9 @@ scale_A . prototype . draw = function (ctx, length) {
   ctx . translate (0, this . height);
   draw_log_log (ctx, length, this . height, this, this . left_extension, this . right_extension);
 };
-var scale_B = function (height, options) {scale_A . call (this, height, options);}; inherit (scale_B, scale_A);
+var scale_B = inherit (scale_A);
 scale_B . prototype . draw = function (ctx, length) {draw_log_log (ctx, length, - this . height, this, this . left_extension, this . right_extension);};
-var scale_AI = function (height, options) {spacer . call (this, height, options);}; inherit (scale_AI, spacer);
+var scale_AI = inherit (spacer);
 scale_AI . prototype . draw_c = false;
 scale_AI . prototype . value = function (location) {return Math . pow (10, 2 - location - location);};
 scale_AI . prototype . location = function (value) {return 1 - Math . log10 (value) * 0.5;};
@@ -73,7 +73,7 @@ scale_AI . prototype . draw = function (ctx, length) {
   ctx . translate (length, this . height);
   draw_log_log (ctx, - length, this . height, this, this . right_extension, this . left_extension);
 };
-var scale_BI = function (height, options) {scale_AI . call (this, height, options);}; inherit (scale_BI, scale_AI);
+var scale_BI = inherit (scale_AI);
 scale_BI . prototype . draw = function (ctx, length) {
   ctx . translate (length, 0); draw_log_log (ctx, - length, - this . height, this, this . right_extension, this . left_extension);
 };
