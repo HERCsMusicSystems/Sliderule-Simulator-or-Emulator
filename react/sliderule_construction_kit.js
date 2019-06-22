@@ -1430,6 +1430,7 @@ var Rule = function (options) {
   };
   this . examine = function (position, relative_location) {
     if (position . y < 0 || position . y > this . ruleHeight ()) return null;
+    if (this . v_scaling !== 1) position = {x: position . x, y: position . y / this . v_scaling};
     var value;
     for (var ind in this . scales) {
       var scale = this . scales [ind];
