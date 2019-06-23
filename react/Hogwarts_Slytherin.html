@@ -40,6 +40,7 @@ url('snellbt-regular.eot');
 <div>
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = on_music checked = true onchange = "javascript: if (this . checked) music . play (); else music . pause ();" />Music
 </div>
 </font>
 <div id="root"></div>
@@ -62,8 +63,14 @@ var sliderules = new Sliderules ({wood_floor: wood_floor, wood: wood, house_logo
 </script>
 <script src=hogwarts_student.js></script>
 <script src="sliderule_application.js"></script>
+<audio id=music autoplay loop >
+	<source src="hps.mp3" type="audio/mpeg" />
+	<source src="hps.wav" type="audio/wav" />
+</audio>
 
 <script>
+var music = document . getElementById ('music');
+if (! document . getElementById ('on_music') . checked) music . pause ();
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 </script>
