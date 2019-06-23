@@ -77,55 +77,37 @@ var scale_BI = inherit (scale_AI);
 scale_BI . prototype . draw = function (ctx, length) {
   ctx . translate (length, 0); draw_log_log (ctx, - length, - this . height, this, this . right_extension, this . left_extension);
 };
-var scale_C = function (height, options) {
-  var s = new spacer (height, options);
-  s . value = function (location) {return Math . pow (10, location);};
-  s . location = function (value) {return Math . log10 (value);};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_log (ctx, length, s . height, s, s . left_extension, s . right_extension);};
-  return s;
-};
-var scale_D = function (height, options) {
-  var s = new scale_C (height, options);
-  s . draw = function (ctx, length) {draw_log (ctx, length, - s . height, s, s . left_extension, s . right_extension);};
-  return s;
-};
-var scale_CI = function (height, options) {
-  var s = new spacer (height, options);
-  s . value = function (location) {return Math . pow (10, 1 - location);};
-  s . location = function (value) {return 1 - Math . log10 (value);};
-  s . draw = function (ctx, length) {ctx . translate (length, s . height); draw_log (ctx, - length, s . height, s, s . right_extension, s . left_extension);};
-  return s;
-};
-var scale_DI = function (height, options) {
-  var s = new scale_CI (height, options);
-  s . draw = function (ctx, length) {ctx . translate (length, 0); draw_log (ctx, - length, - s . height, s, s . right_extension, s . left_extension);};
-  return s;
-};
-var scale_CF = function (height, options) {
-  var s = new spacer (height, options);
-  s . value = function (location) {return Math . pow (10, location) * Math . PI * 0.1;};
-  s . location = function (value) {return Math . log10 (10 * value / Math . PI);};
-  s . draw = function (ctx, length) {
-    var shift = s . location (1);
-    ctx . translate (length * shift, s . height);
-    draw_log_1R (ctx, length, s . height, 1 - shift + s . right_extension, s);
-    mark (ctx, s . indices [0], 0, s . height * 0.5);
+var scale_C = inherit (spacer);
+scale_C . prototype . value = function (location) {return Math . pow (10, location);};
+scale_C . prototype . location = function (value) {return Math . log10 (value);};
+scale_C . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_log (ctx, length, this . height, this, this . left_extension, this . right_extension);};
+var scale_D = inherit (scale_C);
+scale_D . prototype . draw = function (ctx, length) {draw_log (ctx, length, - this . height, this, this . left_extension, this . right_extension);};
+var scale_CI = inherit (spacer);
+scale_CI . prototype . value = function (location) {return Math . pow (10, 1 - location);};
+scale_CI . prototype . location = function (value) {return 1 - Math . log10 (value);};
+scale_CI . prototype . draw = function (ctx, length) {ctx . translate (length, this . height); draw_log (ctx, - length, this . height, this, this . right_extension, this . left_extension);};
+var scale_DI = inherit (scale_CI);
+scale_DI . prototype . draw = function (ctx, length) {ctx . translate (length, 0); draw_log (ctx, - length, - this . height, this, this . right_extension, this . left_extension);};
+var scale_CF = inherit (spacer);
+scale_CF . prototype . value = function (location) {return Math . pow (10, location) * Math . PI * 0.1;};
+scale_CF . prototype . location = function (value) {return Math . log10 (10 * value / Math . PI);};
+scale_CF . prototype . draw = function (ctx, length) {
+    var shift = this . location (1);
+    ctx . translate (length * shift, this . height);
+    draw_log_1R (ctx, length, this . height, 1 - shift + this . right_extension, this);
+    mark (ctx, this . indices [0], 0, this . height * 0.5);
     ctx . translate (- length, 0);
-    draw_log_1L (ctx, length, s . height, 1 - shift - s . left_extension, s);
-  };
-  return s;
+    draw_log_1L (ctx, length, this . height, 1 - shift - this . left_extension, this);
 };
-var scale_DF = function (height, options) {
-  var s = new scale_CF (height, options);
-  s . draw = function (ctx, length) {
-    var shift = s . location (1);
+var scale_DF = inherit (scale_CF);
+scale_DF . prototype . draw = function (ctx, length) {
+    var shift = this . location (1);
     ctx . translate (length * shift, 0);
-    draw_log_1R (ctx, length, - s . height, 1 - shift + s . right_extension, s);
-    mark (ctx, s . indices [0], 0, - s . height * 0.5);
+    draw_log_1R (ctx, length, - this . height, 1 - shift + this . right_extension, this);
+    mark (ctx, this . indices [0], 0, - this . height * 0.5);
     ctx . translate (- length, 0);
-    draw_log_1L (ctx, length, - s . height, 1 - shift - s . left_extension, s);
-  };
-  return s;
+    draw_log_1L (ctx, length, - this . height, 1 - shift - this . left_extension, this);
 };
 var scale_CIF = function (height, options) {
   var s = new spacer (height, options);
