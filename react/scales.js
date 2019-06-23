@@ -114,7 +114,7 @@ scale_CIF . prototype . value = function (location) {return 10 / (Math . pow (10
 scale_CIF . prototype . location = function (value) {return Math . log10 (1 / (Math . PI * value * 0.1));};
 scale_CIF . prototype . draw = function (ctx, length) {
     var shift = Math . log10 (10 / Math . PI);
-    ctx . translate (length * shift, s . height);
+    ctx . translate (length * shift, this . height);
     draw_log_1R (ctx, - length, this . height, shift + this . left_extension, this);
     mark (ctx, this . indices [0], 0, this . height * 0.5);
     ctx . translate (length, 0);
