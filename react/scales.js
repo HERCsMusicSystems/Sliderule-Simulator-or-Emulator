@@ -109,33 +109,27 @@ scale_DF . prototype . draw = function (ctx, length) {
     ctx . translate (- length, 0);
     draw_log_1L (ctx, length, - this . height, 1 - shift - this . left_extension, this);
 };
-var scale_CIF = function (height, options) {
-  var s = new spacer (height, options);
-  s . value = function (location) {return 10 / (Math . pow (10, location) * Math . PI);};
-  s . location = function (value) {return Math . log10 (1 / (Math . PI * value * 0.1));};
-  s . draw = function (ctx, length) {
+var scale_CIF = inherit (spacer);
+scale_CIF . prototype . value = function (location) {return 10 / (Math . pow (10, location) * Math . PI);};
+scale_CIF . prototype . location = function (value) {return Math . log10 (1 / (Math . PI * value * 0.1));};
+scale_CIF . prototype . draw = function (ctx, length) {
     var shift = Math . log10 (10 / Math . PI);
     ctx . translate (length * shift, s . height);
-    draw_log_1R (ctx, - length, s . height, shift + s . left_extension, s);
-    mark (ctx, s . indices [0], 0, s . height * 0.5);
+    draw_log_1R (ctx, - length, this . height, shift + this . left_extension, this);
+    mark (ctx, this . indices [0], 0, this . height * 0.5);
     ctx . translate (length, 0);
-    draw_log_1L (ctx, - length, s . height, shift - s . right_extension, s);
-  };
-  return s;
+    draw_log_1L (ctx, - length, this . height, shift - this . right_extension, this);
 };
-var scale_DIF = function (height, options) {
-  var s = new scale_CIF (height, options);
-  s . draw = function (ctx, length) {
+var scale_DIF = inherit (scale_CIF);
+scale_DIF . prototype . draw = function (ctx, length) {
     var shift = Math . log10 (10 / Math . PI);
     ctx . translate (length * shift, 0);
-    draw_log_1R (ctx, - length, - s . height, shift + s . left_extension, s);
-    mark (ctx, s . indices [0], 0, - s . height * 0.5);
+    draw_log_1R (ctx, - length, - this . height, shift + this . left_extension, this);
+    mark (ctx, this . indices [0], 0, - this . height * 0.5);
     ctx . translate (length, 0);
-    draw_log_1L (ctx, - length, - s . height, shift - s . right_extension, s);
-  };
-  return s;
+    draw_log_1L (ctx, - length, - this . height, shift - this . right_extension, this);
 };
-var scale_K = function (height, options) {spacer . call (this, height, options);}; inherit (scale_K, spacer);
+var scale_K = inherit (spacer);
 scale_K . prototype . draw_c = false;
 scale_K . prototype . value = function (location) {return Math . pow (10, location * 3);};
 scale_K . prototype . location = function (value) {return Math . log10 (value) / 3;};
@@ -143,7 +137,7 @@ scale_K . prototype . draw = function (ctx, length) {
   ctx . translate (0, this . height);
   draw_log_log_log (ctx, length, this . height, this, this . left_extension, this . right_extension);
 };
-var scale_J = function (height, options) {scale_K . call (this, height, options);}; inherit (scale_J, scale_K);
+var scale_J = inherit (scale_K);
 scale_J . prototype . draw = function (ctx, length) {draw_log_log_log (ctx, length, - this . height, this, this . left_extension, this . right_extension);};
 var scale_R1 = function (height, options) {
 	var s = new spacer (height, options);
