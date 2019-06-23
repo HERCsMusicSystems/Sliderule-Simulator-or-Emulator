@@ -1,0 +1,232 @@
+<meta charset="UTF-8"/>
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Aristo 0972 Hyperlog</title>
+  </head>
+<body>
+<div>
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+</div>
+<div id="root"></div>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+
+<script>
+var sliderules = new Sliderules ({background_colour: '#99f'});
+var s = new Sliderule (1200,
+  {markings_colour: 'gold', markings_background: 'black', cursorHairline: 'black',
+  cursor_rounding: 8, cursor_left_extension: 0.11, cursor_right_extension: 0.11, cursor_limit_left: 0.054, cursor_limit_right: 0.054});
+sliderules . sliderules . push (s);
+
+s . backBraces . push (new LeftBrace (2, 0.07, 8, '#ffffc2', 'black', 100, 0.8));
+s . backBraces . push (new RightBrace (2, 0.07, 8, '#ffffc2', 'black', 100, 0.8));
+
+var HairlineLeft = HairlineD - HairlinePS - HairlinePS;
+var HairlineRight = HairlineLeft - Math . log10 (Math . log (2));
+var h2pi = (1 - Math . log10 (Math . PI * 2)) / 2;
+s . cursors . push (new Cursor (Hairline360, 86, 150, 'black', {marking_shift: 0.006}));
+s . cursors . push (new Cursor (h2pi, 18, 150, 'black'));
+s . cursors . push (new Cursor (- h2pi, 86, 150, 'black'));
+s . cursors . push (new Cursor (h2pi, 186, 250, 'black'));
+s . cursors . push (new Cursor (- h2pi, 186, 250, 'black'));
+s . cursorBraces . push (new Engraving ("ARISTO", '10px arial', 'left', 'black', 0.055, 324));
+s . cursorBraces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
+
+var r = new Rule (); s . rules . push (r);
+r . markings . push (new BraceSupport (- 0.146, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
+r . markings . push (new BraceSupport (- 0.148, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+r . markings . push (new BraceSupport (1.146, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
+r . markings . push (new BraceSupport (1.148, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+r . markings . push (new Engraving ('89.4', '10px arial', 'center', 'red', Math . log10 (0.6 * Math . PI / 1.8), 20));
+r . markings . push (new Engraving ('89', '10px arial', 'center', 'red', Math . log10 (Math . PI / 1.8), 20));
+r . markings . push (new Engraving ('88', '10px arial', 'center', 'red', Math . log10 (2 * Math . PI / 1.8), 20));
+r . markings . push (new Engraving ('87', '10px arial', 'center', 'red', Math . log10 (3 * Math . PI / 1.8), 20));
+r . markings . push (new Engraving ('86', '10px arial', 'center', 'red', Math . log10 (4 * Math . PI / 1.8), 20));
+r . markings . push (new Engraving ('85', '10px arial', 'center', 'red', Math . log10 (5 * Math . PI / 1.8), 20));
+r . markings . push (new Engraving ('84', '10px arial', 'center', 'red', Math . log10 (6 * Math . PI / 1.8), 20));
+r . markings . push (new Engraving ('\u2222 arc', '10px arial', 'left', 'black', 1.09, 32));
+r . scales . push (new spacer (22));
+//r . scales . push (new scale_LL00 (20, {left: "LL00", ls: 0.09, right: "e^-0.001X", rs: 0.09, right_extension: 0.046, marking_colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_STdec (20, {left: "ST", ls: 0.09, left_extension: 0.02, right_extension: 0.022, draw_st_corrections: false}));
+r . scales . push (new scale_Tdec (20, {left: "T\u2081", ls: 0.09, right: "\u2222 tan", rs: 0.09, left_extension: 0.02}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_T1dec_down (20, {left: "T\u2082", ls: 0.09, right: "\u2222 tan", rs: 0.09, right_extension: 0.02}));
+r . scales . push (new scale_CF (20, {left: "DF", ls: 0.09, right: "\u03c0\u{1d465}", rs: 0.09, left_extension: 0.022, right_extension: 0.06, indices: ['>>1<<'], draw_c: false, draw_e: false}));
+
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . markings . push (new Engraving ("ARISTO", '16px arial', 'center', 'red', -0.14, 61 - 9 + 7));
+r . markings . push (new Engraving ("STUDIOLOG", '16px arial', 'center', 'red', -0.14, 61 + 9 + 7));
+r . markings . push (new Engraving ("ARISTO", '16px arial', 'center', 'black', 1.14, 61, Math . PI * 1.5));
+r . markings . push (new Engraving ("0969", '16px arial', 'center', 'black', 1.153, 61, Math . PI * 1.5));
+r . markings . push (new Engraving ("GERMANY", '8px arial', 'center', 'black', 1.16, 61, Math . PI * 1.5));
+r . scales . push (new scale_DF (20, {left: "CF", ls: 0.09, right: "\u03c0\u{1d465}", rs: 0.09, left_extension: 0.022, right_extension: 0.06, indices: ['>>1<<'], highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2, draw_e: false, draw_c: false}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_CIF (20, {left: "CIF", ls: 0.09, right: "1/\u03c0\u{1d465}", rs: 0.09, left_extension: 0.018, right_extension: 0.028, marking_colour: 'red'}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_Sdec (20, {left: "S", ls: 0.09, right: "\u2222 sin", rs: 0.09, left_extension: 0.022}));
+r . scales . push (new spacer (12));
+r . scales . push (new scale_DI (20, {left: "CI", ls: 0.09, right: "1/\u{1d465}", rs: 0.09, marking_colour: 'red', indices: [1, 1]}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_C (20, {left: "C", ls: 0.09, right: "\u{1d465}", rs: 0.09, alt: 'black', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2, indices: [1, 1], draw_e: false, draw_c: false}));
+
+r = new Rule (); s . rules . push (r);
+r . markings . push (new BraceSupport (- 0.146, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
+r . markings . push (new BraceSupport (- 0.148, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+r . markings . push (new BraceSupport (1.146, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
+r . markings . push (new BraceSupport (1.148, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+r . markings . push (new Engraving ('84', '10px arial', 'center', 'red', Math . log10 (Math . sin (6 * Math . PI / 180)) + 1, 92));
+r . markings . push (new Engraving ('80', '10px arial', 'center', 'red', Math . log10 (Math . sin (Math . PI / 18)) + 1, 92));
+r . markings . push (new Engraving ('75', '10px arial', 'center', 'red', Math . log10 (Math . sin (15 * Math . PI / 180)) + 1, 92));
+r . markings . push (new Engraving ('70', '10px arial', 'center', 'red', Math . log10 (Math . sin (20 * Math . PI / 180)) + 1, 92));
+r . markings . push (new Engraving ('65', '10px arial', 'center', 'red', Math . log10 (Math . sin (25 * Math . PI / 180)) + 1, 92));
+r . markings . push (new Engraving ('60', '10px arial', 'center', 'red', Math . log10 (Math . sin (30 * Math . PI / 180)) + 1, 92));
+r . markings . push (new Engraving ('55', '10px arial', 'center', 'red', Math . log10 (Math . sin (35 * Math . PI / 180)) + 1, 92));
+r . markings . push (new Engraving ('50', '10px arial', 'center', 'red', Math . log10 (Math . sin (40 * Math . PI / 180)) + 1, 92));
+r . markings . push (new Engraving ('40', '10px arial', 'center', 'red', Math . log10 (Math . sin (50 * Math . PI / 180)) + 1, 92));
+r . markings . push (new Engraving ('30', '10px arial', 'center', 'red', Math . log10 (Math . sin (60 * Math . PI / 180)) + 1, 92));
+r . markings . push (new Engraving ('20', '10px arial', 'center', 'red', Math . log10 (Math . sin (70 * Math . PI / 180)) + 1, 92));
+r . markings . push (new Engraving ('0', '10px arial', 'center', 'red', 1, 92));
+r . markings . push (new Engraving ('\u2222 cos', '10px arial', 'left', 'red', 1.09, 92));
+r . scales . push (new scale_D (20, {left: "D", ls: 0.09, right: "\u{1d465}", rs: 0.09, alt: 'black', draw_e: false, draw_c: false}));
+r . scales . push (new scale_DI (20, {left: "DI", ls: 0.09, right: "1/\u{1d465}", rs: 0.09, marking_colour: 'red', indices: [1, 1], draw_e: false, draw_c: false}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_P (20, {left: "P", ls: 0.09, right: "\u221a1-\u{1d465}\u00b2", rs: 0.09, marking_colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_Sdec_down (20, {left: "S", ls: 0.09, right: "\u2222 sin", rs: 0.09, left_extension: 0.02}));
+//r . scales . push (new scale_LL0_down (20, {left: "LL0", ls: 0.09, right: "e^0.001X", rs: 0.09, right_extension: 0.04}));
+r . scales . push (new spacer (22));
+
+s = new Sliderule (1200,
+  {markings_colour: 'gold', markings_background: 'black', cursor_rounding: 8, cursor_left_extension: 0.11, cursor_right_extension: 0.11, cursor_limit_left: 0.054, cursor_limit_right: 0.054, cursorHairline: 'black'});
+sliderules . sliderules . push (s);
+
+var back_german_braces = [], back_german_cursors = [], back_us_braces = [], back_us_cursors = [];
+back_german_cursors . push (new Cursor (HairlineS, 66, 146, 'black', {marking_align: 'right', marking_shift: -0.01}));
+back_german_cursors . push (new Cursor (HairlineD, 210, 270, 'black'));
+back_german_cursors . push (new Cursor (HairlinePS, 66, 146, 'black'));
+back_german_braces . push (new Engraving ("PS", '10px arial', 'center', 'black', HairlinePS, 62));
+back_german_braces . push (new Engraving ("kW", '10px arial', 'right', 'black', -0.006, 46));
+back_german_braces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
+back_german_braces . push (new Screw (0, -7, 6, 0.5, '#b5a642', '#605321'));
+back_us_cursors . push (new Cursor (HairlineS, 66, 146, 'black', {marking_align: 'right', marking_shift: -0.01}));
+back_us_cursors . push (new Cursor (HairlineD, 210, 270, 'black'));
+back_us_cursors . push (new Cursor (HairlineHPUS, 66, 146, 'black'));
+back_us_braces . push (new Engraving ("HP", '10px arial', 'center', 'black', HairlineHPUS, 62));
+back_us_braces . push (new Engraving ("kW", '10px arial', 'right', 'black', -0.006, 46));
+back_us_braces . push (new CursorAngledBrace (0.115, 0.115, 16, 1, 6, 'gray'));
+back_us_braces . push (new Screw (0, -7, 6, 0.5, '#b5a642', '#605321'));
+
+s . braces . push (new LeftBrace (2, 0.07, 8, '#ffffc2', 'black', 100, 0.8));
+s . braces . push (new LeftBrace (4, 0.063, 8, '#ffffc2', 'black', 100, 0.8));
+s . braces . push (new BraceSupport (0.05, 4, 332, 36, 4, 'white', 'black'));
+s . braces . push (new BraceSupport (0.054, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
+s . braces . push (new BraceSupport (0.052, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+s . braces . push (new BraceSupport (0.054, 283 - 16, 283 + 16, 20, 4, '#83737c', '#83737c'));
+s . braces . push (new BraceSupport (0.052, 283 - 12, 283 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+s . braces . push (new Engraving ("ARISTO", '18px arial', 'center', '#dddddd', 0.05, 168, Math . PI * 0.5));
+s . braces . push (new RightBrace (2, 0.07, 8, '#ffffc2', 'black', 100, 0.8));
+s . braces . push (new RightBrace (4, 0.063, 8, '#ffffc2', 'black', 100, 0.8));
+s . braces . push (new BraceSupport (1.35, 4, 332, 36, 4, 'white', 'black'));
+s . braces . push (new BraceSupport (1.346, 53 - 16, 53 + 16, 20, 4, '#83737c', '#83737c'));
+s . braces . push (new BraceSupport (1.348, 53 - 12, 53 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+s . braces . push (new BraceSupport (1.346, 283 - 16, 283 + 16, 20, 4, '#83737c', '#83737c'));
+s . braces . push (new BraceSupport (1.348, 283 - 12, 283 + 12, 12, 2, '#b6b6b4', '#b6b6b4'));
+s . braces . push (new Engraving ("ARISTO", '18px arial', 'center', '#dddddd', 1.35, 168, Math . PI * 1.5));
+
+r = new Rule (); s . rules . push (r);
+/*
+r . scales . push (new spacer (2));
+r . scales . push (new scale_PH2 (20, {left: "H2", ls: 0.095, right: "\u221a1+X\u00b2", rs: 0.09, left_extension: 0.01}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_SINH2rad_down (20, {left: "Sh2", ls: 0.095, right: "\u2222 sin h", rs: 0.09, left_extension: 0.02, right_extension: 0.005}));
+r . scales . push (new scale_TANHrad (20, {left: "Th", ls: 0.095, right: "\u2222 tan h", rs: 0.09, left_extension: 0.005}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_J (20, {left: "K", ls: 0.095, right: "X\u00b3", rs: 0.09}));
+*/
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL00 (20, {left: "LL00", ls: 0.09, right: "e\u207b\u2070\u22c5\u2070\u2070\u00b9\u02e3", rs: 0.09, right_extension: 0.046, marking_colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL01_down (20, {left: "LL01", ls: 0.09, right: "e\u207b\u2070\u22c5\u2070\u00b9\u02e3", rs: 0.09, right_extension: 0.026, marking_colour: 'red'}));
+r . scales . push (new scale_LL02 (20, {left: "LL02", ls: 0.09, right: "e\u207b\u2070\u22c5\u00b9\u02e3", rs: 0.09, left_extension: 0.026, right_extension: 0.022, marking_colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL03_down (20, {left: "LL03", ls: 0.09, right: "e\u207b\u02e3", rs: 0.09, left_extension: 0.04, right_extension: 0.064, marking_colour: 'red'}));
+r . scales . push (new scale_A (20, {left: "A", ls: 0.09, right: "\u{1d465}\u00b2", rs: 0.09, left_extension: 0.05, alt: 'black', marking_alt: 'red', right_extension: 0.06, draw_e: false}));
+
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_B (20, {left: "B", ls: 0.09, right: "\u{1d465}\u00b2", rs: 0.09, left_extension: 0.05, alt: 'black', marking_alt: 'red', right_extension: 0.06, highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2, draw_e: false}));
+r . scales . push (new scale_AI (20, {left: 'BI', ls: 0.09, right: '1/\u{1d465}\u00b2', rs: 0.09, marking_colour: 'red'}));
+//r . scales . push (new scale_Tdec (20, {left: "T", ls: 0.09, right: "\u2222 tan", rs: 0.09, left_extension: 0.02}));
+r . scales . push (new spacer (2));
+//r . scales . push (new scale_STdec_down (20, {left: "ST", ls: 0.09, right: "\u2222 arc", rs: 0.09, left_extension: 0.02, right_extension: 0.022, draw_st_corrections: false}));
+r . scales . push (new scale_J (20, {left: 'K', ls: 0.09, right: '\u{1d465}\u00b3', rs: 0.09, draw_e: false, draw_pi: false}));
+//r . scales . push (new scale_CSdec (20, {left: "S", ls: 0.09, right: "\u2222 sin", rs: 0.09, centre: "\u2222 cos", ca: 'right', cs: 1.08, cc: 'red', left_extension: 0.02}));
+r . scales . push (new scale_L (20, {left: 'L', ls: 0.09, right: 'lg \u{1d465}', rs: 0.09}));
+r . scales . push (new spacer (2));
+//r . scales . push (new scale_P_down (20, {left: "P", ls: 0.09, right: "\u221a1-X\u00b2", rs: 0.09, marking_colour: 'red'}));
+r . scales . push (new scale_DI (20, {left: 'CI', ls: 0.09, marking_colour: 'red', right: '1/\u{1d465}', rs: 0.09, indices: [1, 1, 1, 1]}));
+r . scales . push (new scale_C (20, {left: "C", ls: 0.09, right: "\u{1d465}", rs: 0.09, left_extension: 0.048, right_extension: 0.066, alt: 'black', marking_alt: 'red', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2, draw_e: false, draw_c: false}));
+
+r = new Rule (); s . rules . push (r);
+/*
+r . scales . push (new scale_D (20, {left: "D", ls: 0.09, right: "X", rs: 0.09, left_extension: 0.048, right_extension: 0.062, alt: 'black', marking_alt: 'red'}));
+r . scales . push (new scale_CI (20, {left: "DI", ls: 0.095, right: "1/X", rs: 0.09, marking_colour: 'red'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_COSHrad_down (20, {left: "Ch", ls: 0.095, right: "\u2222 cos h", rs: 0.09, right_extension: 0.005}));
+r . scales . push (new scale_SINH1rad (20, {left: "Sh1", ls: 0.095, right: "\u2222 sin h", rs: 0.09, right_extension: 0.014}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_PH_down (20, {left: "H1", ls: 0.095, right: "\u221a1+X\u00b2", rs: 0.09, right_extension: 0.05}));
+r . scales . push (new spacer (2));*/
+r . scales . push (new scale_D (20, {left: "D", ls: 0.09, right: "\u{1d465}", rs: 0.09, left_extension: 0.048, right_extension: 0.066, alt: 'black', draw_e: false, draw_c: false}));
+r . scales . push (new scale_LL3 (20, {left: "LL3", ls: 0.09, right: "e\u02e3", rs: 0.09, left_extension: 0.04, right_extension: 0.064}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL2_down (20, {left: "LL2", ls: 0.09, right: "e\u2070\u22c5\u00b9\u02e3", rs: 0.09, left_extension: 0.022, right_extension: 0.042}));
+r . scales . push (new scale_LL1 (20, {left: "LL1", ls: 0.09, right: "e\u2070\u22c5\u2070\u00b9\u02e3", rs: 0.09, left_extension: 0.006, right_extension: 0.02}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL0_down (20, {left: "LL0", ls: 0.09, right: "e\u2070\u22c5\u2070\u2070\u00b9\u02e3", rs: 0.09, right_extension: 0.04}));
+r . scales . push (new spacer (2));
+
+</script>
+
+<script src="sliderule_application.js"></script>
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+
+</script>
+
+</body></html>
