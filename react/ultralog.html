@@ -1,13 +1,40 @@
+<meta charset="UTF-8" />
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
 <html>
   <head>
-    <title>Ultralog</title>
+    <title>UltraLog</title>
   </head>
-<body>
+<body background = tower-bridge.jpgg style = "background-size: 100%;" >
+<font color="black">
 <div>
-	<input type = checkbox onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
-	<input type = checkbox onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
-	<input type = checkbox onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
-	<input type = checkbox onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
 </div>
 <div id="root"></div>
 
@@ -18,26 +45,72 @@
 var sliderules = new Sliderules ();
 var s = new Sliderule (1200); sliderules . sliderules . push (s);
 var r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_LL00 (24));
-r . scales . push (new scale_LL01 (24));
-r . scales . push (new scale_LL02 (24));
-r . scales . push (new scale_LL03 (24));
-r . scales . push (new scale_CF (24));
+r . scales . push (new scale_LL00 (24, {left: 'LL/0', marking_colour: 'red'}));
+r . scales . push (new scale_LL01 (24, {left: 'LL/1', marking_colour: 'red'}));
+r . scales . push (new scale_LL02 (24, {left: 'LL/2', marking_colour: 'red'}));
+r . scales . push (new scale_LL03 (24, {left: 'LL/3', marking_colour: 'red'}));
+r . scales . push (new scale_CF (24, {left: 'DF', highlight: 'yellow'}));
 r = new Rule ({stator: 1}); s . rules . push (r);
-r . scales . push (new scale_DF (24));
-r . scales . push (new scale_DIF (24));
+r . scales . push (new scale_DF (24, {left: 'CF', highlight: 'yellow'}));
+r . scales . push (new scale_DIF (24, {left: 'CIF', highlight: 'yellow', marking_colour: 'red'}));
+r . scales . push (new scale_SINH1rad_down (24, {left: 'SH1'}));
+r . scales . push (new scale_SINH2rad_down (24, {left: 'SH2'}));
+r . scales . push (new scale_COSHrad_down (24, {left: 'CH'}));
+r . scales . push (new scale_TANHrad_down (24, {left: 'TANH'}));
+r . scales . push (new spacer (2, {lines: [{left: 0, right: 1, height: 1}]}));
 //===============
-r . scales . push (new scale_L (24));
-r . scales . push (new scale_CI (24));
-r . scales . push (new scale_C (24));
+r . scales . push (new scale_L (24, {left: 'L'}));
+r . scales . push (new scale_CI (24, {left: 'CI', marking_colour: 'red', highlight: 'yellow'}));
+r . scales . push (new scale_C (24, {left: 'C', highlight: 'yellow'}));
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_D (24));
-r . scales . push (new scale_LL3_down (24));
-r . scales . push (new scale_LL2_down (24));
-r . scales . push (new scale_LL1_down (24));
-r . scales . push (new scale_DLL0 (24));
+r . scales . push (new scale_D (24, {left: 'D', highlight: 'yellow'}));
+r . scales . push (new scale_LL3_down (24, {left: 'LL3'}));
+r . scales . push (new scale_LL2_down (24, {left: 'LL2'}));
+r . scales . push (new scale_LL1_down (24, {left: 'LL1'}));
+r . scales . push (new scale_LL0_down (24, {left: 'LL0'}));
+
+s = new Sliderule (1200); sliderules . sliderules . push (s);
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_CONST (24, {marks: {
+  e: Math . log10 (Math . E),
+  Pi: Math . log10 (Math . PI),
+  W: Math . log10 (7.46),
+  g: Math . log10 (9.80665)
+}, left: 'Const', lines: [{left: -0.1, right: 1.1, height: 1}]}));
+r . scales . push (new scale_R1 (24, {left: 'R1'}));
+r . scales . push (new scale_R2 (24, {left: 'R2'}));
+r . scales . push (new scale_K (24, {left: 'K', highlight: 'yellow'}));
+r . scales . push (new scale_A (24, {left: 'A', highlight: 'yellow'}));
+
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_B (24, {left: 'B', highlight: 'yellow'}));
+r . scales . push (new scale_TCTdec_down (24, {left: 'T1'}));
+r . scales . push (new scale_TCT1dec_down (24, {left: 'T2'}));
+r . scales . push (new scale_STCTdec_down (24, {left: 'ST'}));
+r . scales . push (new scale_SCdec_down (24, {left: 'S'}));
+r . scales . push (new spacer (2, {lines: [{left: 0, right: 1, height: 1}]}));
+r . scales . push (new scale_P (24, {left: 'P'}));
+r . scales . push (new scale_PH (24, {left: 'H1'}));
+r . scales . push (new scale_PH2 (24, {left: 'H2'}));
+r . scales . push (new scale_CI (24, {left: 'CI', marking_colour: 'red', highlight: 'yellow'}));
+r . scales . push (new scale_C (24, {left: 'C', highlight: 'yellow'}));
+
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (24, {left: 'D', highlight: 'yellow'}));
+r . scales . push (new scale_DI (24, {left: 'DI', marking_colour: 'red', highlight: 'yellow'}));
+r . scales . push (new scale_O1 (24, {left: 'Q1'}));
+r . scales . push (new scale_O2 (24, {left: 'Q2'}));
+r . scales . push (new scale_O3 (24, {left: 'Q3'}));
+
 </script>
 
 <script src="sliderule_application.js"></script>
-
+<script>
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
+</script>
+</font>
 </body></html>

@@ -26,6 +26,7 @@
 // CF, DF, CIF, DIF
 // K, J
 // R1, R2, W1, W2
+// Q1, Q2, Q3, O1, O2, O3
 // L, M, Ln, Mn, LR12, LW12
 // Sdec(_down), S(_down), SCdec(_down), CSdec(_down), Sgrad(_down)
 // STdec(_down), ST(_down), STCTdec(_down)
@@ -41,6 +42,7 @@
 // SINH1dec(_down), SINH2dec(_down), SINH1grad(_down), SINH2grad(_down), SINH1rad(_down), SINH2rad(_down);
 // COSHdec(_down), COSHgrad(_down), COSHrad(_down)
 // TANHdec(_down), TANHgrad(_down), TANHrad(_down)
+// CONST(_down)
 //////////////////////////////////////////////////////////////////////////////
 
 var toDeg = function (value) {
@@ -185,6 +187,65 @@ var scale_W2 = function (height, options) {
 		draw_log_1R (ctx, length * 2, - s . height, s . right_extension * 0.5, s);
 	};
 	return s;
+};
+var scale_Q1 = inherit (spacer);
+scale_Q1 . prototype . value = function (location) {return Math . pow (10, location / 3);};
+scale_Q1 . prototype . location = function (value, length) {return Math . log10 (value) * 3;};
+scale_Q1 . prototype . draw = function (ctx, length) {
+	ctx . translate (0, this . height);
+	mark (ctx, this . indices [0], 0, this . height * 0.5);
+	draw_log_1R (ctx, length * 3, this . height, 1 / 3 + this . right_extension / 3, this);
+	ctx . translate (-3 * length, 0);
+	draw_log_1L (ctx, length * 3, this . height, 1 - this . left_extension / 3, this);
+};
+var scale_Q2 = inherit (spacer);
+scale_Q2 . prototype . value = function (location) {return Math . pow (10, 1 / 3 + location / 3);};
+scale_Q2 . prototype . location = function (value, length) {return Math . log10 (value) * 3 - 1;};
+scale_Q2 . prototype . draw = function (ctx, length) {
+  var region = new Path2D ();
+  var left = length * - this . left_extension;
+  var right = length * (1 + this . right_extension);
+  region . moveTo (left, 0); region . lineTo (right, 0); region . lineTo (right, 24); region . lineTo (left, 24); region . closePath ();
+  ctx . save (); ctx . clip (region);
+	ctx . translate (- length, this . height);
+	draw_log_1L (ctx, length * 3, this . height, 1 / 3 - this . left_extension / 3, this);
+  ctx . restore ();
+};
+var scale_Q3 = inherit (spacer);
+scale_Q3 . prototype . value = function (location) {return Math . pow (10, 2 / 3 + location / 3);};
+scale_Q3 . prototype . location = function (value, length) {return Math . log10 (value) * 3 - 2;};
+scale_Q3 . prototype . draw = function (ctx, length) {
+	ctx . translate (-2 * length, this . height);
+	draw_log_1L (ctx, length * 3, this . height, 2 / 3 - this . left_extension / 3, this);
+	ctx . translate (3 * length, 0);
+	mark (ctx, this . indices [1], 0, this . height * 0.5);
+	draw_log_1R (ctx, length * 3, this . height, this . right_extension / 3, this);
+};
+var scale_O1 = inherit (scale_Q1);
+scale_O1 . prototype . draw = function (ctx, length) {
+  mark (ctx, this . indices [0], 0, - this . height * 0.5);
+	draw_log_1R (ctx, length * 3, - this . height, 1 / 3 + this . right_extension / 3, this);
+	ctx . translate (-3 * length, 0);
+	draw_log_1L (ctx, length * 3, - this . height, 1 - this . left_extension / 3, this);
+};
+var scale_O2 = inherit (scale_Q2);
+scale_O2 . prototype . draw = function (ctx, length) {
+  var region = new Path2D ();
+  var left = length * - this . left_extension;
+  var right = length * (1 + this . right_extension);
+  region . moveTo (left, 0); region . lineTo (right, 0); region . lineTo (right, 24); region . lineTo (left, 24); region . closePath ();
+  ctx . save (); ctx . clip (region);
+	ctx . translate (- length, 0);
+	draw_log_1L (ctx, length * 3, - this . height, 1 / 3 - this . left_extension / 3, this);
+  ctx . restore ();
+};
+var scale_O3 = inherit (scale_Q3);
+scale_O3 . prototype . draw = function (ctx, length) {
+  ctx . translate (-2 * length, 0);
+	draw_log_1L (ctx, length * 3, - this . height, 2 / 3 - this . left_extension / 3, this);
+	ctx . translate (3 * length, 0);
+	mark (ctx, this . indices [1], 0, - this . height * 0.5);
+	draw_log_1R (ctx, length * 3, - this . height, this . right_extension / 3, this);
 };
 var scale_Metric = function (height, options) {
 	this . metric_25 = false;
@@ -868,4 +929,23 @@ var scale_TANHgrad_down = function (height, options) {
 	var s = new scale_TANHgrad (height, options);
 	s . draw = function (ctx, length) {draw_tanh (ctx, length, - s . height, s);};
 	return s;
+};
+var scale_CONST = inherit (spacer);
+scale_CONST . prototype . location = function (value) {return Math . log10 (value);};
+scale_CONST . prototype . value = function (location) {return Math . pow (10, location);};
+scale_CONST . prototype . marks = [];
+scale_CONST . prototype . draw = function (ctx, length) {
+  ctx. translate (0, this . height);
+  var h5 = this . height * 0.5;
+  for (var ind in this . marks) {
+    if (this . marks . hasOwnProperty (ind)) {
+      mark (ctx, ind, this . marks [ind] * length, h5);
+    }
+  }
+};
+scale_CONST . prototype . read = function (position) {
+  for (var ind in this . marks) {
+    if (ind . toLowerCase () === position . toLowerCase ()) return Math . pow (10, this . marks [ind]);
+  }
+  return null;
 };
