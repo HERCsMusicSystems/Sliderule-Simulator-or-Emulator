@@ -98,14 +98,14 @@ r . scales . push (new scale_CONST (24, {marks: {
   Pi: Math . log10 (Math . PI),
   W: Math . log10 (7.46),
   g: Math . log10 (9.80665)
-}, left: 'Const', lines: [{left: -0.1, right: 1.1, height: 1}]}));
-r . scales . push (new scale_R1 (24, {left: 'R1'}));
-r . scales . push (new scale_R2 (24, {left: 'R2'}));
-r . scales . push (new scale_K (24, {left: 'K', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2}));
-r . scales . push (new scale_A (24, {left: 'A', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2}));
+}, left: 'Const', lines: [{left: -0.1, right: 1.1, height: 1}], right: 'Const', rs: 0.09}));
+r . scales . push (new scale_R1 (24, {left: 'R1', right: '\u221a\u{1d465}', rs: 0.09}));
+r . scales . push (new scale_R2 (24, {left: 'R2', right: '\u221a\u{1d465}', rs: 0.09}));
+r . scales . push (new scale_K (24, {left: 'K', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2, right: '\u{1d465}\u00b3', rs: 0.09}));
+r . scales . push (new scale_A (24, {left: 'A', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2, right: '\u{1d465}\u00b2', rs: 0.09}));
 
 r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_B (24, {left: 'B', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2}));
+r . scales . push (new scale_B (24, {left: 'B', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2, right: '\u{1d465}\u00b2', rs: 0.09}));
 r . scales . push (new scale_TCTdec_down (24, {left: 'T1'}));
 r . scales . push (new scale_TCT1dec_down (24, {left: 'T2'}));
 r . scales . push (new scale_STCTdec_down (24, {left: 'ST'}));
