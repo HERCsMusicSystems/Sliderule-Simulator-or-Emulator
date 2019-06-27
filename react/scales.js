@@ -252,13 +252,10 @@ scale_Metric . prototype . draw = function (ctx, length) {
 		else draw_metric (ctx, length, this . height, this);
 };
 
-var scale_Metric_down = function (height, options) {
-	var s = new scale_Metric (height, options);
-	s . draw = function (ctx, length) {
-		if (this . metric_25) draw_metric_25 (ctx, length, - s . height, s);
-		else draw_metric (ctx, length, - s . height, s);
-	};
-	return s;
+var scale_Metric_down = inherit (scale_Metric);
+scale_Metric_down . prototype . draw = function (ctx, length) {
+		if (this . metric_25) draw_metric_25 (ctx, length, - this . height, this);
+		else draw_metric (ctx, length, - this . height, this);
 };
 var scale_StudyMate = function (height, options) {
   spacer . call (this, height, options);

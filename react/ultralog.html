@@ -44,6 +44,17 @@
 <script>
 var sliderules = new Sliderules ();
 var s = new Sliderule (1200); sliderules . sliderules . push (s);
+s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 188, 0.7));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 190, 0.7));
+s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 188, 0.7));
+s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 190, 0.7));
+s . braces . push (new Screw (0.034, 434, 12, Math . random () * Math . PI, '#b5a642', '#605321'));
+s . braces . push (new Screw (0.02, 94, 8, Math . random () * Math . PI, '#b5a642', '#605321'));
+s . braces . push (new Screw (0.046, 26, 8, Math . random () * Math . PI, '#b5a642', '#605321'));
+s . braces . push (new Screw (1.366, 434, 12, Math . random () * Math . PI, '#b5a642', '#605321'));
+s . braces . push (new Screw (1.38, 94, 8, Math . random () * Math . PI, '#b5a642', '#605321'));
+s . braces . push (new Screw (1.354, 26, 8, Math . random () * Math . PI, '#b5a642', '#605321'));
+
 var r = new Rule ({rounding: 12}); s . rules . push (r);
 r . scales . push (new scale_LL00 (24, {left: 'LL/0', marking_colour: 'red', right_extension: 0.044, right: 'e\u207b\u2070\u22c5\u2070\u2070\u00b9\u02e3'}));
 r . scales . push (new scale_LL01 (24, {left: 'LL/1', marking_colour: 'red', right_extension: 0.023, right: 'e\u207b\u2070\u22c5\u2070\u00b9\u02e3'}));
@@ -71,6 +82,16 @@ r . scales . push (new scale_LL1_down (24, {left: 'LL1', left_extension: 0.004})
 r . scales . push (new scale_LL0_down (24, {left: 'LL0'}));
 
 s = new Sliderule (1200); sliderules . sliderules . push (s);
+s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 188, 0.7));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 190, 0.7));
+s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 188, 0.7));
+s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 190, 0.7));
+s . braces . push (new Screw (0.034, 48, 12, Math . random () * Math . PI, '#b5a642', '#605321'));
+s . braces . push (new Screw (0.02, 388, 8, Math . random () * Math . PI, '#b5a642', '#605321'));
+s . braces . push (new Screw (0.046, 456, 8, Math . random () * Math . PI, '#b5a642', '#605321'));
+s . braces . push (new Screw (1.366, 48, 12, Math . random () * Math . PI, '#b5a642', '#605321'));
+s . braces . push (new Screw (1.38, 388, 8, Math . random () * Math . PI, '#b5a642', '#605321'));
+s . braces . push (new Screw (1.354, 456, 8, Math . random () * Math . PI, '#b5a642', '#605321'));
 r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_CONST (24, {marks: {
   e: Math . log10 (Math . E),
