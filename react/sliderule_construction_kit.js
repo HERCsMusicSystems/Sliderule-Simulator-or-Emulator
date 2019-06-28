@@ -557,7 +557,7 @@ var draw_small_sine_tan_dec = function (ctx, length, height, s) {
   draw_XR (ctx, s . location, length, 1, 10, limit, h2, 0.1, 0.02, 0.1);
   draw_XR (ctx, s . location, length, 1, 10, limit, h3, 0.5, 0.1, 0.5);
   draw_XR (ctx, s . location, length, 1, 10, limit, h4, 1, 0.5, 1);
-  draw_MLS (ctx, s . location, length, 0, 0.9, 0.1, s . left_extension, h5);
+  draw_MLS (ctx, s . location, length, 0, 0.9, 0.1, - s . left_extension, h5);
   draw_XL (ctx, s . location, length, 0, 1, - s . left_extension, h2, 0.1, 0.02, 0.1);
 };
 var draw_small_sine_deg = function (ctx, length, height, s) {
