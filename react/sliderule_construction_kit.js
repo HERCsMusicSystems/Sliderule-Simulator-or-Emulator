@@ -217,7 +217,7 @@ var draw_MLSI = function (ctx, fn, length, to, from, step, limit, height) {
   }
 };
 
-var draw_log_1R = function (ctx, length, height, extension, scale) {
+var draw_log_1R = function (ctx, length, height, extension, scale, left_extension) {
   var location;
   var abs_length = Math . abs (length);
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
@@ -277,14 +277,16 @@ var draw_log_1R = function (ctx, length, height, extension, scale) {
   	draw_XR (ctx, Math . log10, length, 5, 10, extension, h2, 0.1, 0.02, 0.1);
   }
   if (scale . draw_st_corrections) {
-    var esc = true;
+    if (left_extension === undefined) left_extension = 0;
     var shift = 2 - Math . log10 (Math . PI / 1.8);
-    for (var ind = 4; esc && ind <= 9; ind++) {
+    for (var ind = 4; ind <= 9; ind++) {
       var angle = ind * Math . PI / 180;
       location = shift + Math . log10 (Math . sin (angle));
       var sub_location = shift + Math . log10 (Math . tan (angle));
-      if (location > extension) esc = false;
-      else {stick (ctx, length * location, h2, h5); stick (ctx, length * sub_location, h2, h5);}
+      if (location <= extension) {stick (ctx, length * location, h2, h5); stick (ctx, length * sub_location, h2, h5);}
+      location -= 1; sub_location -= 1;
+      console . log (location, left_extension);
+      if (location >= left_extension) {stick (ctx, length * location, h2, h5); stick (ctx, length * sub_location, h2, h5);}
     }
   }
 };

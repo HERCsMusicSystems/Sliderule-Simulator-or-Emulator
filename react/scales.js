@@ -97,7 +97,7 @@ scale_CF . prototype . location = function (value) {return Math . log10 (10 * va
 scale_CF . prototype . draw = function (ctx, length) {
     var shift = this . location (1);
     ctx . translate (length * shift, this . height);
-    draw_log_1R (ctx, length, this . height, 1 - shift + this . right_extension, this);
+    draw_log_1R (ctx, length, this . height, 1 - shift + this . right_extension, this, 0 - shift - this . left_extension);
     mark (ctx, this . indices [0], 0, this . height * 0.5);
     ctx . translate (- length, 0);
     draw_log_1L (ctx, length, this . height, 1 - shift - this . left_extension, this);
@@ -106,7 +106,7 @@ var scale_DF = inherit (scale_CF);
 scale_DF . prototype . draw = function (ctx, length) {
     var shift = this . location (1);
     ctx . translate (length * shift, 0);
-    draw_log_1R (ctx, length, - this . height, 1 - shift + this . right_extension, this);
+    draw_log_1R (ctx, length, - this . height, 1 - shift + this . right_extension, this, 0 - shift - this . left_extension);
     mark (ctx, this . indices [0], 0, - this . height * 0.5);
     ctx . translate (- length, 0);
     draw_log_1L (ctx, length, - this . height, 1 - shift - this . left_extension, this);
