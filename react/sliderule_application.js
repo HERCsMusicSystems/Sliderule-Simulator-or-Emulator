@@ -137,6 +137,44 @@ rootRootDiv . onwheel = function (event) {
 	sliderules . scale = delta;
 	sliderules . requireRedraw = true;
 };
+
+var touchTimer;
+var longDuration = 550; //ms
+var onLongTouch;
+var startPos;
+
+rootRootDiv . ontouchstart = function (event) {
+	event . preventDefault ();
+	sliderules . resetMovers ();
+	sliderules . dragging = true;
+	touchTimer = setTimeout(onLongTouch, longDuration);
+	var touches = event.changedTouches;
+	startPos = subvbc ({x: touches[0] . clientX, y: touches[0] . clientY}, slideruleCanvas . getBoundingClientRect ());
+	sliderules . mousePosition = startPos;
+};
+
+rootRootDiv . ontouchmove = function (event) {
+	if (! sliderules . dragging) return;
+	var touches = event.changedTouches;
+	var position = subvbc ({x: touches[0] . clientX, y: touches[0] . clientY}, slideruleCanvas . getBoundingClientRect ());
+	var delta = subv (position, sliderules . mousePosition);
+	sliderules . synchroniseMove (delta, position, sliderules . mousePosition);
+	sliderules . mousePosition = position;
+};
+
+rootRootDiv . ontouchend = function (event) {
+	sliderules . dragging = false;
+	clearTimeout(touchTimer);	
+};
+
+onLongTouch = function () {
+	if(Math.abs(startPos . x - sliderules . mousePosition . x) < 10 && Math.abs(startPos . y - sliderules . mousePosition . y) < 10){
+		var ret = sliderules . synchroniseTarget (addv (startPos, {x: 0.5, y: 0}));
+	}
+};
+
+rootRootDiv . onscroll = function () {return false;}
+
 rootDiv . appendChild (rootRootDiv);
 var slideruleCanvas = document . createElement ('canvas');
 slideruleCanvas . id = 'sliderule_canvas';
