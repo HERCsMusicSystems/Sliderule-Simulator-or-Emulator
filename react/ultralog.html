@@ -82,6 +82,8 @@ r . scales . push (new scale_LL1_down (24, {left: 'LL1', left_extension: 0.004, 
 r . scales . push (new scale_LL0_down (24, {left: 'LL0', right_extension: 0.042, right: 'e\u2070\u22c5\u2070\u2070\u00b9\u02e3', rs: 0.09}));
 
 s = new Sliderule (1200); sliderules . sliderules . push (s);
+s . cursors . push (new Cursor (HairlineS, 72, 144, 'red'));
+s . cursors . push (new Cursor (HairlineD, 314, 410, 'red'));
 s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 188, 0.7));
 s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 190, 0.7));
 s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 188, 0.7));
