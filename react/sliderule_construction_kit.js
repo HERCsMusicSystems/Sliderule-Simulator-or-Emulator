@@ -285,7 +285,6 @@ var draw_log_1R = function (ctx, length, height, extension, scale, left_extensio
       var sub_location = shift + Math . log10 (Math . tan (angle));
       if (location <= extension) {stick (ctx, length * location, h2, h5); stick (ctx, length * sub_location, h2, h5);}
       location -= 1; sub_location -= 1;
-      console . log (location, left_extension);
       if (location >= left_extension) {stick (ctx, length * location, h2, h5); stick (ctx, length * sub_location, h2, h5);}
     }
   }
