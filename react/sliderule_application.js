@@ -169,7 +169,7 @@ rootRootDiv . ontouchend = function (event) {
 
 onLongTouch = function () {
 	if(Math.abs(startPos . x - sliderules . mousePosition . x) < 10 && Math.abs(startPos . y - sliderules . mousePosition . y) < 10){
-		var ret = sliderules . synchroniseTarget (addv (sliderules . position, {x: 0.5, y: 0}));
+		var ret = sliderules . synchroniseTarget (addv (startPos, {x: 0.5, y: 0}));
 	}
 };
 
