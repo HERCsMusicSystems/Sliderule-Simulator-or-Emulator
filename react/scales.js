@@ -32,7 +32,7 @@
 // STdec(_down), ST(_down), STCTdec(_down)
 // Tdec(_down), T1dec(_down), TCTdec(_down), CTTdec(_down), TCT1dec(_down), CTT1dec(_down)
 // T(_down), T1(_down)
-// Tgrad(_down)
+// Tgrad(_down), T1grad(_down)
 // P(_down), PH(_down), PH2(_down), PT(_down)
 // ISTd(_down)
 // LL3(_down), LL2(_down), LL1(_down), LL0(_down), CLL0, DLL0
@@ -392,6 +392,17 @@ var scale_Tgrad = function (height, options) {
 };
 var scale_Tgrad_down = function (height, options) {
 	var s = new scale_Tgrad (height, options);
+	s . draw = function (ctx, length) {draw_tan_dec (ctx, length, - s . height, s);};
+	return s;
+};
+var scale_T1grad = function (height, options) {
+	var s = new scale_Tdec (height, options);
+	s . value = function (location) {return Math . atan (Math . pow (10, location)) * 200 / Math . PI;};
+	s . location = function (value) {return Math . log10 (Math . tan (value * Math . PI / 200));};
+	return s;
+};
+var scale_T1grad_down = function (height, options) {
+	var s = new scale_T1grad (height, options);
 	s . draw = function (ctx, length) {draw_tan_dec (ctx, length, - s . height, s);};
 	return s;
 };
