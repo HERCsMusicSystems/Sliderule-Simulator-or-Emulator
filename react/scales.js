@@ -395,17 +395,12 @@ var scale_Tgrad_down = function (height, options) {
 	s . draw = function (ctx, length) {draw_tan_dec (ctx, length, - s . height, s);};
 	return s;
 };
-var scale_T1grad = function (height, options) {
-	var s = new scale_Tdec (height, options);
-	s . value = function (location) {return Math . atan (Math . pow (10, location)) * 200 / Math . PI;};
-	s . location = function (value) {return Math . log10 (Math . tan (value * Math . PI / 200));};
-	return s;
-};
-var scale_T1grad_down = function (height, options) {
-	var s = new scale_T1grad (height, options);
-	s . draw = function (ctx, length) {draw_tan_dec (ctx, length, - s . height, s);};
-	return s;
-};
+var scale_T1grad = inherit (spacer);
+scale_T1grad . prototype . value = function (location) {return Math . atan (Math . pow (10, location)) * 200 / Math . PI;};
+scale_T1grad . prototype . location = function (value) {return Math . log10 (Math . tan (value * Math . PI / 200));};
+scale_T1grad . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_tan_dec1 (ctx, length, this . height, this);};
+var scale_T1grad_down = inherit (scale_T1grad);
+scale_T1grad_down . prototype . draw = function (ctx, length) {draw_tan_dec1 (ctx, length, - this . height, this);};
 var scale_TCTdec = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return Math . atan (Math . pow (10, location - 1)) * 180 / Math . PI;};

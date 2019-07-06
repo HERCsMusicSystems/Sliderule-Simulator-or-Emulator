@@ -592,6 +592,20 @@ var draw_tan_dec = function (ctx, length, height, scale) {
   draw_XL (ctx, scale . location, length, 6, 10, - scale . left_extension, height * 0.4, 1, 0.5, 1);
   draw_XL (ctx, scale . location, length, 1, 10, - scale . left_extension, height * 0.2, 0.5, 0.1, 0.5);
 };
+var draw_tan_dec1 = function (ctx, length, height, scale) {
+  var h5 = height * 0.5, h4 = height * 0.4, h3 = height * 0.3, h2 = height * 0.2;
+  var rext = 1 + scale . right_extension, lext = - scale . left_extension
+  draw_MLS (ctx, scale . location, length, 15, 85, 5, lext, h5);
+  draw_XL (ctx, scale . location, length, 80, 90, lext, h4, 5, 1, 5);
+  draw_XL (ctx, scale . location, length, 80, 90, lext, h3, 1, 0.5, 1);
+  draw_XL (ctx, scale . location, length, 80, 90, lext, h2, 0.5, 0.1, 0.5);
+  draw_XL (ctx, scale . location, length, 15, 80, lext, h3, 5, 1, 5);
+  draw_XL (ctx, scale . location, length, 15, 80, lext, h2, 1, 0.2, 1);
+  draw_MRS (ctx, scale . location, length, 90, 180, 1, rext, h5);
+  draw_XR (ctx, scale . location, length, 90, 180, rext, h4, 1, 0.5, 1);
+  draw_XR (ctx, scale . location, length, 90, 180, rext, h3, 0.5, 0.1, 0.5);
+  draw_XR (ctx, scale . location, length, 90, 180, rext, h2, 0.1, 0.05, 0.1);
+};
 var draw_tan_deg = function (ctx, length, height, scale) {
   draw_MLS (ctx, fn_tan_dec, length, 1, 5.5, 0.5, - scale . left_extension, height * 0.5);
   draw_MR (ctx, fn_tan_dec, length, 6, 10, 1, height * 0.5);
