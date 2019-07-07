@@ -541,18 +541,34 @@ var draw_small_sine_dec = function (ctx, length, height, s) {
   ctx . translate (- length, 0);
   draw_log_1L (ctx, length, height, 1 - shift - s . left_extension, s);
 };
-var draw_small_sine_tan_dec = function (ctx, length, height, s) {
+var draw_small_sine_tan_dec = function (ctx, length, height, s, initial) {
+  if (initial === undefined) initial = 90;
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   var limit = 1 + s . right_extension;
   var degree = 1;
   var location = s . location (degree);
-  while (location <= limit) {
-    location *= length;
-    tick (ctx, location, h5);
-    ctx . textAlign = 'left'; ctx . fillStyle = s . alt; mmark (ctx, 90 - degree, location + 1, h5);
-    ctx . textAlign = 'right'; ctx . fillStyle = s . colour; mmark (ctx, degree, location - 1, h5);
-    degree += 1;
-    location = s . location (degree);
+  switch (s . red_shift) {
+  case 'right':
+    while (location <= limit) {
+      location *= length;
+      tick (ctx, location, h5);
+      ctx . textAlign = 'left'; ctx . fillStyle = s . alt; mmark (ctx, initial - degree, location + 1, h5);
+      ctx . textAlign = 'right'; ctx . fillStyle = s . colour; mmark (ctx, degree, location - 1, h5);
+      degree += 1;
+      location = s . location (degree);
+    }
+    break;
+  case 'left':
+    while (location <= limit) {
+      location *= length;
+      tick (ctx, location, h5);
+      ctx . textAlign = 'right'; ctx . fillStyle = s . alt; mmark (ctx, initial - degree, location - 1, h5);
+      ctx . textAlign = 'left'; ctx . fillStyle = s . colour; mmark (ctx, degree, location + 1, h5);
+      degree += 1;
+      location = s . location (degree);
+    }
+    break;
+  default: break;
   }
   ctx . textAlign = 'center';
   draw_XR (ctx, s . location, length, 1, 10, limit, h2, 0.1, 0.02, 0.1);
@@ -1300,6 +1316,7 @@ var spacer = function (height, options) {
 spacer . prototype . draw_c = true;
 spacer . prototype . draw_pi = true;
 spacer . prototype . draw_e = true;
+spacer . prototype . red_shift = 'right';
 spacer . prototype . indices = ['1', '10', '100', '1000', '10000', '100000'];
 spacer . prototype . ruleHeight = function () {return this . height;};
 spacer . prototype . hitTest = function (y) {return false;};
