@@ -1315,7 +1315,6 @@ var spacer = function (height, options) {
 spacer . prototype . draw_c = true;
 spacer . prototype . draw_pi = true;
 spacer . prototype . draw_e = true;
-spacer . prototype . red_shift = 'right';
 spacer . prototype . indices = ['1', '10', '100', '1000', '10000', '100000'];
 spacer . prototype . ruleHeight = function () {return this . height;};
 spacer . prototype . hitTest = function (y) {return false;};
