@@ -29,7 +29,7 @@
 // Q1, Q2, Q3, O1, O2, O3
 // L, M, Ln, Mn, LR12, LW12
 // Sdec(_down), S(_down), SCdec(_down), CSdec(_down), Sgrad(_down)
-// STdec(_down), ST(_down), STCTdec(_down), STCTgrad(_down)
+// STdec(_down), ST(_down), STCTdec(_down), CTSTdec(_down), STCTgrad(_down), CTSTgrad(_down)
 // Tdec(_down), T1dec(_down), TCTdec(_down), CTTdec(_down), TCT1dec(_down), CTT1dec(_down)
 // T(_down), T1(_down)
 // Tgrad(_down), T1grad(_down)
@@ -353,13 +353,23 @@ var scale_ST = function (height, options) {
   return s;
 };
 var scale_STCTdec = inherit (scale_STdec);
-scale_STCTdec . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_small_sine_tan_dec (ctx, length, this . height, this);};
+scale_STCTdec . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_small_sine_tan_dec (ctx, length, this . height, this, 'cs', 90);};
 var scale_STCTdec_down = inherit (scale_STCTdec);
-scale_STCTdec_down . prototype . draw = function (ctx, length) {draw_small_sine_tan_dec (ctx, length, - this . height, this);};
+scale_STCTdec_down . prototype . draw = function (ctx, length) {draw_small_sine_tan_dec (ctx, length, - this . height, this, 'cs', 90);};
+var scale_CTSTdec = inherit (scale_STCTdec);
+scale_CTSTdec . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_small_sine_tan_dec (ctx, length, this . height, this, 'sc', 90);};
+var scale_CTSTdec_down = inherit (scale_STCTdec);
+scale_CTSTdec_down . prototype . draw = function (ctx, length) {draw_small_sine_tan_dec (ctx, length, - this . height, this, 'sc', 90);};
 var scale_STCTgrad = inherit (scale_STCTdec);
 scale_STCTgrad . prototype . value = function (location) {return Math . pow (10, location) * 2 / Math . PI;};
 scale_STCTgrad . prototype . location = function (value) {return Math . log10 (value * Math . PI / 2);};
-scale_STCTgrad . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_small_sine_tan_dec (ctx, length, this . height, this, 100);};
+scale_STCTgrad . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_small_sine_tan_dec (ctx, length, this . height, this, 'cs', 100);};
+var scale_STCTgrad_down = inherit (scale_STCTgrad);
+scale_STCTgrad_down . prototype . draw = function (ctx, length) {draw_small_sine_tan_dec (ctx, length, - this . height, this, 'cs', 100);};
+var scale_CTSTgrad = inherit (scale_STCTgrad);
+scale_CTSTgrad . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_small_sine_tan_dec (ctx, length, this . height, this, 'sc', 100);};
+var scale_CTSTgrad_down = inherit (scale_STCTgrad);
+scale_CTSTgrad_down . prototype . draw = function (ctx, length) {draw_small_sine_tan_dec (ctx, length, - this . height, this, 'sc', 100);};
 var scale_ST_down = function (height, options) {
   var s = new scale_ST (height, options);
   s . draw = function (ctx, length) {draw_small_sine_deg (ctx, length, - s . height, s);};

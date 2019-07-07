@@ -541,14 +541,13 @@ var draw_small_sine_dec = function (ctx, length, height, s) {
   ctx . translate (- length, 0);
   draw_log_1L (ctx, length, height, 1 - shift - s . left_extension, s);
 };
-var draw_small_sine_tan_dec = function (ctx, length, height, s, initial) {
-  if (initial === undefined) initial = 90;
+var draw_small_sine_tan_dec = function (ctx, length, height, s, red_shift, initial) {
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   var limit = 1 + s . right_extension;
   var degree = 1;
   var location = s . location (degree);
-  switch (s . red_shift) {
-  case 'right':
+  switch (red_shift) {
+  case 'cs':
     while (location <= limit) {
       location *= length;
       tick (ctx, location, h5);
@@ -558,7 +557,7 @@ var draw_small_sine_tan_dec = function (ctx, length, height, s, initial) {
       location = s . location (degree);
     }
     break;
-  case 'left':
+  case 'sc':
     while (location <= limit) {
       location *= length;
       tick (ctx, location, h5);
