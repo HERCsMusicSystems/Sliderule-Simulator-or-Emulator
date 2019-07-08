@@ -51,7 +51,12 @@ var changeSide = function (side) {
 	switch (side) {
 	case 'front': sliderules . sliderules [0] . inactive = false; sliderules . sliderules [1] . inactive = true; break;
 	case 'back': sliderules . sliderules [0] . inactive = true; sliderules . sliderules [1] . inactive = false; break;
+	case 'both': sliderules . sliderules [0] . inactive = false; sliderules . sliderules [1] . inactive = false; break;
 	default: break;
+	}
+	switch (side) {
+	case 'both': if (sliderules . sliderules [1] . position . y === 0) sliderules . sliderules [1] . position . y = 60; break;
+	default: if (sliderules . sliderules [1] . position . y === 60) sliderules . sliderules [1] . position . y = 0; break;
 	}
 	sliderules . requireRedraw = true;
 };
