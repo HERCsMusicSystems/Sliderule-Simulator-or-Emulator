@@ -658,160 +658,82 @@ scale_ISTd . prototype . draw = function (ctx, length) {ctx . translate (0, s . 
 var scale_ISTd_down = inherit (scale_ISTd);
 scale_ISTd_down . prototype . draw = function (ctx, length) {this . drawISTd (ctx, length, - this . height);};
 
-var scale_P = function (height, options) {
-  var s = new spacer (height, options);
-  s . value = function (location) {var ret = Math . pow (10, location - 1); return Math . sqrt (1 - ret * ret);};
-  s . location = function (value) {return 1 + Math . log10 (Math . sqrt (1 - value * value));};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_pe (ctx, length, s. height, s);};
-  return s;
-};
-var scale_P_down = function (height, options) {
-  var s = new scale_P (height, options);
-  s . draw = function (ctx, length) {draw_pe (ctx, length, - s. height, s);};
-  return s;
-};
-var scale_PH = function (height, options) {
-	var s = new spacer (height, options);
-	s . value = function (location) {var ret = Math . pow (10, location - 1); return Math . sqrt (ret * ret + 1);};
-	s . location = function (value) {return 1 + Math . log10 (Math . sqrt (value * value - 1));};
-	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_ph (ctx, length, s . height, s);};
-	return s;
-};
-var scale_PH_down = function (height, options) {
-	var s = new scale_PH (height, options);
-	s . draw = function (ctx, length) {draw_ph (ctx, length, - s . height, s);};
-	return s;
-};
-var scale_PH2 = function (height, options) {
-	var s = new spacer (height, options);
-	s . value = function (location) {var ret = Math . pow (10, location); return Math . sqrt (ret * ret + 1);};
-	s . location = function (value) {return Math . log10 (Math . sqrt (value * value - 1));};
-	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_ph2 (ctx, length, s . height, s);};
-	return s;
-};
-var scale_PH2_down = function (height, options) {
-	var s = new scale_PH2 (height, options);
-	s . draw = function (ctx, length) {draw_ph2 (ctx, length, - s . height, s);};
-	return s;
-};
-var scale_PT = function (height, options) {
-	var s = new scale_PH2 (height, options);
-	s . value = function (location) {var x = Math . pow (10, location); x *= x; x -= 1; return Math . sqrt (x);};
-	s . location = function (value) {return Math . log10 (Math . sqrt (1 + value * value));};
-	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_pt (ctx, length, s . height, s);};
-	return s;
-};
-var scale_PT_down = function (height, options) {
-	var s = new scale_PT (height, options);
-	s . draw = function (ctx, length) {draw_ph2 (ctx, length, - s . height, s);};
-	return s;
-};
-var scale_LL3 = function (height, options) {
-  var s = new spacer (height, options);
-  s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location));};
-  s . location = function (value) {return Math . log10 (Math . log (value));};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL3 (ctx, length, s . height, s);};
-  return s;
-};
-var scale_LL3_down = function (height, options) {
-  var s = new scale_LL3 (height, options);
-  s . draw = function (ctx, length) {draw_LL3 (ctx, length, - s . height, s);};
-  return s;
-};
-var scale_LL2 = function (height, options) {
-  var s = new spacer (height, options);
-  s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location - 1));};
-  s . location = function (value) {return 1 + Math . log10 (Math . log (value));};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL2 (ctx, length, s . height, s);};
-  return s;
-};
-var scale_LL2_down = function (height, options) {
-  var s = new scale_LL2 (height, options);
-  s . draw = function (ctx, length) {draw_LL2 (ctx, length, - s . height, s);};
-  return s;
-};
-var scale_LL1 = function (height, options) {
-  var s = new spacer (height, options);
-  s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location - 2));};
-  s . location = function (value) {return 2 + Math . log10 (Math . log (value));};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL1 (ctx, length, s . height, s);};
-  return s;
-};
-var scale_LL1_down = function (height, options) {
-  var s = new scale_LL1 (height, options);
-  s . draw = function (ctx, length) {draw_LL1 (ctx, length, - s . height, s);};
-  return s;
-};
-var scale_LL0 = function (height, options) {
-  var s = new spacer (height, options);
-  s . value = function (location) {return Math . pow (Math . E, Math . pow (10, location - 3));};
-  s . location = function (value) {return 3 + Math . log10 (Math . log (value));};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL0 (ctx, length, s . height, s);};
-  return s;
-};
-var scale_LL0_down = function (height, options) {
-  var s = new scale_LL0 (height, options);
-  s . draw = function (ctx, length) {draw_LL0 (ctx, length, - s . height, s);};
-  return s;
-};
-var scale_CLL0 = function (height, options) {
-  var s = new scale_C (height, options);
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_log_ll0 (ctx, length, s . height, s);};
-  return s;
-};
-var scale_DLL0 = function (height, options) {
-  var s = new scale_D (height, options);
-  s . draw = function (ctx, length) {draw_log_ll0 (ctx, length, - s . height, s);};
-  return s;
-};
-var scale_LL03 = function (height, options) {
-	var s = new spacer (height, options);
-	s . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location));};
-	s . location = function (value) {return Math . log10 (- Math . log (value));};
-	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL03 (ctx, length, s . height, s);};
-	return s;
-};
-var scale_LL03_down = function (height, options) {
-	var s = new scale_LL03 (height, options);
-	s . draw = function (ctx, length) {draw_LL03 (ctx, length, - s . height, s);};
-	return s;
-};
-var scale_LL02 = function (height, options) {
-	var s = new spacer (height, options);
-	s . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 1));};
-	s . location = function (value) {return 1 + Math . log10 (- Math . log (value));};
-	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL02 (ctx, length, s . height, s);};
-	return s;
-};
-var scale_LL02_down = function (height, options) {
-	var s = new scale_LL02 (height, options);
-	s . draw = function (ctx, length) {draw_LL02 (ctx, length, - s . height, s);};
-	return s;
-};
-var scale_LL01 = function (height, options) {
-	var s = new spacer (height, options);
-	s . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 2));};
-	s . location = function (value) {return 2 + Math . log10 (- Math . log (value));};
-	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL01 (ctx, length, s . height, s);};
-	return s;
-};
-var scale_LL01_down = function (height, options) {
-	var s = new scale_LL01 (height, options);
-	s . draw = function (ctx, length) {draw_LL01 (ctx, length, - s . height, s);};
-	return s;
-};
-var scale_LL00 = function (height, options) {
-  var s = new spacer (height, options);
-  s . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 3));};
-  s . location = function (value) {return 3 + Math . log10 (- Math . log (value));};
-  s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_LL00 (ctx, length, s . height, s);};
-  return s;
-};
-var scale_LL00_down = function (height, options) {
-  var s = new scale_LL00 (height, options);
-  s . draw = function (ctx, length) {draw_LL00 (ctx, length, - s . height, s);};
-  return s;
-};
+var scale_P = inherit (spacer);
+scale_P . prototype . value = function (location) {var ret = Math . pow (10, location - 1); return Math . sqrt (1 - ret * ret);};
+scale_P . prototype . location = function (value) {return 1 + Math . log10 (Math . sqrt (1 - value * value));};
+scale_P . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_pe (ctx, length, this. height, this);};
+var scale_P_down = inherit (scale_P);
+scale_P_down . prototype . draw = function (ctx, length) {draw_pe (ctx, length, - this. height, this);};
+var scale_PH = inherit (spacer);
+scale_PH . prototype . value = function (location) {var ret = Math . pow (10, location - 1); return Math . sqrt (ret * ret + 1);};
+scale_PH . prototype . location = function (value) {return 1 + Math . log10 (Math . sqrt (value * value - 1));};
+scale_PH . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_ph (ctx, length, this . height, this);};
+var scale_PH_down = inherit (scale_PH);
+scale_PH_down . prototype . draw = function (ctx, length) {draw_ph (ctx, length, - this . height, this);};
+var scale_PH2 = inherit (spacer);
+scale_PH2 . prototype . value = function (location) {var ret = Math . pow (10, location); return Math . sqrt (ret * ret + 1);};
+scale_PH2 . prototype . location = function (value) {return Math . log10 (Math . sqrt (value * value - 1));};
+scale_PH2 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_ph2 (ctx, length, this . height, this);};
+var scale_PH2_down = inherit (scale_PH2);
+scale_PH2_down . prototype . draw = function (ctx, length) {draw_ph2 (ctx, length, - this . height, this);};
+var scale_PT = inherit (spacer);
+scale_PT . prototype . value = function (location) {var x = Math . pow (10, location); x *= x; x -= 1; return Math . sqrt (x);};
+scale_PT . prototype . location = function (value) {return Math . log10 (Math . sqrt (1 + value * value));};
+scale_PT . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_pt (ctx, length, this . height, this);};
+var scale_PT_down = inherit (scale_PT);
+scale_PT_down . prototype . draw = function (ctx, length) {draw_pt (ctx, length, - this . height, this);};
+var scale_LL3 = inherit (spacer);
+scale_LL3 . prototype . value = function (location) {return Math . pow (Math . E, Math . pow (10, location));};
+scale_LL3 . prototype . location = function (value) {return Math . log10 (Math . log (value));};
+scale_LL3 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_LL3 (ctx, length, this . height, this);};
+var scale_LL3_down = inherit (scale_LL3);
+scale_LL3_down . prototype . draw = function (ctx, length) {draw_LL3 (ctx, length, - this . height, this);};
+var scale_LL2 = inherit (spacer);
+scale_LL2 . prototype . value = function (location) {return Math . pow (Math . E, Math . pow (10, location - 1));};
+scale_LL2 . prototype . location = function (value) {return 1 + Math . log10 (Math . log (value));};
+scale_LL2 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_LL2 (ctx, length, this . height, this);};
+var scale_LL2_down = inherit (scale_LL2);
+scale_LL2_down . prototype . draw = function (ctx, length) {draw_LL2 (ctx, length, - this . height, this);};
+var scale_LL1 = inherit (spacer);
+scale_LL1 . prototype . value = function (location) {return Math . pow (Math . E, Math . pow (10, location - 2));};
+scale_LL1 . prototype . location = function (value) {return 2 + Math . log10 (Math . log (value));};
+scale_LL1 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_LL1 (ctx, length, this . height, this);};
+var scale_LL1_down = inherit (scale_LL1);
+scale_LL1_down . prototype . draw = function (ctx, length) {draw_LL1 (ctx, length, - this . height, this);};
+var scale_LL0 = inherit (spacer);
+scale_LL0 . prototype . value = function (location) {return Math . pow (Math . E, Math . pow (10, location - 3));};
+scale_LL0 . prototype . location = function (value) {return 3 + Math . log10 (Math . log (value));};
+scale_LL0 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_LL0 (ctx, length, this . height, this);};
+var scale_LL0_down = inherit (scale_LL0);
+scale_LL0_down . prototype . draw = function (ctx, length) {draw_LL0 (ctx, length, - this . height, this);};
+var scale_CLL0 = inherit (scale_C);
+scale_CLL0 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_log_ll0 (ctx, length, this . height, this);};
+var scale_DLL0 = inherit (scale_D);
+scale_DLL0 . prototype . draw = function (ctx, length) {draw_log_ll0 (ctx, length, - this . height, this);};
+var scale_LL03 = inherit (spacer);
+scale_LL03 . prototype . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location));};
+scale_LL03 . prototype . location = function (value) {return Math . log10 (- Math . log (value));};
+scale_LL03 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_LL03 (ctx, length, this . height, this);};
+var scale_LL03_down = inherit (scale_LL03);
+scale_LL03_down . prototype . draw = function (ctx, length) {draw_LL03 (ctx, length, - this . height, this);};
+var scale_LL02 = inherit (spacer);
+scale_LL02 . prototype . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 1));};
+scale_LL02 . prototype . location = function (value) {return 1 + Math . log10 (- Math . log (value));};
+scale_LL02 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_LL02 (ctx, length, this . height, this);};
+var scale_LL02_down = inherit (scale_LL02);
+scale_LL02_down . prototype . draw = function (ctx, length) {draw_LL02 (ctx, length, - this . height, this);};
+var scale_LL01 = inherit (spacer);
+scale_LL01 . prototype . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 2));};
+scale_LL01 . prototype . location = function (value) {return 2 + Math . log10 (- Math . log (value));};
+scale_LL01 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_LL01 (ctx, length, this . height, this);};
+var scale_LL01_down = inherit (scale_LL01);
+scale_LL01_down . prototype . draw = function (ctx, length) {draw_LL01 (ctx, length, - this . height, this);};
+var scale_LL00 = inherit (spacer);
+scale_LL00 . prototype . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 3));};
+scale_LL00 . prototype . location = function (value) {return 3 + Math . log10 (- Math . log (value));};
+scale_LL00 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_LL00 (ctx, length, this . height, this);};
+var scale_LL00_down = inherit (scale_LL00);
+scale_LL00_down . prototype . draw = function (ctx, length) {draw_LL00 (ctx, length, - this . height, this);};
 var scale_SINH2rad = function (height, options) {
 	var s = new spacer (height, options);
 	s . value = function (location) {location = Math . pow (10, location); return Math . log (location + Math . sqrt (location * location + 1));};
