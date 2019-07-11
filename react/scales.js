@@ -289,18 +289,12 @@ scale_Ln . prototype . location = function (value) {return value === 0 ? 0 : val
 scale_Ln . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_ln (ctx, length, this . height, this);};
 var scale_Mn = inherit (scale_Ln);
 scale_Mn . prototype . draw = function (ctx, length) {draw_ln (ctx, length, - this . height, this);};
-var scale_LR12 = function (height, options) {
-	var s = new spacer (height, options);
-	s . value = function (location) {return location * 5;};
-	s . location = function (value) {return value * 0.2;};
-	s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_lin_12 (ctx, length, s . height, s);};
-	return s;
-};
-var scale_LW12 = function (height, options) {
-	var s = new scale_LR12 (height, options);
-	s . draw = function (ctx, length) {draw_lin_12 (ctx, length, - s . height, s);};
-	return s;
-};
+var scale_LR12 = inherit (spacer);
+scale_LR12 . prototype . value = function (location) {return location * 5;};
+scale_LR12 . prototype . location = function (value) {return value * 0.2;};
+scale_LR12 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_lin_12 (ctx, length, this . height, this);};
+var scale_LW12 = inherit (scale_LR12);
+scale_LW12 . prototype . draw = function (ctx, length) {draw_lin_12 (ctx, length, - this . height, this);};
 var scale_Sdec = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return Math . asin (Math . pow (10, location - 1)) * 180 / Math . PI;};
