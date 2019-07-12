@@ -1679,6 +1679,55 @@ var drawLBrace = function (ctx, radius, r2, from, to, mid_point, margin, backgro
 	ctx . strokeStyle = colour; ctx . stroke ();
 };
 
+var drawPickettXBrace = function (ctx, radius, r2, from, to, top, bottom, dent, margin, s) {
+  from *= s . length; to *= s . length;
+  bottom = s . height () - bottom;
+  var hh = s . height ();
+  var at = Math . atan2 (bottom - top - radius - r2, dent + r2 + radius);
+  ctx . beginPath ();
+  ctx . arc (to - radius - margin, radius + margin, radius, Math . PI * 1.5, Math . PI * 2);
+  ctx . arc (to - radius - margin, hh - radius - margin, radius, 0, Math . PI * 0.5);
+  ctx . arc (from + radius + margin, hh - radius - margin, radius, Math . PI * 0.5, Math . PI);
+  ctx . arc (from + radius + margin, bottom + radius, radius, Math . PI, Math . PI * 1.5);
+  ctx . arc (from + radius + margin + dent, bottom - r2, r2, Math . PI * 0.5, Math . PI * 1.5 + at, true);
+  ctx . arc (from + radius + margin, top - radius, radius, Math . PI * 0.5 + at, Math . PI);
+  ctx . arc (from + radius + margin, radius + margin, radius, Math . PI, Math . PI * 1.5);
+  ctx . closePath ();
+};
+
+var PickettXTopBraces = function (radius, r2, from, to, top, bottom, dent, margin, background, colour) {
+  this . background = null;
+  this . draw = function (ctx, s) {
+    if (this . background === null) {
+      if (typeof (background) == 'string') this . background = background;
+      else this . background = ctx . createPattern (background, 'repeat');
+    }
+    drawPickettXBrace (ctx, radius, r2, from, to, top, bottom, dent, margin, s);
+    ctx . fillStyle = this . background; ctx . fill ();
+    ctx . strokeStyle = colour; ctx . stroke ();
+    ctx . translate (s . length * (1 + s . left_margin + s . right_margin), 0); ctx . scale (-1, 1);
+    drawPickettXBrace (ctx, radius, r2, from, to, top, bottom, dent, margin, s);
+    ctx . fill (); ctx . stroke ();
+  };
+};
+
+var PickettXBottomBraces = function (radius, r2, from, to, top, bottom, dent, margin, background, colour) {
+  this . background = null;
+  this . draw = function (ctx, s) {
+    if (this . background === null) {
+      if (typeof (background) == 'string') this . background = background;
+      else this . background = ctx . createPattern (background, 'repeat');
+    }
+    ctx . translate (0, s . height ()); ctx . scale (1, -1);
+    drawPickettXBrace (ctx, radius, r2, from, to, top, bottom, dent, margin, s);
+    ctx . fillStyle = this . background; ctx . fill ();
+    ctx . strokeStyle = colour; ctx . stroke ();
+    ctx . translate (s . length * (1 + s . left_margin + s . right_margin), 0); ctx . scale (-1, 1);
+    drawPickettXBrace (ctx, radius, r2, from, to, top, bottom, dent, margin, s);
+    ctx . fill (); ctx . stroke ();
+  };
+};
+
 var LTopLeftBrace = function (radius, r2, from, to, mid_point, margin, background, colour, s) {
   this . draw = function (ctx, s) {drawLBrace (ctx, radius, r2, from, to, mid_point, margin, background, colour, s);};
 };
