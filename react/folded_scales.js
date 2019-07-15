@@ -25,6 +25,7 @@
 // CF36, DF36, CIF36, DIF36
 // CFM, DFM, CIFM, DIFM
 // CF1M, DF1M, CIF1M, DIF1M
+// LL2M
 //////////////////////////////////////////////////////////////////////////////
 
 var scale_CF10 = function (height, options) {
@@ -240,3 +241,7 @@ var scale_DIF1M = function (height, options) {
   };
   return s;
 };
+
+var scale_LL2M = inherit (spacer);
+scale_LL2M . prototype . value = function (location) {return Math . pow (Math . E, Math . pow (10, location - 1) / Math . log10 (Math . E));};
+scale_LL2M . prototype . location = function (value) {return 1 + Math . log10 (Math . log (value) * Math . log10 (Math . E));};
