@@ -41,6 +41,7 @@ url('snellbt-regular.eot');
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
 	<input type = checkbox id = on_music checked = true onchange = "javascript: if (this . checked) music . play (); else music . pause ();" />Music
+  <input type="button" value="Reverto!" style="background-color: #f44336; color: white; border: none; border-radius: 4px; padding: 4px; font-family: snell; font-size: 16px; font-weight: bold;" onclick="javascript: reverto ();" />
 </div>
 </font>
 <div id="root"></div>
@@ -58,7 +59,7 @@ var wood = new Image (); wood . src = 'wood/wood_7.png'; wood . onload = functio
 
 var house_logo = new Image (); house_logo . src = 'hogwart/Hufflepuff_ClearBG2.png'; house_logo . onload = function () {sliderules . requireRedraw = true;};
 
-var sliderules = new Sliderules ({wood_floor: wood_floor, wood: wood, house_logo: house_logo, house: 'Hufflepuff', motto: 'You might belong in Hufflepuff, Where they are just and loyal, Those patient Hufflepuff are true And unafraid of toil.', c1: 'yellow', c2: '#ff8a8a'});
+var sliderules = new Sliderules ({wood_floor: wood_floor, wood: wood, house_logo: house_logo, house: 'Hufflepuff', motto: 'You might belong in Hufflepuff, Where they are just and loyal, Those patient Hufflepuff are true And unafraid of toil.', c1: '#ffff00', c2: '#ff8a8a'});
 
 </script>
 <script src=hogwarts_student.js></script>

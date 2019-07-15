@@ -213,6 +213,7 @@ var dimm = function (intensity, colours) {
             scale . colour = intensify_colour (scale . colour, intensity, colours);
             scale . alt = intensify_colour (scale . alt, intensity, colours);
             if (scale . marking_colour != undefined) scale . marking_colour = intensify_colour (scale . marking_colour, intensity, colours);
+						if (scale . marking_alt != undefined) scale . marking_alt = intensify_colour (scale . marking_alt, intensity, colours)
           }
         }
       }
