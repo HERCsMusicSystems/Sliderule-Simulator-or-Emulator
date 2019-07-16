@@ -224,11 +224,11 @@ var draw_log_1R = function (ctx, length, height, extension, scale, left_extensio
   draw_MR (ctx, Math . log10, length, 2, 9, extension, h5, scale . marking_limit);
   if (abs_length >= 800) draw_MRS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
   if (scale . draw_pi) {location = Math . log10 (Math . PI); if (location < extension) smark (ctx, '\u03c0', length * location, h2, h5);}
-  if (scale . draw_e) {location = Math . log10 (Math . E); if (location < extension) smark (ctx, 'e', length * location, h2, h5);}
+  if (scale . draw_e) {location = Math . log10 (Math . E); if (location < extension) smark (ctx, '\u{1d452}', length * location, h2, h5);}
   if (scale . draw_c) {
     location = Math . log10 (Math . sqrt (4 / Math . PI)); if (location < extension) smark (ctx, 'c', length * location, h2, h5);
     location = (0.5 + Math . log10 (Math . sqrt (4 / Math . PI)));
-      if (location < extension) smark (ctx, 'c1', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), h2, h5);
+      if (location < extension) smark (ctx, 'c\u2081', length * (0.5 + Math . log10 (Math . sqrt (4 / Math . PI))), h2, h5);
   }
   if (scale . draw_r) {location = Math . log10 (18 / Math . PI); if (location < extension) smark (ctx, 'R', length * location, h2, h5);}
   if (scale . draw_q) {location = Math . log10 (Math . PI / 1.8); if (location < extension) smark (ctx, 'q', length * location, h2, h5);}

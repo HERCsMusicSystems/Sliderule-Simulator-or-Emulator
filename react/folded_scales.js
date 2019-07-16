@@ -247,6 +247,7 @@ var draw_LL2M = function (ctx, length, height, s) {
 	var h5 = height * 0.5; var h2 = height * 0.2; var h3 = height * 0.3; var h4 = height * 0.4;
   draw_MRS (ctx, s . location, length, 2, 3, 0.5, limit, h5);
   draw_MRS (ctx, s . location, length, 4, 20, 1, limit, h5);
+  smark (ctx, '\u{1d452}', length * s . location (Math . E), h3, h5);
   draw_XR (ctx, s . location, length, 2, 2.5, limit, h4, 0.5, 0.1, 0.5);
   draw_XR (ctx, s . location, length, 2.5, 20, limit, h3, 0.5, 0.1, 0.5);
   draw_XR (ctx, s . location, length, 2.5, 4, limit, h2, 0.1, 0.02, 0.1);
