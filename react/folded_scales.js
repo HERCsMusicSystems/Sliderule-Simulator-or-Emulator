@@ -25,7 +25,7 @@
 // CF36, DF36, CIF36, DIF36
 // CFM, DFM, CIFM, DIFM
 // CF1M, DF1M, CIF1M, DIF1M
-// LL2M(_down)
+// LL2M(_down) LL3M(_down)
 //////////////////////////////////////////////////////////////////////////////
 
 var scale_CF10 = function (height, options) {
@@ -255,12 +255,114 @@ var draw_LL2M = function (ctx, length, height, s) {
   limit = - s . left_extension;
   draw_MLSF (ctx, s . location, length, 1.1, 1.45, 0.05, 2, limit, h5);
 	draw_MLS (ctx, s . location, length, 1.5, 1.9, 0.1, limit, h5);
-  draw_XL (ctx, s . location, length, 1.5, 2.5, limit, h3, 0.1, 0.05, 0.1);
+  draw_XL (ctx, s . location, length, 1.5, 1.8, limit, h4, 0.1, 0.05, 0.1);
+  draw_XL (ctx, s . location, length, 1.8, 2.5, limit, h3, 0.1, 0.05, 0.1);
   draw_XL (ctx, s . location, length, 1.8, 2.5, limit, h2, 0.05, 0.01, 0.05);
   draw_XL (ctx, s . location, length, 1.4, 1.8, limit, h3, 0.05, 0.01, 0.05);
   draw_XL (ctx, s . location, length, 1.4, 1.8, limit, h2, 0.01, 0.005, 0.01);
   draw_XL (ctx, s . location, length, 1.1, 1.4, limit, h3, 0.05, 0.01, 0.05);
   draw_XL (ctx, s . location, length, 1.1, 1.4, limit, h2, 0.01, 0.002, 0.01);
+};
+
+var draw_LL3M = function (ctx, length, height, s) {
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+	var limit = - s . left_extension;
+  draw_ML (ctx, s . location, length, 1, 9, - s . left_extension, h5);
+  draw_MRS (ctx, s . location, length, 10, 50, 10, 1, h5);
+  draw_XL (ctx, s . location, length, 1, 3, - s . left_extension, h4, 1, 0.5, 1);
+	draw_XL (ctx, s . location, length, 1, 3, - s . left_extension, h3, 0.5, 0.1, 0.5);
+	draw_XL (ctx, s . location, length, 1, 3, - s . left_extension, h2, 0.1, 0.02, 0.1);
+  draw_XR (ctx, s . location, length, 3, 6, limit, h4, 1, 0.5, 1);
+	draw_XR (ctx, s . location, length, 3, 6, limit, h3, 0.5, 0.1, 0.5);
+	draw_XL (ctx, s . location, length, 3, 6, limit, h2, 0.1, 0.05, 0.1);
+	draw_XL (ctx, s . location, length, 6, 10, limit, h3, 1, 0.5, 1);
+	draw_XL (ctx, s . location, length, 6, 10, limit, h2, 0.5, 0.1, 0.5);
+	draw_XL (ctx, s . location, length, 10, 30, limit, h4, 10, 5, 10);
+	draw_XL (ctx, s . location, length, 10, 30, limit, h3, 5, 1, 5);
+	draw_XL (ctx, s . location, length, 10, 30, limit, h2, 1, 0.5, 1);
+	draw_XL (ctx, s . location, length, 30, 50, limit, h3, 10, 5, 10);
+	draw_XL (ctx, s . location, length, 30, 50, limit, h2, 5, 1, 5);
+	draw_XL (ctx, s . location, length, 50, 100, limit, h3, 50, 10, 50);
+	draw_XL (ctx, s . location, length, 50, 100, limit, h2, 10, 2, 10);
+  mark (ctx, "10\u00b2", length * s . location (100), h5);
+	mark (ctx, "2", length * s . location (200), h5);
+	mark (ctx, "3", length * s . location (300), h5);
+	mark (ctx, "4", length * s . location (400), h5);
+	mark (ctx, "5", length * s . location (500), h5);
+	mark (ctx, "10\u00b3", length * s . location (1000), h5);
+	mark (ctx, "2", length * s . location (2000), h5);
+	mark (ctx, "3", length * s . location (3000), h5);
+	mark (ctx, "4", length * s . location (4000), h5);
+	mark (ctx, "5", length * s . location (5000), h5);
+	mark (ctx, "10\u2074", length * s . location (10000), h5);
+	mark (ctx, "2", length * s . location (20000), h5);
+  mark (ctx, "3", length * s . location (30000), h5);
+	mark (ctx, "4", length * s . location (40000), h5);
+	mark (ctx, "5", length * s . location (50000), h5);
+	mark (ctx, "10\u2075", length * s . location (100000), h5);
+	mark (ctx, "2", length * s . location (200000), h5);
+  mark (ctx, "3", length * s . location (300000), h5);
+	mark (ctx, "4", length * s . location (400000), h5);
+	mark (ctx, "5", length * s . location (500000), h5);
+	mark (ctx, "10\u2076", length * s . location (1000000), h5);
+	mark (ctx, "2", length * s . location (2000000), h5);
+  mark (ctx, "3", length * s . location (3000000), h5);
+	mark (ctx, "4", length * s . location (4000000), h5);
+	mark (ctx, "5", length * s . location (5000000), h5);
+	mark (ctx, "10\u2077", length * s . location (10000000), h5);
+	mark (ctx, "2", length * s . location (20000000), h5);
+  mark (ctx, "3", length * s . location (30000000), h5);
+	mark (ctx, "4", length * s . location (40000000), h5);
+	mark (ctx, "5", length * s . location (50000000), h5);
+	mark (ctx, "10\u2078", length * s . location (100000000), h5);
+	mark (ctx, "2", length * s . location (200000000), h5);
+  mark (ctx, "3", length * s . location (300000000), h5);
+	mark (ctx, "4", length * s . location (400000000), h5);
+	mark (ctx, "5", length * s . location (500000000), h5);
+	mark (ctx, "10\u2079", length * s . location (1000000000), h5);
+	mark (ctx, "2", length * s . location (2000000000), h5);
+  mark (ctx, "3", length * s . location (3000000000), h5);
+	mark (ctx, "4", length * s . location (4000000000), h5);
+	mark (ctx, "5", length * s . location (5000000000), h5);
+	mark (ctx, "10\u00b9\u2070", length * s . location (10000000000), h5);
+  limit = 1 + s . right_extension;
+  draw_XR (ctx, s . location, length, 100, 400, limit, h3, 100, 50, 100);
+	draw_XR (ctx, s . location, length, 100, 400, limit, h2, 50, 10, 50);
+	draw_XR (ctx, s . location, length, 400, 500, limit, h2, 100, 20, 100);
+	draw_XR (ctx, s . location, length, 500, 1000, limit, h3, 500, 100, 500);
+	draw_XR (ctx, s . location, length, 500, 1000, limit, h2, 100, 50, 100);
+  draw_XR (ctx, s . location, length, 1000, 3000, limit, h3, 1000, 500, 1000);
+	draw_XR (ctx, s . location, length, 1000, 3000, limit, h2, 500, 100, 500);
+	draw_XR (ctx, s . location, length, 3000, 5000, limit, h2, 1000, 200, 1000);
+	draw_XR (ctx, s . location, length, 5000, 10000, limit, h3, 5000, 1000, 5000);
+	draw_XR (ctx, s . location, length, 5000, 10000, limit, h2, 1000, 500, 1000);
+  draw_XR (ctx, s . location, length, 10000, 20000, limit, h3, 10000, 5000, 10000);
+	draw_XR (ctx, s . location, length, 10000, 20000, limit, h2, 5000, 1000, 5000);
+	draw_XR (ctx, s . location, length, 20000, 50000, limit, h2, 10000, 2000, 10000);
+	draw_XR (ctx, s . location, length, 50000, 100000, limit, h3, 50000, 10000, 50000);
+	draw_XR (ctx, s . location, length, 50000, 100000, limit, h2, 10000, 5000, 10000);
+  draw_XR (ctx, s . location, length, 100000, 200000, limit, h3, 100000, 50000, 100000);
+	draw_XR (ctx, s . location, length, 100000, 200000, limit, h2, 50000, 10000, 50000);
+	draw_XR (ctx, s . location, length, 200000, 500000, limit, h2, 100000, 20000, 100000);
+	draw_XR (ctx, s . location, length, 500000, 1000000, limit, h3, 500000, 100000, 500000);
+	draw_XR (ctx, s . location, length, 500000, 1000000, limit, h2, 100000, 50000, 100000);
+  draw_XR (ctx, s . location, length, 1000000, 2000000, limit, h3, 1000000, 500000, 1000000);
+	draw_XR (ctx, s . location, length, 1000000, 2000000, limit, h2, 500000, 100000, 500000);
+	draw_XR (ctx, s . location, length, 2000000, 5000000, limit, h2, 1000000, 200000, 1000000);
+	draw_XR (ctx, s . location, length, 5000000, 10000000, limit, h3, 5000000, 1000000, 5000000);
+	draw_XR (ctx, s . location, length, 5000000, 10000000, limit, h2, 1000000, 500000, 1000000);
+  draw_XR (ctx, s . location, length, 10000000, 20000000, limit, h3, 10000000, 5000000, 10000000);
+	draw_XR (ctx, s . location, length, 10000000, 20000000, limit, h2, 5000000, 1000000, 5000000);
+	draw_XR (ctx, s . location, length, 20000000, 40000000, limit, h2, 10000000, 2000000, 10000000);
+  draw_XR (ctx, s . location, length, 40000000, 50000000, limit, h2, 10000000, 5000000, 10000000);
+	draw_XR (ctx, s . location, length, 50000000, 100000000, limit, h3, 50000000, 10000000, 50000000);
+	draw_XR (ctx, s . location, length, 50000000, 100000000, limit, h2, 10000000, 5000000, 10000000);
+  draw_XR (ctx, s . location, length, 100000000, 300000000, limit, h2, 100000000, 20000000, 100000000);
+  draw_XR (ctx, s . location, length, 300000000, 500000000, limit, h2, 100000000, 50000000, 100000000);
+	draw_XR (ctx, s . location, length, 500000000, 1000000000, limit, h2, 500000000, 100000000, 500000000);
+  draw_XR (ctx, s . location, length, 1000000000, 2000000000, limit, h2, 1000000000, 200000000, 1000000000);
+  draw_XR (ctx, s . location, length, 2000000000, 5000000000, limit, h2, 1000000000, 500000000, 1000000000);
+	draw_XR (ctx, s . location, length, 5000000000, 10000000000, limit, h2, 5000000000, 1000000000, 5000000000);
 };
 
 var scale_LL2M = inherit (spacer);
@@ -270,3 +372,11 @@ scale_LL2M . prototype . draw = function (ctx, length) {ctx . translate (0, this
 
 var scale_LL2M_down = inherit (scale_LL2M);
 scale_LL2M_down . prototype . draw = function (ctx, length) {draw_LL2M (ctx, length, - this . height, this);};
+
+var scale_LL3M = inherit (spacer);
+scale_LL3M . prototype . value = function (location) {return Math . pow (Math . E, Math . pow (10, location) / Math . log10 (Math . E));};
+scale_LL3M . prototype . location = function (value) {return Math . log10 (Math . log (value) * Math . log10 (Math . E));};
+scale_LL3M . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_LL3M (ctx, length, this . height, this);};
+
+var scale_LL3M_down = inherit (scale_LL3M);
+scale_LL3M_down . prototype . draw = function (ctx, length) {draw_LL3M (ctx, length, - this . height, this);};

@@ -900,7 +900,7 @@ var draw_LL3 = function (ctx, length, height, s) {
 	mark (ctx, "5", length * s . location (5000), h5);
 	mark (ctx, "10\u2074", length * s . location (10000), h5);
 	mark (ctx, "2", length * s . location (20000), h5);
-	smark (ctx, "e", 0, h3, h5);
+	smark (ctx, '\u{1d452}', 0, h3, h5);
 	esc = s . location (30000); if (esc <= limit) mark (ctx, "3", length * esc, h5);
 	esc = s . location (40000); if (esc <= limit) mark (ctx, "4", length * esc, h5);
 	esc = s . location (50000); if (esc <= limit) mark (ctx, "5", length * esc, h5);
@@ -972,7 +972,7 @@ var draw_LL2 = function (ctx, length, height, s) {
 	draw_XR (ctx, s . location, length, 2.5, 9, limit, h2, 0.1, 0.02, 0.1);
 	draw_MRSF (ctx, s . location, length, 1.2, 1.45, 0.05, 2, limit, h5);
 	draw_MRS (ctx, s . location, length, 1.5, 1.9, 0.1, limit, h5);
-	smark (ctx, "e", length, h3, h5);
+	smark (ctx, '\u{1d452}', length, h3, h5);
 	limit = - s . left_extension;
 	draw_MLSF (ctx, s . location, length, 1.002, 1.18, 0.02, 2, limit, h5);
 	draw_XL (ctx, s . location, length, 1, 1.2, limit, h4, 0.02, 0.01, 0.02);
