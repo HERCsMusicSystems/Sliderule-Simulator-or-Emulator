@@ -140,11 +140,6 @@ r . scales . push (new spacer (8));
 var s = new Sliderule (1390, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.05, cursor_right_extension: 0.05, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
 s . braces . push (new PickettXBottomBraces (8, 18, 0, 0.05, 98, 78, 11, 2, 'silver', 'red'));
 s . braces . push (new PickettXBottomBraces (8, 18, 0, 0.05, 96, 76, 12, 4, 'silver', 'red'));
-// s . braces . push (new BraceSupport (0.016, 1, 73, 60, 8, 'silver', 'black'));
-// s . braces . push (new BraceSupport (0.016, 177, 249, 60, 8, 'silver', 'black'));
-// s . braces . push (new BraceSupport (1.184, 1, 73, 60, 8, 'silver', 'black'));
-// s . braces . push (new BraceSupport (1.184, 177, 249, 60, 8, 'silver', 'black'));
-// s . braces . push (new BezierBraces (68, 0.115, 2, corrugated, 'black', 2, 0.018, 20, 40, -0.068));
 s . braces . push (new Screw (0.016, 36, 24, Math . random () * Math . PI, '#eeeeee', '#666666'));
 s . braces . push (new Bolt (0.016, 194, 8, '#eeeeee', '#666666'));
 s . braces . push (new Bolt (0.016, 230, 8, '#eeeeee', '#666666'));
@@ -159,7 +154,7 @@ s . cursorBraces . push (new Screw (0.03, 263, 12, Math . random () * Math . PI,
 var r = new Rule ({left_margin: 0.1, right_margin: 0.1, rule_colour: '#f1d6ab'}); s . rules . push (r);
 r . scales . push (new scale_LL0 (20));
 r . scales . push (new scale_LL01_down (20, {lines: [{left: 0, right: 1, height: 0}]}));
-r . scales . push (new scale_LL1 (20));
+r . scales . push (new scale_LL1M (20));
 r . scales . push (new scale_LL01_down (20, {lines: [{left: 0, right: 1, height: 0}]}));
 r . scales . push (new scale_CFM (20, {draw_c: false, draw_e: false, right_extension: 0.001}));
 
