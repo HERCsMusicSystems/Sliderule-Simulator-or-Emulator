@@ -43,21 +43,21 @@ r = new Rule ({rule_colour: sliderules . wood, left_margin: 0.12, right_margin: 
 r . markings . push (new Engraving (sliderules . house + ' House', '24px snell', 'center', sliderules . c1, 0.5, 20));
 var scales_11 = [];
 scales_11 . push (new spacer (24));
-scales_11 . push (new scale_K (24, {right: '\u{1d465}\u00b3', rs: 0.09, colour: sliderules . c2, left_extension: 0.076, right_extension: 0.069, alt: '#008000', marking_alt: 'red', dimm: true}));
-scales_11 . push (new scale_A (24, {right: '\u{1d465}\u00b2', rs: 0.09, colour: sliderules . c2, left_extension: 0.08, right_extension: 0.076, alt: '#008000', marking_alt: '#ff0000', dimm: true}));
+scales_11 . push (new scale_K (24, {right: '\u{1d465}\u00b3', rs: 0.09, colour: sliderules . c2, left_extension: 0.076, right_extension: 0.069, alt: '#008000', marking_alt: 'red', dimm: false}));
+scales_11 . push (new scale_A (24, {right: '\u{1d465}\u00b2', rs: 0.09, colour: sliderules . c2, left_extension: 0.08, right_extension: 0.076, alt: '#008000', marking_alt: '#ff0000', dimm: false}));
 var scales_12 = [];
 scales_12 . push (new spacer (24));
-scales_12 . push (new scale_CIF (24, {right: '10/\u03c0\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.078, right_extension: 0.072, alt: 'green', marking_alt: 'red', dimm: true}));
-scales_12 . push (new scale_CF (24, {right: '\u03c0\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.084, right_extension: 0.072, alt: '#008000', marking_alt: '#ff0000', dimm: true}));
+scales_12 . push (new scale_CIF (24, {right: '10/\u03c0\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.078, right_extension: 0.072, alt: 'green', marking_alt: 'red', dimm: false}));
+scales_12 . push (new scale_CF (24, {right: '\u03c0\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.084, right_extension: 0.072, alt: '#008000', marking_alt: '#ff0000', dimm: false}));
 r . scales = scales_11;
 
 r = new Rule ({stator: 1, rule_colour: sliderules . wood, left_margin: 0.12, right_margin: 0.12}); s . rules . push (r);
 var scales_21 = [];
-scales_21 . push (new scale_B (24, {right: '\u{1d465}\u00b2', rs: 0.09, colour: sliderules . c2, left_extension: 0.08, right_extension: 0.076, alt: '#008000', marking_alt: 'red', dimm: true}));
+scales_21 . push (new scale_B (24, {right: '\u{1d465}\u00b2', rs: 0.09, colour: sliderules . c2, left_extension: 0.08, right_extension: 0.076, alt: '#008000', marking_alt: 'red', dimm: false}));
 scales_21 . push (new scale_CI (24, {right: '10/\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.08, right_extension: 0.078, marking_colour: 'red', alt: 'green', marking_alt: 'red'}));
 scales_21 . push (new scale_C (24, {right: '\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.078, right_extension: 0.08, alt: 'green', marking_alt: 'red', draw_q: true, draw_r: true, draw_st_corrections: true}));
 var scales_22 = [];
-scales_22 . push (new scale_DF (24, {right: '\u03c0\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.084, right_extension: 0.072, alt: '#008000', marking_alt: 'red', dimm: true}));
+scales_22 . push (new scale_DF (24, {right: '\u03c0\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.084, right_extension: 0.072, alt: '#008000', marking_alt: 'red', dimm: false}));
 scales_22 . push (new scale_CI (24, {right: '10/\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.08, right_extension: 0.078, marking_colour: 'red', alt: 'green', marking_alt: 'red'}));
 scales_22 . push (new scale_C (24, {right: '\u{1d465}', rs: 0.09, colour: sliderules . c2, left_extension: 0.078, right_extension: 0.08, alt: 'green', marking_alt: 'red', draw_q: true, draw_r: true, draw_st_corrections: true}));
 r . scales = scales_21;
@@ -77,7 +77,18 @@ r . markings . push (new Engraving ('INCHES', '12px arial', 'left', sliderules .
 r . scales . push (new spacer (12));
 r . scales . push (new scale_StudyMate (24, {colour: sliderules . c2, shift: -1, right_extension: 0.1}));
 
+var changeDimms = function (value) {
+  var rules = sliderules . sliderules [0] . rules;
+  for (var ind in rules) {
+    var rule = rules [ind];
+    for (var sub in rule . scales) {
+      if (typeof rule . scales [sub] . dimm === 'boolean') rule . scales [sub] . dimm = value;
+    }
+  }
+};
+
 var reverto = function () {
+  changeDimms (true);
   dimmm (255, 0, 10);
   window . setTimeout (function () {
     if (sliderules . sliderules [0] . rules [2] . scales === scales_11) {
@@ -87,6 +98,9 @@ var reverto = function () {
       sliderules . sliderules [0] . rules [2] . scales = scales_11;
       sliderules . sliderules [0] . rules [3] . scales = scales_21;
     }
+    changeDimms (true);
     dimmm (0, 255, 10);
+    window . setTimeout (function () {changeDimms (false); window . setTimeout (function () {sliderules . requireRedraw = true;}, 100);}, 3500);
   }, 4000);
 };
+
