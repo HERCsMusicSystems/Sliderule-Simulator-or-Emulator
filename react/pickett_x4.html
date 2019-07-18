@@ -153,7 +153,7 @@ s . cursorBraces . push (new Screw (0.03, 263, 12, Math . random () * Math . PI,
 
 var r = new Rule ({left_margin: 0.1, right_margin: 0.1, rule_colour: '#f1d6ab'}); s . rules . push (r);
 r . scales . push (new scale_LL0M (20));
-r . scales . push (new scale_LL01_down (20, {lines: [{left: 0, right: 1, height: 0}]}));
+r . scales . push (new scale_LL00M_down (20, {marking_colour: 'red', lines: [{left: 0, right: 1, height: 0}]}));
 r . scales . push (new scale_LL1M (20));
 r . scales . push (new scale_LL01_down (20, {lines: [{left: 0, right: 1, height: 0}]}));
 r . scales . push (new scale_CFM (20, {draw_c: false, draw_e: false, right_extension: 0.001}));

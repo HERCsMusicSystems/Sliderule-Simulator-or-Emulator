@@ -25,7 +25,8 @@
 // CF36, DF36, CIF36, DIF36
 // CFM, DFM, CIFM, DIFM
 // CF1M, DF1M, CIF1M, DIF1M
-// LL2M(_down) LL3M(_down)
+// LL0M(_down) LL1M(_down) LL2M(_down) LL3M(_down)
+// LL00M(_down)
 //////////////////////////////////////////////////////////////////////////////
 
 var scale_CF10 = function (height, options) {
@@ -434,3 +435,26 @@ scale_LL3M . prototype . draw = function (ctx, length) {ctx . translate (0, this
 
 var scale_LL3M_down = inherit (scale_LL3M);
 scale_LL3M_down . prototype . draw = function (ctx, length) {draw_LL3M (ctx, length, - this . height, this);};
+
+var draw_LL00M = function (ctx, length, height, s) {
+  var h5 = height * 0.5, h4 = height * 0.4, h3 = height * 0.3, h2 = height * 0.2;
+  var limit = - s . left_extension;
+  draw_MLSI (ctx, s . location, length, 0.999, 0.991, 0.001, limit, h5);
+  draw_XLI (ctx, s . location, length, 0.999, 0.99, limit, h4, 0.001, 0.0005, 0.001);
+  draw_XLI (ctx, s . location, length, 0.999, 0.99, limit, h3, 0.0005, 0.0001, 0.0005);
+  draw_XLI (ctx, s . location, length, 0.995, 0.99, limit, h2, 0.0001, 0.00005, 0.0001);
+  draw_XLI (ctx, s . location, length, 0.999, 0.995, limit, h2, 0.0001, 0.00002, 0.0001);
+  limit = 1 + s . right_extension;
+  draw_MRSI (ctx, s . location, length, 0.99, 0.97, 0.005, limit, h5);
+  draw_XRI (ctx, s . location, length, 0.99, 0.97, limit, h4, 0.005, 0.001, 0.005);
+  draw_XRI (ctx, s . location, length, 0.99, 0.97, limit, h3, 0.001, 0.0005, 0.001);
+  draw_XRI (ctx, s . location, length, 0.99, 0.97, limit, h2, 0.0005, 0.0001, 0.0005);
+};
+
+var scale_LL00M = inherit (spacer);
+scale_LL00M . prototype . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 3) / Math . log10 (Math . E));};
+scale_LL00M . prototype . location = function (value) {return 3 + Math . log10 (- Math . log (value) * Math . log10 (Math . E));};
+scale_LL00M . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_LL00M (ctx, length, this . height, this);};
+
+var scale_LL00M_down = inherit (scale_LL00M);
+scale_LL00M_down . prototype . draw = function (ctx, length) {draw_LL00M (ctx, length, - this . height, this);};
