@@ -179,7 +179,7 @@ var isolate = function (scales) {
   }
   sliderules . requireRedraw = true;
 };
-var intensify_colour = function (colour, intensity, colours) {
+var intensify_colour = function (colour, intensity) {
   if (colour == 'black') colour = '#000000';
   if (colour == 'red') colour = '#ff0000';
   if (colour . charAt (0) == '#') colour = colour . substring (0, 7);
@@ -193,27 +193,29 @@ var intensify_colour = function (colour, intensity, colours) {
   }
   return colour;
 };
-var dimmm = function (from, to, by, colours) {
-  if (colours == undefined) colours = ['#000000', '#ff0000'];
-  dimm (from, colours);
+var dimmm = function (from, to, by, fn) {
+  dimm (from);
   by = Math . abs (by);
-  if (from == to) return;
+  if (from == to) {
+		if (fn !== undefined) fn ();
+		return;
+	}
   if (from > to) from -= by;
   else if (from < to) from += by;
   if (Math . abs (to - from) < by) from = to;
-  setTimeout (function () {dimmm (from, to, by, colours);}, 100);
+  setTimeout (function () {dimmm (from, to, by, fn);}, 100);
 };
-var dimm = function (intensity, colours) {
+var dimm = function (intensity) {
   for (var esc in sliderules . sliderules) {
     //if (! sliderules . sliderules [esc] . inactive) {
       for (var ind in sliderules . sliderules [esc] . rules) {
         for (var sub in sliderules . sliderules [esc] . rules [ind] . scales) {
           var scale = sliderules . sliderules [esc] . rules [ind] . scales [sub];
           if (scale . dimm) {
-            scale . colour = intensify_colour (scale . colour, intensity, colours);
-            scale . alt = intensify_colour (scale . alt, intensity, colours);
-            if (scale . marking_colour != undefined) scale . marking_colour = intensify_colour (scale . marking_colour, intensity, colours);
-						if (scale . marking_alt != undefined) scale . marking_alt = intensify_colour (scale . marking_alt, intensity, colours)
+            scale . colour = intensify_colour (scale . colour, intensity);
+            scale . alt = intensify_colour (scale . alt, intensity);
+            if (scale . marking_colour != undefined) scale . marking_colour = intensify_colour (scale . marking_colour, intensity);
+						if (scale . marking_alt != undefined) scale . marking_alt = intensify_colour (scale . marking_alt, intensity);
           }
         }
       }

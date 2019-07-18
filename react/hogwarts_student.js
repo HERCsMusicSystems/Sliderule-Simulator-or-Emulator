@@ -89,8 +89,7 @@ var changeDimms = function (value) {
 
 var reverto = function () {
   changeDimms (true);
-  dimmm (255, 0, 10);
-  window . setTimeout (function () {
+  dimmm (255, 0, 10, function () {
     if (sliderules . sliderules [0] . rules [2] . scales === scales_11) {
       sliderules . sliderules [0] . rules [2] . scales = scales_12;
       sliderules . sliderules [0] . rules [3] . scales = scales_22;
@@ -99,8 +98,10 @@ var reverto = function () {
       sliderules . sliderules [0] . rules [3] . scales = scales_21;
     }
     changeDimms (true);
-    dimmm (0, 255, 10);
-    window . setTimeout (function () {changeDimms (false); window . setTimeout (function () {sliderules . requireRedraw = true;}, 100);}, 3500);
-  }, 4000);
+    dimmm (0, 255, 10, function () {
+      changeDimms (false);
+      sliderules . requireRedraw = true;
+    });
+  });
 };
 
