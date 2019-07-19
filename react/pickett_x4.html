@@ -155,7 +155,7 @@ var r = new Rule ({left_margin: 0.1, right_margin: 0.1, rule_colour: '#f1d6ab'})
 r . scales . push (new scale_LL0M (20));
 r . scales . push (new scale_LL00M_down (20, {marking_colour: 'red', lines: [{left: 0, right: 1, height: 0}]}));
 r . scales . push (new scale_LL1M (20));
-r . scales . push (new scale_LL01_down (20, {lines: [{left: 0, right: 1, height: 0}]}));
+r . scales . push (new scale_LL01M_down (20, {marking_colour: 'red', lines: [{left: 0, right: 1, height: 0}]}));
 r . scales . push (new scale_CFM (20, {draw_c: false, draw_e: false, right_extension: 0.001}));
 
 r = new Rule ({stator: 1, rounding: 0, left_margin: 0.1, right_margin: 0.1, rule_colour: '#ededd5'}); s . rules . push (r);
@@ -196,9 +196,11 @@ r = new Rule ({left_margin: 0.1, right_margin: 0.1, rule_colour: '#f1d6ab'}); s 
 // r . scales . push (new spacer (2));
 r . scales . push (new scale_D (20, {draw_e: false, draw_c: false}));
 r . scales . push (new scale_LL2M (20, {lines: [{left: 0, right: 1, height: 1}]}));
-r . scales . push (new scale_LL02_down (20));
+r . scales . push (new scale_LL02_down (20, {marking_colour: 'red'}));
 r . scales . push (new scale_LL3M (20, {lines: [{left: 0, right: 1, height: 1}]}));
-r . scales . push (new scale_LL03_down (20));
+r . scales . push (new scale_LL03_down (20, {marking_colour: 'red'}));
+
+sliderules . sliderules [1] . position . y = -290;
 
 </script>
 

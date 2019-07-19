@@ -25,8 +25,8 @@
 // CF36, DF36, CIF36, DIF36
 // CFM, DFM, CIFM, DIFM
 // CF1M, DF1M, CIF1M, DIF1M
-// LL0M(_down) LL1M(_down) LL2M(_down) LL3M(_down)
-// LL00M(_down)
+// LL0M(_down), LL1M(_down), LL2M(_down), LL3M(_down)
+// LL00M(_down), LL01M(_down)
 //////////////////////////////////////////////////////////////////////////////
 
 var scale_CF10 = function (height, options) {
@@ -451,6 +451,21 @@ var draw_LL00M = function (ctx, length, height, s) {
   draw_XRI (ctx, s . location, length, 0.99, 0.97, limit, h2, 0.0005, 0.0001, 0.0005);
 };
 
+var draw_LL01M = function (ctx, length, height, s) {
+  var h5 = height * 0.5, h4 = height * 0.4, h3 = height * 0.3, h2 = height * 0.2;
+  var limit = - s . left_extension;
+  draw_MLSI (ctx, s . location, length, 0.99, 0.91, 0.01, limit, h5);
+  draw_XLI (ctx, s . location, length, 0.99, 0.9, limit, h4, 0.01, 0.005, 0.01);
+  draw_XLI (ctx, s . location, length, 0.99, 0.9, limit, h3, 0.005, 0.001, 0.005);
+  draw_XLI (ctx, s . location, length, 0.95, 0.9, limit, h2, 0.001, 0.0005, 0.001);
+  draw_XLI (ctx, s . location, length, 0.99, 0.95, limit, h2, 0.001, 0.0002, 0.001);
+  limit = 1 + s . right_extension;
+  draw_MRSI (ctx, s . location, length, 0.9, 0.7, 0.05, 2, h5);
+  draw_XRI (ctx, s . location, length, 0.9, 0.7, limit, h5, 0.05, 0.01, 0.05);
+  draw_XRI (ctx, s . location, length, 0.9, 0.7, limit, h3, 0.01, 0.005, 0.01);
+  draw_XRI (ctx, s . location, length, 0.9, 0.7, limit, h2, 0.005, 0.001, 0.005);
+};
+
 var scale_LL00M = inherit (spacer);
 scale_LL00M . prototype . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 3) / Math . log10 (Math . E));};
 scale_LL00M . prototype . location = function (value) {return 3 + Math . log10 (- Math . log (value) * Math . log10 (Math . E));};
@@ -458,3 +473,11 @@ scale_LL00M . prototype . draw = function (ctx, length) {ctx . translate (0, thi
 
 var scale_LL00M_down = inherit (scale_LL00M);
 scale_LL00M_down . prototype . draw = function (ctx, length) {draw_LL00M (ctx, length, - this . height, this);};
+
+var scale_LL01M = inherit (spacer);
+scale_LL01M . prototype . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 2) / Math . log10 (Math . E));};
+scale_LL01M . prototype . location = function (value) {return 2 + Math . log10 (- Math . log (value) * Math . log10 (Math . E));};
+scale_LL01M . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_LL01M (ctx, length, this . height, this);};
+
+var scale_LL01M_down = inherit (scale_LL01M);
+scale_LL01M_down . prototype . draw = function (ctx, length) {draw_LL01M (ctx, length, - this . height, this);};
