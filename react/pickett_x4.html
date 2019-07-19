@@ -198,9 +198,7 @@ r . scales . push (new scale_D (20, {draw_e: false, draw_c: false}));
 r . scales . push (new scale_LL2M (20, {lines: [{left: 0, right: 1, height: 1}]}));
 r . scales . push (new scale_LL02M_down (20, {marking_colour: 'red'}));
 r . scales . push (new scale_LL3M (20, {lines: [{left: 0, right: 1, height: 1}]}));
-r . scales . push (new scale_LL03_down (20, {marking_colour: 'red'}));
-
-sliderules . sliderules [1] . position . y = -290;
+r . scales . push (new scale_LL03M_down (20, {left_extension: 0.2, marking_colour: 'red'}));
 
 </script>
 
