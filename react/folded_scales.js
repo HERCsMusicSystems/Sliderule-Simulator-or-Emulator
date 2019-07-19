@@ -26,7 +26,7 @@
 // CFM, DFM, CIFM, DIFM
 // CF1M, DF1M, CIF1M, DIF1M
 // LL0M(_down), LL1M(_down), LL2M(_down), LL3M(_down)
-// LL00M(_down), LL01M(_down)
+// LL00M(_down), LL01M(_down), LL02M(_down), LL03M(_down)
 //////////////////////////////////////////////////////////////////////////////
 
 var scale_CF10 = function (height, options) {
@@ -466,6 +466,18 @@ var draw_LL01M = function (ctx, length, height, s) {
   draw_XRI (ctx, s . location, length, 0.9, 0.7, limit, h2, 0.005, 0.001, 0.005);
 };
 
+var draw_LL02M = function (ctx, length, height, s) {
+  var h5 = height * 0.5, h4 = height * 0.4, h3 = height * 0.3, h2 = height * 0.2;
+  var limit = - s . left_extension;
+  draw_MLSI (ctx, s . location, length, 1, 0.55, 0.05, limit, h5);
+  draw_XLI (ctx, s . location, length, 1, 0.5, limit, h3, 0.5, 0.01, 0.5);
+  draw_XLI (ctx, s . location, length, 1, 0.5, limit, h2, 0.01, 0.002, 0.01);
+  limit = 1 + s . right_extension;
+  draw_MRSI (ctx, s . location, length, 0.5, 0, 0.05, limit, h5);
+  draw_XRI (ctx, s . location, length, 0.5, 0, limit, h3, 0.5, 0.01, 0.5);
+  draw_XRI (ctx, s . location, length, 0.5, 0, limit, h2, 0.01, 0.002, 0.01);
+};
+
 var scale_LL00M = inherit (spacer);
 scale_LL00M . prototype . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 3) / Math . log10 (Math . E));};
 scale_LL00M . prototype . location = function (value) {return 3 + Math . log10 (- Math . log (value) * Math . log10 (Math . E));};
@@ -481,3 +493,11 @@ scale_LL01M . prototype . draw = function (ctx, length) {ctx . translate (0, thi
 
 var scale_LL01M_down = inherit (scale_LL01M);
 scale_LL01M_down . prototype . draw = function (ctx, length) {draw_LL01M (ctx, length, - this . height, this);};
+
+var scale_LL02M = inherit (spacer);
+scale_LL02M . prototype . value = function (location) {return Math . pow (Math . E, - Math . pow (10, location - 1) / Math . log10 (Math . E));};
+scale_LL02M . prototype . location = function (value) {return 1 + Math . log10 (- Math . log (value) * Math . log10 (Math . E));};
+scale_LL02M . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_LL02M (ctx, length, this . height, this);};
+
+var scale_LL02M_down = inherit (scale_LL02M);
+scale_LL02M_down . prototype . draw = function (ctx, length) {draw_LL02M (ctx, length, - this . height, this);};
