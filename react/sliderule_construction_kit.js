@@ -2102,7 +2102,8 @@ var DecilonCursorBrace = function (shift, l1, t1, r1, l2, t2, r2, background, co
 	};
 };
 
-var CursorWindow = function (margin, radius, background, colour) {
+var CursorWindow = function (margin, radius, background, colour, other_margin) {
+  if (other_margin === undefined) other_margin = margin;
   this . draw = function (ctx, s) {
     var right = s . cursor_right_extension * s . length;
     var left = - s . cursor_left_extension * s . length;
@@ -2114,11 +2115,11 @@ var CursorWindow = function (margin, radius, background, colour) {
     ctx . arc (left + rd, h + s . cursor_bottom_margin, rd, Math . PI * 0.5, Math . PI);
     ctx . arc (left + rd, - s . cursor_top_margin, rd, Math . PI, Math . PI * 1.5);
     ctx . closePath ();
-    ctx . moveTo (right - margin, - s . cursor_top_margin + margin - rd + radius);
-    ctx . arc (right - radius - margin, - s . cursor_top_margin + margin + radius - rd, radius, 0, Math . PI * 1.5, true);
-    ctx . arc (left + radius + margin, - s. cursor_top_margin + margin + radius - rd, radius, Math . PI * 1.5, Math . PI, true);
-    ctx . arc (left + radius + margin, h + s . cursor_bottom_margin - margin - radius + rd, radius, Math . PI, Math . PI * 0.5, true);
-    ctx . arc (right - radius - margin, h + s . cursor_bottom_margin - margin - radius + rd, radius, Math . PI * 0.5, 0, true);
+    ctx . moveTo (right - margin, - s . cursor_top_margin + other_margin - rd + radius);
+    ctx . arc (right - radius - margin, - s . cursor_top_margin + other_margin + radius - rd, radius, 0, Math . PI * 1.5, true);
+    ctx . arc (left + radius + margin, - s. cursor_top_margin + other_margin + radius - rd, radius, Math . PI * 1.5, Math . PI, true);
+    ctx . arc (left + radius + margin, h + s . cursor_bottom_margin - other_margin - radius + rd, radius, Math . PI, Math . PI * 0.5, true);
+    ctx . arc (right - radius - margin, h + s . cursor_bottom_margin - other_margin - radius + rd, radius, Math . PI * 0.5, 0, true);
     ctx . closePath ();
     if (this . pattern) ctx . fillStyle = this . pattern;
     else {

@@ -460,7 +460,7 @@ var draw_LL01M = function (ctx, length, height, s) {
   draw_XLI (ctx, s . location, length, 0.95, 0.9, limit, h2, 0.001, 0.0005, 0.001);
   draw_XLI (ctx, s . location, length, 0.99, 0.95, limit, h2, 0.001, 0.0002, 0.001);
   limit = 1 + s . right_extension;
-  draw_MRSI (ctx, s . location, length, 0.9, 0.7, 0.05, 2, h5);
+  draw_MRSI (ctx, s . location, length, 0.9, 0.7, 0.05, limit, h5);
   draw_XRI (ctx, s . location, length, 0.9, 0.7, limit, h5, 0.05, 0.01, 0.05);
   draw_XRI (ctx, s . location, length, 0.9, 0.7, limit, h3, 0.01, 0.005, 0.01);
   draw_XRI (ctx, s . location, length, 0.9, 0.7, limit, h2, 0.005, 0.001, 0.005);
