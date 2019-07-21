@@ -95,20 +95,19 @@ r . scales . push (new spacer (6));
 r . scales . push (new scale_CF (20, {left: 'DF', ls: 0.015, la: 'center', right: 'DF', rs: 0.015, ra: 'center', draw_c: false, draw_e: false, right_extension: 0.001}));
 
 r = new Rule ({stator: 1, rounding: 0, left_margin: 0.15, right_margin: 0.15, rule_colour: '#ededd5'}); s . rules . push (r);
-r . markings . push (new Bolt (-0.11, 80, 8, 'white', 'black'));
-r . markings . push (new Bolt (1.11, 80, 8, 'white', 'black'));
+r . markings . push (new Bolt (-0.11, 70, 8, 'white', 'black'));
+r . markings . push (new Bolt (1.11, 70, 8, 'white', 'black'));
 r . markings . push (new Engraving ('MODEL', '12px arial', 'center', 'black', -0.11, 55));
 r . markings . push (new Engraving ('X-3', '38px snell', 'left', 'black', -0.08, 55));
-r . markings . push (new Engraving ('POWER LOG EXPONENTIAL', '12px arial', 'center', 'black', -0.08, 125));
-r . markings . push (new Engraving ('LOG LOG DUAL BASE', '10px arial', 'center', 'black', -0.08, 140));
+r . markings . push (new Engraving ('POWER LOG EXPONENTIAL', '12px arial', 'center', 'black', -0.08, 105));
+r . markings . push (new Engraving ('LOG LOG DUAL BASE', '10px arial', 'center', 'black', -0.08, 120));
 r . markings . push (new Engraving ('PICKETT', 'bold 12px arial', 'left', 'black', 1.03, 78));
 r . markings . push (new Engraving ('Executive', '24px snell', 'left', 'black', 1.03, 100));
-r . scales . push (new scale_DF (20, {left: 'CF', ls: 0.015, la: 'center', right: 'CF', rs: 0.015, ra: 'center', draw_e: false, draw_c: false, highlight: '#e6a65f', highlight_left: 0.2, highlight_right: 0.2}));
-r . scales . push (new scale_DIF (20, {left: 'CIF', ls: 0.015, la: 'center', right: 'CIF', rs: 0.015, ra: 'center', marking_colour: 'red', draw_e: false, draw_c: false}));
-r . scales . push (new scale_Tdec (20, {left: 'T', ls: 0.015, la: 'center', right: 'T', rs: 0.015, ra: 'center', lines: [{left: 0, right: 1, height: 1}]}));
-r . scales . push (new scale_T1dec_down (20, {left: 'T', ls: 0.015, la: 'center', right: 'T', rs: 0.015, ra: 'center'}));
+r . scales . push (new scale_B (20, {left: 'B', ls: 0.015, la: 'center', right: 'B', rs: 0.015, ra: 'center', draw_e: false, draw_c: false, highlight: '#e6a65f', highlight_left: 0.2, highlight_right: 0.2}));
 r . scales . push (new scale_STdec (20, {left: 'ST', ls: 0.015, la: 'center', right: 'ST', rs: 0.015, ra: 'center', draw_st_corrections: false, lines: [{left: 0, right: 1, height: 1}]}));
 r . scales . push (new scale_CSdec_down (20, {left: 'S', ls: 0.015, la: 'center', right: 'S', rs: 0.015, ra: 'center'}));
+r . scales . push (new scale_Tdec (20, {left: 'T', ls: 0.015, la: 'center', right: 'T', rs: 0.015, ra: 'center', lines: [{left: 0, right: 1, height: 1}]}));
+r . scales . push (new scale_T1dec_down (20, {left: 'T', ls: 0.015, la: 'center', right: 'T', rs: 0.015, ra: 'center'}));
 r . scales . push (new scale_CI (20, {left: 'CI', ls: 0.015, la: 'center', right: 'CI', rs: 0.015, ra: 'center', marking_colour: 'red', indices: [1, 1, 1, 1]}));
 r . scales . push (new scale_C (20, {left: 'C', ls: 0.015, la: 'center', right: 'C', rs: 0.015, ra: 'center', draw_e: false, draw_c: false, highlight: '#e6a65f', highlight_left: 0.2, highlight_right: 0.2}));
 
