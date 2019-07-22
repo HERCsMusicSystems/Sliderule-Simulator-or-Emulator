@@ -70,7 +70,7 @@ var logo = new Image (); logo . src = 'Pickett_logo_triangle.png'; logo . onload
 
 var sliderules = new Sliderules ();
 
-var s = new Sliderule (1390, {left_margin: 0.15, right_margin: 0.15, cursor_left_extension: 0.055, cursor_right_extension: 0.055, cursor_top_margin: 0, cursor_bottom_margin: 0, cursor_limit_left: 0, cursor_limit_right: 0, cursor_rounding: 16, cursorHairline: 'black'}); sliderules . sliderules . push (s);
+var s = new Sliderule (1390, {left_margin: 0.15, right_margin: 0.15, cursor_left_extension: 0.055, cursor_right_extension: 0.055, cursor_top_margin: 0, cursor_bottom_margin: 0, cursor_limit_left: 0, cursor_limit_right: 0, cursor_rounding: 16, cursorHairline: 'black', cursor_limit_left: 0.045, cursor_limit_right: 0.045}); sliderules . sliderules . push (s);
 s . braces . push (new PickettXBottomBraces (8, 18, 0, 0.05, 118, 98, 11, 2, 'silver', 'red'));
 s . braces . push (new PickettXBottomBraces (8, 18, 0, 0.05, 116, 96, 12, 4, 'silver', 'red'));
 s . braces . push (new Screw (0.024, 320, 16, Math . random () * Math . PI, '#eeeeee', '#666666'));
@@ -137,7 +137,7 @@ r . scales . push (new spacer (8));
 // OTHER SIDE //
 ////////////////
 
-var s = new Sliderule (1390, {left_margin: 0.15, right_margin: 0.15, cursor_left_extension: 0.055, cursor_right_extension: 0.055, cursor_top_margin: 0, cursor_bottom_margin: 0, cursor_limit_left: 0, cursor_limit_right: 0, cursor_rounding: 16, cursorHairline: 'black'}); sliderules . sliderules . push (s);
+var s = new Sliderule (1390, {left_margin: 0.15, right_margin: 0.15, cursor_left_extension: 0.055, cursor_right_extension: 0.055, cursor_top_margin: 0, cursor_bottom_margin: 0, cursor_limit_left: 0, cursor_limit_right: 0, cursor_rounding: 16, cursorHairline: 'black', cursor_limit_left: 0.045, cursor_limit_right: 0.045}); sliderules . sliderules . push (s);
 s . braces . push (new PickettXTopBraces (8, 18, 0, 0.05, 118, 98, 11, 2, 'silver', 'red'));
 s . braces . push (new PickettXTopBraces (8, 18, 0, 0.05, 116, 96, 12, 4, 'silver', 'red'));
 s . braces . push (new Bolt (0.024, 360 - 320, 12, '#eeeeee', '#666666'));
