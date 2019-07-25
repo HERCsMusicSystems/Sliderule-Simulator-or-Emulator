@@ -47,8 +47,13 @@ for a more civilized age ...<br/>
 </i>
 (last update: 15th July 2019)
 <script>
-var VersionDate = new Date ('2019-08-01');
-if (new Date (localStorage . getItem ('sckvd')) . toString () !== VersionDate . toString ()) {localStorage . setItem ('sckvd', VersionDate);}
+
+var VersionDate = new Date ('2019-07-15');
+if (new Date (localStorage . getItem ('VersionDate')) . toString () !== VersionDate . toString ()) {
+  localStorage . setItem ('VersionDate', VersionDate);
+  location . reload (true);
+}
+
 </script>
 </div>
 </center>

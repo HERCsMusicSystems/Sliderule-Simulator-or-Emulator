@@ -20,13 +20,6 @@
 // THE SOFTWARE.                                                                 //
 ///////////////////////////////////////////////////////////////////////////////////
 
-var VersionDate = new Date (localStorage . getItem ('sckvd'));
-var StoredDate = new Date (localStorage . getItem ('sckd'));
-if (VersionDate > StoredDate) {
-  localStorage . setItem ('sckd', VersionDate);
-  location . reload ();
-}
-
 var inherit = function (from, to) {
   if (to === undefined) {to = from; from = function () {to . apply (this, arguments);}}
   from . prototype = Object . create (to . prototype);
