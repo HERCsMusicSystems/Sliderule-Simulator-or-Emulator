@@ -159,16 +159,7 @@ Some useful formulas:<br />
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings&nbsp;
 	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Other Markings&nbsp;
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.&nbsp;
-  <select id = lessons><option value = "Choose Lesson ====" >Choose Lesson ====</option></select>
-  <input type = button value = "Play lesson" onclick = "javascript: playLesson ('lessons');" />&nbsp;&nbsp;
-  <select id = tests><option value = "Choose Test of Merit ====" >Choose Test of Merit ====</option></select>
-  <input type = button value = "Attempt test" onclick = "javascript: playLesson ('tests');" />&nbsp;&nbsp;
-  <input type = button id = clear_instructions onclick = "javascript: document . getElementById ('info') . innerHTML = '';" value = "Clear instructions." />
 </div>
-
-  <div style = "display: block; position: absolute; background-color: white; border-color: black; border-style: solid; border-width: 1px;">
-    <font color = red ><span id = info /></font>
-  </div>
 
 
 
@@ -196,8 +187,14 @@ Some useful formulas:<br />
 <!--
 <script src="manual/sliderule_tutorial_tabling.js"></script>
 <script src="manual/sliderule_test_tabling.js"></script>
--->
-<script src="hiram_abif.js"></script>
+<script src="hiram_abif.js"></script>-->
+
+<script>
+var sliderules = new Sliderules ({name: 'Hiram Abiff', manufacturer: 'HERCs', made_in: "Et inventum est in Templo Salomonis in MCXX annis."});
+//"Inventa est in templum fecerat Salomon rex Israel A. D. MCXX"});
+</script>
+
+<script src="templar.js"></script>
 
 <script src="templars_artefacts.js"></script>
 
