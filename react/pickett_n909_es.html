@@ -159,18 +159,25 @@ custom_scale . prototype . locations = {
 	feet_to_metres: cl (30.48 * 0.935), metres_to_feet: cl (93.5),
 	yards_to_metres: cl (91.44 * 0.164), metres_to_yards: cl (16.4),
 	pounds_to_kilograms: cl (10.6), kilograms_to_pounds: cl (10.6 / 0.453592),
-	kilometres_to_miles: cl (0.621371 * 2.35), miles_to_kilometres: cl (2.35)
+	kilometres_to_miles: cl (0.621371 * 2.35), miles_to_kilometres: cl (2.35),
+	metric_to_short_tons: cl (1 / 0.907185),
+	square_feet_to_metres: cl (4.55), square_metres_to_feet: cl (4.55 / 0.92903),
+	cubic_feet_to_metres: cl (2.65), cubic_metres_to_feet: cl (2.65/ 0.283168)
 };
 custom_scale . prototype . draw = function (ctx, length) {
 	var b1 = this . height * 0.2, b2 = this . height * 0.4, b3 = this . height * 0.6, b4 = this . height * 0.8, b5 = this . height;
 	ctx . font = 'bold 14px arial';
 	ctx . textBaseline = 'middle';
 	dbr (ctx, length, this . locations . litres_to_gallons, 1, 0, b2, [{text: 'GALLONS', location: 0.77}, {text: 'LITRES', location: 0.95}]);
-	dbr (ctx, length, this . locations . feet_to_metres, this . locations . metres_to_feet, 0, b1, [{text: 'METRES', location: 0.8}, {text: 'FEET', location: 0.9}]);
+	dbr (ctx, length, this . locations . feet_to_metres, this . locations . metres_to_feet, 0, b1, [{text: 'METRES', location: 0.8}, {text: 'FEET', location: 0.9}, {text: 'TONS', location: 0.04}]);
 	dbr (ctx, length, this . locations . yards_to_metres, this . locations . metres_to_yards, 0, b1, [{text: 'METRES', location: 0.56}, {text: 'YARDS', location: 0.63}]);
 	dbr (ctx, length, this . locations . pounds_to_kilograms, this . locations . kilograms_to_pounds, 0, b2, [{text: 'KILOGRAMS', location: 0.555}, {text: 'POUNDS', location: 0.65}]);
 	ldbr (ctx, length, this . locations . kilometres_to_miles, 0.13, 0, b1, 'MILES');
-	rdbr (ctx, length, this . locations . miles_to_kilometers, 0.13, 0, b2, 'KILOMETRES');
+	rdbr (ctx, length, this . locations . miles_to_kilometres, 0.13, 0, b2, 'KILOMETRES');
+	ldbr (ctx, length, this . locations . metric_to_short_tons, 0.05, 0, b2, 'SHORT');
+	ldbr (ctx, length, 0, 0.05, 0, b3, 'METRIC');
+	dbr (ctx, length, this . locations . square_feet_to_metres, this . locations . square_metres_to_feet, 0, b1, [{text: 'SQ. METERS', location: 0.29}, {text: 'SQ. FEET X I0', location: 0.388}]);
+	dbr (ctx, length, this . locations . cubic_feet_to_metres, this . locations . cubic_metres_to_feet, 0, b2, [{text: 'CU. METERS', location: 0.27}, {text: 'CU. FEET X I0', location: 0.41}]);
 };
 custom_scale . prototype . read = function (position, shift) {
 	console . log (position, shift);
