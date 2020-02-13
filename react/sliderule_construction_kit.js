@@ -1353,12 +1353,12 @@ spacer . prototype . sub_draw = function (ctx, length) {
   if (this . cf !== undefined) ctx . font = this . cf;
   if (this . centre !== undefined) {ctx . textAlign = this . ca; ctx . fillText (this . centre, length * this . cs, textBase);}
 };
-spacer . prototype . read = function (position) {return null;};
-spacer . prototype . examine = function (position) {
+spacer . prototype . read = function (position, shift) {return null;};
+spacer . prototype . examine = function (position, shift) {
   if (position . y < 0 || position . y > this . height) return null;
   var p = prompt ('Value for: ' + (this . left ? this . left : '') + ' ' + (this . right ? this . right : '') , '0.0000');
   if (p === null) return null;
-  var re = this . read (p);
+  var re = this . read (p, shift);
   if (re != null) return re;
   p = p . replace (',', '.');
   switch (p) {
@@ -1470,7 +1470,7 @@ var Rule = function (options) {
     for (var ind in this . scales) {
       var scale = this . scales [ind];
       if (! scale . dimm) {
-        value = scale . examine (position);
+        value = scale . examine (position, relative_location - this . shift);
         if (value != null) {
           var location = scale . location (value, relative_location - this . shift);
           if (isNaN (location)) location = null;
