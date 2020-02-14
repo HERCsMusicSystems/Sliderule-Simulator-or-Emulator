@@ -64,22 +64,22 @@ var logo = new Image (); logo . src = 'Pickett_logo_triangle.png'; logo . onload
 
 var sliderules = new Sliderules ();
 
-var s = new Sliderule (1200, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.05, cursor_right_extension: 0.05, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
-s . braces . push (new BraceSupport (0.016, 1, 73, 60, 8, 'silver', 'black'));
-s . braces . push (new BraceSupport (0.016, 177, 249, 60, 8, 'silver', 'black'));
-s . braces . push (new BraceSupport (1.184, 1, 73, 60, 8, 'silver', 'black'));
-s . braces . push (new BraceSupport (1.184, 177, 249, 60, 8, 'silver', 'black'));
-s . braces . push (new BezierBraces (68, 0.115, 2, corrugated, 'black', 2, 0.018, 20, 40, -0.068));
-s . braces . push (new Screw (0.016, 36, 24, Math . random () * Math . PI, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (0.016, 194, 8, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (0.016, 230, 8, '#eeeeee', '#666666'));
-s . braces . push (new Screw (1.184, 36, 24, Math . random () * Math . PI, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (1.184, 194, 8, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (1.184, 230, 8, '#eeeeee', '#666666'));
+var s = new Sliderule (1200, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.054, cursor_right_extension: 0.054, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
+s . braces . push (new BraceSupport (0.016, 1, 50, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (0.016, 158, 207, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.184, 1, 50, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.184, 158, 207, 70, 8, 'silver', 'black'));
+s . braces . push (new BezierBraces (44, 0.08, 2, corrugated, 'black', 2, 0.018, 20, 40, -0.035));
+s . braces . push (new Screw (0.016, 24, 16, Math . random () * Math . PI, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.004, 183, 12, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.03, 183, 12, '#eeeeee', '#666666'));
+s . braces . push (new Screw (1.184, 24, 16, Math . random () * Math . PI, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.172, 183, 12, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.198, 183, 12, '#eeeeee', '#666666'));
 s . cursorGlassBraces . push (new CursorBrace (0.06, 0.06, 26, 0, 16, '#deb887'));
 s . cursorBraces . push (new Screw (0, -13, 12, Math . random () * Math . PI, 'silver', '#666666'));
-s . cursorBraces . push (new Screw (-0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
-s . cursorBraces . push (new Screw (0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (-0.03, 221, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (0.03, 221, 12, Math . random () * Math . PI, 'silver', '#666666'));
 
 var r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
 r . markings . push (new Engraving ('K', '14px arial', 'right', 'black', -0.01, 24));
@@ -162,7 +162,15 @@ custom_scale . prototype . locations = {
 	kilometres_to_miles: cl (0.621371 * 2.35), miles_to_kilometres: cl (2.35),
 	metric_to_short_tons: cl (1 / 0.907185),
 	square_feet_to_metres: cl (4.55), square_metres_to_feet: cl (4.55 / 0.92903),
-	cubic_feet_to_metres: cl (2.65), cubic_metres_to_feet: cl (2.65/ 0.283168)
+	cubic_feet_to_metres: cl (2.65), cubic_metres_to_feet: cl (2.65/ 0.283168),
+	quarts_to_litres: cl (1.2835), litres_to_quarts: cl (1.2835 / 0.946353),
+	cubic_centimetres_to_inches: cl (2.31), cubic_inches_to_centimetres: cl (2.31 * 1.63871),
+	grams_to_ounces: cl (1.79), ounces_to_grams: cl (1.79 * 2.83495),
+	square_yards_to_metres: cl (9.7 * 0.836127), square_metres_to_yards: cl (9.7),
+	centimetres_to_inches: cl (5.55), inches_to_centimetres: cl (5.55 * 2.54),
+	square_kilometres_to_miles: cl (16.7), square_miles_to_kilometres: cl (16.7 / 0.386102),
+	cubic_yards_to_metres: cl (57.5), cubic_metres_to_yards: cl (57.5 / 0.764555),
+	square_centimetres_to_inches: cl (100 / 6.4516), square_inches_to_centimetres: 1
 };
 custom_scale . prototype . draw = function (ctx, length) {
 	var b1 = this . height * 0.2, b2 = this . height * 0.4, b3 = this . height * 0.6, b4 = this . height * 0.8, b5 = this . height;
@@ -178,30 +186,38 @@ custom_scale . prototype . draw = function (ctx, length) {
 	ldbr (ctx, length, 0, 0.05, 0, b3, 'METRIC');
 	dbr (ctx, length, this . locations . square_feet_to_metres, this . locations . square_metres_to_feet, 0, b1, [{text: 'SQ. METERS', location: 0.29}, {text: 'SQ. FEET X I0', location: 0.388}]);
 	dbr (ctx, length, this . locations . cubic_feet_to_metres, this . locations . cubic_metres_to_feet, 0, b2, [{text: 'CU. METERS', location: 0.27}, {text: 'CU. FEET X I0', location: 0.41}]);
+	dbr (ctx, length, this . locations . quarts_to_litres, this . locations . litres_to_quarts, b5, b4, [{text: 'LITERS', location: 0.028}, {text: 'QUARTS', location: 0.095}]);
+	dbr (ctx, length, this . locations . cubic_centimetres_to_inches, this . locations . cubic_inches_to_centimetres, b5, b4, [{text: 'INCHES', location: 0.156}, {text: 'CUBIC', location: 0.236}, {text: 'CM. X I0', location: 0.315}]);
+	dbr (ctx, length, this . locations . grams_to_ounces, this . locations . ounces_to_grams, b5, b3, [{text: 'OUNCES', location: 0.19}, {text: 'GRAMS X I0', location: 0.276}]);
+	dbr (ctx, length, this . locations . square_yards_to_metres, this . locations . square_metres_to_yards, b5, b4, [{text: 'METERS', location: 0.426}, {text: 'SQ.', location: 0.475}, {text: 'YARDS', location: 0.516}]);
+	dbr (ctx, length, this . locations . centimetres_to_inches, this . locations . inches_to_centimetres, b5, b3, [{text: 'INCHES', location: 0.41}, {text: 'CENTIMETERS', location: 0.52}]);
+	dbr (ctx, length, this . locations . square_kilometres_to_miles, this . locations . square_miles_to_kilometres, b5, b4, [{text: 'SQ. MILES', location: 0.652}, {text: 'SQ. KILOMETERS', location: 0.752}]);
+	dbr (ctx, length, this . locations . cubic_yards_to_metres, this . locations . cubic_metres_to_yards, b5, b4, [{text: 'METERS', location: 0.852}, {text: 'CU.', location: 0.91}, {text: 'YARDS', location: 0.958}]);
+	dbr (ctx, length, this . locations . square_centimetres_to_inches, this . locations . square_inches_to_centimetres, b5, b3, [{text: 'SQ. INCHES', location: 0.68}, {text: 'SQ. CENTIMETERS', location: 0.9}]);
 };
 custom_scale . prototype . read = function (position, shift) {
 	console . log (position, shift);
 	return null;
 };
 
-s = new Sliderule (1200, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.05, cursor_right_extension: 0.05, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
-s . braces . push (new BraceSupport (0.016, 1, 73, 60, 8, 'silver', 'black'));
-s . braces . push (new BraceSupport (0.016, 177, 249, 60, 8, 'silver', 'black'));
-s . braces . push (new BraceSupport (1.184, 1, 73, 60, 8, 'silver', 'black'));
-s . braces . push (new BraceSupport (1.184, 177, 249, 60, 8, 'silver', 'black'));
-s . braces . push (new BezierBraces (68, 0.115, 2, corrugated, 'black', 2, 0.018, 20, 40, -0.068));
-s . braces . push (new Bolt (0.016, 250 - 36, 24, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (0.016, 250 - 36, 6, '#dddddd', '#666666'));
-s . braces . push (new Bolt (0.016, 250 - 194, 8, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (0.016, 250 - 230, 8, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (1.184, 250 - 36, 24, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (1.184, 250 - 36, 6, '#dddddd', '#666666'));
-s . braces . push (new Bolt (1.184, 250 - 194, 8, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (1.184, 250 - 230, 8, '#eeeeee', '#666666'));
+s = new Sliderule (1200, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.054, cursor_right_extension: 0.054, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
+s . braces . push (new BraceSupport (0.016, 1, 50, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (0.016, 158, 207, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.184, 1, 50, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.184, 158, 207, 70, 8, 'silver', 'black'));
+s . braces . push (new BezierBraces (44, 0.08, 2, corrugated, 'black', 2, 0.018, 20, 40, -0.035));
+s . braces . push (new Bolt (0.016, 208 - 24, 16, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.016, 208 - 24, 6, '#dddddd', '#666666'));
+s . braces . push (new Bolt (0.004, 208 - 183, 8, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.03, 208 - 183, 8, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.184, 208 - 24, 16, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.184, 208 - 24, 6, '#dddddd', '#666666'));
+s . braces . push (new Bolt (1.172, 208 - 183, 8, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.198, 208 - 183, 8, '#eeeeee', '#666666'));
 s . cursorGlassBraces . push (new CursorBrace (0.06, 0.06, 26, 0, 16, '#deb887'));
 s . cursorBraces . push (new Screw (0, -13, 12, Math . random () * Math . PI, 'silver', '#666666'));
-s . cursorBraces . push (new Screw (-0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
-s . cursorBraces . push (new Screw (0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (-0.03, 221, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (0.03, 221, 12, Math . random () * Math . PI, 'silver', '#666666'));
 
 var r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
 // r . markings . push (new Engraving ('LL\u2082', '14px arial', 'right', 'black', -0.01, 30));
@@ -213,18 +229,18 @@ r . scales . push (new scale_L (24, {left_extension: 0.005, lines: [{left: 0, ri
 r . scales . push (new scale_A (24, {draw_e: false, draw_pi: false}));
 
 r = new Rule ({stator: 1, left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow', rounding: 2}); s . rules . push (r);
-r . scales . push (new custom_scale (104));
+r . scales . push (new custom_scale (108));
 // r . markings . push (new Engraving ('CF', '14px arial', 'right', 'black', -0.01, 20));
 // r . markings . push (new Engraving ('Ln', '14px arial', 'right', 'black', -0.01, 38));
 // r . markings . push (new Engraving ('L', '14px arial', 'right', 'black', -0.01, 56));
 // r . markings . push (new Engraving ('CI', '14px arial', 'right', 'red', -0.01, 78));
 // r . markings . push (new Engraving ('C', '14px arial', 'right', 'black', -0.01, 98));
-// r . markings . push (new Engraving ('PICKET', '10px arial', 'center', 'black', -0.07, 20));
-// r . markings . push (new Engraving ('ALL METAL', '10px arial', 'center', 'black', -0.07, 34));
-// r . markings . push (new Engraving ('SLIDE RULES', '10px arial', 'center', 'black', -0.07, 102 - 22));
-// r . markings . push (new Engraving ('PICKET INC.', '10px arial', 'center', 'black', 1.06, 24));
-// r . markings . push (new Engraving ('SANTA BARBARA', '10px arial', 'center', 'black', 1.06, 102 - 12 - 14));
-// r . markings . push (new Engraving ('Calif.', '10px arial', 'center', 'black', 1.06, 102 - 12));
+r . markings . push (new Engraving ('UNIVERSAL', '14px arial', 'center', 'black', -0.04, 38));
+r . markings . push (new Engraving ('CONVERSION', '14px arial', 'center', 'black', -0.04, 55));
+r . markings . push (new Engraving ('SCALES', '14px arial', 'center', 'black', -0.04, 72));
+r . markings . push (new Engraving ('PICKET INC.', '10px arial', 'center', 'black', 1.06, 24));
+r . markings . push (new Engraving ('SANTA BARBARA', '10px arial', 'center', 'black', 1.06, 102 - 12 - 14));
+r . markings . push (new Engraving ('Calif.', '10px arial', 'center', 'black', 1.06, 102 - 12));
 // r . markings . push (new Bolt (-0.095, 51, 6, 'white', 'black'));
 // r . markings . push (new Bolt (1.095, 51, 6, 'white', 'black'));
 // r . scales . push (new scale_DF (24, {draw_e: false}));
