@@ -200,6 +200,24 @@ custom_scale . prototype . read = function (position, shift) {
 	return null;
 };
 
+var fahrenheit_scale = function (height) {
+	spacer . call (this, height, null);
+}; inherit (fahrenheit_scale, spacer);
+fahrenheit_scale . prototype . value = function (location) {return 220 * location / 0.75 - 10;};
+fahrenheit_scale . prototype . location = function (value) {return 0.75 * (value + 10) / 220;};
+fahrenheit_scale . prototype . draw = function (ctx, length) {
+	var h1 = this . height * 0.5, h2 = this . height * 0.3;
+	ctx . translate (0, this . height);
+	for (ind = -10; ind < 210; ind += 10) {
+		mark (ctx, ind, length * this . location (ind), h1);
+		tick (ctx, length * this . location (ind + 2), h2);
+		tick (ctx, length * this . location (ind + 4), h2);
+		tick (ctx, length * this . location (ind + 6), h2);
+		tick (ctx, length * this . location (ind + 8), h2);
+	}
+	mark (ctx, 210, length * this . location (210), h1);
+};
+
 s = new Sliderule (1200, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.054, cursor_right_extension: 0.054, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
 s . braces . push (new BraceSupport (0.016, 1, 50, 70, 8, 'silver', 'black'));
 s . braces . push (new BraceSupport (0.016, 158, 207, 70, 8, 'silver', 'black'));
@@ -225,7 +243,7 @@ var r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow
 // r . markings . push (new Engraving ('+', '14px arial', 'right', 'black', -0.0098, 18));
 // r . markings . push (new Engraving ('DF', '14px arial', 'right', 'black', -0.01, 70));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_L (24, {left_extension: 0.005, lines: [{left: 0, right: 1, height: 1}]}));
+r . scales . push (new fahrenheit_scale (24));
 r . scales . push (new scale_A (24, {draw_e: false, draw_pi: false}));
 
 r = new Rule ({stator: 1, left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow', rounding: 2}); s . rules . push (r);
