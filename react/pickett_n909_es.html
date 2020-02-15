@@ -203,19 +203,70 @@ custom_scale . prototype . read = function (position, shift) {
 var fahrenheit_scale = function (height) {
 	spacer . call (this, height, null);
 }; inherit (fahrenheit_scale, spacer);
-fahrenheit_scale . prototype . value = function (location) {return 220 * location / 0.75 - 10;};
-fahrenheit_scale . prototype . location = function (value) {return 0.75 * (value + 10) / 220;};
+fahrenheit_scale . prototype . value64 = function (location) {return 64 * (location - 0.84) / 0.16;};
+fahrenheit_scale . prototype . location64 = function (value) {return 0.84 + 0.16 * value / 64;};
+fahrenheit_scale . prototype . valueF = function (location) {return 220 * location / 0.76 - 10;};
+fahrenheit_scale . prototype . locationF = function (value) {return 0.76 * (value + 10) / 220;};
+fahrenheit_scale . prototype . value = function (location) {if (location >= 0.84) return this . value64 (location); return this . valueF (location);};
+fahrenheit_scale . prototype . location = function (value, position) {if (position >= 0.84) return this . location64 (value); return this . locationF (value);};
 fahrenheit_scale . prototype . draw = function (ctx, length) {
-	var h1 = this . height * 0.5, h2 = this . height * 0.3;
+	var h1 = this . height * 0.5, h2 = this . height * 0.4, h3 = this . height * 0.2;
 	ctx . translate (0, this . height);
-	for (ind = -10; ind < 210; ind += 10) {
-		mark (ctx, ind, length * this . location (ind), h1);
-		tick (ctx, length * this . location (ind + 2), h2);
-		tick (ctx, length * this . location (ind + 4), h2);
-		tick (ctx, length * this . location (ind + 6), h2);
-		tick (ctx, length * this . location (ind + 8), h2);
+	for (var ind = -10; ind < 210; ind += 10) {
+		mark (ctx, ind, length * this . locationF (ind), h1);
+		tick (ctx, length * this . locationF (ind + 2), h3);
+		tick (ctx, length * this . locationF (ind + 4), h3);
+		tick (ctx, length * this . locationF (ind + 6), h3);
+		tick (ctx, length * this . locationF (ind + 8), h3);
 	}
-	mark (ctx, 210, length * this . location (210), h1);
+	mark (ctx, 210, length * this . locationF (210), h1);
+	for (var ind = 0; ind < 64; ind += 8) {
+		mark (ctx, ind, length * this . location64 (ind), h1);
+		tick (ctx, length * this . location64 (ind + 2), h2);
+		tick (ctx, length * this . location64 (ind + 4), h2);
+		tick (ctx, length * this . location64 (ind + 6), h2);
+		tick (ctx, length * this . location64 (ind + 1), h3);
+		tick (ctx, length * this . location64 (ind + 3), h3);
+		tick (ctx, length * this . location64 (ind + 5), h3);
+		tick (ctx, length * this . location64 (ind + 7), h3);
+	}
+	mark (ctx, 64, length * this . location64 (64), h1);
+};
+
+var celsius_scale = function (height) {
+	spacer . call (this, height, null);
+}; inherit (celsius_scale, spacer);
+celsius_scale . prototype . value10 = function (location) {return 10 * (location - 0.84) / 0.16;};
+celsius_scale . prototype . location10 = function (value) {return 0.84 + 0.16 * value / 10;};
+celsius_scale . prototype . valueC = function (location) {return 220 * location * 5 / 9 / 0.76 - 210 / 9;};
+celsius_scale . prototype . locationC = function (value) {return 0.76 * (value * 9 / 5 + 42) / 220;};
+celsius_scale . prototype . value = function (location) {if (location >= 0.84) return this . value10 (location); return this . valueC (location);};
+celsius_scale . prototype . location = function (value, position) {if (position >= 0.84) return this . location10 (value); return this . locationC (value);};
+celsius_scale . prototype . draw = function (ctx, length) {
+	var h1 = - this . height * 0.5, h2 = - this . height * 0.4, h3 = - this . height * 0.2;
+//	ctx . translate (0, this . height);
+	tick (ctx, length * this . locationC (-22), h3);
+	for (var ind = -20; ind < 100; ind += 10) {
+		mark (ctx, ind, length * this . locationC (ind), h1);
+		tick (ctx, length * this . locationC (ind + 2), h3);
+		tick (ctx, length * this . locationC (ind + 4), h3);
+		tick (ctx, length * this . locationC (ind + 6), h3);
+		tick (ctx, length * this . locationC (ind + 8), h3);
+	}
+	mark (ctx, 100, length * this . locationC (100), h1);
+	for (var ind = 0; ind < 10; ind += 1) {
+		mark (ctx, ind, length * this . location10 (ind), h1);
+		tick (ctx, length * this . location10 (ind + 0.5), h2);
+		tick (ctx, length * this . location10 (ind + 0.1), h3);
+		tick (ctx, length * this . location10 (ind + 0.2), h3);
+		tick (ctx, length * this . location10 (ind + 0.3), h3);
+		tick (ctx, length * this . location10 (ind + 0.4), h3);
+		tick (ctx, length * this . location10 (ind + 0.6), h3);
+		tick (ctx, length * this . location10 (ind + 0.7), h3);
+		tick (ctx, length * this . location10 (ind + 0.8), h3);
+		tick (ctx, length * this . location10 (ind + 0.9), h3);
+	}
+	mark (ctx, 10, length * this . location10 (10), h1);
 };
 
 s = new Sliderule (1200, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.054, cursor_right_extension: 0.054, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
@@ -238,6 +289,9 @@ s . cursorBraces . push (new Screw (-0.03, 221, 12, Math . random () * Math . PI
 s . cursorBraces . push (new Screw (0.03, 221, 12, Math . random () * Math . PI, 'silver', '#666666'));
 
 var r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+r . markings . push (new Engraving ('FAHRENHEIT', 'bold 10px arialnarrow', 'right', 'black', -0.01, 18));
+r . markings . push (new Engraving ('FRACTIONS', 'bold 10px arialnarrow', 'right', 'black', 0.83, 18));
+r . markings . push (new Engraving ('1/64', 'bold 10px arial', 'left', 'black', 1.015, 18));
 // r . markings . push (new Engraving ('LL\u2082', '14px arial', 'right', 'black', -0.01, 30));
 // r . markings . push (new Engraving ('-', '14px arial', 'right', 'black', -0.0098, 42));
 // r . markings . push (new Engraving ('+', '14px arial', 'right', 'black', -0.0098, 18));
@@ -268,12 +322,16 @@ r . markings . push (new Engraving ('Calif.', '10px arial', 'center', 'black', 1
 // r . scales . push (new scale_C (24));
 
 r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+r . markings . push (new Engraving ('CELSIUS', 'bold 10px arialnarrow', 'center', 'black', -0.025, 50 - 20));
+r . markings . push (new Engraving ('(CENTIGRADE)', 'bold 10px arialnarrow', 'center', 'black', -0.025, 50 - 8));
+r . markings . push (new Engraving ('DECIMALS', 'bold 10px arialnarrow', 'right', 'black', 0.83, 50 - 8));
+r . markings . push (new Engraving ('100', 'bold 10px arial', 'left', 'black', 1.015, 50 - 8));
 // r . markings . push (new Engraving ('D', '14px arial', 'right', 'black', -0.01, 20));
 // r . markings . push (new Engraving ('LL\u2083', '14px arial', 'right', 'black', -0.01, 52));
 // r . markings . push (new Engraving ('+', '14px arial', 'right', 'black', -0.0098, 40));
 // r . markings . push (new Engraving ('-', '14px arial', 'right', 'black', -0.0098, 64));
 r . scales . push (new scale_B (24, {draw_pi: false, draw_e: false}));
-r . scales . push (new scale_M (24));
+r . scales . push (new celsius_scale (24));
 r . scales . push (new spacer (2));
 
 </script>
