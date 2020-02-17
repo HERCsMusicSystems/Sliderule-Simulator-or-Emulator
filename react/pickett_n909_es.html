@@ -1,7 +1,7 @@
 <meta charset="UTF-8"/>
 <!--
 ///////////////////////////////////////////////////////////////////////////////////
-//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                     Copyright (C) 2020 Dr Robert P. Wolf                      //
 //                                                                               //
 // Permission is hereby granted, free of charge, to any person obtaining a copy  //
 // of this software and associated documentation files (the "Software"), to deal //
@@ -28,25 +28,13 @@
     <title>Pickett N909-ES</title>
     <link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
   </head>
-<body background="apollo-11.jpg" style="background-size: 100%;">
+<body style="background-size: 100%;">
 
 <div align="right">
-	<font color="yellow">
+	<font color="black">
 	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
-<!--	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.-->
-	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front'); document . body . style . backgroundImage = this . checked ? 'url(\'./Buzz.png\')' : 'url(\'./apollo-11.jpg\')';" />Other side.
-<!--	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
-	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 800 : 1200);" />Short/Long
-  <br/>
-  <select id = lessons><option value = "Choose Lesson ====" >Choose Lesson ====</option></select>
-  <input type = button value = "Play lesson" onclick = "javascript: playLesson ('lessons');" />&nbsp;&nbsp;&nbsp;
-  <select id = tests><option value = "Choose Test of Merit ====" >Choose Test of Merit ====</option></select>
-  <input type = button value = "Attempt test" onclick = "javascript: playLesson ('tests');" />&nbsp;&nbsp;&nbsp;
-  <input type = button id = clear_instructions onclick = "javascript: document . getElementById ('info') . innerHTML = '';" value = "Clear instructions." />
-  <div style = "display: block; position: fixed; background-color: white; border-color: black; border-style: solid; border-width: 1px;">
-    <font color = red ><span id = info /></font>
-  </div>-->
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
   </font>
 </div>
 
@@ -60,7 +48,6 @@
 <script>
 
 var corrugated = new Image (); corrugated . src = 'corrugated12.png'; corrugated . onload = function () {sliderules . requireRedraw = true;};
-var logo = new Image (); logo . src = 'Pickett_logo_triangle.png'; logo . onload = function () {sliderules . requireRedraw = true;};
 
 var sliderules = new Sliderules ();
 
@@ -86,8 +73,6 @@ r . markings . push (new Engraving ('K', '14px arial', 'center', 'black', -0.013
 r . markings . push (new Engraving ('A', '14px arial', 'center', 'black', -0.013, 48));
 r . markings . push (new Engraving ('K', '14px arial', 'center', 'black', 1.013, 24));
 r . markings . push (new Engraving ('A', '14px arial', 'center', 'black', 1.013, 48));
-// r . markings . push (new Engraving ('-', '12px arial', 'right', 'black', -0.02, 45));
-// r . markings . push (new Engraving ('+', '12px arial', 'right', 'black', -0.02, 12));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_K (24, {draw_pi: false, draw_e: false}));
 r . scales . push (new scale_A (24, {draw_e: false}));
@@ -111,7 +96,6 @@ r . markings . push (new Engraving ('METRIC', 'italic 12px arial', 'right', 'bla
 r . markings . push (new Engraving ('CONVERSION', '11px arial', 'right', 'black', -0.025, 102 - 12));
 r . markings . push (new Bolt (-0.085, 51, 6, 'black', 'black'));
 r . markings . push (new Bolt (1.085, 51, 6, 'black', 'black'));
-//r . markings . push (new Logo (logo, 1.055, 50, 0.18));
 r . markings . push (new Engraving ('PICKETT', 'bold 14px arial', 'center', 'black', 1.05, 24));
 r . markings . push (new Engraving ('MADE IN U.S.A.', '10px arial', 'center', 'black', 1.055, 84));
 r . scales . push (new scale_B (24, {draw_e: false}));
@@ -123,10 +107,8 @@ r . scales . push (new scale_C (24, {draw_r: true, draw_e: false, draw_c: false}
 r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
 r . markings . push (new Engraving ('D', '14px arial', 'center', 'black', -0.013, 20));
 r . markings . push (new Engraving ('L', '14px arial', 'center', 'black', -0.013, 40));
-r . markings . push (new Engraving ('K', '14px arial', 'center', 'black', -0.013, 64));
 r . markings . push (new Engraving ('D', '14px arial', 'center', 'black', 1.013, 20));
 r . markings . push (new Engraving ('L', '14px arial', 'center', 'black', 1.013, 40));
-r . markings . push (new Engraving ('K', '14px arial', 'center', 'black', 1.013, 64));
 r . scales . push (new scale_D (24, {draw_r: true, draw_e: false, draw_c: false}));
 r . scales . push (new scale_M (24));
 r . scales . push (new spacer (2));
@@ -209,7 +191,42 @@ custom_scale . prototype . draw = function (ctx, length) {
 	dbr (ctx, length, this . locations . square_centimetres_to_inches, this . locations . square_inches_to_centimetres, b5, b3, [{text: 'SQ. INCHES', location: 0.68}, {text: 'SQ. CENTIMETERS', location: 0.9}]);
 };
 custom_scale . prototype . read = function (position, shift) {
-	console . log (position, shift);
+	position = position . toLowerCase ();
+	switch (position) {
+	case 'my': return this . value (this . locations . metres_to_yards);
+	case 'smy': return this . value (this . locations . square_metres_to_yards);
+	case 'cmy': return this . value (this . locations . cubic_metres_to_yards);
+	case 'ym': return this . value (this . locations . yards_to_metres);
+	case 'sym': return this . value (this . locations . square_yards_to_metres);
+	case 'cym': return this . value (this . locations . cubic_yards_to_metres);
+	case 'mf': return this . value (this . locations . metres_to_feet);
+	case 'smf': return this . value (this . locations . square_metres_to_feet);
+	case 'cmf': return this . value (this . locations . cubic_metres_to_feet);
+	case 'fm': return this . value (this . locations . feet_to_metres);
+	case 'sfm': return this . value (this . locations . square_feet_to_metres);
+	case 'cfm': return this . value (this . locations . cubic_feet_to_metres);
+	case 'ic': return this . value (this . locations . inches_to_centimetres);
+	case 'sic': return this . value (this . locations . square_inches_to_centimetres);
+	case 'cic': return this . value (this . locations . cubic_inches_to_centimetres);
+	case 'ci': return this . value (this . locations . centimetres_to_inches);
+	case 'sci': return this . value (this . locations . square_centimetres_to_inches);
+	case 'cci': return this . value (this . locations . cubic_centimetres_to_inches);
+	case 'mts': case 'mst': return this . value (this . locations . metric_to_short_tons);
+	case 'stm': case 'smt': return 1;
+	case 'km': return this . value (this . locations . kilometres_to_miles);
+	case 'mk': return this . value (this . locations . miles_to_kilometres);
+	case 'skm': return this . value (this . locations . square_kilometres_to_miles);
+	case 'smk': return this . value (this . locations . square_miles_to_kilometres);
+	case 'lg': return this . value (this . locations . litres_to_gallons);
+	case 'gl': return 100;
+	case 'lq': return this . value (this . locations . litres_to_quarts);
+	case 'ql': return this . value (this . locations . quarts_to_litres);
+	case 'og': return this . value (this . locations . ounces_to_grams);
+	case 'go': return this . value (this . locations . grams_to_ounces);
+	case 'kp': return this . value (this . locations . kilograms_to_pounds);
+	case 'pk': return this . value (this . locations . pounds_to_kilograms);
+	default: break;
+	}
 	return null;
 };
 
@@ -257,7 +274,6 @@ celsius_scale . prototype . value = function (location) {if (location >= 0.84) r
 celsius_scale . prototype . location = function (value, position) {if (position >= 0.84) return this . location10 (value); return this . locationC (value);};
 celsius_scale . prototype . draw = function (ctx, length) {
 	var h1 = - this . height * 0.5, h2 = - this . height * 0.4, h3 = - this . height * 0.2;
-//	ctx . translate (0, this . height);
 	tick (ctx, length * this . locationC (-22), h3);
 	for (var ind = -20; ind < 100; ind += 10) {
 		mark (ctx, ind, length * this . locationC (ind), h1);
@@ -305,21 +321,12 @@ var r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow
 r . markings . push (new Engraving ('FAHRENHEIT', 'bold 10px arialnarrow', 'right', 'black', -0.01, 18));
 r . markings . push (new Engraving ('FRACTIONS', 'bold 10px arialnarrow', 'right', 'black', 0.83, 18));
 r . markings . push (new Engraving ('1/64', 'bold 10px arial', 'left', 'black', 1.015, 18));
-// r . markings . push (new Engraving ('LL\u2082', '14px arial', 'right', 'black', -0.01, 30));
-// r . markings . push (new Engraving ('-', '14px arial', 'right', 'black', -0.0098, 42));
-// r . markings . push (new Engraving ('+', '14px arial', 'right', 'black', -0.0098, 18));
-// r . markings . push (new Engraving ('DF', '14px arial', 'right', 'black', -0.01, 70));
 r . scales . push (new spacer (2));
 r . scales . push (new fahrenheit_scale (24));
 r . scales . push (new scale_A (24, {draw_e: false, draw_pi: false}));
 
 r = new Rule ({stator: 1, left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow', rounding: 2}); s . rules . push (r);
 r . scales . push (new custom_scale (108));
-// r . markings . push (new Engraving ('CF', '14px arial', 'right', 'black', -0.01, 20));
-// r . markings . push (new Engraving ('Ln', '14px arial', 'right', 'black', -0.01, 38));
-// r . markings . push (new Engraving ('L', '14px arial', 'right', 'black', -0.01, 56));
-// r . markings . push (new Engraving ('CI', '14px arial', 'right', 'red', -0.01, 78));
-// r . markings . push (new Engraving ('C', '14px arial', 'right', 'black', -0.01, 98));
 r . markings . push (new Engraving ('UNIVERSAL', '14px arial', 'center', 'black', -0.04, 38));
 r . markings . push (new Engraving ('CONVERSION', '14px arial', 'center', 'black', -0.04, 55));
 r . markings . push (new Engraving ('SCALES', '14px arial', 'center', 'black', -0.04, 72));
@@ -328,23 +335,12 @@ r . markings . push (new Engraving ('ALL METAL', '10px arial', 'center', 'black'
 r . markings . push (new Engraving ('SLIDE RULES', '10px arial', 'center', 'black', 1.06, 102 - 12));
 r . markings . push (new Bolt (-0.085, 51, 6, 'black', 'black'));
 r . markings . push (new Bolt (1.085, 51, 6, 'black', 'black'));
-// r . markings . push (new Bolt (-0.095, 51, 6, 'white', 'black'));
-// r . markings . push (new Bolt (1.095, 51, 6, 'white', 'black'));
-// r . scales . push (new scale_DF (24, {draw_e: false}));
-// r . scales . push (new scale_Ln (18, {draw_st_corrections: false, right_extension: 0.005, lines: [{left: 0, right: 2.31 / Math . log (10), height: 1}]}));
-// r . scales . push (new scale_M (18));
-// r . scales . push (new scale_DI (18, {marking_colour: 'red'}));
-// r . scales . push (new scale_C (24));
 
 r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
 r . markings . push (new Engraving ('CELSIUS', 'bold 10px arialnarrow', 'center', 'black', -0.025, 50 - 20));
 r . markings . push (new Engraving ('(CENTIGRADE)', 'bold 10px arialnarrow', 'center', 'black', -0.025, 50 - 8));
 r . markings . push (new Engraving ('DECIMALS', 'bold 10px arialnarrow', 'right', 'black', 0.83, 50 - 8));
 r . markings . push (new Engraving ('100', 'bold 10px arial', 'left', 'black', 1.015, 50 - 8));
-// r . markings . push (new Engraving ('D', '14px arial', 'right', 'black', -0.01, 20));
-// r . markings . push (new Engraving ('LL\u2083', '14px arial', 'right', 'black', -0.01, 52));
-// r . markings . push (new Engraving ('+', '14px arial', 'right', 'black', -0.0098, 40));
-// r . markings . push (new Engraving ('-', '14px arial', 'right', 'black', -0.0098, 64));
 r . scales . push (new scale_B (24, {draw_pi: false, draw_e: false}));
 r . scales . push (new celsius_scale (24));
 r . scales . push (new spacer (2));
@@ -357,10 +353,8 @@ r . scales . push (new spacer (2));
 <script>
 changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
-//changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 changeVersion ('german');
-//changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
 </script>
 
 
