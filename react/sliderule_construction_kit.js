@@ -1408,11 +1408,18 @@ var Rule = function (options) {
   this . markings = [];
   this . backMarkings = [];
   this . v_scaling = 1;
+  this . limit_target = function () {
+    if (this . target > 1 + this . right_margin) this . target = 1 + this . right_margin;
+    if (this . target < -1 - this . left_margin) this . target = -1 - this . left_margin;
+  };
+  this . limit_shift = function () {
+    if (this . shift > 1 + this . right_margin) this . shift = 1 + this . right_margin;
+    if (this . shift < -1 - this . left_margin) this . shift = -1 - this . left_margin;
+  };
   this . move = function (delta, length) {
     delta *= this . rule_motion; delta /= length;
     this . target += delta;
-    if (this . target > 1 + this . right_margin) this . target = 1 + this . right_margin;
-    if (this . target < -1 - this . left_margin) this . target = -1 - this . left_margin;
+    this . limit_target ();
     this . shift = this . target;
     return delta;
   };
@@ -2437,7 +2444,7 @@ var Sliderules = function (options) {
           r = this . sliderules [ind] . rules [sub];
           if (r != rule && ! r . noSync) {
           	if (r . stator == rule . stator) {r . target = rule . target; r . shift = rule . shift; this . requireRedraw = true;}
-          	if (r . stator > rule . stator) {r . target += delta; if (adjustShift) r . shift += delta; this . requireRedraw = true;}
+          	if (r . stator > rule . stator) {r . target += delta; if (adjustShift) r . shift += delta; r . limit_target (); r . limit_shift (); this . requireRedraw = true;}
           }
         }
       }
