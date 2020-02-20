@@ -1,0 +1,133 @@
+<meta charset="UTF-8"/>
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2020 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Michael O'Leary</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
+  </head>
+
+<body>
+
+<div>
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+</div>
+
+<div id="root"></div>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+<script src="folded_scales.js"></script>
+<script src="sliderule_ctrl.js"></script>
+<script src="scales_temperature.js"></script>
+
+<script>
+
+var sliderules = new Sliderules ();
+
+var s = new Sliderule (1200); sliderules . sliderules . push (s);
+
+var r = new Rule (); s . rules . push (r);
+
+r . scales . push (new spacer (2));
+r . scales . push (new scale_Q1 (24));
+r . scales . push (new scale_Q2 (24));
+r . scales . push (new scale_Q3 (24));
+r . scales . push (new scale_K (24));
+r . scales . push (new scale_KI (24));
+r . scales . push (new scale_AI (24));
+r . scales . push (new scale_A (24));
+
+r = new Rule ({stator: 1}); s . rules . push (r);
+
+r . scales . push (new scale_B (24));
+r . scales . push (new scale_BI (24));
+r . scales . push (new scale_J (24));
+r . scales . push (new scale_SCdec (24));
+r . scales . push (new scale_STdec (24));
+r . scales . push (new scale_TCTdec (24));
+r . scales . push (new scale_TCT1dec (24));
+r . scales . push (new scale_L (24));
+r . scales . push (new scale_CI (24));
+r . scales . push (new scale_C (24));
+
+r = new Rule (); s . rules . push (r);
+
+r . scales . push (new scale_D (24));
+r . scales . push (new scale_DI (24));
+r . scales . push (new scale_P_down (24));
+r . scales . push (new scale_M (24));
+r . scales . push (new scale_Mn (24));
+r . scales . push (new scale_W1 (24));
+r . scales . push (new scale_W2 (24));
+r . scales . push (new spacer (2));
+
+s = new Sliderule (1200); sliderules . sliderules . push (s);
+
+r = new Rule (); s . rules . push (r);
+
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL00 (24, {left: 'LL/0', marking_colour: 'red', right_extension: 0.044, right: 'e\u207b\u2070\u22c5\u2070\u2070\u00b9\u02e3', rs: 0.09}));
+r . scales . push (new scale_LL01 (24, {left: 'LL/1', marking_colour: 'red', right_extension: 0.023, right: 'e\u207b\u2070\u22c5\u2070\u00b9\u02e3', rs: 0.09}));
+r . scales . push (new scale_LL02 (24, {left: 'LL/2', marking_colour: 'red', left_extension: 0.026, right_extension: 0.022, right: 'e\u207b\u2070\u22c5\u00b9\u02e3', rs: 0.09}));
+r . scales . push (new scale_LL03 (24, {left: 'LL/3', marking_colour: 'red', left_extension: 0.04, right_extension: 0.065, right: 'e\u207b\u02e3', rs: 0.09}));
+r . scales . push (new scale_LL3 (24, {left: 'LL3', left_extension: 0.04, right_extension: 0.064, right: 'e\u02e3', rs: 0.09}));
+r . scales . push (new scale_LL2 (24, {left: 'LL2', left_extension: 0.024, right_extension: 0.042, right: 'e\u2070\u22c5\u00b9\u02e3', rs: 0.09}));
+r . scales . push (new scale_CF (24, {left: 'DF', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2, left_extension: 0.022, right_extension: 0.06, draw_c: false, right: '\u03c0\u{1d465}', rs: 0.09}));
+
+r = new Rule ({stator: 1}); s . rules . push (r);
+
+r . scales . push (new scale_DF (24, {left: 'CF', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2, left_extension: 0.022, right_extension: 0.06, draw_c: false, right: '\u03c0\u{1d465}', rs: 0.09}));
+r . scales . push (new scale_DIF (24, {left: 'CIF', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2, marking_colour: 'red', draw_c: false, left_extension: 0.004, right_extension: 0.028, right: '10/\u03c0\u{1d465}', rs: 0.09}));
+r . scales . push (new scale_DI (24, {left: 'DI', marking_colour: 'red', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2, right: '1/\u{1d465}', rs: 0.08}));
+r . scales . push (new scale_L (24, {left: 'L', right: 'log \u{1d465}', rs: 0.09}));
+r . scales . push (new scale_Ln (24, {left: 'Ln', right: 'ln \u{1d465}', rs: 0.09}));
+r . scales . push (new scale_SINH1rad_down (24, {left: 'SH1', right_extension: 0.014, right: '\u2222 sin h', rs: 0.09}));
+r . scales . push (new scale_TANHrad_down (24, {left: 'TH', left_extension: 0.004, right: '\u2222 tan h', rs: 0.09}));
+r . scales . push (new scale_Fahrenheit (24, {left: '\u00b0F', ls: 0.02, la: 'right', lines: [{left: 0, right: 1, height: 1}]}));
+r . scales . push (new scale_Kelvin (24, {left: '\u00b0K', ls: 0.02, la: 'right'}));
+r . scales . push (new scale_C (24, {left: 'C', highlight: 'yellow', highlight_left: 0.2, highlight_right: 0.2, right: '\u{1d465}', rs: 0.09}));
+
+r = new Rule (); s . rules . push (r);
+
+r . scales . push (new scale_LL1_down (24, {left: 'LL1', left_extension: 0.004, right_extension: 0.022, right: 'e\u2070\u22c5\u2070\u00b9\u02e3', rs: 0.09}));
+r . scales . push (new scale_LL0_down (24, {left: 'LL0', right_extension: 0.042, right: 'e\u2070\u22c5\u2070\u2070\u00b9\u02e3', rs: 0.09}));
+r . scales . push (new spacer (2));
+</script>
+
+<script src="sliderule_application.js"></script>
+
+<script>
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeVersion ('german');
+</script>
+
+</body>
+
+</html>

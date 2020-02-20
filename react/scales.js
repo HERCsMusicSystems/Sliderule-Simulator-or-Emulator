@@ -139,8 +139,20 @@ scale_K . prototype . draw = function (ctx, length) {
   ctx . translate (0, this . height);
   draw_log_log_log (ctx, length, this . height, this, this . left_extension, this . right_extension);
 };
+var scale_KI = inherit (spacer);
+scale_KI . prototype . draw_c = false;
+scale_KI . prototype . value = function (location) {return Math . pow (10, 3 - location - location - location);};
+scale_KI . prototype . location = function (value) {return 1 - Math . log10 (value) / 3;};
+scale_KI . prototype . draw = function (ctx, length) {
+  ctx . translate (length, this . height);
+  draw_log_log_log (ctx, - length, this . height, this, this . right_extension, this . left_extension);
+};
 var scale_J = inherit (scale_K);
 scale_J . prototype . draw = function (ctx, length) {draw_log_log_log (ctx, length, - this . height, this, this . left_extension, this . right_extension);};
+var scale_JI = inherit (scale_KI);
+scale_JI . prototype . draw = function (ctx, length) {
+  ctx . translate (length, 0); draw_log_log_log (ctx, - length, - this . height, this, this . right_extension, this . left_extension);
+};
 var scale_R1 = inherit (spacer);
 scale_R1 . prototype . value = function (location) {return Math . pow (10, location * 0.5);};
 scale_R1 . prototype . location = function (value, length) {return Math . log10 (value) * 2;};
