@@ -1,0 +1,173 @@
+<meta charset="UTF-8"/>
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2020 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Flying Fish 1003</title>
+		<link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
+  </head>
+
+<body>
+	<style>
+	@font-face
+	{
+	font-family: snell;
+	src: url('snellbt-regular.otf'),
+	url('snellbt-regular.eot');
+	}
+	{
+		font-family: parei;
+		src: url('Pare Italic.tff')
+	}
+	{
+		font-family: parer;
+		src: url('Pare Reverse Italic.tff')
+	}
+	</style>
+
+<div>
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+</div>
+
+<div id="root"></div>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+<script src="folded_scales.js"></script>
+<script src="sliderule_ctrl.js"></script>
+<script src="scales_temperature.js"></script>
+
+<script>
+
+var sliderules = new Sliderules ();
+
+var s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_limit_left: 0.158, cursor_limit_right: 0.058}); sliderules . sliderules . push (s);
+
+var r = new Rule (); s . rules . push (r);
+
+r . markings . push (new Engraving ('lnI\u2081', '18px arial', 'left', '#ff0001', -0.1, 20));
+r . markings . push (new Engraving ('lnI\u2080', '18px arial', 'left', '#ff0001', -0.1, 46));
+r . markings . push (new Engraving ('lnI\u208b\u2081', '18px arial', 'left', '#ff0001', -0.1, 72));
+r . markings . push (new Engraving ('lnI\u208b\u2082', '18px arial', 'left', '#ff0001', -0.1, 98));
+r . markings . push (new Engraving ('DF', '18px arial', 'center', '#000001', -0.082, 124));
+
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL00 (24, {marking_colour: '#ff0001', left_extension: 0.025}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL01_down (24, {marking_colour: '#ff0002', left_extension: 0.022}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL02 (24, {marking_colour: '#ff0001', left_extension: 0.026}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL03_down (24, {marking_colour: '#ff0002', left_extension: 0.04}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CF10 (24, {colour: '#000001', left_extension: 0.023}));
+
+r = new Rule ({stator: 1}); s . rules . push (r);
+
+r . markings . push (new Engraving ('CF', '18px arial', 'center', '#000001', -0.082, 20));
+r . markings . push (new Engraving ('CIF', '18px arial', 'center', '#ff0002', -0.082, 46));
+r . markings . push (new Engraving ('H\u2080', '18px arial', 'center', '#000001', -0.082, 72));
+r . markings . push (new Engraving ('H\u2081', '18px arial', 'center', '#000001', -0.082, 98));
+r . markings . push (new Engraving ('H\u2080', '18px arial', 'center', '#ff0002', -0.082, 124));
+r . markings . push (new Engraving ('CI', '18px arial', 'center', '#ff0002', -0.082, 150));
+r . markings . push (new Engraving ('C', '18px arial', 'center', '#000001', -0.082, 176));
+
+r . scales . push (new scale_DF10 (24, {colour: '#000002'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DIF10 (24, {marking_colour: '#ff0001'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_PH (24, {colour: '#000001'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_PH2_down (24, {colour: '#000002'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_P (24, {marking_colour: '#ff0001'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_DI (24, {marking_colour: '#ff0002'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_C (24, {colour: '#000001'}));
+
+r = new Rule (); s . rules . push (r);
+
+r . markings . push (new Engraving ('D', '18px arial', 'center', '#000001', -0.082, 20));
+r . markings . push (new Engraving ('ln\u2081', '18px arial', 'left', '#000002', -0.1, 46));
+r . markings . push (new Engraving ('ln\u2080', '18px arial', 'left', '#000002', -0.1, 72));
+r . markings . push (new Engraving ('ln\u208b\u2081', '18px arial', 'left', '#000002', -0.1, 98));
+r . markings . push (new Engraving ('ln\u208b\u2082', '18px arial', 'left', '#000002', -0.1, 124));
+r . scales . push (new scale_D (24, {colour: '#000002'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL3 (24, {colour: '#000001'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL2_down (24, {colour: '#000002'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL1 (24, {colour: '#000001'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL0_down (24, {colour: '#000002'}));
+r . scales . push (new spacer (2));
+
+s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_limit_left: 0.058, cursor_limit_right: 0.058}); sliderules . sliderules . push (s);
+
+var r = new Rule (); s . rules . push (r);
+
+r . scales . push (new spacer (2));
+r . scales . push (new scale_C (24));
+
+r = new Rule ({stator: 1}); s . rules . push (r);
+
+r . scales . push (new scale_D (24));
+r . scales . push (new scale_CF (24));
+
+r = new Rule (); s . rules . push (r);
+
+r . scales . push (new scale_DF (24));
+r . scales . push (new spacer (2));
+
+</script>
+
+<script src="sliderule_application.js"></script>
+
+<script>
+
+var fillText = ctx . fillText;
+ctx . fillText = function () {
+	switch (this . fillStyle) {
+	case '#000001': this . save (); this . transform (1, 0, -0.3, 1, -5, 0); fillText . apply (this, arguments); this . restore (); break;
+	case '#000002': this . save (); this . transform (1, 0, -0.3, 1, 5, 0); fillText . apply (this, arguments); this . restore (); break;
+	case '#ff0001': this . save (); this . transform (1, 0, 0.3, 1, 5, 0); fillText . apply (this, arguments); this . restore (); break;
+	case '#ff0002': this . save (); this . transform (1, 0, 0.3, 1, -5, 0); fillText . apply (this, arguments); this . restore (); break;
+	default: fillText . apply (this, arguments); break;
+	}
+};
+
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeVersion ('german');
+</script>
+
+</body>
+
+</html>
