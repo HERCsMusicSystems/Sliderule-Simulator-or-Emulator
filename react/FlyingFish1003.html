@@ -29,7 +29,7 @@
 		<link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
   </head>
 
-<body>
+<body background="fishing.jpg" style="background-size: cover;">
 	<style>
 	@font-face
 	{
@@ -48,8 +48,7 @@
 	</style>
 
 <div>
-	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
-	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings.
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
 </div>
 
@@ -65,9 +64,24 @@
 
 var sliderules = new Sliderules ();
 
-var s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_limit_left: 0.158, cursor_limit_right: 0.058}); sliderules . sliderules . push (s);
+var logo = new Image (); logo . src = "flying_fish_logo.png"; logo . onload = function () {sliderules . requireRedraw = true;};
 
-var r = new Rule (); s . rules . push (r);
+var s = new Sliderule (1200, {cursor_left_extension: 0.08, cursor_right_extension: 0.08, cursor_limit_left: 0.05, cursor_limit_right: 0.05, cursor_top_margin: 6, cursor_bottom_margin: 6, cursor_rounding: 18}); sliderules . sliderules . push (s);
+
+s . braces . push (new LeftBrace (2, 0.066, 8, 'gold', 'black', 144, 0.7));
+s . braces . push (new LeftBrace (4, 0.06, 8, 'tan', 'black', 146, 0.7));
+s . braces . push (new RightBrace (2, 0.066, 8, 'gold', 'black', 144, 0.7));
+s . braces . push (new RightBrace (4, 0.06, 8, 'tan', 'black', 146, 0.7));
+s . cursorGlassBraces . push (new CursorBrace (0.09, 0.09, 26, 0, 20, '#deb887'));
+s . cursorBraces . push (new Screw (-0.064, -12, 10, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (0.064, -12, 10, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (-0.064, 440 + 12, 10, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (0.064, 440 + 12, 10, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Engraving ('SHANGHAI', '16px arial', 'center', 'red', 0, 440 + 18));
+s . cursorBraces . push (new HLine (-2, -0.03, 0.05, 'red'));
+s . cursorBraces . push (new Logo (logo, -0.034, -14, 0.25, 0.3));
+
+var r = new Rule ({rule_colour: '#ffffdd'}); s . rules . push (r);
 
 r . markings . push (new Engraving ('lnI\u2081', '18px arial', 'left', '#ff0001', -0.1, 20));
 r . markings . push (new Engraving ('lnI\u2080', '18px arial', 'left', '#ff0001', -0.1, 46));
@@ -75,18 +89,27 @@ r . markings . push (new Engraving ('lnI\u208b\u2081', '18px arial', 'left', '#f
 r . markings . push (new Engraving ('lnI\u208b\u2082', '18px arial', 'left', '#ff0001', -0.1, 98));
 r . markings . push (new Engraving ('DF', '18px arial', 'center', '#000001', -0.082, 124));
 
-r . scales . push (new spacer (2));
-r . scales . push (new scale_LL00 (24, {marking_colour: '#ff0001', left_extension: 0.025}));
-r . scales . push (new spacer (2));
-r . scales . push (new scale_LL01_down (24, {marking_colour: '#ff0002', left_extension: 0.022}));
-r . scales . push (new spacer (2));
-r . scales . push (new scale_LL02 (24, {marking_colour: '#ff0001', left_extension: 0.026}));
-r . scales . push (new spacer (2));
-r . scales . push (new scale_LL03_down (24, {marking_colour: '#ff0002', left_extension: 0.04}));
-r . scales . push (new spacer (2));
-r . scales . push (new scale_CF10 (24, {colour: '#000001', left_extension: 0.023}));
+r . markings . push (new Engraving ('-.001', '16px arial', 'right', '#000001', 1.09, 20));
+r . markings . push (new Engraving ('\u27f6-.01', '16px arial', 'left', '#000001', 1.09, 20));
+r . markings . push (new Engraving ('-.01', '16px arial', 'right', '#000001', 1.09, 46));
+r . markings . push (new Engraving ('\u27f6-.1', '16px arial', 'left', '#000001', 1.09, 46));
+r . markings . push (new Engraving ('-.1', '16px arial', 'right', '#000001', 1.09, 72));
+r . markings . push (new Engraving ('\u27f6-1', '16px arial', 'left', '#000001', 1.09, 72));
+r . markings . push (new Engraving ('-1', '16px arial', 'right', '#000001', 1.09, 98));
+r . markings . push (new Engraving ('\u27f6-10', '16px arial', 'left', '#000001', 1.09, 98));
 
-r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL00 (24, {marking_colour: '#ff0001', left_extension: 0.025, right_extension: 0.026}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL01_down (24, {marking_colour: '#ff0002', left_extension: 0.022, right_extension: 0.026}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL02 (24, {marking_colour: '#ff0001', left_extension: 0.026, right_extension: 0.022}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL03_down (24, {marking_colour: '#ff0002', left_extension: 0.04, right_extension: 0.036}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_CF10 (24, {colour: '#000001', draw_e: false, draw_c: false, left_extension: 0.023, right_extension: 0.02}));
+
+r = new Rule ({stator: 1, rule_colour: '#ffffdd'}); s . rules . push (r);
 
 r . markings . push (new Engraving ('CF', '18px arial', 'center', '#000001', -0.082, 20));
 r . markings . push (new Engraving ('CIF', '18px arial', 'center', '#ff0002', -0.082, 46));
@@ -96,36 +119,53 @@ r . markings . push (new Engraving ('H\u2080', '18px arial', 'center', '#ff0002'
 r . markings . push (new Engraving ('CI', '18px arial', 'center', '#ff0002', -0.082, 150));
 r . markings . push (new Engraving ('C', '18px arial', 'center', '#000001', -0.082, 176));
 
-r . scales . push (new scale_DF10 (24, {colour: '#000002'}));
+r . markings . push (new Engraving ('\u221a1+(.1C)\u00b2', '16px arial', 'center', '#000001', 1.1, 72));
+r . markings . push (new HLine (58, 1.08, 1.13, 'black'))
+r . markings . push (new Engraving ('\u221a1+C\u00b2', '16px arial', 'center', '#000001', 1.1, 98));
+r . markings . push (new HLine (84, 1.09, 1.12, 'black'))
+r . markings . push (new Engraving ('\u221a1-(.1C)\u00b2', '16px arial', 'center', '#000001', 1.1, 124));
+r . markings . push (new HLine (110, 1.08, 1.13, 'black'))
+
+r . scales . push (new scale_DF10 (24, {colour: '#000002', draw_e: false, draw_pi: false, draw_c: false}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_DIF10 (24, {marking_colour: '#ff0001'}));
+r . scales . push (new scale_DIF10 (24, {marking_colour: '#ff0001', draw_e: false, draw_c: false, draw_pi: false, left_extension: 0.02, right_extension: 0.025}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_PH (24, {colour: '#000001'}));
+r . scales . push (new scale_PH (24, {colour: '#000001', left_extension: 0.05, right_extension: 0.024}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_PH2_down (24, {colour: '#000002'}));
+r . scales . push (new scale_PH2_down (24, {colour: '#000002', left_extension: 0.045, right_extension: 0.024}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_P (24, {marking_colour: '#ff0001'}));
+r . scales . push (new scale_P (24, {marking_colour: '#ff0001', left_extension: 0.026}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_DI (24, {marking_colour: '#ff0002'}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_C (24, {colour: '#000001'}));
 
-r = new Rule (); s . rules . push (r);
+r = new Rule ({rule_colour: '#ffffdd'}); s . rules . push (r);
 
 r . markings . push (new Engraving ('D', '18px arial', 'center', '#000001', -0.082, 20));
 r . markings . push (new Engraving ('ln\u2081', '18px arial', 'left', '#000002', -0.1, 46));
 r . markings . push (new Engraving ('ln\u2080', '18px arial', 'left', '#000002', -0.1, 72));
 r . markings . push (new Engraving ('ln\u208b\u2081', '18px arial', 'left', '#000002', -0.1, 98));
 r . markings . push (new Engraving ('ln\u208b\u2082', '18px arial', 'left', '#000002', -0.1, 124));
+
+r . markings . push (new Engraving ('1', '16px arial', 'right', '#000001', 1.09, 46));
+r . markings . push (new Engraving ('\u27f610', '16px arial', 'left', '#000001', 1.09, 46));
+r . markings . push (new Engraving ('.1', '16px arial', 'right', '#000001', 1.09, 72));
+r . markings . push (new Engraving ('\u27f61', '16px arial', 'left', '#000001', 1.09, 72));
+r . markings . push (new Engraving ('.01', '16px arial', 'right', '#000001', 1.09, 98));
+r . markings . push (new Engraving ('\u27f6.1', '16px arial', 'left', '#000001', 1.09, 98));
+r . markings . push (new Engraving ('.001', '16px arial', 'right', '#000001', 1.09, 124));
+r . markings . push (new Engraving ('\u27f6.01', '16px arial', 'left', '#000001', 1.09, 124));
+
 r . scales . push (new scale_D (24, {colour: '#000002'}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_LL3 (24, {colour: '#000001'}));
+r . scales . push (new scale_LL3 (24, {colour: '#000001', left_extension: 0.04, right_extension: 0.036}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_LL2_down (24, {colour: '#000002'}));
+r . scales . push (new scale_LL2_down (24, {colour: '#000002', left_extension: 0.024, right_extension: 0.042}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_LL1 (24, {colour: '#000001'}));
+r . scales . push (new scale_LL1 (24, {colour: '#000001', left_extension: 0.026, right_extension: 0.02}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_LL0_down (24, {colour: '#000002'}));
+r . scales . push (new scale_LL0_down (24, {colour: '#000002', left_extension: 0.024, right_extension: 0.04}));
 r . scales . push (new spacer (2));
 
 s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_limit_left: 0.058, cursor_limit_right: 0.058}); sliderules . sliderules . push (s);
@@ -163,7 +203,7 @@ ctx . fillText = function () {
 };
 
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
-changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+// changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 changeVersion ('german');
 </script>
