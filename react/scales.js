@@ -480,6 +480,54 @@ var scale_TCT1dec_down = function (height, options) {
   s . draw = function (ctx, length) {draw_big_tan_cotan_dec (ctx, length, - s . height, s);};
   return s;
 };
+var scale_TCT2dec = function (height, options) {
+  var s = new spacer (height, options);
+  s . value = function (location) {return Math . atan (Math . pow (10, location + 1)) * 180 / Math . PI;};
+  s . location = function (value) {return Math . log10 (Math . tan (value * Math . PI / 180)) - 1;};
+  s . draw = function (ctx, length) {
+    ctx . translate (0, s . height);
+    var h5 = s . height * 0.5, h4 = s . height * 0.4, h3 = s . height * 0.3, h2 = s . height * 0.2;
+		var ext = - s . left_extension;
+		for (var ind = 80; ind <= 89; ind += 1) {
+			var l = s . location (ind);
+			if (l > ext) {
+				l *= length;
+				tick (ctx, l, h5);
+				ctx . textAlign = 'right'; ctx . fillStyle = s . colour; mmark (ctx, ind, l - 1, h5);
+				ctx . textAlign = 'left'; ctx . fillStyle = s . alt; mmark (ctx, 90 - ind, l + 1, h5);
+			}
+		}
+		draw_XR (ctx, s . location, length, 85, 88, 1, h2, 0.1, 0.02, 0.1);
+		draw_XR (ctx, s . location, length, 85, 88, 1, h3, 0.5, 0.1, 0.5);
+		draw_XR (ctx, s . location, length, 85, 88, 1, h4, 1, 0.5, 1);
+		draw_XL (ctx, s . location, length, 80, 85, ext, h2, 0.1, 0.05, 0.1);
+		draw_XL (ctx, s . location, length, 80, 85, ext, h3, 0.5, 0.1, 0.5);
+		draw_XL (ctx, s . location, length, 80, 85, ext, h4, 1, 0.5, 1);
+		draw_XR (ctx, s . location, length, 88, 89, 1, h2, 0.05, 0.01, 0.05);
+		draw_XR (ctx, s . location, length, 88, 89, 1, h3, 0.1, 0.05, 0.1);
+		draw_XR (ctx, s . location, length, 88, 89, 1, h4, 0.5, 0.1, 0.5);
+		tick (ctx, s . location (88.5) * length, h5);
+		ext = 1 + s . right_extension;
+		draw_XR (ctx, s . location, length, 89, 90, ext, h2, 0.01, 0.005, 0.01);
+		draw_XR (ctx, s . location, length, 89, 90, ext ,h3, 0.05, 0.01, 0.05);
+		draw_XR (ctx, s . location, length, 89, 90, ext, h4, 0.1, 0.05, 0.1);
+		draw_XR (ctx, s . location, length, 89, 90, ext, h5, 1, 0.1, 1);
+		ctx . textAlign = 'left'; ctx . fillStyle = s . alt;
+		for (var ind = 1; ind < 10; ind += 1) {
+			var l = s . location (89 + ind / 10);
+			if (l < ext) {l *= length; mmark (ctx, '.' + ind, l + 1, h5);}
+		}
+		var l = s . location (88.5) * length;
+		mmark (ctx, '1.5', l + 1, h5);
+		ctx . textAlign = 'right'; ctx . fillStyle = s . colour; mmark (ctx, '88.5', l - 1, h5);
+  };
+  return s;
+};
+var scale_TCT2dec_down = function (height, options) {
+  var s = new scale_TCT2dec (height, options);
+  s . draw = function (ctx, length) {};
+  return s;
+};
 var scale_CTT1dec = function (height, options) {
   var s = new spacer (height, options);
   s . value = function (location) {return Math . atan (Math . pow (10, location)) * 180 / Math . PI;};

@@ -132,13 +132,13 @@ r . scales . push (new scale_DIF10 (24, {marking_colour: '#ff0001', draw_e: fals
 r . scales . push (new spacer (2));
 r . scales . push (new scale_PH (24, {colour: '#000001', left_extension: 0.05, right_extension: 0.024}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_PH2_down (24, {colour: '#000002', left_extension: 0.045, right_extension: 0.024}));
+r . scales . push (new scale_PH2_down (24, {colour: '#000002', left_extension: 0.045, right_extension: 0.022}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_P (24, {marking_colour: '#ff0001', left_extension: 0.026}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_DI (24, {marking_colour: '#ff0002'}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_C (24, {colour: '#000001'}));
+r . scales . push (new scale_C (24, {colour: '#000001', draw_e: false, draw_c: false}));
 
 r = new Rule ({rule_colour: '#ffffdd'}); s . rules . push (r);
 
@@ -157,7 +157,7 @@ r . markings . push (new Engraving ('\u27f6.1', '16px arial', 'left', '#000001',
 r . markings . push (new Engraving ('.001', '16px arial', 'right', '#000001', 1.09, 124));
 r . markings . push (new Engraving ('\u27f6.01', '16px arial', 'left', '#000001', 1.09, 124));
 
-r . scales . push (new scale_D (24, {colour: '#000002'}));
+r . scales . push (new scale_D (24, {colour: '#000002', draw_e: false, draw_c: false}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_LL3 (24, {colour: '#000001', left_extension: 0.04, right_extension: 0.036}));
 r . scales . push (new spacer (2));
@@ -168,21 +168,118 @@ r . scales . push (new spacer (2));
 r . scales . push (new scale_LL0_down (24, {colour: '#000002', left_extension: 0.024, right_extension: 0.04}));
 r . scales . push (new spacer (2));
 
-s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_limit_left: 0.058, cursor_limit_right: 0.058}); sliderules . sliderules . push (s);
+s = new Sliderule (1200, {cursor_left_extension: 0.08, cursor_right_extension: 0.08, cursor_limit_left: 0.05, cursor_limit_right: 0.05, cursor_top_margin: 6, cursor_bottom_margin: 6, cursor_rounding: 18}); sliderules . sliderules . push (s);
 
-var r = new Rule (); s . rules . push (r);
+s . braces . push (new LeftBrace (2, 0.066, 8, 'gold', 'black', 144, 0.7));
+s . braces . push (new LeftBrace (4, 0.06, 8, 'tan', 'black', 146, 0.7));
+s . braces . push (new RightBrace (2, 0.066, 8, 'gold', 'black', 144, 0.7));
+s . braces . push (new RightBrace (4, 0.06, 8, 'tan', 'black', 146, 0.7));
+s . cursorGlassBraces . push (new CursorBrace (0.09, 0.09, 26, 0, 20, '#deb887'));
+s . cursorBraces . push (new Screw (-0.064, -12, 10, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (0.064, -12, 10, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (-0.064, 440 + 12, 10, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (0.064, 440 + 12, 10, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new HLine (-2, -0.03, 0.05, 'red'));
+s . cursorBraces . push (new Logo (logo, -0.034, -14, 0.25, 0.3));
+
+var r = new Rule ({rule_colour: '#ffffdd'}); s . rules . push (r);
+
+r . markings . push (new Engraving ('sh\u2081', '18px arial', 'center', '#000001', -0.082, 20));
+r . markings . push (new Engraving ('sh\u2080', '18px arial', 'center', '#000001', -0.082, 46));
+r . markings . push (new Engraving ('cu\u2081', '18px arial', 'center', '#000001', -0.082, 72));
+r . markings . push (new Engraving ('cu\u2082', '18px arial', 'center', '#000001', -0.082, 98));
+r . markings . push (new Engraving ('cu\u2083', '18px arial', 'center', '#000001', -0.082, 124));
+
+r . markings . push (new Engraving ('-.1', '16px arial', 'right', '#000001', 1.08, 20));
+r . markings . push (new Engraving ('\u27f61', '16px arial', 'left', '#000001', 1.08, 20));
+r . markings . push (new Engraving ('1', '16px arial', 'right', '#000001', 1.08, 46));
+r . markings . push (new Engraving ('\u27f610', '16px arial', 'left', '#000001', 1.08, 46));
+r . markings . push (new Engraving ('1', '16px arial', 'right', '#000001', 1.08, 72));
+r . markings . push (new Engraving ('\u27f610', '16px arial', 'left', '#000001', 1.08, 72));
+r . markings . push (new Engraving ('10', '16px arial', 'right', '#000001', 1.08, 98));
+r . markings . push (new Engraving ('\u27f6100', '16px arial', 'left', '#000001', 1.08, 98));
+r . markings . push (new Engraving ('100', '16px arial', 'right', '#000001', 1.08, 124));
+r . markings . push (new Engraving ('\u27f61000', '16px arial', 'left', '#000001', 1.08, 124));
 
 r . scales . push (new spacer (2));
-r . scales . push (new scale_C (24));
+r . scales . push (new scale_SINH1rad (24, {marking_colour: '#000001', left_extension: 0.025, right_extension: 0.012}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_SINH2rad_down (24, {marking_colour: '#000002', left_extension: 0.022, right_extension: 0.026}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_Q1 (24, {marking_colour: '#000001', right_extension: 0.028}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_O2 (24, {marking_colour: '#000002', left_extension: 0.036, right_extension: 0.018}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_Q3 (24, {colour: '#000001', draw_e: false, draw_c: false, left_extension: 0.012}));
 
-r = new Rule ({stator: 1}); s . rules . push (r);
+r = new Rule ({stator: 1, rule_colour: '#ffffdd'}); s . rules . push (r);
 
-r . scales . push (new scale_D (24));
-r . scales . push (new scale_CF (24));
+r . markings . push (new Engraving ('lg\u2081\u207b\u00b9', '18px arial', 'center', '#000001', -0.082, 20));
+r . markings . push (new Engraving ('tg\u2080', '18px arial', 'right', '#000001', -0.082, 46));
+r . markings . push (new Engraving ('ctg\u2080', '18px arial', 'left', '#ff0001', -0.082, 46));
+r . markings . push (new Engraving ('tg\u2081', '18px arial', 'right', '#000001', -0.082, 72));
+r . markings . push (new Engraving ('ctg\u2081', '18px arial', 'left', '#ff0001', -0.082, 72));
+r . markings . push (new Engraving ('tg\u2082', '18px arial', 'right', '#000001', -0.082, 98));
+r . markings . push (new Engraving ('ctg\u2082', '18px arial', 'left', '#ff0001', -0.082, 98));
+r . markings . push (new Engraving ('sin\u2080', '18px arial', 'right', '#000001', -0.082, 124));
+r . markings . push (new Engraving ('cos\u2080', '18px arial', 'left', '#ff0001', -0.082, 124));
+r . markings . push (new Engraving ('srt\u208b\u2081', '18px arial', 'right', '#000001', -0.092, 150));
+r . markings . push (new Engraving ('cos\u208b\u2081ctg\u208b\u2081', '18px arial', 'left', '#ff0001', -0.092, 150));
+r . markings . push (new Engraving ('C', '18px arial', 'center', '#000001', -0.082, 176));
 
-r = new Rule (); s . rules . push (r);
+r . markings . push (new Engraving ('1', '16px arial', 'right', '#000001', 1.08, 20));
+r . markings . push (new Engraving ('\u27f610', '16px arial', 'left', '#000001', 1.08, 20));
+r . markings . push (new Engraving ('.1', '16px arial', 'right', '#000001', 1.08, 46));
+r . markings . push (new Engraving ('\u27f61', '16px arial', 'left', '#000001', 1.08, 46));
+r . markings . push (new Engraving ('1', '16px arial', 'right', '#000001', 1.08, 72));
+r . markings . push (new Engraving ('\u27f610', '16px arial', 'left', '#000001', 1.08, 72));
+r . markings . push (new Engraving ('10', '16px arial', 'right', '#000001', 1.08, 98));
+r . markings . push (new Engraving ('\u27f6100', '16px arial', 'left', '#000001', 1.08, 98));
+r . markings . push (new Engraving ('.1', '16px arial', 'right', '#000001', 1.08, 124));
+r . markings . push (new Engraving ('\u27f61', '16px arial', 'left', '#000001', 1.08, 124));
+r . markings . push (new Engraving ('.01', '16px arial', 'right', '#000001', 1.08, 150));
+r . markings . push (new Engraving ('\u27f6.1', '16px arial', 'left', '#000001', 1.08, 150));
 
-r . scales . push (new scale_DF (24));
+r . scales . push (new scale_M (24, {colour: '#000002', draw_e: false, draw_pi: false, draw_c: false}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_TCTdec (24, {colour: '#000001', alt: '#ff0001', draw_e: false, draw_c: false, draw_pi: false, left_extension: 0.02}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_TCT1dec_down (24, {colour: '#000002', alt: '#ff0002', right_extension: 0.024}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_TCT2dec (24, {colour: '#000001', alt: '#ff0001', left_extension: 0.024, right_extension: 0.02}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_SCdec (24, {colour: '#000001', alt: '#ff0001', left_extension: 0.024}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_STCTdec_down (24, {colour: '#000002', alt: '#ff0002', left_extension: 0.024, right_extension: 0.021}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_C (24, {colour: '#000001'}));
+
+r = new Rule ({rule_colour: '#ffffdd'}); s . rules . push (r);
+
+r . markings . push (new Engraving ('D', '18px arial', 'center', '#000001', -0.082, 20));
+r . markings . push (new Engraving ('sq\u2082', '18px arial', 'left', '#000002', -0.1, 46));
+r . markings . push (new Engraving ('sq\u2081', '18px arial', 'left', '#000002', -0.1, 72));
+r . markings . push (new Engraving ('th\u2080', '18px arial', 'left', '#000002', -0.1, 98));
+r . markings . push (new Engraving ('ch\u2081', '18px arial', 'left', '#000002', -0.1, 124));
+
+r . markings . push (new Engraving ('10', '16px arial', 'right', '#000001', 1.08, 46));
+r . markings . push (new Engraving ('\u27f6100', '16px arial', 'left', '#000001', 1.08, 46));
+r . markings . push (new Engraving ('1', '16px arial', 'right', '#000001', 1.08, 72));
+r . markings . push (new Engraving ('\u27f610', '16px arial', 'left', '#000001', 1.08, 72));
+r . markings . push (new Engraving ('.1', '16px arial', 'right', '#000001', 1.08, 98));
+r . markings . push (new Engraving ('\u27f61', '16px arial', 'left', '#000001', 1.08, 98));
+r . markings . push (new Engraving ('1', '16px arial', 'right', '#000001', 1.08, 124));
+r . markings . push (new Engraving ('\u27f610', '16px arial', 'left', '#000001', 1.08, 124));
+
+r . scales . push (new scale_D (24, {colour: '#000002'}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_R2 (24, {colour: '#000001', draw_pi: false, draw_e: false, left_extension: 0.02}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_W1 (24, {colour: '#000002', right_extension: 0.012}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_TANHrad (24, {colour: '#000001', left_extension: 0.026}));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_COSHrad_down (24, {colour: '#000002', left_extension: 0.024, right_extension: 0.026}));
 r . scales . push (new spacer (2));
 
 </script>
