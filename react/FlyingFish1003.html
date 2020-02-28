@@ -206,9 +206,9 @@ r . scales . push (new scale_SINH1rad (24, {marking_colour: '#000001', left_exte
 r . scales . push (new spacer (2));
 r . scales . push (new scale_SINH2rad_down (24, {marking_colour: '#000002', left_extension: 0.022, right_extension: 0.026}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_Q1 (24, {marking_colour: '#000001', right_extension: 0.028}));
+r . scales . push (new scale_Q1 (24, {marking_colour: '#000001', right_extension: 0.028, draw_e: false, draw_c: false}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_O2 (24, {marking_colour: '#000002', left_extension: 0.036, right_extension: 0.018}));
+r . scales . push (new scale_O2 (24, {marking_colour: '#000002', left_extension: 0.036, right_extension: 0.018, draw_e: false, draw_c: false}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_Q3 (24, {colour: '#000001', draw_e: false, draw_c: false, left_extension: 0.012}));
 
@@ -252,7 +252,7 @@ r . scales . push (new scale_SCdec (24, {colour: '#000001', alt: '#ff0001', left
 r . scales . push (new spacer (2));
 r . scales . push (new scale_STCTdec_down (24, {colour: '#000002', alt: '#ff0002', left_extension: 0.024, right_extension: 0.021}));
 r . scales . push (new spacer (2));
-r . scales . push (new scale_C (24, {colour: '#000001'}));
+r . scales . push (new scale_C (24, {colour: '#000001', draw_e: false, draw_c: false}));
 
 r = new Rule ({rule_colour: '#ffffdd'}); s . rules . push (r);
 
@@ -271,7 +271,7 @@ r . markings . push (new Engraving ('\u27f61', '16px arial', 'left', '#000001', 
 r . markings . push (new Engraving ('1', '16px arial', 'right', '#000001', 1.08, 124));
 r . markings . push (new Engraving ('\u27f610', '16px arial', 'left', '#000001', 1.08, 124));
 
-r . scales . push (new scale_D (24, {colour: '#000002'}));
+r . scales . push (new scale_D (24, {colour: '#000002', draw_e: false, draw_c: false}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_R2 (24, {colour: '#000001', draw_pi: false, draw_e: false, left_extension: 0.02}));
 r . scales . push (new spacer (2));
