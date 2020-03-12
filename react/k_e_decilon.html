@@ -1,3 +1,4 @@
+<meta charset="UTF-8"/>
 <!--
 ///////////////////////////////////////////////////////////////////////////////////
 //                     Copyright (C) 2017 Dr Robert P. Wolf                      //
@@ -31,8 +32,11 @@
 <div>
 	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
-	<!--<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.-->
-	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<!--<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.-->
+	<input type = radio name = visible id = visible_front onchange = "javascript: changeSide ('front', 100);" checked />Front
+	<input type = radio name = visible id = visible_back  onchange = "javascript: changeSide ('back', 100);" />Back
+	<input type = radio name = visible id = visible_both  onchange = "javascript: changeSide ('both', 200);" />Both Sides
   <input type = checkbox id = dimm_scales onchange = "javascript: if (this . checked) dcl_dimm (); else dcl_undimm ();" />Dimm.
 	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long.
 </div>
@@ -117,7 +121,7 @@ r . scales . push (new scale_LL2_down (24, {left_extension: 0.022, right_extensi
 r . scales . push (new scale_LL3_down (24, {left_extension: 0.02, right_extension: 0.015, left: "Ln3", la: 'right', ls: 0.05, centre: "1.0      to  10.0", cs: 1.03, ca: 'left', cf: '10px arial'}));
 r . scales . push (new spacer (2));
 
-s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_top_margin: 19, cursor_bottom_margin: 19, hairline_top: 20, hairline_bottom: 20, cursor_limit_left: 0.024, cursor_limit_right: 0.024}); sliderules . sliderules . push (s);
+s = new Sliderule (1200, {cursor_left_extension: 0.07, cursor_right_extension: 0.07, cursor_top_margin: 19, cursor_bottom_margin: 19, hairline_top: 20, hairline_bottom: 20, cursor_limit_left: 0.024, cursor_limit_right: 0.024, position: {x: 0, y: 80}}); sliderules . sliderules . push (s);
 
 s . cursorBraces . push (new Screw (0.055, -12, 7, 0, '#9498a1', 'white'));
 s . cursorBraces . push (new Screw (-0.055, -12, 7, 2, '#9498a1', 'white'));
@@ -185,7 +189,8 @@ r . scales . push (new spacer (2));
 changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 //changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
-changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+//changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeSide (document . getElementById ('visible_front') . checked ? 'font': document . getElementById ('visible_back') . checked ? 'back' : 'both');
 changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
 if (document . getElementById ('dimm_scales') . checked) {isolate (["A", "B", "C", "D"]); dimm(47, ['black', 'red']);}
 </script>
