@@ -34,9 +34,9 @@
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<!--<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.-->
-	<input type = radio name = visible id = visible_front onchange = "javascript: changeSide ('front', 100);" checked />Front
-	<input type = radio name = visible id = visible_back  onchange = "javascript: changeSide ('back', 100);" />Back
-	<input type = radio name = visible id = visible_both  onchange = "javascript: changeSide ('both', 200);" />Both Sides
+	<input type = radio name = visible id = visible_front onchange = "javascript: changeSide ('front');" checked />Front
+	<input type = radio name = visible id = visible_back  onchange = "javascript: changeSide ('back');" />Back
+	<input type = radio name = visible id = visible_both  onchange = "javascript: changeSide ('both');" />Both Sides
   <input type = checkbox id = dimm_scales onchange = "javascript: if (this . checked) dcl_dimm (); else dcl_undimm ();" />Dimm.
 	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long.
 </div>
@@ -190,7 +190,7 @@ changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 //changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 //changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
-changeSide (document . getElementById ('visible_front') . checked ? 'font': document . getElementById ('visible_back') . checked ? 'back' : 'both');
+changeSide (document . getElementById ('visible_front') . checked ? 'front': document . getElementById ('visible_back') . checked ? 'back' : 'both');
 changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
 if (document . getElementById ('dimm_scales') . checked) {isolate (["A", "B", "C", "D"]); dimm(47, ['black', 'red']);}
 </script>

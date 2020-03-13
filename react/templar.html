@@ -28,12 +28,15 @@
     <title>Templar</title>
     <link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
   </head>
-<body background = knights-templar_4.jpg style = "background-size: 100%;">
+<body background = knights-templar_4.jpg style = "background-size: cover;">
 <div>
 	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
-	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<!--<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.-->
+	<input type = radio name = visible id = visible_front onchange = "javascript: changeSide ('front');" checked />Front
+	<input type = radio name = visible id = visible_back  onchange = "javascript: changeSide ('back');" />Back
+	<input type = radio name = visible id = visible_both  onchange = "javascript: changeSide ('both');" />Both Sides
 <!--	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.-->
 	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 800 : 1200);" />Short/Long
   <br/>
@@ -87,9 +90,10 @@ var sliderules = new Sliderules ({name: 'Hiram Abiff', manufacturer: 'HERCs', ma
 changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
-changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+//changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 changeVersion ('german');
 changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
+changeSide (document . getElementById ('visible_front') . checked ? 'front': document . getElementById ('visible_back') . checked ? 'back' : 'both');
 </script>
 
 </body></html>
