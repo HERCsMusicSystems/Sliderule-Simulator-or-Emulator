@@ -32,7 +32,11 @@
 	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox id = on_extras onchange = "javascript: changeMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
-	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+  <div style="display: inline; background-color: lightblue;">
+    <input type = radio name = other_side id=visible_front onclick="javascript: changeSide ('front');" checked=true/>Front
+    <input type = radio name = other_side id=visible_back onclick="javascript: changeSide ('back');"/>Back
+    <input type = radio name = other_side id=visible_both onclick="javascript: changeSide ('both');"/>Both sides
+  </div>
 	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
 	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
 </div>
@@ -223,7 +227,7 @@ r . scales . push (new spacer (2));
 changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 changeMarkings ('hairlines', document . getElementById ('on_extras') . checked);
-changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeSide (document . getElementById ('visible_front') . checked ? 'front': document . getElementById ('visible_back') . checked ? 'back' : 'both');
 changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
 changeSize (document . getElementById ('short_long') . checked ? 900 : 1200);
 

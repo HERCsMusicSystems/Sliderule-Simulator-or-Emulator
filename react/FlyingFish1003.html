@@ -30,26 +30,11 @@
   </head>
 
 <body background="fishing.jpg" style="background-size: cover;">
-	<style>
-	@font-face
-	{
-	font-family: snell;
-	src: url('snellbt-regular.otf'),
-	url('snellbt-regular.eot');
-	}
-	{
-		font-family: parei;
-		src: url('Pare Italic.tff')
-	}
-	{
-		font-family: parer;
-		src: url('Pare Reverse Italic.tff')
-	}
-	</style>
-
 <div>
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings.
-	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+    <input type = radio name = other_side id=visible_front onclick="javascript: changeSide ('front');" checked=true/>Front
+    <input type = radio name = other_side id=visible_back onclick="javascript: changeSide ('back');"/>Back
+    <input type = radio name = other_side id=visible_both onclick="javascript: changeSide ('both');"/>Both sides
 </div>
 
 <div id="root"></div>
@@ -301,7 +286,7 @@ ctx . fillText = function () {
 
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 // changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
-changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeSide (document . getElementById ('visible_front') . checked ? 'front': document . getElementById ('visible_back') . checked ? 'back' : 'both');
 changeVersion ('german');
 </script>
 
