@@ -31,21 +31,8 @@
 
 <div align="right">
 	<font color="yellow">
-	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
-	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
-<!--	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.-->
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings.
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front'); document . body . style . backgroundImage = this . checked ? 'url(\'./Buzz.png\')' : 'url(\'./apollo-11.jpg\')';" />Other side.
-<!--	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
-	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 800 : 1200);" />Short/Long
-  <br/>
-  <select id = lessons><option value = "Choose Lesson ====" >Choose Lesson ====</option></select>
-  <input type = button value = "Play lesson" onclick = "javascript: playLesson ('lessons');" />&nbsp;&nbsp;&nbsp;
-  <select id = tests><option value = "Choose Test of Merit ====" >Choose Test of Merit ====</option></select>
-  <input type = button value = "Attempt test" onclick = "javascript: playLesson ('tests');" />&nbsp;&nbsp;&nbsp;
-  <input type = button id = clear_instructions onclick = "javascript: document . getElementById ('info') . innerHTML = '';" value = "Clear instructions." />
-  <div style = "display: block; position: fixed; background-color: white; border-color: black; border-style: solid; border-width: 1px;">
-    <font color = red ><span id = info /></font>
-  </div>-->
   </font>
 </div>
 
@@ -196,12 +183,9 @@ r . scales . push (new spacer (2));
 <script src="sliderule_application.js"></script>
 
 <script>
-changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
-//changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
 changeVersion ('german');
-//changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
 </script>
 
 

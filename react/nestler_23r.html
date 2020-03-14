@@ -35,8 +35,6 @@
 	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
   <input type = checkbox id = on_swap onchange = "javascript: scale_swap (this . checked);" />Slide reversed.
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
-<!--	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
-	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long-->
   </font>
   <br/>
 </div>
@@ -207,8 +205,6 @@ changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
-//changeVersion ('german');
-//changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
 scale_swap (document . getElementById ('on_swap') . checked);
 </script>
 
