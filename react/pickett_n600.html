@@ -58,24 +58,24 @@ var logo = new Image (); logo . src = 'Pickett_logo_triangle.png'; logo . onload
 
 var sliderules = new Sliderules ();
 
-var s = new Sliderule (1000, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.05, cursor_right_extension: 0.05, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
-s . braces . push (new BraceSupport (0.016, 1, 73, 60, 8, 'silver', 'black'));
-s . braces . push (new BraceSupport (0.016, 177, 249, 60, 8, 'silver', 'black'));
-s . braces . push (new BraceSupport (1.184, 1, 73, 60, 8, 'silver', 'black'));
-s . braces . push (new BraceSupport (1.184, 177, 249, 60, 8, 'silver', 'black'));
-s . braces . push (new BezierBraces (68, 0.115, 2, corrugated, 'black', 2, 0.018, 20, 40, -0.068));
-s . braces . push (new Screw (0.016, 36, 24, Math . random () * Math . PI, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (0.016, 194, 8, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (0.016, 230, 8, '#eeeeee', '#666666'));
-s . braces . push (new Screw (1.184, 36, 24, Math . random () * Math . PI, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (1.184, 194, 8, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (1.184, 230, 8, '#eeeeee', '#666666'));
+var s = new Sliderule (1000, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.05, cursor_right_extension: 0.05, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0.006, cursor_limit_right: 0.006, cursorHairline: 'black'}); sliderules . sliderules . push (s);
+s . braces . push (new BraceSupport (0.011, 1, 73, 60, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (0.011, 177, 249, 60, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.189, 1, 73, 60, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.189, 177, 249, 60, 8, 'silver', 'black'));
+s . braces . push (new BezierBraces (68, 0.11, 2, corrugated, 'black', 2, 0.013, 20, 40, -0.068));
+s . braces . push (new Screw (0.011, 36, 24, Math . random () * Math . PI, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.011, 194, 8, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.011, 230, 8, '#eeeeee', '#666666'));
+s . braces . push (new Screw (1.189, 36, 24, Math . random () * Math . PI, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.189, 194, 8, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.189, 230, 8, '#eeeeee', '#666666'));
 s . cursorGlassBraces . push (new CursorBrace (0.06, 0.06, 26, 0, 16, '#deb887'));
 s . cursorBraces . push (new Screw (0, -13, 12, Math . random () * Math . PI, 'silver', '#666666'));
 s . cursorBraces . push (new Screw (-0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
 s . cursorBraces . push (new Screw (0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
 
-var r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+var r = new Rule ({left_margin: 0.12, right_margin: 0.12, rule_colour: 'yellow'}); s . rules . push (r);
 r . markings . push (new Engraving ('LL\u2081', '14px arial', 'right', 'black', -0.02, 30));
 r . markings . push (new Engraving ('A', '14px arial', 'right', 'black', -0.01, 70));
 r . markings . push (new Engraving ('-', '12px arial', 'right', 'black', -0.02, 45));
@@ -85,7 +85,7 @@ r . scales . push (new scale_LL1 (24, {left_extension: 0.005, lines: [{left: 0, 
 r . scales . push (new scale_LL01_down (24, {marking_colour: 'red'}));
 r . scales . push (new scale_A (24));
 
-r = new Rule ({stator: 1, left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow', rounding: 2}); s . rules . push (r);
+r = new Rule ({stator: 1, left_margin: 0.12, right_margin: 0.12, rule_colour: 'yellow', rounding: 2}); s . rules . push (r);
 r . markings . push (new Engraving ('B', '14px arial', 'right', 'black', -0.01, 20));
 r . markings . push (new Engraving ('ST', '14px arial', 'right', 'black', -0.01, 38));
 r . markings . push (new Engraving ('T', '14px arial', 'right', 'black', -0.01, 56));
@@ -105,7 +105,7 @@ r . scales . push (new scale_TCTdec (18, {lines: [{left: 0, right: 1, height: 1}
 r . scales . push (new scale_SCdec_down (18));
 r . scales . push (new scale_C (24));
 
-r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+r = new Rule ({left_margin: 0.12, right_margin: 0.12, rule_colour: 'yellow'}); s . rules . push (r);
 r . markings . push (new Engraving ('D', '14px arial', 'right', 'black', -0.01, 20));
 r . markings . push (new Engraving ('DI', '14px arial', 'right', 'red', -0.01, 40));
 r . markings . push (new Engraving ('K', '14px arial', 'right', 'black', -0.01, 64));
@@ -118,26 +118,26 @@ r . scales . push (new spacer (2));
 // OTHER SIDE //
 ////////////////
 
-s = new Sliderule (1000, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.05, cursor_right_extension: 0.05, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
-s . braces . push (new BraceSupport (0.016, 1, 73, 60, 8, 'silver', 'black'));
-s . braces . push (new BraceSupport (0.016, 177, 249, 60, 8, 'silver', 'black'));
-s . braces . push (new BraceSupport (1.184, 1, 73, 60, 8, 'silver', 'black'));
-s . braces . push (new BraceSupport (1.184, 177, 249, 60, 8, 'silver', 'black'));
-s . braces . push (new BezierBraces (68, 0.115, 2, corrugated, 'black', 2, 0.018, 20, 40, -0.068));
-s . braces . push (new Bolt (0.016, 250 - 36, 24, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (0.016, 250 - 36, 6, '#dddddd', '#666666'));
-s . braces . push (new Bolt (0.016, 250 - 194, 8, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (0.016, 250 - 230, 8, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (1.184, 250 - 36, 24, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (1.184, 250 - 36, 6, '#dddddd', '#666666'));
-s . braces . push (new Bolt (1.184, 250 - 194, 8, '#eeeeee', '#666666'));
-s . braces . push (new Bolt (1.184, 250 - 230, 8, '#eeeeee', '#666666'));
+s = new Sliderule (1000, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.05, cursor_right_extension: 0.05, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0.006, cursor_limit_right: 0.006, cursorHairline: 'black'}); sliderules . sliderules . push (s);
+s . braces . push (new BraceSupport (0.011, 1, 73, 60, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (0.011, 177, 249, 60, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.189, 1, 73, 60, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.189, 177, 249, 60, 8, 'silver', 'black'));
+s . braces . push (new BezierBraces (68, 0.11, 2, corrugated, 'black', 2, 0.013, 20, 40, -0.068));
+s . braces . push (new Bolt (0.011, 250 - 36, 24, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.011, 250 - 36, 6, '#dddddd', '#666666'));
+s . braces . push (new Bolt (0.011, 250 - 194, 8, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.011, 250 - 230, 8, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.189, 250 - 36, 24, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.189, 250 - 36, 6, '#dddddd', '#666666'));
+s . braces . push (new Bolt (1.189, 250 - 194, 8, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.189, 250 - 230, 8, '#eeeeee', '#666666'));
 s . cursorGlassBraces . push (new CursorBrace (0.06, 0.06, 26, 0, 16, '#deb887'));
 s . cursorBraces . push (new Screw (0, -13, 12, Math . random () * Math . PI, 'silver', '#666666'));
 s . cursorBraces . push (new Screw (-0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
 s . cursorBraces . push (new Screw (0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
 
-var r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+var r = new Rule ({left_margin: 0.12, right_margin: 0.12, rule_colour: 'yellow'}); s . rules . push (r);
 r . markings . push (new Engraving ('LL\u2082', '14px arial', 'right', 'black', -0.01, 30));
 r . markings . push (new Engraving ('-', '14px arial', 'right', 'black', -0.0098, 42));
 r . markings . push (new Engraving ('+', '14px arial', 'right', 'black', -0.0098, 18));
@@ -147,7 +147,7 @@ r . scales . push (new scale_LL2 (24, {left_extension: 0.005, lines: [{left: 0, 
 r . scales . push (new scale_LL02_down (24, {marking_colour: 'red'}));
 r . scales . push (new scale_CF (24, {draw_e: false}));
 
-r = new Rule ({stator: 1, left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow', rounding: 2}); s . rules . push (r);
+r = new Rule ({stator: 1, left_margin: 0.12, right_margin: 0.12, rule_colour: 'yellow', rounding: 2}); s . rules . push (r);
 r . markings . push (new Engraving ('CF', '14px arial', 'right', 'black', -0.01, 20));
 r . markings . push (new Engraving ('Ln', '14px arial', 'right', 'black', -0.01, 38));
 r . markings . push (new Engraving ('L', '14px arial', 'right', 'black', -0.01, 56));
@@ -159,15 +159,15 @@ r . markings . push (new Engraving ('SLIDE RULES', '10px arial', 'center', 'blac
 r . markings . push (new Engraving ('PICKET INC.', '10px arial', 'center', 'black', 1.06, 24));
 r . markings . push (new Engraving ('SANTA BARBARA', '10px arial', 'center', 'black', 1.06, 102 - 12 - 14));
 r . markings . push (new Engraving ('Calif.', '10px arial', 'center', 'black', 1.06, 102 - 12));
-r . markings . push (new Bolt (-0.095, 51, 6, 'white', 'black'));
-r . markings . push (new Bolt (1.095, 51, 6, 'white', 'black'));
+r . markings . push (new Bolt (-0.085, 51, 6, 'white', 'black'));
+r . markings . push (new Bolt (1.085, 51, 6, 'white', 'black'));
 r . scales . push (new scale_DF (24, {draw_e: false}));
 r . scales . push (new scale_Ln (18, {draw_st_corrections: false, right_extension: 0.005, lines: [{left: 0, right: 2.31 / Math . log (10), height: 1}]}));
 r . scales . push (new scale_M (18));
 r . scales . push (new scale_DI (18, {marking_colour: 'red'}));
 r . scales . push (new scale_C (24));
 
-r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+r = new Rule ({left_margin: 0.12, right_margin: 0.12, rule_colour: 'yellow'}); s . rules . push (r);
 r . markings . push (new Engraving ('D', '14px arial', 'right', 'black', -0.01, 20));
 r . markings . push (new Engraving ('LL\u2083', '14px arial', 'right', 'black', -0.01, 52));
 r . markings . push (new Engraving ('+', '14px arial', 'right', 'black', -0.0098, 40));
