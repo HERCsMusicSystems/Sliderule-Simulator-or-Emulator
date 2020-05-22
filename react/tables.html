@@ -37,14 +37,39 @@
 var csv_builder = function (name) {
 	var s = window [name];
 	s = new s (24);
-	console . log (s);
-	console . log (s . value (0.5));
+	var ind = Number . parseFloat (s . value (0) . toFixed (1));
+	var limit = Number . parseFloat (s . value (1) . toFixed (1));
+	var tab = document . createElement ('table');
+	var range = Math . abs (limit - ind);
+	var step = 1;
+	while (range / step < 90) step /= 10;
+	if (ind > limit) {var x = ind; ind = limit; limit = x;}
+	while (ind <= limit) {
+		var tr = document . createElement ('tr');
+		var td = document . createElement ('td');
+		td . appendChild (document . createTextNode (ind));
+		tr . appendChild (td);
+		td = document . createElement ('td');
+		td . appendChild (document . createTextNode (s . location (ind)));
+		tr . appendChild (td);
+		tab . appendChild (tr);
+		ind += step;
+		ind = Number . parseFloat (ind . toFixed (7));
+	}
+	var div = document . getElementById ('csv');
+	div . innerHTML = '';
+	div . appendChild (tab);
 };
 </script>
 
 <select onchange="jacascript: csv_builder (this . value);">
+	<option>scale_K</option>
 	<option>scale_A</option>
+	<option>scale_AI</option>
 	<option>scale_C</option>
+	<option>scale_CI</option>
+	<option>scale_CF</option>
+	<option>scale_CIF</option>
 </select>
 
 <div id="csv">
