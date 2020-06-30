@@ -1,3 +1,4 @@
+<meta charset="UTF-8"/>
 <!--
 ///////////////////////////////////////////////////////////////////////////////////
 //                     Copyright (C) 2017 Dr Robert P. Wolf                      //
@@ -38,6 +39,7 @@
   <input type = radio name = fold onchange = "javascript: changeFold ('360');" value = 360 />360
   <input type = radio name = fold onchange = "javascript: changeFold ('x/log(e)');" value = "x/log(e)" />x/log(e)
   <input type = radio name = fold onchange = "javascript: changeFold ('x*log(e)');" value = "x*log(e)" />x&#x00b7;log(e)
+  <input type = radio name = fold onchange = "javascript: changeFold ('Addiator');" value = "Addiator" />Log x
 </div>
 <div id="root"></div>
 
@@ -55,6 +57,7 @@ var changeFold = function (fold) {
   case '360': sliderules . sliderules [2] . inactive = false; break;
   case 'x/log(e)': sliderules . sliderules [3] . inactive = false; break;
   case 'x*log(e)': sliderules . sliderules [4] . inactive = false; break;
+  case 'Addiator': sliderules . sliderules [5] . inactive = false; break;
   default: break;
   }
   sliderules . requireRedraw = true;
@@ -214,6 +217,38 @@ r . scales . push (new scale_DI (24, {left: "CI", right: "10/X", rs: 0.07, marki
 r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07}));
 r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.07}));
+r . scales . push (new scale_DI (24, {left: "DI", right: "10/X", rs: 0.07, marking_colour: 'red'}));
+r . scales . push (new spacer (24));
+
+var s = new Sliderule (1200, {cursor_top_margin: 13, cursor_bottom_margin: 13, hairline_top: -10, hairline_bottom: -10, cursor_limit_left: 0.028, cursor_limit_right: 0.028, markings_background: 'yellow'}); sliderules . sliderules . push (s);
+s . braces . push (new LeftBrace (2, 0.07, 8, 'white', 'black', 74, 1));
+s . braces . push (new LeftBrace (4, 0.063, 8, 'white', 'black', 76, 1));
+s . braces . push (new RightBrace (2, 0.07, 8, 'white', 'black', 74, 1));
+s . braces . push (new RightBrace (4, 0.063, 8, 'white', 'black', 76, 1));
+s . cursorGlassBraces . push (new DecilonCursorBrace (1, 0.1, 12, 8, 0.04, 18, 4, 'tan', 'black'));
+s . cursorBraces . push (new Engraving ('HERCs', '12px arial', 'right', 'red', 0.09, 240));
+s . cursorBraces . push (new Screw (-0.07, -9, 6, Math . random () * Math . PI, 'gold', 'silver'));
+s . cursorBraces . push (new Screw (0.07, -9, 6, Math . random () * Math . PI, 'gold', 'silver'));
+s . cursorBraces . push (new Screw (-0.07, 253, 6, Math . random () * Math . PI, 'gold', 'silver'));
+s . cursorBraces . push (new Screw (0.07, 253, 6, Math . random () * Math . PI, 'gold', 'silver'));
+s . cursors . push (new Cursor (Hairline360, 36, 120, 'red'));
+s . cursors . push (new Cursor (Hairline360R, 36, 120, 'red', {marking_align: 'right', marking_shift: -0.01}));
+var r = new Rule (); s . rules . push (r);
+r . markings . push (new Engraving ('FOLD STUDY', '16px arial', 'left', 'red', 0, 20));
+r . markings . push (new Engraving ('Made in Australia', '12px arial', 'right', 'black', 1, 16));
+r . scales . push (new spacer (24));
+r . scales . push (new scale_CIF (24, {left: "DIF", right: "10/\u03c0X", rs: 0.07, marking_colour: 'red', indices: ['>>1<<']}));
+r . scales . push (new scale_L (24, {left: "L", right: "log \u{1d465}", rs: 0.07}));
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . markings . push (new RuleBars (-0.194, 1, 4, 96, 9, 6, 4, 'tan'));
+r . markings . push (new RuleBars (1.194, -1, 4, 96, 9, 6, 4, 'tan'));
+r . scales . push (new scale_M (24, {left: "L", right: "log \u{1d465}", rs: 0.07}));
+r . scales . push (new scale_CIF (24, {left: "CIF", right: "10/\u03c0X", rs: 0.07, marking_colour: 'red', indices: ['>>1<<']}));
+r . scales . push (new spacer (4));
+r . scales . push (new scale_DI (24, {left: "CI", right: "10/X", rs: 0.07, marking_colour: 'red'}));
+r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07}));
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.07, }));
 r . scales . push (new scale_DI (24, {left: "DI", right: "10/X", rs: 0.07, marking_colour: 'red'}));
 r . scales . push (new spacer (24));
 
