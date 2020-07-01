@@ -40,14 +40,29 @@
   <input type = radio name = fold onchange = "javascript: changeFold ('x/log(e)');" value = "x/log(e)" />x/log(e)
   <input type = radio name = fold onchange = "javascript: changeFold ('x*log(e)');" value = "x*log(e)" />x&#x00b7;log(e)
   <input type = radio name = fold onchange = "javascript: changeFold ('Addiator');" value = "Addiator" />Log x
+  <input type = checkbox id = explanatory_checkbox onchange = "javascript: document . getElementById ('explanation') . style . display = this . checked ? 'block' : 'none';"/>Explanation
 </div>
 <div id="root"></div>
+
+<div id="explanation" style="position: fixed; bottom: 24px; left: 24px; background: gold; border-radius: 8px; padding: 8px; font-family: arial;">
+<b>EXPLANATION</b>:<br/>
+A<sup>n</sup> &#x00D7; A<sup>m</sup> = A<sup>n + m</sup><br/>
+<b>EXAMPLE</b>:<br/>
+2 = 10<sup>0.30103</sup><br/>
+3 = 10<sup>0.477121</sup><br/>
+6 = 10<sup>0.778151</sup><br/>
+2 &#x00D7; 3 = 6<br/>
+0.30103 + 0.477121 = 0.778151<br/>
+2 &#x00D7; 3 = 10<sup>0.30103</sup> &#x00D7; 10<sup>0.477121</sup> = 10<sup>0.30103 + 0.477121</sup> = 10<sup>0.778151</sup> = 6<br/>
+</div>
 
 <script src="sliderule_construction_kit.js"></script>
 <script src="scales.js"></script>
 <script src="folded_scales.js"></script>
 
 <script>
+
+document . getElementById ('explanatory_checkbox') . checked = true;
 
 var changeFold = function (fold) {
   for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . inactive = true;
@@ -231,25 +246,23 @@ s . cursorBraces . push (new Screw (-0.07, -9, 6, Math . random () * Math . PI, 
 s . cursorBraces . push (new Screw (0.07, -9, 6, Math . random () * Math . PI, 'gold', 'silver'));
 s . cursorBraces . push (new Screw (-0.07, 253, 6, Math . random () * Math . PI, 'gold', 'silver'));
 s . cursorBraces . push (new Screw (0.07, 253, 6, Math . random () * Math . PI, 'gold', 'silver'));
-s . cursors . push (new Cursor (Hairline360, 36, 120, 'red'));
-s . cursors . push (new Cursor (Hairline360R, 36, 120, 'red', {marking_align: 'right', marking_shift: -0.01}));
 var r = new Rule (); s . rules . push (r);
 r . markings . push (new Engraving ('FOLD STUDY', '16px arial', 'left', 'red', 0, 20));
 r . markings . push (new Engraving ('Made in Australia', '12px arial', 'right', 'black', 1, 16));
 r . scales . push (new spacer (24));
-r . scales . push (new scale_CIF (24, {left: "DIF", right: "10/\u03c0X", rs: 0.07, marking_colour: 'red', indices: ['>>1<<']}));
+r . scales . push (new spacer (24));
 r . scales . push (new scale_L (24, {left: "L", right: "log \u{1d465}", rs: 0.07}));
 r = new Rule ({stator: 1}); s . rules . push (r);
 r . markings . push (new RuleBars (-0.194, 1, 4, 96, 9, 6, 4, 'tan'));
 r . markings . push (new RuleBars (1.194, -1, 4, 96, 9, 6, 4, 'tan'));
 r . scales . push (new scale_M (24, {left: "L", right: "log \u{1d465}", rs: 0.07}));
-r . scales . push (new scale_CIF (24, {left: "CIF", right: "10/\u03c0X", rs: 0.07, marking_colour: 'red', indices: ['>>1<<']}));
+r . scales . push (new spacer (24));
 r . scales . push (new spacer (4));
-r . scales . push (new scale_DI (24, {left: "CI", right: "10/X", rs: 0.07, marking_colour: 'red'}));
+r . scales . push (new spacer (24));
 r . scales . push (new scale_C (24, {left: "C", right: "X", rs: 0.07}));
 r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_D (24, {left: "D", right: "X", rs: 0.07, }));
-r . scales . push (new scale_DI (24, {left: "DI", right: "10/X", rs: 0.07, marking_colour: 'red'}));
+r . scales . push (new spacer (24));
 r . scales . push (new spacer (24));
 
 </script>
