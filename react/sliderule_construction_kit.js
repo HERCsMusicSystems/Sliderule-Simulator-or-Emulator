@@ -222,7 +222,7 @@ var draw_log_1R = function (ctx, length, height, extension, scale, left_extensio
   var abs_length = Math . abs (length);
   var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
   draw_MR (ctx, Math . log10, length, 2, 9, extension, h5, scale . marking_limit);
-  if (abs_length >= 800) draw_MRS (ctx, Math . log10, length, 1.1, 1.9, 0.1, extension, h5);
+  if (abs_length >= 800) draw_MRS (ctx, Math . log10, length, 1.1, 2, 0.1, extension, h5);
   if (scale . draw_pi) {location = Math . log10 (Math . PI); if (location < extension) smark (ctx, '\u03c0', length * location, h2, h5);}
   if (scale . draw_e) {location = Math . log10 (Math . E); if (location < extension) smark (ctx, '\u{1d452}', length * location, h2, h5);}
   if (scale . draw_c) {
