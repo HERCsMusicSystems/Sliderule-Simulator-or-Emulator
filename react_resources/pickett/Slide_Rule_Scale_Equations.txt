@@ -1,0 +1,73 @@
+Slide Rule Scale Equations by Rick Nungester
+Created 2004-10-19, last modified 2021-01-05
+
+x = normalized scale position, 0 to 1 linear.
+C_D means "C or D". A_B means "A or B".
+_blk means the black scale. _red means the red scale.
+_hi means the upper scale. _lo means the lower scale.
+~= means "is approximately equal to".
+
+Common Scales
+=============
+C_D    = 10^x
+CI     = 10^(1-x)             = 10/C
+CF_DF  = 10^frac(x+log(pi))   = pi*C_D with re-scale
+CIF    = 10^frac(2-x-log(pi)) = 10/CF
+A_B    = 10^frac(2*x)         = D^2 with re-scale
+K      = 10^frac(3*x)         = D^3 with re-scales
+L      = x                    = log(D)
+Ln     = ln(10)*x             = ln(D)
+LL3    = e^(10^(x-0))         = e^(D)
+LL2    = e^(10^(x-1))         = e^(D/10)
+LL1    = e^(10^(x-2))         = e^(D/100)
+LL01   = e^(-10^(x-2))        = e^(-D/100)
+LL02   = e^(-10^(x-1))        = e^(-D/10)
+LL03   = e^(-10^(x-0))        = e^(-D)
+S      = asin(10^(x-1))       = asin(C/10)
+T      = atan(10^(x-1))       = atan(C/10)
+ST     = asin(10^(x-2))       = asin(C/100) = ~atan(C/100)
+
+Pickett N-16-ES Electrolog, front, other scales
+===============================================
+S_blk  = asin(10^(-x))        = asin(CI/10)
+S_red  = acos(10^(-x))        = acos(CI/10)
+T_blk  = atan(10^(-x))        = atan(CI/10)
+T_red  = atan(10^x)           = atan(C)
+ST     = asin(10^(-(x+1)))    = asin(CI/100) ~= atan(CI/100)
+SH1    = ln(10^x+sqrt(10^(2*x)+1))            = asinh(D)
+SH2    = ln(10^(x-1)+sqrt(10^(2*x-2)+1))      = asinh(D/10)
+TH     = 0.5*ln((1+10^(x-1))/(1-10^(x-1)))    = atanh(D/10)
+
+Pickett N-16-ES Electrolog, back, other scales
+==============================================
+Theta_hi  = atan(10^(if(x>0.5,3,-1)-2*x)) = atan(DorL/10) or atan(DorL*10)
+Theta_lo  = atan(10^(1-2*x))              = atan(DorL)
+Alpha_hi  = atan(10^(2*x+if(x>0.5,-3,1)))
+Alpha_lo  = atan(10^(2*x-1))
+dB_hi_blk = 20*(3-2*x)
+dB_hi_red = 20*(2*x+1)
+XL        = 2*pi*10^(1-2*x)      = 2*pi*L Ohms
+ZSorXC    = 10^(2*x-1)/(2*pi)    = 1/(2*pi*C) Ohms
+CorL      = 10^(1-2*x)           = 1/F Farads or Henrys
+F_DorQ    = 10^(2*x-1)           = Hz (a key scale)
+Lambda    = 299.8*10^(1-2*x)     = 299.8/F Mm
+Omega     = 2*pi*10^(2*x-1)      = 2*pi*F rad/sec
+Tau       = 10^(1-2*x)/(2*pi)    = 1/Omega sec
+Cr        = 10^(2-4*x)           = 1/F^2 farads
+Lr        = 10^(4*x)/(2*pi)^2    = (10*F/(2*pi))^2 Henrys
+dB_lo_blk = -10*log(1+10^(2-4*x))
+dB_lo_red = -10*log(1+10^(4*x-2))
+CosTheta  = 1/sqrt(1+10^(2-4*x))
+CosAlpha  = 1/sqrt(1+10^(4*x-2))
+
+Post 1459, other scales
+=======================
+Theta     = asin(sqrt(x))        = degrees, nearly linear
+RTheta    = pi/180*asin(sqrt(x)) = radians, nearly linear
+P_Q       = 10*sqrt(x)           = 10*sin(Theta)
+Q'        = 10*sqrt(x+1)         = Q extended right
+T         = sqrt(x/(1-x))        = tan(Theta)
+
+Pythagorus scale
+================
+Py        = sqrt(1-(10^(x-1))^2) = sqrt((1-(D/10)^2)) = cos(asin(D/10))
