@@ -18,7 +18,7 @@ userManual ['Moving Cursor'] = function (message) {
       }
       return false;
     };}, delay: 6000},
-    {action: function () {message ("Now try these instruction again.");}, dealy: 4000}
+    {action: function () {message ("Now try these instruction again.");}, delay: 4000}
   ];
 };
 
@@ -62,7 +62,7 @@ userManual ['Moving Cursor by right-click'] = function (message) {
       }
       return false;
     };}, delay: 6000},
-    {action: function () {isolate (); message ("Now try these instruction again.");}, dealy: 4000}
+    {action: function () {isolate (); message ("Now try these instruction again.");}, delay: 4000}
   ];
 };
 
