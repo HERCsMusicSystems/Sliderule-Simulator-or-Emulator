@@ -42,6 +42,8 @@
 
 <script>
 
+var logo = new Image (); logo . src = 'Kohinoor_logo.png';
+var graphoplex = new Image (); graphoplex . src = 'Graphoplex_Logo_Red.png';
 var sliderules = new Sliderules ();
 
 var s = new Sliderule (1200); sliderules . sliderules . push (s);
@@ -53,8 +55,12 @@ r . scales . push (new scale_LL03 (18, {marking_colour: 'red'}));
 r . scales . push (new scale_CF (18));
 
 r = new Rule ({stator: 1}); s . rules . push (r);
+r . markings . push (new Logo (logo, 1.08, 45, 0.125));
+r . markings . push (new Engraving ('11010', '10px arial', 'center', 'black', 1.08, 72));
+r . markings . push (new Logo (graphoplex, -0.08, 45, 0.125, Math . PI * 1.5));
+r . markings . push (new Engraving ('FRACE', '8px times', 'center', 'red', -0.065, 45, Math . PI * 1.5));
 r . scales . push (new scale_DF (18));
-r . scales . push (new scale_CIF (18, {colour: 'red'}));
+r . scales . push (new scale_CIF (18, {left: 'CIF', colour: 'red', right_extension: 0.028}));
 r . scales . push (new scale_K (18, {lines: [{left: 0, right: 1, height: 1}]}));
 r . scales . push (new scale_CI (18, {colour: 'red'}));
 r . scales . push (new scale_C (18, {left_extension: 0.048}));
