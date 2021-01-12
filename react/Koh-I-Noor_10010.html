@@ -1,0 +1,75 @@
+<meta charset="UTF-8"/>
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2021 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+	<head>
+		<title>Graphoplex Koh-I-Noor 10010</title>
+		<link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
+	</head>
+
+<body>
+	<div>
+		<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+		<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+		<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	</div>
+<div id="root"/>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+
+<script>
+
+var sliderules = new Sliderules ();
+
+var s = new Sliderule (1200); sliderules . sliderules . push (s);
+
+var r = new Rule (); s . rules . push (r);
+r . scales . push (new spacer (4));
+r . scales . push (new scale_LL02 (18, {marking_colour: 'red'}));
+r . scales . push (new scale_LL03 (18, {marking_colour: 'red'}));
+r . scales . push (new scale_CF (18));
+
+r = new Rule ({stator: 1}); s . rules . push (r);
+r . scales . push (new scale_DF (18));
+r . scales . push (new scale_CIF (18, {colour: 'red'}));
+r . scales . push (new scale_K (18, {lines: [{left: 0, right: 1, height: 1}]}));
+r . scales . push (new scale_CI (18, {colour: 'red'}));
+r . scales . push (new scale_C (18, {left_extension: 0.048}));
+
+r = new Rule (); s . rules . push (r);
+r . scales . push (new scale_D (18));
+r . scales . push (new scale_LL3_down (18));
+r . scales . push (new scale_LL2_down (18));
+r . scales . push (new spacer (4));
+
+</script>
+
+<script src="sliderule_application.js"></script>
+
+
+</body>
+
+</html>
