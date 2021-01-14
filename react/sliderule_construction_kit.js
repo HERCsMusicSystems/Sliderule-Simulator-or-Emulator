@@ -1032,7 +1032,8 @@ var draw_log_ll0 = function (ctx, length, height, s) {
   measures . push (ctx . measureText (s . indices [1]) . width * 0.6);
   ctx . font = "italic " + Math . floor (Math . abs (height) * 0.3) + "px arial";
   ctx . textAlign = 'right';
-  for (ind = 0; ind < 10; ind++) ctx . fillText ('1.00', length * Math . log10 (ind + 1) - measures [ind], h5);
+  for (ind = 0; ind < 9; ind++) ctx . fillText ('1.00', length * Math . log10 (ind + 1) - measures [ind], h5);
+  ctx . fillText ('1.0', length * Math . log10 (10) - measures [9], h5);
   ctx . textAlign = 'left';
   ctx . fillText ('01', length * Math . log10 (4) + measures [3], h5);
   ctx . fillText ('01', length * Math . log10 (5) + measures [4], h5);

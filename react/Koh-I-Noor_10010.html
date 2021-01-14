@@ -174,21 +174,21 @@ s . braces . push (new supports (22, 12, 14, 28, 4, 'blue'));
 
 var r = new Rule ({left_margin: 0.16, right_margin: 0.16, rounding: 12}); s . rules . push (r);
 r . scales . push (new spacer (4));
-r . scales . push (new scale_LL02 (18, {left: 'LL02', ls: 0.06, right: '1/e\u2070\u22c5\u00b9\u02e3', rs: 0.06, left_extension: 0.027, right_extension: 0.022, marking_colour: 'red'}));
-r . scales . push (new scale_LL03 (18, {left: 'LL03', ls: 0.06, right: '1/e\u02e3', rs: 0.06, left_extension: 0.027, right_extension: 0.036, marking_colour: 'red'}));
-r . scales . push (new scale_CF (18, {left: 'DF', ls: 0.06, right: '\u03c0X', rs: 0.06, left_extension: 0.021, right_extension: 0.022}));
+r . scales . push (new scale_LL01 (18, {left: 'LL01', ls: 0.064, right: '1/e\u2070\u22c5\u00b9\u02e3', rs: 0.06, left_extension: 0.022, right_extension: 0.022, marking_colour: 'red'}));
+r . scales . push (new scale_L (18, {left: 'L', ls: 0.064, right: '1/e\u02e3', rs: 0.06}));
+r . scales . push (new scale_A (18, {left: 'A', ls: 0.064, right: '\u03c0X', rs: 0.06, left_extension: 0.05, right_extension: 0.022}));
 
 r = new Rule ({stator: 1, left_margin: 0.16, right_margin: 0.16, rounding: 12}); s . rules . push (r);
-r . scales . push (new scale_DF (18, {left: 'CF', ls: 0.06, left_extension: 0.021, right_extension: 0.022}));
-r . scales . push (new scale_CIF (18, {left: 'CIF', ls: 0.06, colour: 'red', left_extension: 0.018, right_extension: 0.028}));
-r . scales . push (new scale_K (18, {left: 'K', ls: 0.06, lines: [{left: 0, right: 1, height: 1}]}));
-r . scales . push (new scale_CI (18, {left: 'CI', ls: 0.06, colour: 'red'}));
-r . scales . push (new scale_C (18, {left: 'C', ls: 0.06, left_extension: 0.048, right_extension: 0.044}));
+r . scales . push (new scale_B (18, {left: 'B', ls: 0.064, left_extension: 0.05, right_extension: 0.022}));
+r . scales . push (new scale_TCTdec (18, {left: 'T', ls: 0.064, left_extension: 0.018, right_extension: 0.028}));
+r . scales . push (new scale_STdec (18, {left: 'S R T', ls: 0.064, left_extension: 0.018, draw_st_corrections: false, lines: [{left: 0, right: 1, height: 1}]}));
+r . scales . push (new scale_SCdec (18, {left: 'S', ls: 0.064, left_extension: 0.02}));
+r . scales . push (new scale_C (18, {left: 'C', ls: 0.064, left_extension: 0.048, right_extension: 0.044}));
 
 r = new Rule ({left_margin: 0.16, right_margin: 0.16, rounding: 12}); s . rules . push (r);
-r . scales . push (new scale_D (18, {left: 'D', ls: 0.06, right: 'X', rs: 0.07, left_extension: 0.048, right_extension: 0.044}));
-r . scales . push (new scale_LL3_down (18, {left: 'LL3', ls: 0.065, right: 'e\u02e3', rs: 0.07, left_extension: 0.04, right_extension: 0.064}));
-r . scales . push (new scale_LL2_down (18, {left: 'LL2', ls: 0.065, right: 'e\u2070\u22c5\u00b9\u02e3', rs: 0.07, left_extension: 0.021, right_extension: 0.042}));
+r . scales . push (new scale_D (18, {left: 'D', ls: 0.064, right: 'X', rs: 0.07, left_extension: 0.048, right_extension: 0.044}));
+r . scales . push (new scale_DI (18, {left: 'DI', ls: 0.064, right: 'e\u02e3', rs: 0.07}));
+r . scales . push (new scale_LL1_down (18, {left: 'LL1', ls: 0.064, right: 'e\u2070\u22c5\u00b9\u02e3', rs: 0.07, left_extension: 0.021, right_extension: 0.042}));
 r . scales . push (new spacer (4));
 
 </script>

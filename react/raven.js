@@ -94,7 +94,7 @@ r . scales . push (new scale_DI (24, {left: "CI", right: "10/\u{1d465}", rs: 0.0
 r . scales . push (new scale_C (24, {left: "C", right: "\u{1d465}", rs: 0.07, left_extension: 0.048, right_extension: 0.042, draw_c: false}));
 r = new Rule (); s . rules . push (r);
 r . scales . push (new scale_DLL0 (24, {left: "D", right: "\u{1d465}", rs: 0.07, centre: "e\u2070\u22c5\u2070\u2070\u00b9\u02e3", cs: 1.02, ca: 'left', cc: 'red', left_extension: 0.048, draw_c: false}));
-r . markings . push (new Engraving ("LL", 'italic 12px arial', 'left', 'red', -0.08, 18));
+r . markings . push (new Engraving ("LL0", 'italic 12px arial', 'left', 'red', -0.08, 18));
 r . scales . push (new scale_LL1_down (24, {left: "LL1", right: "e\u2070\u22c5\u2070\u00b9\u02e3", rs: 0.02, left_extension: 0.05}));
 r . scales . push (new scale_LL2_down (24, {left: "LL2", right: "e\u2070\u22c5\u00b9\u02e3", rs: 0.02, left_extension: 0.046, right_extension: 0.014}));
 r . scales . push (new scale_LL3_down (24, {left: "LL3", right: "e\u02e3", rs: 0.02, left_extension: 0.04, right_extension: 0.014}));
