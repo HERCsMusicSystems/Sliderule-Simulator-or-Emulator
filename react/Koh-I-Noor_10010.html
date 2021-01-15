@@ -174,21 +174,21 @@ s . braces . push (new supports (22, 12, 14, 28, 4, 'blue'));
 
 var r = new Rule ({left_margin: 0.16, right_margin: 0.16, rounding: 12}); s . rules . push (r);
 r . scales . push (new spacer (4));
-r . scales . push (new scale_LL01 (18, {left: 'LL01', ls: 0.064, right: '1/e\u2070\u22c5\u00b9\u02e3', rs: 0.06, left_extension: 0.022, right_extension: 0.022, marking_colour: 'red'}));
-r . scales . push (new scale_L (18, {left: 'L', ls: 0.064, right: '1/e\u02e3', rs: 0.06}));
-r . scales . push (new scale_A (18, {left: 'A', ls: 0.064, right: '\u03c0X', rs: 0.06, left_extension: 0.05, right_extension: 0.022}));
+r . scales . push (new scale_LL01 (18, {left: 'LL01', ls: 0.064, right: '1/e\u2070\u22c5\u2070\u00b9\u02e3', rs: 0.052, left_extension: 0.022, right_extension: 0.024, marking_colour: 'red'}));
+r . scales . push (new scale_L (18, {left: 'L', ls: 0.064, right: 'Log X', rs: 0.052}));
+r . scales . push (new scale_A (18, {left: 'A', ls: 0.064, right: 'X\u00b2', rs: 0.052, left_extension: 0.05, right_extension: 0.04}));
 
 r = new Rule ({stator: 1, left_margin: 0.16, right_margin: 0.16, rounding: 12}); s . rules . push (r);
-r . scales . push (new scale_B (18, {left: 'B', ls: 0.064, left_extension: 0.05, right_extension: 0.022}));
-r . scales . push (new scale_TCTdec (18, {left: 'T', ls: 0.064, left_extension: 0.018, right_extension: 0.028}));
+r . scales . push (new scale_B (18, {left: 'B', ls: 0.064, left_extension: 0.05, right_extension: 0.04}));
+r . scales . push (new scale_TCTdec (18, {left: 'T', ls: 0.064, left_extension: 0.018}));
 r . scales . push (new scale_STdec (18, {left: 'S R T', ls: 0.064, left_extension: 0.018, draw_st_corrections: false, lines: [{left: 0, right: 1, height: 1}]}));
 r . scales . push (new scale_SCdec (18, {left: 'S', ls: 0.064, left_extension: 0.02}));
 r . scales . push (new scale_C (18, {left: 'C', ls: 0.064, left_extension: 0.048, right_extension: 0.044}));
 
 r = new Rule ({left_margin: 0.16, right_margin: 0.16, rounding: 12}); s . rules . push (r);
-r . scales . push (new scale_D (18, {left: 'D', ls: 0.064, right: 'X', rs: 0.07, left_extension: 0.048, right_extension: 0.044}));
-r . scales . push (new scale_DI (18, {left: 'DI', ls: 0.064, right: 'e\u02e3', rs: 0.07}));
-r . scales . push (new scale_LL1_down (18, {left: 'LL1', ls: 0.064, right: 'e\u2070\u22c5\u00b9\u02e3', rs: 0.07, left_extension: 0.021, right_extension: 0.042}));
+r . scales . push (new scale_D (18, {left: 'D', ls: 0.064, right: 'X', rs: 0.052, left_extension: 0.048, right_extension: 0.044}));
+r . scales . push (new scale_DI (18, {left: 'DI', ls: 0.064, right: '1/x', rs: 0.052, colour: 'red'}));
+r . scales . push (new scale_LL1_down (18, {left: 'LL1', ls: 0.064, right: 'e\u2070\u22c5\u2070\u00b9\u02e3', rs: 0.052, left_extension: 0.005, right_extension: 0.04}));
 r . scales . push (new spacer (4));
 
 </script>
