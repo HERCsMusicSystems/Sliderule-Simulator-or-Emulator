@@ -207,20 +207,28 @@ r . scales . push (new scale_LL02_down (24, {left_extension: 0.026, right_extens
 r . scales . push (new scale_LL01 (24, {left_extension: 0.046, right_extension: 0.048, left: "LL\u2080\u2081", right: "e^-0.01x", rs: 0.08, colour: 'red'}));
 r . scales . push (new spacer (1));
 r . scales . push (new scale_LL00_down (24, {left_extension: 0.046, right_extension: 0.046, left: "LL\u2080\u2080", right: "e^-0.001x", rs: 0.08, colour: 'red'}));
+r . markings . push (new Engraving ('\u2207', '12px arial', 'center', 'red', 0, 110));
+r . markings . push (new VLine (0, 110, 122, 'red', 1));
 r . scales . push (new scale_R2 (24, {left_extension: 0.106, ls: 0.14, right_extension: 0.084, left: "W\u2082", right: "\u221a10 X\u00b3", rs: 0.13, draw_q: true}));
 
 r = new Rule ({stator: 1, left_margin: 0.26, right_margin: 0.26}); s . rules . push (r);
 r . markings . push (new RuleBars (-0.254, 1, 4, 116, 9, 6, 4, 'black'));
 r . markings . push (new RuleBars (1.254, -1, 4, 116, 9, 6, 4, 'black'));
+r . markings . push (new Engraving ('\u0394', '12px arial', 'center', 'red', 0, 22));
+r . markings . push (new VLine (0, 0, 12, 'red', 1));
 r . scales . push (new scale_W2 (24, {left_extension: 0.106, ls: 0.14, right_extension: 0.084, left: "W\u2082'", right: "\u221a10 X\u00b3", rs: 0.13, alt: 'black', draw_q: true}));
 r . scales . push (new scale_DI (24, {left_extension: 0.114, right_extension: 0.098, left: "CI", ls: 0.14, right: "10/x", rs: 0.13, colour: 'red'}));
 r . scales . push (new scale_LR12 (24, {left_extension: 0.1, ls: 0.14, right_extension: 0.1, left: "L", right: "\u00bdlg X", rs: 0.13}));
 r . scales . push (new spacer (2));
 r . scales . push (new scale_D (24, {left_extension: 0.098, right_extension: 0.08, ls: 0.14, left: "C", right: "X", rs: 0.13, highlight: '#ccffcc', alt: 'black'}));
 r . scales . push (new scale_R1 (24, {left_extension: 0.092, right_extension: 0.09, ls: 0.14, left: "W\u2081'", right: "\u221aX", rs: 0.13, alt: 'black', draw_q: true}));
+r . markings . push (new Engraving ('\u2207', '12px arial', 'center', 'red', 1, 110));
+r . markings . push (new VLine (1, 110, 122, 'red', 1));
 
 r = new Rule ({left_margin: 0.24, right_margin: 0.24}); s . rules . push (r);
 r . scales . push (new scale_W1 (24, {left_extension: 0.092, right_extension: 0.09, left: "W\u2081'", ls: 0.14, right: "\u221aX", rs: 0.13, alt: 'black', draw_q: true}));
+r . markings . push (new Engraving ('\u0394', '12px arial', 'center', 'red', 1, 22));
+r . markings . push (new VLine (1, 0, 12, 'red', 1));
 r . scales . push (new scale_CLL0 (24, {left_extension: 0.048, right_extension: 0.042, left: "D", ls: 0.14, right: "X", rs: 0.13, centre: "LL", cs: -0.1, ca: 'left', cf: 'italic 12px arial', highlight: '#ccffcc'}));
 r . markings . push (new Engraving ("e^0.001x", 'italic 12px arial', 'left', 'black', 1.08, 42));
 r . scales . push (new spacer (1));

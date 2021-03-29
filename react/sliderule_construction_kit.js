@@ -1379,6 +1379,10 @@ spacer . prototype . examine = function (position, shift) {
     case 'r': p = 18 / Math . PI; break;
     case 'r0': p = 1.8 / Math . PI; break;
     case 'r1': p = 180 / Math . PI; break;
+    case 'r2': p = Math . sqrt (2); break;
+    case 'r3': p = Math . sqrt (3); break;
+    case 'r10': p = Math . sqrt (10); break;
+    case 're': p = 10 / Math . E; break;
     default:
       var pp = p . split (":");
       var divisor = 1;
