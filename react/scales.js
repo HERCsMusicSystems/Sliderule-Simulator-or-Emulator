@@ -27,7 +27,7 @@
 // K, J
 // R1, R2, W1, W2
 // Q1, Q2, Q3, O1, O2, O3
-// L, M, Ln, Mn, LR12, LW12
+// L, M, Ln, Mn, LR12, LW12, L01, M01
 // Sdec(_down), S(_down), SCdec(_down), CSdec(_down), Sgrad(_down)
 // STdec(_down), ST(_down), STCTdec(_down), CTSTdec(_down), STCTgrad(_down), CTSTgrad(_down)
 // Tdec(_down), T1dec(_down), TCTdec(_down), CTTdec(_down), TCT1dec(_down), CTT1dec(_down)
@@ -314,6 +314,12 @@ var scale_Sdec = function (height, options) {
   s . draw = function (ctx, length) {ctx . translate (0, s . height); draw_sine_dec (ctx, length, s . height, s);};
   return s;
 };
+var scale_L01 = inherit (spacer);
+scale_L01 . prototype . value = function (location) {return location;};
+scale_L01 . prototype . location = function (value) {return value;};
+scale_L01 . prototype . draw = function (ctx, length) {ctx . translate (0, this . height); draw_lin_01 (ctx, length, this . height, this);};
+var scale_M01 = inherit (scale_L01);
+scale_M01 . prototype . draw = function (ctx, length) {draw_lin_01 (ctx, length, - this . height, this);};
 var scale_Sdec_down = function (height, options) {
   var s = new scale_Sdec (height, options);
   s . draw = function (ctx, length) {draw_sine_dec (ctx, length, - s . height, s);};

@@ -465,6 +465,30 @@ var draw_lin_12 = function (ctx, length, height, scale) {
   draw_XL (ctx, fn_lin_1, length, -10, 0, limit, h3, 0.1, 0.05, 0.1);
   draw_XL (ctx, fn_lin_1, length, -10, 0, limit, h2, 0.05, 0.01, 0.05);
 };
+var draw_lin_01 = function (ctx, length, height, scale) {
+  var h5 = height * 0.5; var h4 = height * 0.4; var h3 = height * 0.3; var h2 = height * 0.2;
+  var limit = 1 + scale . right_extension;
+  mark (ctx, '.0', 0, h5);
+  mark (ctx, '.1', length * fn_lin (1), h5);
+  mark (ctx, '.2', length * fn_lin (2), h5);
+  mark (ctx, '.3', length * fn_lin (3), h5);
+  mark (ctx, '.4', length * fn_lin (4), h5);
+  mark (ctx, '.5', length * fn_lin (5), h5);
+  mark (ctx, '.6', length * fn_lin (6), h5);
+  mark (ctx, '.7', length * fn_lin (7), h5);
+  mark (ctx, '.8', length * fn_lin (8), h5);
+  mark (ctx, '.9', length * fn_lin (9), h5);
+  mark (ctx, '1', length, h5);
+  draw_05R (ctx, fn_lin, length, 0, 20, limit, h4);
+  draw_01R (ctx, fn_lin, length, 0, 20, limit, h3);
+  if (length < 1000) draw_005R (ctx, fn_lin, length, 0, 20, limit, h2); else draw_002R (ctx, fn_lin, length, 0, 20, limit, h2);
+  ctx . translate (- length, 0);
+  limit = 1 - scale . left_extension;
+  draw_05L (ctx, fn_lin, length, 0, 10, limit, h4);
+  draw_01L (ctx, fn_lin, length, 0, 10, limit, h3);
+  if (length < 1000) draw_005L (ctx, fn_lin, length, 0, 10, limit, h2); else draw_002L (ctx, fn_lin, length, 0, 10, limit, h2);
+};
+
 
 var fn_sin_dec = function (value) {return Math . log10 (10 * Math . sin (value * Math . PI / 180));};
 var draw_sine_dec = function (ctx, length, height, scale) {
