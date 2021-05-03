@@ -33,9 +33,10 @@
 	<div style="font-family: arial; color: gold; text-shadow: 2px 2px blue;">
 		<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 		<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+		<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
 		<input type = radio name = other_side id=visible_front onclick="javascript: changeSide ('front');" checked=true/>Front
-	    <input type = radio name = other_side id=visible_back onclick="javascript: changeSide ('back');"/>Back
-	    <input type = radio name = other_side id=visible_both onclick="javascript: changeSide ('both');"/>Both sides
+		<input type = radio name = other_side id=visible_back onclick="javascript: changeSide ('back');"/>Back
+		<input type = radio name = other_side id=visible_both onclick="javascript: changeSide ('both');"/>Both sides
 	</div>
 <div id="root"/>
 
@@ -136,9 +137,11 @@ var supports = function (left, top, width, height, radius, colour) {
 var graphoplex = new Image (); graphoplex . src = 'Graphoplex_Logo_Red.png';
 var sliderules = new Sliderules ();
 
-var s = new Sliderule (1200, {left_margin: 0.16, right_margin: 0.16, cursor_limit_left: 0.03, cursor_limit_right: 0.03, cursor_left_extension: 0.07, cursor_right_extension: 0.07}); sliderules . sliderules . push (s);
-s . braces . push (new brace (0, 70, 12, 80, 0.6, {x: 20, y: 50}, 'gray'));
-s . braces . push (new brace (5, 65, 12, 80, 0.6, {x: 20, y: 50}, 'DarkGray'));
+var s = new Sliderule (1200, {left_margin: 0.16, right_margin: 0.16, cursor_limit_left: 0.02, cursor_limit_right: 0.02, cursor_top_margin: 12, cursor_bottom_margin: 12, cursor_left_extension: 0.08, cursor_right_extension: 0.08}); sliderules . sliderules . push (s);
+s . cursors . push (new Cursor (HairlineHP, 4, 238, 'red'));
+s . cursors . push (new Cursor (-HairlineHP, 4, 238, 'red', {marking_align: 'right', marking_shift: -0.005}));
+s . braces . push (new brace (0, 70, 12, 80, 0.7, {x: 20, y: 50}, 'gray'));
+s . braces . push (new brace (5, 65, 12, 80, 0.7, {x: 20, y: 50}, 'DarkGray'));
 s . braces . push (new supports (20, 10, 20, 52, 8, 'gray'));
 s . braces . push (new supports (22, 12, 14, 48, 8, 'DarkGray'));
 
@@ -150,8 +153,10 @@ r . scales . push (new scale_LL03 (18, {left: 'LL03', ls: 0.06, right: '1/e\u02e
 r . scales . push (new scale_CF (18, {left: 'DF', ls: 0.06, right: '\u03c0X', rs: 0.06, left_extension: 0.021, right_extension: 0.022}));
 
 r = new Rule ({stator: 1, left_margin: 0.16, right_margin: 0.16, rounding: 12}); s . rules . push (r);
-r . markings . push (new Logo (graphoplex, 1.072, 45, 0.11));
-r . markings . push (new Engraving ('10010', '9px arial', 'center', 'black', 1.072, 70));
+r . markings . push (new Logo (graphoplex, 1.072, 30, 0.11));
+r . markings . push (new Engraving ('BREVETÉ S.G.D.G', '7px times', 'center', 'red', 1.072, 47));
+r . markings . push (new Engraving ('MADE IN FRANCE', '8px arial', 'center', 'red', 1.072, 55));
+r . markings . push (new Engraving ('690a', '12px arial', 'center', 'red', 1.155, 45, Math . PI / -2));
 // r . markings . push (new Logo (graphoplex, -0.1, 45, 0.125, Math . PI * 1.5));
 // r . markings . push (new Engraving ('FRANCE', '8px times', 'center', 'red', -0.085, 45, Math . PI * 1.5));
 r . scales . push (new scale_DF (18, {left: 'CF', ls: 0.06, left_extension: 0.021, right_extension: 0.022}));
@@ -167,7 +172,11 @@ r . scales . push (new scale_LL2_down (18, {left: 'LL2', ls: 0.065, right: 'e\u2
 r . scales . push (new scale_LL1_down (18, {left: 'LL1', ls: 0.065, right: 'e\u2070\u22c5\u2070\u00b9\u02e3', rs: 0.07, left_extension: 0.006, right_extension: 0.04}));
 r . scales . push (new spacer (4));
 
-var s = new Sliderule (1200, {left_margin: 0.16, right_margin: 0.16, cursor_limit_left: 0.03, cursor_limit_right: 0.03, cursor_left_extension: 0.07, cursor_right_extension: 0.07}); sliderules . sliderules . push (s);
+var s = new Sliderule (1200, {left_margin: 0.16, right_margin: 0.16, cursor_limit_left: 0.02, cursor_limit_right: 0.02, cursor_top_margin: 12, cursor_bottom_margin: 12, cursor_left_extension: 0.08, cursor_right_extension: 0.08}); sliderules . sliderules . push (s);
+s . cursors . push (new Cursor (HairlineS, 58, 94, 'red'));
+s . cursors . push (new Cursor (HairlineD, 148, 184, 'red', {marking_align: 'right', marking_shift: -0.005}));
+s . cursors . push (new Cursor (HairlineHP, 4, 238, 'red'));
+s . cursors . push (new Cursor (-HairlineHP, 4, 238, 'red', {marking_align: 'right', marking_shift: -0.005}));
 s . braces . push (new brace (0, 70, 12, 80, 0.6, {x: 20, y: 50}, 'gray'));
 s . braces . push (new brace (5, 65, 12, 80, 0.6, {x: 20, y: 50}, 'DarkGray'));
 s . braces . push (new supports (20, 10, 20, 52, 8, 'gray'));
@@ -181,9 +190,12 @@ r . scales . push (new scale_TCT1dec (18, {left: 'T > 45\u00b0', ls: 0.036, righ
 r . scales . push (new scale_A (18, {left: 'A', ls: 0.064, right: 'X\u00b2', rs: 0.052, left_extension: 0.05, right_extension: 0.04}));
 
 r = new Rule ({stator: 1, left_margin: 0.16, right_margin: 0.16, rounding: 12}); s . rules . push (r);
+r . markings . push (new Logo (graphoplex, 1.072, 30, 0.11));
+r . markings . push (new Engraving ('BREVETÉ S.G.D.G', '7px times', 'center', 'red', 1.072, 47));
+r . markings . push (new Engraving ('MADE IN FRANCE', '8px arial', 'center', 'red', 1.072, 55));
 r . scales . push (new scale_B (18, {left: 'B', ls: 0.064, left_extension: 0.05, right_extension: 0.04}));
 r . scales . push (new scale_TCTdec (18, {left: 'T < 45\u00b0', ls: 0.064, left_extension: 0.001}));
-r . scales . push (new scale_STdec (18, {left: 'S R T', ls: 0.064, left_extension: 0.018, right_extension: 0.022, draw_st_corrections: false, lines: [{left: 0, right: 1, height: 1}]}));
+r . scales . push (new scale_STdec (18, {left: 'S R T', ls: 0.064, left_extension: 0.018, right_extension: 0.022, draw_st_corrections: false, lines: [{left: -0.018, right: 1.02, height: 1}]}));
 r . scales . push (new scale_SCdec (18, {left: 'S', ls: 0.064, left_extension: 0}));
 r . scales . push (new scale_C (18, {left: 'C', ls: 0.064, left_extension: 0.048, right_extension: 0.044}));
 
@@ -201,6 +213,7 @@ r . scales . push (new spacer (4));
 <script>
 changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
 changeSide (document . getElementById ('visible_front') . checked ? 'front': document . getElementById ('visible_back') . checked ? 'back' : 'both');
 </script>
 
