@@ -420,7 +420,9 @@ var draw_studymate = function (ctx, length, height, scale) {
   draw_XR (ctx, scale . location, length, 0, high_value, limit, h6, 0.5, 0.25, 0.5);             // 1/4
   draw_XR (ctx, scale . location, length, 0, high_value, limit, h5, 0.25, 0.125, 0.25);          // 1/8
   draw_XR (ctx, scale . location, length, 0, high_value, limit, h4, 0.125, 0.0625, 0.125);       // 1/16
-  draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, 0.0625, 0.03125, 0.0625);    // 1/32
+  // draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, 0.0625, 0.03125, 0.0625);    // 1/32
+  if (scale . draw_32)
+    draw_XR (ctx, scale . location, length, scale . draw_32 . from, scale . draw_32 . to, limit, h3, 0.0625, 0.03125, 0.0625);
   if (scale . draw_64)
     draw_XR (ctx, scale . location, length, scale . draw_64 . from, scale . draw_64 . to, limit, h2, 0.03125, 0.015625, 0.03125); // 1/32
   ctx . textAlign = 'right';
