@@ -394,7 +394,8 @@ var draw_metric = function (ctx, length, height, scale) {
   if (length * (scale . location (scale . step) - scale . location (0)) > 55) {
 		draw_XR (ctx, scale . location, length, 0, high_value, limit, h4, scale . step, scale . step * 0.5, scale . step);
 		draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, scale . step * 0.5, scale . step * 0.1, scale . step * 0.5);
-		draw_XR (ctx, scale . location, length, 0, high_value, limit, h2, scale . step * 0.1, scale . step * 0.05, scale . step * 0.1);
+		if (scale . draw_half_mm)
+			draw_XR (ctx, scale . location, length, scale . draw_half_mm . from * scale . step, scale . draw_half_mm . to * scale . step, limit, h2, scale . step * 0.1, scale . step * 0.05, scale . step * 0.1);
   } else {
 		draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, scale . step, scale . step * 0.5, scale . step);
 		draw_XR (ctx, scale . location, length, 0, high_value, limit, h2, scale . step * 0.5, scale . step * 0.1, scale . step * 0.5);
