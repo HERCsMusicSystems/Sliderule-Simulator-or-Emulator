@@ -43,7 +43,7 @@
 var sliderules = new Sliderules ();
 var s = new Sliderule (720); sliderules . sliderules . push (s);
 var r = new Rule (); s . rules . push (r);
-r . scales . push (new scale_Metric_down (24, {scale: 15, draw_half_mm: {from: 2, to: 4}, lines: [{left: 0, right: 1, height: 1}, {left: 0, right: 1, height: 0.2}]}));
+r . scales . push (new scale_Metric_down (24, {scale: 15, draw_half_mm: {from: 0, to: 4}, lines: [{left: 0, right: 1, height: 1}, {left: 0, right: 1, height: 0.3}, {left: 0, right: 4 / 15, height: 0.2}]}));
 r . scales . push (new spacer (12));
 r . scales . push (new scale_StudyMate (24, {scale: 15 / 2.54, right_extension: 0.016, draw_32: {from: 0, to: 2.5}, draw_64: {from: 2, to: 2.5}, lines: [{left: 0, right: 1.016, height: 0}, {left: 0, right: 1.016, height: 0.5}, {left: 0, right: 1.016, height: 0.6}, {left: 0, right: 2.5 * 2.54 / 15, height: 0.7}, {left: 2 * 2.54 / 15, right: 2.5 * 2.54 / 15, height: 0.8}]}));
 </script>
