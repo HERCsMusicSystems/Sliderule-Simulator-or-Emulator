@@ -391,14 +391,13 @@ var draw_metric = function (ctx, length, height, scale) {
   var limit = 1 + scale . right_extension;
   var high_value = scale . step * 100;
   draw_MRS (ctx, scale . location, length, 0, high_value, scale . step, limit, h5);
+  draw_XR (ctx, scale . location, length, 0, high_value, limit, h4, scale . step, scale . step * 0.5, scale . step);
+  draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, scale . step * 0.5, scale . step * 0.1, scale . step * 0.5);
   if (length * (scale . location (scale . step) - scale . location (0)) > 55) {
-		draw_XR (ctx, scale . location, length, 0, high_value, limit, h4, scale . step, scale . step * 0.5, scale . step);
-		draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, scale . step * 0.5, scale . step * 0.1, scale . step * 0.5);
-		if (scale . draw_half_mm)
-			draw_XR (ctx, scale . location, length, scale . draw_half_mm . from * scale . step, scale . draw_half_mm . to * scale . step, limit, h2, scale . step * 0.1, scale . step * 0.05, scale . step * 0.1);
-  } else {
-		draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, scale . step, scale . step * 0.5, scale . step);
-		draw_XR (ctx, scale . location, length, 0, high_value, limit, h2, scale . step * 0.5, scale . step * 0.1, scale . step * 0.5);
+    if (scale . draw_half_mm)
+      draw_XR (ctx, scale . location, length, scale . draw_half_mm . from * scale . step, scale . draw_half_mm . to * scale . step, limit, h2, scale . step * 0.1, scale . step * 0.05, scale . step * 0.1);
+    else
+      draw_XR (ctx, scale . location, length, 0, high_value, limit, h2, scale . step * 0.1, scale . step * 0.05, scale . step * 0.01);
   }
 };
 var draw_metric_25 = function (ctx, length, height, scale) {
@@ -424,6 +423,8 @@ var draw_studymate = function (ctx, length, height, scale) {
   // draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, 0.0625, 0.03125, 0.0625);    // 1/32
   if (scale . draw_32)
     draw_XR (ctx, scale . location, length, scale . draw_32 . from, scale . draw_32 . to, limit, h3, 0.0625, 0.03125, 0.0625);
+  else
+    draw_XR (ctx, scale . location, length, 0, high_value, limit, h3, 0.0625, 0.03125, 0.0625);
   if (scale . draw_64)
     draw_XR (ctx, scale . location, length, scale . draw_64 . from, scale . draw_64 . to, limit, h2, 0.03125, 0.015625, 0.03125); // 1/32
   ctx . textAlign = 'right';
