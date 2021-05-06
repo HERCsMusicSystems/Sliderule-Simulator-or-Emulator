@@ -132,9 +132,9 @@ rootRootDiv . onmouseleave = function (event) {sliderules . dragging = false;};
 rootRootDiv . onmouseout = function (event) {sliderules . dragging = false;};
 rootRootDiv . onwheel = function (event) {
 	event . preventDefault ();
-	var delta;
-	if (event . deltaY < 0) delta = sliderules . scale * sliderules . scaling_factor;
-	if (event . deltaY > 0) delta = sliderules . scale / sliderules . scaling_factor;
+	var delta = sliderules . scale;
+	if (event . deltaY < 0) delta *= sliderules . scaling_factor;
+	if (event . deltaY > 0) delta /= sliderules . scaling_factor;
 	var point = subvbc ({x: event . clientX, y: event . clientY}, slideruleCanvas . getBoundingClientRect ());
 	point = scalv (point, 1 / sliderules . scale);
 	var offset = scalv (point, delta - sliderules . scale);
