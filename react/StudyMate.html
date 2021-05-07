@@ -41,24 +41,31 @@
 
 <script>
 var sliderules = new Sliderules ();
-var s = new Sliderule (850, {left_margin: 0.02, right_margin: 0.02, position: {x: 0, y: 10}}); sliderules . sliderules . push (s);
-var r = new Rule ({left_margin: 0.02, right_margin: 0.02, rule_colour: 'Silver'}); s . rules . push (r);
-r . scales . push (new scale_Metric_down (24, {scale: 6 * 2.54, right_extension: 15 / 6 / 2.54 - 1, draw_half_mm: {from: 0, to: 4},
-    lines: [{left: 0, right: 15 / 6 / 2.54, height: 1}, {left: 0, right: 15 / 6 / 2.54, height: 0.3}, {left: 0, right: 4 / 6 / 2.54, height: 0.2}]}));
+var s = new Sliderule (850, {left_margin: 0.03, right_margin: 0.03, position: {x: 0, y: 10}}); sliderules . sliderules . push (s);
+var r = new Rule ({left_margin: 0.03, right_margin: 0.03, rule_colour: 'Silver'}); s . rules . push (r);
+r . scales . push (new scale_Metric_down (24, {scale: 6 * 2.54, right_extension: 15 / 6 / 2.54 - 1, draw_half_mm: {from: 0, to: 5},
+    lines: [{left: 0, right: 15 / 6 / 2.54, height: 1}, {left: 0, right: 15 / 6 / 2.54, height: 0.3}, {left: 0, right: 5 / 6 / 2.54, height: 0.2}]}));
 r . scales . push (new spacer (12));
 r . scales . push (new scale_StudyMate (24, {scale: 6, draw_32: {from: 0, to: 2.5}, draw_64: {from: 2, to: 2.5},
     lines: [{left: 0, right: 1, height: 0}, {left: 0, right: 1, height: 0.5}, {left: 0, right: 1, height: 0.6}, {left: 0, right: 2.5 / 6, height: 0.7}, {left: 2 / 6, right: 2.5 / 6, height: 0.8}]}));
 
-s = new Sliderule (1700, {left_margin: 0.01, position: {x: 0, y: 20}}); sliderules . sliderules . push (s);
-r = new Rule ({left_margin: 0.01, right_margin: 0.01, rule_colour: 'Silver'}); s . rules . push (r);
+s = new Sliderule (1700, {left_margin: 0.015, right_margins: 0.015, position: {x: 0, y: 20}}); sliderules . sliderules . push (s);
+r = new Rule ({left_margin: 0.015, right_margin: 0.015, rule_colour: 'Silver'}); s . rules . push (r);
+r . markings . push (new Engraving ('I N C H E S', '10px arial', 'center', 'black', 1 / 48, 50));
+r . markings . push (new Engraving ('32', 'bold 8px arial', 'center', 'black', 3 / 48, 50));
+r . markings . push (new Engraving ('64', 'bold 8px arial', 'center', 'black', 13 / 48, 50));
+r . markings . push (new Engraving ('16', 'bold 8px arial', 'center', 'black', 17 / 48, 50));
+r . markings . push (new Engraving ('1 ft', 'bold 12px arial', 'center', 'black', 46 / 48, 50));
+r . markings . push (new Engraving ('30 cm', 'bold 12px arial', 'center', 'black', 1, 12));
+r . markings . push (new Engraving ('STAINLESS', '12px arial', 'center', 'black', 37 / 48, 50));
 r . scales . push (new scale_Metric_down (28, {scale: 12 * 2.54, right_extension: 30 / 12 / 2.54 - 1, draw_half_mm: {from: 0, to: 10},
     lines: [{left: 0, right: 10 / 12 / 2.54, height: 0.2}, {left: 0, right: 30 / 12 / 2.54, height: 0.3}, {left: 0, right: 30 / 12 / 2.54, height: 1}]}));
 r . scales . push (new spacer (12));
 r . scales . push (new scale_StudyMate (28, {scale: 12, draw_32: {from: 0, to: 4}, draw_64: {from: 3, to: 4},
     lines: [{left: 0, right: 1, height: 0.5}, {left: 0, right: 1, height: 0.6}, {left: 0, right: 4 / 12, height: 0.7}, {left: 3 / 12, right: 4 / 12, height: 0.8}, {left: 0, right: 1, height: 0}]}));
 
-s = new Sliderule (2600, {left_margin: 0.02 / 3, position: {x: 0, y: 20}}); sliderules . sliderules . push (s);
-r = new Rule ({left_margin: 0.02 / 3, right_margin: 0.02 / 3, rule_colour: 'Silver'}); s . rules . push (r);
+s = new Sliderule (2550, {left_margin: 0.01, right_margin: 0.01, position: {x: 0, y: 20}}); sliderules . sliderules . push (s);
+r = new Rule ({left_margin: 0.01, right_margin: 0.01, rule_colour: 'Silver'}); s . rules . push (r);
 r . scales . push (new scale_Metric_down (28, {scale: 18 * 2.54, right_extension: 45 / 18 / 2.54 - 1, draw_half_mm: {from: 0, to: 10},
     lines: [{left: 0, right: 10 / 18 / 2.54, height: 0.2}, {left: 0, right: 45 / 18 / 2.54, height: 0.3}, {left: 0, right: 45 / 18 / 2.54, height: 1}]}));
 r . scales . push (new spacer (12));
