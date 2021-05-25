@@ -92,7 +92,7 @@ var changeMovementSpeed = function (speed) {
     }
 };
 
-var copyright = "Emulator / Simulator Copyright \u00a9 2017 - " + new Date () . getFullYear () + " Dr Robert Wolf @ http://www.hercsmusicsystems.com.au";
+var copyright = `Emulator / Simulator Copyright \u00a9 2017 - ${new Date () . getFullYear ()} Dr Robert Wolf @ http://www.sliderules.org Email: robert.wolf@hercsmusicsystems.com.au`;
 var copyright_colours = ['blue', 'gray', 'yellow', 'lavender', 'green', 'olive', 'silver', 'tan', 'wheat', 'khaki'];
 var copyright_colour = copyright_colours [Math . floor (Math . random () * copyright_colours . length)];
 
