@@ -39,7 +39,7 @@
 var Makers = {
 	Breitling: {
 		BezelRadius: 0.48,
-		NumberSize1: 0.05
+		NumberSize1: 0.04
 	}
 };
 
@@ -85,44 +85,62 @@ var repaint = function () {
 	var BezelRadius = - Makers [Maker] . BezelRadius * size;
 	var BezelDent = BezelRadius / -20;
 	var NumberSize1 = Makers [Maker] . NumberSize1 * size;
-	var BezelNumber = BezelRadius + NumberSize1 * 1.2;
+	var BezelNumber = BezelRadius + NumberSize1 * 1.4;
 	var BezelLeft = Math . PI / 2 - 1;
 	var BezelRight = Math . PI / 2 + 1;
 	ctx . save ();
 	ctx . textBaseline = 'alphabetic';
 	ctx . textAlign = 'center';
-	ctx . font = `${NumberSize1}px sans`;
+	ctx . font = `${NumberSize1}px arial`;
 	ctx . translate (canvas . width * 0.5, canvas . height * 0.5);
+	//======================
+	//======================
+	ctx . save ();
+	ctx . rotate (degree);
+	ctx . beginPath ();
+	for (var ind = 0; ind < 60; ind ++) {
+		ctx . arc (0, BezelRadius, BezelDent, BezelRight, BezelLeft, true);
+		ctx . rotate (Math . PI / 30);
+	}
+	ctx . closePath ();
+	ctx . moveTo (BezelRadius * -0.86, 0);
+	ctx . arc (0, 0, BezelRadius * -0.86, 0, Math . PI * 2, true);
+	ctx . stroke (); ctx . fillStyle = 'blue'; ctx . fill ();
+	ctx . restore ();
+	//======================
+	ctx . save();
+	var position = Math . log10 (6);
+	ctx . rotate (- pi2 * position + degree);
+	ctx . fillStyle = 'red'; ctx . fillText ('10', 0, BezelNumber); ctx . fillStyle = 'white';
+	var next = Math . log10 (1.1); ctx . rotate (pi2 * next); ctx . fillText ('11', 0, BezelNumber); position = next;
+	next = Math . log10 (1.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('12', 0, BezelNumber); position = next;
+	next = Math . log10 (1.3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('13', 0, BezelNumber); position = next;
+	next = Math . log10 (1.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('14', 0, BezelNumber); position = next;
+	next = Math . log10 (1.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('15', 0, BezelNumber); position = next;
+	next = Math . log10 (1.6); ctx . rotate (pi2 * (next - position)); ctx . fillText ('16', 0, BezelNumber); position = next;
+	next = Math . log10 (1.7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('17', 0, BezelNumber); position = next;
+	next = Math . log10 (1.8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('18', 0, BezelNumber); position = next;
+	next = Math . log10 (1.9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('19', 0, BezelNumber); position = next;
+	next = Math . log10 (2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('20', 0, BezelNumber); position = next;
+	next = Math . log10 (2.1); ctx . rotate (pi2 * (next - position)); ctx . fillText ('21', 0, BezelNumber); position = next;
+	next = Math . log10 (2.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('22', 0, BezelNumber); position = next;
+	next = Math . log10 (2.3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('23', 0, BezelNumber); position = next;
+	next = Math . log10 (2.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('24', 0, BezelNumber); position = next;
+	next = Math . log10 (2.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('25', 0, BezelNumber); position = next;
+	next = Math . log10 (3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('30', 0, BezelNumber); position = next;
+	next = Math . log10 (4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('40', 0, BezelNumber); position = next;
+	next = Math . log10 (5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('50', 0, BezelNumber); position = next;
+	next = Math . log10 (6); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'red'; ctx . fillText ('60', 0, BezelNumber); position = next;
+	next = Math . log10 (7); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'white'; ctx . fillText ('70', 0, BezelNumber); position = next;
+	next = Math . log10 (8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('80', 0, BezelNumber); position = next;
+	next = Math . log10 (9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('90', 0, BezelNumber); position = next;
+	ctx . restore ();
 	//======================
 	ctx . save ();
 	// ctx . rotate (degree * Math . PI / 48);
 	// ctx . rotate (degree);
 	ctx . translate (BreitlingLogo . width * -0.5, BreitlingLogo . height * -0.5);
 	ctx . drawImage (BreitlingLogo, 0, 0);
-	ctx . restore ();
-	//======================
-	ctx . save();
-	var position = Math . log10 (6);
-	ctx . rotate (- pi2 * position + degree);
-	ctx . fillText ('10', 0, BezelNumber);
-	var next = Math . log10 (2); ctx . rotate (pi2 * next); ctx . fillText ('20', 0, BezelNumber); position = next;
-	next = Math . log10 (3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('30', 0, BezelNumber); position = next;
-	next = Math . log10 (4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('40', 0, BezelNumber); position = next;
-	next = Math . log10 (5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('50', 0, BezelNumber); position = next;
-	next = Math . log10 (6); ctx . rotate (pi2 * (next - position)); ctx . fillText ('60', 0, BezelNumber); position = next;
-	next = Math . log10 (7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('70', 0, BezelNumber); position = next;
-	next = Math . log10 (8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('80', 0, BezelNumber); position = next;
-	next = Math . log10 (9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('90', 0, BezelNumber); position = next;
-	ctx . restore ();
-	//======================
-	ctx . save ();
-	ctx . rotate (degree);
-	ctx . beginPath ();
-	for (var ind = 0; ind < 60; ind ++) {
-		ctx . arc (0, BezelRadius, BezelDent, BezelLeft, BezelRight);
-		ctx . rotate (Math . PI / -30);
-	}
-	ctx . closePath (); ctx . stroke ();
 	ctx . restore ();
 	//======================
 	ctx . restore ();
