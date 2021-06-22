@@ -32,13 +32,14 @@
 </header>
 
 <body style="margin: 0px;">
-<canvas id="Navitimer" width="1200" height="600"/>
+<canvas id="Navitimer" width="1200" height="600" onmousedown="javascript: MouseDown (event);" onmouseup="javascript: MouseUp (event);" onmousemove="javascript: MouseMove (event);"/>
 
-<script type="text/JavaScript">
+<script type="text/javascript">
 
 var Makers = {
 	Breitling: {
-		BezelRadius: 0.48
+		BezelRadius: 0.48,
+		NumberSize1: 0.05
 	}
 };
 
@@ -48,29 +49,74 @@ var BreitlingLogo = new Image (); BreitlingLogo . src = 'BreitlingScaled.png';
 
 var canvas = document . getElementById ('Navitimer');
 var ctx = canvas . getContext ('2d');
+var pi2 = Math . PI + Math . PI;
 
 var degree = 0;
+
+var point = null;
+var atan = null;
+
+var MousePoint = function (e) {
+	var rect = canvas . getBoundingClientRect ();
+	return {x: e . clientX - rect . left - canvas . width / 2, y: e . clientY - rect . top - canvas . height / 2};
+};
+
+var MouseDown = function (e) {
+	point = MousePoint (e);
+	atan = Math . atan2 (point . y, point . x);
+	console . log ('MOUSE DOWN', atan);
+};
+
+var MouseUp = function (e) {
+	point = null;
+};
+
+var MouseMove = function (e) {
+	if (! point) return;
+	var p = MousePoint (e);
+	var a = Math . atan2 (p . y, p . x);
+	degree += a - atan; point = p; atan = a;
+};
 
 var repaint = function () {
 	canvas . width = window . innerWidth;
 	canvas . height = window . innerHeight;
 	var size = canvas . height;
 	var BezelRadius = - Makers [Maker] . BezelRadius * size;
-	var BezelDent = BezelRadius * 10 / -200;
+	var BezelDent = BezelRadius / -20;
+	var NumberSize1 = Makers [Maker] . NumberSize1 * size;
+	var BezelNumber = BezelRadius + NumberSize1 * 1.2;
 	var BezelLeft = Math . PI / 2 - 1;
 	var BezelRight = Math . PI / 2 + 1;
 	ctx . save ();
+	ctx . textBaseline = 'alphabetic';
+	ctx . textAlign = 'center';
+	ctx . font = `${NumberSize1}px sans`;
 	ctx . translate (canvas . width * 0.5, canvas . height * 0.5);
 	//======================
 	ctx . save ();
-	ctx . rotate (degree * Math . PI / 48);
+	// ctx . rotate (degree * Math . PI / 48);
+	// ctx . rotate (degree);
 	ctx . translate (BreitlingLogo . width * -0.5, BreitlingLogo . height * -0.5);
 	ctx . drawImage (BreitlingLogo, 0, 0);
 	ctx . restore ();
 	//======================
+	ctx . save();
+	var position = Math . log10 (6);
+	ctx . rotate (- pi2 * position + degree);
+	ctx . fillText ('10', 0, BezelNumber);
+	var next = Math . log10 (2); ctx . rotate (pi2 * next); ctx . fillText ('20', 0, BezelNumber); position = next;
+	next = Math . log10 (3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('30', 0, BezelNumber); position = next;
+	next = Math . log10 (4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('40', 0, BezelNumber); position = next;
+	next = Math . log10 (5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('50', 0, BezelNumber); position = next;
+	next = Math . log10 (6); ctx . rotate (pi2 * (next - position)); ctx . fillText ('60', 0, BezelNumber); position = next;
+	next = Math . log10 (7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('70', 0, BezelNumber); position = next;
+	next = Math . log10 (8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('80', 0, BezelNumber); position = next;
+	next = Math . log10 (9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('90', 0, BezelNumber); position = next;
+	ctx . restore ();
 	//======================
 	ctx . save ();
-	// ctx . rotate (degree);
+	ctx . rotate (degree);
 	ctx . beginPath ();
 	for (var ind = 0; ind < 60; ind ++) {
 		ctx . arc (0, BezelRadius, BezelDent, BezelLeft, BezelRight);
@@ -80,7 +126,7 @@ var repaint = function () {
 	ctx . restore ();
 	//======================
 	ctx . restore ();
-	degree += 1;
+	// degree += 1;
 	if (degree > 96) degree = 0;
 };
 
