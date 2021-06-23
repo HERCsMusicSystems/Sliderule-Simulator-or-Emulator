@@ -39,7 +39,12 @@
 var Makers = {
 	Breitling: {
 		BezelRadius: 0.48,
-		NumberSize1: 0.04
+		BezelRim: 0.44,
+		BezelNumbers: 0.4,
+		StatorTop: 0.36,
+		StatorBottom: 0.3,
+		NumberSize1: 0.036,
+		NumberSize2: 0.026
 	}
 };
 
@@ -64,7 +69,6 @@ var MousePoint = function (e) {
 var MouseDown = function (e) {
 	point = MousePoint (e);
 	atan = Math . atan2 (point . y, point . x);
-	console . log ('MOUSE DOWN', atan);
 };
 
 var MouseUp = function (e) {
@@ -76,6 +80,13 @@ var MouseMove = function (e) {
 	var p = MousePoint (e);
 	var a = Math . atan2 (p . y, p . x);
 	degree += a - atan; point = p; atan = a;
+	repaint ();
+};
+
+var mark = function (position, r1, r2) {
+	var angle = Math . log10 (position) * pi2;
+	var sin = Math . sin (angle); var cos = - Math . cos (angle);
+	ctx . moveTo (r1 * sin, r1 * cos); ctx . lineTo (r2 * sin, r2 * cos);
 };
 
 var repaint = function () {
@@ -84,8 +95,14 @@ var repaint = function () {
 	var size = canvas . height;
 	var BezelRadius = - Makers [Maker] . BezelRadius * size;
 	var BezelDent = BezelRadius / -20;
+	var BezelRim = Makers [Maker] . BezelRim * size;
+	var StatorTop = Makers [Maker] . StatorTop * size;
+	var StatorBottom = - Makers [Maker] . StatorBottom * size;
+	var r1 = StatorTop + 1; var r2 = StatorTop * 1.06; var r3 = StatorTop * 1.08; var r4 = StatorTop * 1.1;
+	var rm1 = StatorTop; var rm2 = StatorTop * 0.94; var rm3 = StatorTop * 0.92; var rm4 = StatorTop * 0.89;
 	var NumberSize1 = Makers [Maker] . NumberSize1 * size;
-	var BezelNumber = BezelRadius + NumberSize1 * 1.4;
+	var NumberSize2 = Makers [Maker] . NumberSize2 * size;
+	var BezelNumber = - Makers [Maker] . BezelNumbers * size; //BezelRadius + NumberSize1 * 1.4;
 	var BezelLeft = Math . PI / 2 - 1;
 	var BezelRight = Math . PI / 2 + 1;
 	ctx . save ();
@@ -103,14 +120,49 @@ var repaint = function () {
 		ctx . rotate (Math . PI / 30);
 	}
 	ctx . closePath ();
-	ctx . moveTo (BezelRadius * -0.86, 0);
-	ctx . arc (0, 0, BezelRadius * -0.86, 0, Math . PI * 2, true);
+	ctx . moveTo (StatorTop, 0);
+	ctx . arc (0, 0, StatorTop, 0, Math . PI * 2, true);
 	ctx . stroke (); ctx . fillStyle = 'blue'; ctx . fill ();
+	ctx . strokeStyle = 'red';
+	ctx . beginPath (); ctx . arc (0, 0, BezelRim, 0, Math . PI * 2); ctx . stroke ();
+	ctx . beginPath (); ctx . arc (0, 0, BezelRim + 2, 0, Math . PI * 2); ctx . stroke ();
+	ctx . beginPath (); ctx . arc (0, 0, StatorTop, 0, Math . PI * 2); ctx . stroke ();
 	ctx . restore ();
 	//======================
 	ctx . save();
-	var position = Math . log10 (6);
+	var shift = Math . log10 (6);
+	var position = shift;
 	ctx . rotate (- pi2 * position + degree);
+	ctx . beginPath ();
+	for (var ind = 1.2; ind < 2.5; ind += 0.1) {
+		mark (ind + 0.02, r1, r3);
+		mark (ind + 0.04, r1, r3);
+		mark (ind + 0.06, r1, r3);
+		mark (ind + 0.08, r1, r3);
+	}
+	for (var ind = 2.5; ind < 6; ind += 0.5) {
+		mark (ind + 0.05, r1, r2);
+		mark (ind + 0.1, r1, r3);
+		mark (ind + 0.15, r1, r2);
+		mark (ind + 0.2, r1, r3);
+		mark (ind + 0.25, r1, r2);
+		mark (ind + 0.3, r1, r3);
+		mark (ind + 0.35, r1, r2);
+		mark (ind + 0.4, r1, r3);
+		mark (ind + 0.45, r1, r2);
+	}
+	for (var ind = 6; ind < 12; ind += 0.5) {
+		mark (ind + 0.1, r1, r3);
+		mark (ind + 0.2, r1, r3);
+		mark (ind + 0.3, r1, r3);
+		mark (ind + 0.4, r1, r3);
+	}
+	ctx . strokeStyle = 'white'; ctx . stroke ();
+	ctx . beginPath ();
+	for (var ind = 1.2; ind < 2.6; ind += 0.1) mark (ind, r1, r4);
+	for (var ind = 3; ind < 6; ind += 0.5) mark (ind, r1, r4);
+	for (var ind = 6.5; ind < 12; ind += 0.5) mark (ind, r1, r4);
+	ctx . lineWidth = 3; ctx . stroke ();
 	ctx . fillStyle = 'red'; ctx . fillText ('10', 0, BezelNumber); ctx . fillStyle = 'white';
 	var next = Math . log10 (1.1); ctx . rotate (pi2 * next); ctx . fillText ('11', 0, BezelNumber); position = next;
 	next = Math . log10 (1.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('12', 0, BezelNumber); position = next;
@@ -144,8 +196,73 @@ var repaint = function () {
 	ctx . restore ();
 	//======================
 	ctx . save ();
+	ctx . beginPath (); ctx . arc (0, 0, StatorTop, 0, Math . PI * 2); ctx . fillStyle = 'gray'; ctx . fill ();
+	ctx . rotate (- pi2 * shift);
+	ctx . beginPath ();
+	for (var ind = 1.2; ind < 2.5; ind += 0.1) {
+		mark (ind + 0.02, rm1, rm3);
+		mark (ind + 0.04, rm1, rm3);
+		mark (ind + 0.06, rm1, rm3);
+		mark (ind + 0.08, rm1, rm3);
+	}
+	for (var ind = 2.5; ind < 6; ind += 0.5) {
+		mark (ind + 0.05, rm1, rm2);
+		mark (ind + 0.1, rm1, rm3);
+		mark (ind + 0.15, rm1, rm2);
+		mark (ind + 0.2, rm1, rm3);
+		mark (ind + 0.25, rm1, rm2);
+		mark (ind + 0.3, rm1, rm3);
+		mark (ind + 0.35, rm1, rm2);
+		mark (ind + 0.4, rm1, rm3);
+		mark (ind + 0.45, rm1, rm2);
+	}
+	for (var ind = 6; ind < 12; ind += 0.5) {
+		mark (ind + 0.1, rm1, rm3);
+		mark (ind + 0.2, rm1, rm3);
+		mark (ind + 0.3, rm1, rm3);
+		mark (ind + 0.4, rm1, rm3);
+	}
+	ctx . strokeStyle = 'white'; ctx . stroke ();
+	ctx . beginPath ();
+	for (var ind = 1.2; ind < 2.6; ind += 0.1) mark (ind, rm1, rm4);
+	for (var ind = 3; ind < 6; ind += 0.5) mark (ind, rm1, rm4);
+	for (var ind = 6.5; ind < 12; ind += 0.5) mark (ind, rm1, rm4);
+	// mark (1.05, r1, r4);
+	ctx . lineWidth = 3; ctx . stroke ();
+	ctx . font = `${NumberSize2}px arial`;
+	ctx . fillStyle = 'white'; ctx . fillText ('10', 0, StatorBottom);
+	next = Math . log10 (1.1); ctx . rotate (pi2 * next); ctx . fillText ('11', 0, StatorBottom); position = next;
+	next = Math . log10 (1.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('12', 0, StatorBottom); position = next;
+	next = Math . log10 (1.3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('13', 0, StatorBottom); position = next;
+	next = Math . log10 (1.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('14', 0, StatorBottom); position = next;
+	next = Math . log10 (1.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('15', 0, StatorBottom); position = next;
+	next = Math . log10 (1.6); ctx . rotate (pi2 * (next - position)); ctx . fillText ('16', 0, StatorBottom); position = next;
+	next = Math . log10 (1.7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('17', 0, StatorBottom); position = next;
+	next = Math . log10 (1.8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('18', 0, StatorBottom); position = next;
+	next = Math . log10 (1.9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('19', 0, StatorBottom); position = next;
+	next = Math . log10 (2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('20', 0, StatorBottom); position = next;
+	next = Math . log10 (2.1); ctx . rotate (pi2 * (next - position)); ctx . fillText ('21', 0, StatorBottom); position = next;
+	next = Math . log10 (2.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('22', 0, StatorBottom); position = next;
+	next = Math . log10 (2.3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('23', 0, StatorBottom); position = next;
+	next = Math . log10 (2.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('24', 0, StatorBottom); position = next;
+	next = Math . log10 (2.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('25', 0, StatorBottom); position = next;
+	next = Math . log10 (3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('30', 0, StatorBottom); position = next;
+	next = Math . log10 (3.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('35', 0, StatorBottom); position = next;
+	next = Math . log10 (4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('40', 0, StatorBottom); position = next;
+	next = Math . log10 (4.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('45', 0, StatorBottom); position = next;
+	next = Math . log10 (5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('50', 0, StatorBottom); position = next;
+	next = Math . log10 (5.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('55', 0, StatorBottom); position = next;
+	next = Math . log10 (6); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'red'; ctx . fillText ('60', 0, StatorBottom); position = next;
+	next = Math . log10 (6.5); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'white'; ctx . fillText ('65', 0, StatorBottom); position = next;
+	next = Math . log10 (7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('7', 0, StatorBottom); position = next;
+	next = Math . log10 (8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('8', 0, StatorBottom); position = next;
+	next = Math . log10 (9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('9', 0, StatorBottom); position = next;
+	ctx . restore ();
+	//======================
+	ctx . save ();
 	// ctx . rotate (degree * Math . PI / 48);
 	// ctx . rotate (degree);
+	ctx . scale (0.5, 0.5);
 	ctx . translate (BreitlingLogo . width * -0.5, BreitlingLogo . height * -0.5);
 	ctx . drawImage (BreitlingLogo, 0, 0);
 	ctx . restore ();
