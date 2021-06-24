@@ -32,7 +32,10 @@
 </header>
 
 <body style="margin: 0px;">
-<canvas id="Navitimer" width="1200" height="600" onmousedown="javascript: MouseDown (event);" onmouseup="javascript: MouseUp (event);" onmousemove="javascript: MouseMove (event);"/>
+<canvas id="Navitimer" width="1200" height="600"
+	onmousedown="javascript: MouseDown (event);" onmouseup="javascript: MouseUp (event);"
+	onmousemove="javascript: MouseMove (event);" onmouseleave="javascript: MouseUp (event);"
+/>
 
 <script type="text/javascript">
 
@@ -41,10 +44,16 @@ var Makers = {
 		BezelRadius: 0.48,
 		BezelRim: 0.44,
 		BezelNumbers: 0.4,
-		StatorTop: 0.36,
-		StatorBottom: 0.3,
+		StatorTop: 0.37,
+		StatorBottom: 0.32,
+		//MinuteConversionLine: 0.295,
+		MinuteConversionLine: 0.31,
+		//Converters: 0.265,
+		Converters: 0.28,
 		NumberSize1: 0.036,
-		NumberSize2: 0.026
+		NumberSize2: 0.026,
+		HoursSize: 0.06,
+		HoursRadius: 0.21
 	}
 };
 
@@ -98,13 +107,17 @@ var repaint = function () {
 	var BezelRim = Makers [Maker] . BezelRim * size;
 	var StatorTop = Makers [Maker] . StatorTop * size;
 	var StatorBottom = - Makers [Maker] . StatorBottom * size;
-	var r1 = StatorTop + 1; var r2 = StatorTop * 1.06; var r3 = StatorTop * 1.08; var r4 = StatorTop * 1.1;
-	var rm1 = StatorTop; var rm2 = StatorTop * 0.94; var rm3 = StatorTop * 0.92; var rm4 = StatorTop * 0.89;
+	var r1 = StatorTop + 1; var r2 = StatorTop * 1.04; var r3 = StatorTop * 1.05; var r4 = StatorTop * 1.06;
+	var rm1 = StatorTop; var rm2 = StatorTop * 0.96; var rm3 = StatorTop * 0.95; var rm4 = StatorTop * 0.94;
+	var MinuteConversionLine = Makers [Maker] . MinuteConversionLine * size;
+	var Converters = - Makers [Maker] . Converters * size;
 	var NumberSize1 = Makers [Maker] . NumberSize1 * size;
 	var NumberSize2 = Makers [Maker] . NumberSize2 * size;
-	var BezelNumber = - Makers [Maker] . BezelNumbers * size; //BezelRadius + NumberSize1 * 1.4;
+	var BezelNumber = - Makers [Maker] . BezelNumbers * size;
 	var BezelLeft = Math . PI / 2 - 1;
 	var BezelRight = Math . PI / 2 + 1;
+	var HoursSize = Makers [Maker] . HoursSize * size;
+	var HoursRadius = Makers [Maker] . HoursRadius * size;
 	ctx . save ();
 	ctx . textBaseline = 'alphabetic';
 	ctx . textAlign = 'center';
@@ -126,7 +139,7 @@ var repaint = function () {
 	ctx . strokeStyle = 'red';
 	ctx . beginPath (); ctx . arc (0, 0, BezelRim, 0, Math . PI * 2); ctx . stroke ();
 	ctx . beginPath (); ctx . arc (0, 0, BezelRim + 2, 0, Math . PI * 2); ctx . stroke ();
-	ctx . beginPath (); ctx . arc (0, 0, StatorTop, 0, Math . PI * 2); ctx . stroke ();
+	//ctx . beginPath (); ctx . arc (0, 0, StatorTop, 0, Math . PI * 2); ctx . stroke ();
 	ctx . restore ();
 	//======================
 	ctx . save();
@@ -222,6 +235,7 @@ var repaint = function () {
 		mark (ind + 0.3, rm1, rm3);
 		mark (ind + 0.4, rm1, rm3);
 	}
+	mark (6, rm1, rm3);
 	ctx . strokeStyle = 'white'; ctx . stroke ();
 	ctx . beginPath ();
 	for (var ind = 1.2; ind < 2.6; ind += 0.1) mark (ind, rm1, rm4);
@@ -230,33 +244,68 @@ var repaint = function () {
 	// mark (1.05, r1, r4);
 	ctx . lineWidth = 3; ctx . stroke ();
 	ctx . font = `${NumberSize2}px arial`;
-	ctx . fillStyle = 'white'; ctx . fillText ('10', 0, StatorBottom);
-	next = Math . log10 (1.1); ctx . rotate (pi2 * next); ctx . fillText ('11', 0, StatorBottom); position = next;
-	next = Math . log10 (1.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('12', 0, StatorBottom); position = next;
+	ctx . fillStyle = 'red'; ctx . fillText ('10', 0, StatorBottom); ctx . fillStyle = 'white'; ctx . fillText ('1:40', 0, Converters);
+	next = Math . log10 (1.1); ctx . rotate (pi2 * next); ctx . fillText ('11', 0, StatorBottom); ctx . fillText ('1:50', 0, Converters); position = next;
+	next = Math . log10 (1.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('12', 0, StatorBottom); ctx . fillText ('2:00', 0, Converters); position = next;
 	next = Math . log10 (1.3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('13', 0, StatorBottom); position = next;
 	next = Math . log10 (1.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('14', 0, StatorBottom); position = next;
-	next = Math . log10 (1.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('15', 0, StatorBottom); position = next;
+	next = Math . log10 (1.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('15', 0, StatorBottom); ctx . fillText ('2:30', 0, Converters); position = next;
 	next = Math . log10 (1.6); ctx . rotate (pi2 * (next - position)); ctx . fillText ('16', 0, StatorBottom); position = next;
 	next = Math . log10 (1.7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('17', 0, StatorBottom); position = next;
-	next = Math . log10 (1.8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('18', 0, StatorBottom); position = next;
+	next = Math . log10 (1.8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('18', 0, StatorBottom); ctx . fillText ('3:00', 0, Converters); position = next;
 	next = Math . log10 (1.9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('19', 0, StatorBottom); position = next;
 	next = Math . log10 (2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('20', 0, StatorBottom); position = next;
-	next = Math . log10 (2.1); ctx . rotate (pi2 * (next - position)); ctx . fillText ('21', 0, StatorBottom); position = next;
+	next = Math . log10 (2.1); ctx . rotate (pi2 * (next - position)); ctx . fillText ('21', 0, StatorBottom); ctx . fillText ('3:30', 0, Converters); position = next;
 	next = Math . log10 (2.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('22', 0, StatorBottom); position = next;
 	next = Math . log10 (2.3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('23', 0, StatorBottom); position = next;
-	next = Math . log10 (2.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('24', 0, StatorBottom); position = next;
+	next = Math . log10 (2.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('24', 0, StatorBottom); ctx . fillText ('4:00', 0, Converters); position = next;
 	next = Math . log10 (2.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('25', 0, StatorBottom); position = next;
-	next = Math . log10 (3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('30', 0, StatorBottom); position = next;
+	next = Math . log10 (2.7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('4:30', 0, Converters); position = next;
+	next = Math . log10 (3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('30', 0, StatorBottom); ctx . fillText ('5:00', 0, Converters); position = next;
 	next = Math . log10 (3.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('35', 0, StatorBottom); position = next;
+	next = Math . log10 (3.6); ctx . rotate (pi2 * (next - position)); ctx . fillText ('6:00', 0, Converters); position = next;
 	next = Math . log10 (4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('40', 0, StatorBottom); position = next;
+	next = Math . log10 (4.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('7:00', 0, Converters); position = next;
 	next = Math . log10 (4.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('45', 0, StatorBottom); position = next;
+	next = Math . log10 (4.8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('8:00', 0, Converters); position = next;
 	next = Math . log10 (5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('50', 0, StatorBottom); position = next;
+	next = Math . log10 (5.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('9:00', 0, Converters); position = next;
 	next = Math . log10 (5.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('55', 0, StatorBottom); position = next;
-	next = Math . log10 (6); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'red'; ctx . fillText ('60', 0, StatorBottom); position = next;
+	//next = Math . log10 (6); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'red'; ctx . fillText ('60', 0, StatorBottom); position = next;
 	next = Math . log10 (6.5); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'white'; ctx . fillText ('65', 0, StatorBottom); position = next;
-	next = Math . log10 (7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('7', 0, StatorBottom); position = next;
-	next = Math . log10 (8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('8', 0, StatorBottom); position = next;
-	next = Math . log10 (9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('9', 0, StatorBottom); position = next;
+	next = Math . log10 (7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('7', 0, StatorBottom); ctx . fillText ('1:10', 0, Converters); position = next;
+	next = Math . log10 (8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('8', 0, StatorBottom); ctx . fillText ('1:20', 0, Converters); position = next;
+	next = Math . log10 (9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('9', 0, StatorBottom); ctx . fillText ('1:30', 0, Converters); position = next;
+	ctx . restore ();
+	//======================
+	ctx . save ();
+	ctx . fillStyle = 'white';
+	ctx . beginPath ();
+	ctx . moveTo (0, - StatorTop);
+	r1 = size * 0.025; r2 = Converters * 0.86;
+	ctx . bezierCurveTo (0, Converters * 0.5 - StatorTop * 0.5, r1 * 0.5, Converters, r1, Converters);
+	ctx . lineTo (- r1, Converters);
+	ctx . bezierCurveTo (r1 * -0.5, Converters, 0, Converters * 0.5 - StatorTop * 0.5, 0, - StatorTop);
+	ctx . fill ();
+	ctx . fillText ('MPH', 0, Converters * 0.88);
+	ctx . beginPath ();
+	r1 = size * 0.045;
+	ctx . moveTo (- r1, Converters);
+	ctx . lineTo (- r1, r2); ctx . lineTo (r1, r2); ctx . lineTo (r1, Converters);
+	ctx . strokeStyle = 'white'; ctx . lineWidth = 3; ctx . stroke ();
+	ctx . rotate (pi2 * - shift);
+	ctx . strokeStyle = 'white';
+	ctx . beginPath (); ctx . arc (0, 0, MinuteConversionLine, 0, pi2); ctx . stroke ();
+	ctx . beginPath ();
+	r1 = MinuteConversionLine; r2 = MinuteConversionLine * 0.98; r3 = MinuteConversionLine * 0.96;
+	for (var ind = 6; ind < 12; ind += 0.5) mark (ind, r1, r2);
+	for (var ind = 12; ind < 30; ind ++) mark (ind, r1, r2);
+	for (var ind = 30; ind < 60; ind += 6) {
+		mark (ind, r1, r2); mark (ind + 1, r1, r2); mark (ind + 2, r1, r2);
+		mark (ind + 3, r1, r3); mark (ind + 4, r1, r2); mark (ind + 5, r1, r2);
+	}
+	mark (6, r1, r3);
+	ctx . stroke ();
 	ctx . restore ();
 	//======================
 	ctx . save ();
@@ -264,7 +313,14 @@ var repaint = function () {
 	// ctx . rotate (degree);
 	ctx . scale (0.5, 0.5);
 	ctx . translate (BreitlingLogo . width * -0.5, BreitlingLogo . height * -0.5);
-	ctx . drawImage (BreitlingLogo, 0, 0);
+	ctx . drawImage (BreitlingLogo, 0, size * -0.3);
+	ctx . restore ();
+	//======================
+	ctx . save ();
+	ctx . font = `${HoursSize}px arial`; ctx . textBaseline = 'middle'; ctx . textAlign = 'center'; ctx . fillStyle = 'lime';
+	for (var ind = 2; ind <= 24; ind += 2) {
+		ctx . fillText (ind, HoursRadius * Math . sin (Math . PI * ind / 12), HoursRadius * - Math . cos (Math . PI * ind / 12));
+	};
 	ctx . restore ();
 	//======================
 	ctx . restore ();
