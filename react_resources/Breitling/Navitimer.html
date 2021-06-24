@@ -209,7 +209,15 @@ var repaint = function () {
 	ctx . restore ();
 	//======================
 	ctx . save ();
-	ctx . beginPath (); ctx . arc (0, 0, StatorTop, 0, Math . PI * 2); ctx . fillStyle = 'navy'; ctx . fill ();
+	ctx . rotate (degree);
+	ctx . beginPath ();
+	ctx . moveTo (0, - StatorTop - 1); ctx . lineTo (size * 0.006, BezelNumber * 0.99); ctx . lineTo (size * -0.006, BezelNumber * 0.99); ctx . closePath ();
+	ctx . fillStyle = 'red';
+	ctx . fill ();
+	ctx . restore ();
+	//======================
+	ctx . save ();
+	ctx . beginPath (); ctx . arc (0, 0, StatorTop, 0, Math . PI * 2); ctx . fillStyle = 'black'; ctx . fill ();
 	ctx . rotate (- pi2 * shift);
 	ctx . beginPath ();
 	for (var ind = 1.2; ind < 2.5; ind += 0.1) {
@@ -295,6 +303,7 @@ var repaint = function () {
 	ctx . strokeStyle = 'white'; ctx . lineWidth = 3; ctx . stroke ();
 	ctx . rotate (pi2 * - shift);
 	ctx . strokeStyle = 'white';
+	ctx . lineWidth = 1;
 	ctx . beginPath (); ctx . arc (0, 0, MinuteConversionLine, 0, pi2); ctx . stroke ();
 	ctx . beginPath ();
 	r1 = MinuteConversionLine; r2 = MinuteConversionLine * 0.98; r3 = MinuteConversionLine * 0.96;
@@ -311,13 +320,14 @@ var repaint = function () {
 	ctx . save ();
 	// ctx . rotate (degree * Math . PI / 48);
 	// ctx . rotate (degree);
-	ctx . scale (0.5, 0.5);
-	ctx . translate (BreitlingLogo . width * -0.5, BreitlingLogo . height * -0.5);
+	var LogoScaling = size / 1600;
+	ctx . scale (LogoScaling, LogoScaling);
+	ctx . translate (BreitlingLogo . width * -0.5, -0.002 / LogoScaling);
 	ctx . drawImage (BreitlingLogo, 0, size * -0.3);
 	ctx . restore ();
 	//======================
 	ctx . save ();
-	ctx . font = `${HoursSize}px arial`; ctx . textBaseline = 'middle'; ctx . textAlign = 'center'; ctx . fillStyle = 'lime';
+	ctx . font = `bold ${HoursSize}px arial`; ctx . textBaseline = 'middle'; ctx . textAlign = 'center'; ctx . fillStyle = 'lime';
 	for (var ind = 2; ind <= 24; ind += 2) {
 		ctx . fillText (ind, HoursRadius * Math . sin (Math . PI * ind / 12), HoursRadius * - Math . cos (Math . PI * ind / 12));
 	};
