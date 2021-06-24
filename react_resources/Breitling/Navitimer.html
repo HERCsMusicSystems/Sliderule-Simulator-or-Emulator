@@ -318,12 +318,14 @@ var repaint = function () {
 	ctx . restore ();
 	//======================
 	ctx . save ();
-	// ctx . rotate (degree * Math . PI / 48);
-	// ctx . rotate (degree);
-	var LogoScaling = size / 1600;
+	var LogoScaling = size / 1200;
 	ctx . scale (LogoScaling, LogoScaling);
-	ctx . translate (BreitlingLogo . width * -0.5, -0.002 / LogoScaling);
-	ctx . drawImage (BreitlingLogo, 0, size * -0.3);
+	ctx . translate (BreitlingLogo . width * -0.5, size * -0.15 / LogoScaling);
+	ctx . drawImage (BreitlingLogo, 0, 0);
+	ctx . restore ();
+	//======================
+	ctx . save ();
+	ctx . fillStyle = 'white'; ctx . font = `${NumberSize2}px arial`; ctx . fillText ('COSMONAUTE', 0, size * -0.06); ctx . fillText ('1962', 0, size * -0.035);
 	ctx . restore ();
 	//======================
 	ctx . save ();
