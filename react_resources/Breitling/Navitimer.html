@@ -98,6 +98,12 @@ var mark = function (position, r1, r2) {
 	ctx . moveTo (r1 * sin, r1 * cos); ctx . lineTo (r2 * sin, r2 * cos);
 };
 
+var lmark = function (position, r1, r2) {
+	var angle = position * pi2;
+	var sin = Math . sin (angle); var cos = - Math . cos (angle);
+	ctx . moveTo (r1 * sin, r1 * cos); ctx . lineTo (r2 * sin, r2 * cos);
+};
+
 var repaint = function () {
 	canvas . width = window . innerWidth;
 	canvas . height = window . innerHeight;
@@ -174,7 +180,7 @@ var repaint = function () {
 	ctx . beginPath ();
 	for (var ind = 1.2; ind < 2.6; ind += 0.1) mark (ind, r1, r4);
 	for (var ind = 3; ind < 6; ind += 0.5) mark (ind, r1, r4);
-	for (var ind = 6.5; ind < 12; ind += 0.5) mark (ind, r1, r4);
+	for (var ind = 6.5; ind < 12; ind += 0.5) if (ind !== 10) mark (ind, r1, r4);
 	ctx . lineWidth = 3; ctx . stroke ();
 	ctx . fillStyle = 'red'; ctx . fillText ('10', 0, BezelNumber); ctx . fillStyle = 'white';
 	var next = Math . log10 (1.1); ctx . rotate (pi2 * next); ctx . fillText ('11', 0, BezelNumber); position = next;
@@ -207,12 +213,19 @@ var repaint = function () {
 	next = Math . log10 (9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('90', 0, BezelNumber); position = next;
 	next = Math . log10 (9.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('95', 0, BezelNumber); position = next;
 	ctx . restore ();
-	//======================
+	//==== BEZEL RED ARROWS ===================
+	var t2 = StatorTop * -1.06; var t3 = StatorTop * -1.1;
+	var s6 = size * 0.006;
 	ctx . save ();
 	ctx . rotate (degree);
 	ctx . beginPath ();
 	ctx . moveTo (0, - StatorTop - 1); ctx . lineTo (size * 0.006, BezelNumber * 0.99); ctx . lineTo (size * -0.006, BezelNumber * 0.99); ctx . closePath ();
-	ctx . fillStyle = 'red';
+	ctx . fillStyle = 'red'; ctx . fill ();
+	ctx . rotate (- pi2 * shift);
+	ctx . moveTo (0, - StatorTop - 1); ctx . lineTo (size * 0.006, BezelNumber * 0.99); ctx . lineTo (size * -0.006, BezelNumber * 0.99); ctx . closePath ();
+	ctx . fill ();
+	ctx . rotate (pi2 * Math . log10 (3.6));
+	ctx . moveTo (0, t2); ctx . lineTo (size * 0.006, t3); ctx . lineTo (size * -0.006, t3); ctx . closePath ();
 	ctx . fill ();
 	ctx . restore ();
 	//======================
@@ -238,7 +251,7 @@ var repaint = function () {
 		mark (ind + 0.45, rm1, rm2);
 	}
 	for (var ind = 6; ind < 12; ind += 0.5) {
-		mark (ind + 0.1, rm1, rm3);
+		if (ind !== 6) mark (ind + 0.1, rm1, rm3);
 		mark (ind + 0.2, rm1, rm3);
 		mark (ind + 0.3, rm1, rm3);
 		mark (ind + 0.4, rm1, rm3);
@@ -248,7 +261,7 @@ var repaint = function () {
 	ctx . beginPath ();
 	for (var ind = 1.2; ind < 2.6; ind += 0.1) mark (ind, rm1, rm4);
 	for (var ind = 3; ind < 6; ind += 0.5) mark (ind, rm1, rm4);
-	for (var ind = 6.5; ind < 12; ind += 0.5) mark (ind, rm1, rm4);
+	for (var ind = 6.5; ind < 12; ind += 0.5) if (ind !== 10) mark (ind, rm1, rm4);
 	// mark (1.05, r1, r4);
 	ctx . lineWidth = 3; ctx . stroke ();
 	ctx . font = `${NumberSize2}px arial`;
@@ -280,8 +293,9 @@ var repaint = function () {
 	next = Math . log10 (5.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('9:00', 0, Converters); position = next;
 	next = Math . log10 (5.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('55', 0, StatorBottom); position = next;
 	//next = Math . log10 (6); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'red'; ctx . fillText ('60', 0, StatorBottom); position = next;
-	next = Math . log10 (6.5); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'white'; ctx . fillText ('65', 0, StatorBottom); position = next;
-	next = Math . log10 (7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('7', 0, StatorBottom); ctx . fillText ('1:10', 0, Converters); position = next;
+	//next = Math . log10 (6.5); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'white'; ctx . fillText ('65', 0, StatorBottom); position = next;
+	next = Math . log10 (6.2); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'red'; ctx . fillText ('KM', 0, StatorBottom); position = next;
+	next = Math . log10 (7); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'white'; ctx . fillText ('7', 0, StatorBottom); ctx . fillText ('1:10', 0, Converters); position = next;
 	next = Math . log10 (8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('8', 0, StatorBottom); ctx . fillText ('1:20', 0, Converters); position = next;
 	next = Math . log10 (9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('9', 0, StatorBottom); ctx . fillText ('1:30', 0, Converters); position = next;
 	ctx . restore ();
@@ -318,6 +332,25 @@ var repaint = function () {
 	ctx . restore ();
 	//======================
 	ctx . save ();
+	r1 = Converters * -0.98; r2 = Converters * -0.95; r3 = Converters * -0.92; r4 = Converters * -0.88;
+	ctx . beginPath ();
+	for (var ind = 0; ind < 12; ind ++) {
+		//lmark (ind / 12, r1, r4);
+		for (var sub = 0; sub < 0.98; sub += 0.2) {
+			if (sub > 0) lmark ((ind + sub) / 12, r1, r3);
+			for (var esc = 0.05; esc < 0.2; esc += 0.05) lmark ((ind + sub + esc) / 12, r1, r2);
+		}
+	}
+	ctx . strokeStyle = 'white'; ctx . stroke ();
+	ctx . beginPath ();
+	for (var ind = 1; ind < 24; ind += 2) lmark (ind / 24, r2 - 1, r4);
+	ctx . strokeStyle = 'lime'; ctx . lineWidth = size * 0.01; ctx . stroke ();
+	ctx . beginPath ();
+	for (var ind = 2; ind < 24; ind += 2) lmark (ind / 24, r1, r2);
+	ctx . lineWidth = size * 0.004; ctx . stroke ();
+	ctx . restore ();
+	//======================
+	ctx . save ();
 	var LogoScaling = size / 1200;
 	ctx . scale (LogoScaling, LogoScaling);
 	ctx . translate (BreitlingLogo . width * -0.5, size * -0.15 / LogoScaling);
@@ -334,9 +367,33 @@ var repaint = function () {
 		ctx . fillText (ind, HoursRadius * Math . sin (Math . PI * ind / 12), HoursRadius * - Math . cos (Math . PI * ind / 12));
 	};
 	ctx . restore ();
+	//==== STATOR RED ARROWS ======================
+	var t1 = - StatorTop + 1; t2 = StatorTop * -0.94; t3 = StatorTop * -0.89;
+	ctx . save ();
+	ctx . rotate (- pi2 * shift);
+	ctx . beginPath ();
+	ctx . moveTo (0, t1); ctx . lineTo (s6, t2); ctx . lineTo (- s6, t2); ctx . closePath ();
+	ctx . fillStyle = 'red'; ctx . fill ();
+	ctx . rotate (pi2 * Math . log10 (3.6));
+	ctx . beginPath ();
+	ctx . moveTo (0, t2); ctx . lineTo (s6, t3); ctx . lineTo (- s6, t3); ctx . closePath ();
+	ctx . fill ();
+	ctx . rotate (pi2 * (Math . log10 (3.3) - Math . log10 (3.6)));
+	ctx . beginPath ();
+	ctx . moveTo (0, t2); ctx . lineTo (s6, t3); ctx . lineTo (- s6, t3); ctx . closePath ();
+	ctx . fill ();
+	ctx . rotate (pi2 * Math . log10 (1.15078));
+	ctx . beginPath ();
+	ctx . moveTo (0, t2); ctx . lineTo (s6, t3); ctx . lineTo (- s6, t3); ctx . closePath ();
+	ctx . fill ();
+	ctx . rotate (pi2 * (Math . log10 (1.852) - Math . log10 (1.15078)));
+	ctx . beginPath ();
+	ctx . moveTo (0, t1); ctx . lineTo (s6, t2); ctx . lineTo (- s6, t2); ctx . closePath ();
+	ctx . fill ();
+	ctx . restore ();
 	//======================
 	var date = new Date (Date . now ());
-	//======================
+	//==== HOUR HANDLE ======================
 	ctx . save ();
 	ctx . rotate ((date . getHours () + date . getMinutes () / 60) * Math . PI / 12 - Math . PI * 0.5);
 	ctx . beginPath ();
@@ -360,15 +417,17 @@ var repaint = function () {
 	ctx . lineTo (size * 0.04, size * 0.004);
 	ctx . fill ();
 	ctx . restore ();
-	//======================
+	//==== MINUTE HANDLE ======================
 	ctx . save ();
 	ctx . rotate ((date . getMinutes () + date . getSeconds () / 60) * Math . PI / 30 - Math . PI * 0.5);
 	ctx . beginPath ();
 	ctx . arc (0, 0, size * 0.016, 0.25, Math . PI * 2 - 0.25);
+	r1 = Converters * -0.88; r2 = Converters * -0.95;
+	r3 = Converters * -0.85; r4 = Converters * -0.87;
 	ctx . lineTo (size * 0.034, size * -0.01);
-	ctx . lineTo (size * 0.26, size * -0.01);
-	ctx . lineTo (size * 0.28, 0);
-	ctx . lineTo (size * 0.26, size * 0.01);
+	ctx . lineTo (r1, size * -0.01);
+	ctx . lineTo (r2, 0);
+	ctx . lineTo (r1, size * 0.01);
 	ctx . lineTo (size * 0.034, size * 0.01);
 	ctx . closePath ();
 	ctx . fillStyle = 'silver';
@@ -378,9 +437,9 @@ var repaint = function () {
 	ctx . beginPath ();
 	ctx . fillStyle = 'lime';
 	ctx . moveTo (size * 0.04, size * -0.004);
-	ctx . lineTo (size * 0.25, size * -0.004);
-	ctx . lineTo (size * 0.26, 0);
-	ctx . lineTo (size * 0.25, size * 0.004);
+	ctx . lineTo (r3, size * -0.004);
+	ctx . lineTo (r4, 0);
+	ctx . lineTo (r3, size * 0.004);
 	ctx . lineTo (size * 0.04, size * 0.004);
 	ctx . fill ();
 	ctx . restore ();
