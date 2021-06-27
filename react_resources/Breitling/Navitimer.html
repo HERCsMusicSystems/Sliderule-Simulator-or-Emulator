@@ -357,12 +357,11 @@ var repaint = function () {
 	mark (6, r1, r3);
 	ctx . stroke ();
 	ctx . restore ();
-	//======================
+	//==== CYFERBLAT MARKINGS ======================
 	ctx . save ();
 	r1 = Converters * -0.98; r2 = Converters * -0.95; r3 = Converters * -0.92; r4 = Converters * -0.88;
 	ctx . beginPath ();
 	for (var ind = 0; ind < 12; ind ++) {
-		//lmark (ind / 12, r1, r4);
 		for (var sub = 0; sub < 0.98; sub += 0.2) {
 			if (sub > 0) lmark ((ind + sub) / 12, r1, r3);
 			for (var esc = 0.05; esc < 0.2; esc += 0.05) lmark ((ind + sub + esc) / 12, r1, r2);
