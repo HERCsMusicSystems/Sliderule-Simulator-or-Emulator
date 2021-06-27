@@ -61,7 +61,8 @@ var Maker = 'Breitling';
 
 var Status = {
 	Monitor: true,
-	Adjustment: 86400000
+	Adjustment: 86400000,
+	Cursor: 0.15
 };
 
 var BreitlingLogo = new Image (); BreitlingLogo . src = 'BreitlingWhiteScaled.png';
@@ -338,7 +339,7 @@ var repaint = function () {
 	ctx . fill ();
 	ctx . fillText ('MPH', 0, Converters * 0.88);
 	ctx . beginPath ();
-	r1 = size * 0.045;
+	r1 = size * 0.042;
 	ctx . moveTo (- r1, Converters);
 	ctx . lineTo (- r1, r2); ctx . lineTo (r1, r2); ctx . lineTo (r1, Converters);
 	ctx . strokeStyle = 'white'; ctx . lineWidth = 3; ctx . stroke ();
@@ -363,8 +364,8 @@ var repaint = function () {
 	ctx . beginPath ();
 	for (var ind = 0; ind < 12; ind ++) {
 		for (var sub = 0; sub < 0.98; sub += 0.2) {
-			if (sub > 0) lmark ((ind + sub) / 12, r1, r3);
-			for (var esc = 0.05; esc < 0.2; esc += 0.05) lmark ((ind + sub + esc) / 12, r1, r2);
+			if (sub > 0) {var tick = ind + sub; if (tick >= 0.35 && tick <= 11.65) lmark ((ind + sub) / 12, r1, r3);}
+			for (var esc = 0.05; esc < 0.2; esc += 0.05) {var tick = ind + sub + esc; if (tick >= 0.35 && tick <= 11.65) lmark (tick / 12, r1, r2);}
 		}
 	}
 	ctx . strokeStyle = 'white'; ctx . stroke ();
@@ -448,8 +449,8 @@ var repaint = function () {
 	ctx . rotate ((date . getMinutes () + date . getSeconds () / 60 + date . getMilliseconds () / 60000) * Math . PI / 30 - Math . PI * 0.5);
 	ctx . beginPath ();
 	ctx . arc (0, 0, size * 0.016, 0.25, Math . PI * 2 - 0.25);
-	r1 = Converters * -0.88; r2 = Converters * -0.95;
-	r3 = Converters * -0.85; r4 = Converters * -0.87;
+	r1 = Converters * -0.84; r2 = Converters * -0.91;
+	r3 = Converters * -0.81; r4 = Converters * -0.83;
 	ctx . lineTo (size * 0.034, size * -0.01);
 	ctx . lineTo (r1, size * -0.01);
 	ctx . lineTo (r2, 0);
@@ -468,6 +469,13 @@ var repaint = function () {
 	ctx . lineTo (r3, size * 0.004);
 	ctx . lineTo (size * 0.04, size * 0.004);
 	ctx . fill ();
+	ctx . restore ();
+	//==== CURSOR ======================
+	ctx . save ();
+	ctx . beginPath (); lmark (Status . Cursor, - BezelRadius, - StatorBottom); ctx . strokeStyle = 'red'; ctx . stroke ();
+	ctx . fillStyle = 'red';
+	var sin = Math . sin (Status . Cursor * pi2); var cos = Math . cos (Status . Cursor * pi2);
+	ctx . fillText (Math . pow (10, Status . Cursor - degree / pi2 + Math . log10 (0.6)) . toFixed (2), - BezelRadius * sin, BezelRadius * cos);
 	ctx . restore ();
 	//======================
 	ctx . restore ();
