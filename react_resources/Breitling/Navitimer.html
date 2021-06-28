@@ -52,7 +52,9 @@ var Makers = {
 		NumberSize1: 0.036,
 		NumberSize2: 0.026,
 		HoursSize: 0.06,
-		HoursRadius: 0.21
+		HoursRadius: 0.21,
+		TotalizerRadius: 0.25,
+		TotalizerLocation: 0.5
 	}
 };
 
@@ -264,6 +266,8 @@ var repaint = function () {
 	var BezelRight = Math . PI / 2 + 1;
 	var HoursSize = Makers [Maker] . HoursSize * size;
 	var HoursRadius = Makers [Maker] . HoursRadius * size;
+	var TotalizerRadius = Makers [Maker] . TotalizerRadius * size;
+	var TotalizerLocation = Makers [Maker] . TotalizerLocation * size;
 	//==== STATUS ===========
 	if (Status . Monitor) {
 		ctx . fillText (`Date: ${date . toString ()}`, 10, 10);
@@ -571,6 +575,11 @@ var repaint = function () {
 	ctx . moveTo (0, t1); ctx . lineTo (s6, t2); ctx . lineTo (- s6, t2); ctx . closePath ();
 	ctx . fill ();
 	ctx . restore ();
+	//==== MINUTE TOTALIZER ================
+	ctx . save ();
+	ctx . beginPath ();
+	ctx . fill (); ctx . stroke ();
+	ctx . restore ();
 	//==== DATE DISPLAY =======================
 	ctx . save ();
 	ctx . rotate (0.125 * pi2);
@@ -637,7 +646,7 @@ var repaint = function () {
 	ctx . lineTo (size * 0.04, ss6);
 	ctx . fill ();
 	ctx . restore ();
-	//==== CHRONOGRAPH HANDLE ================
+	//==== CHRONOGRAPH SECONDS HAND ================
 	ctx . save ();
 	var ss4 = size * 0.004;
 	if (Chronograph . From === null) ctx . rotate (Math . PI * -0.5);
