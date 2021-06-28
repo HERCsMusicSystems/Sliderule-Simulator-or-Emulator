@@ -128,8 +128,8 @@ var MouseDown = function (e) {
 	point_angle = atan / pi2 + 0.25;
 	while (point_angle < 0) point_angle += 1; while (point_angle > 1) point_angle -= 1;
 	point_cursor_proximity = Math . abs (point_angle - Cursor);
+	var m = Makers [Maker];
 	if (e . button != 0) {
-		var m = Makers [Maker];
 		if (point_length < m . BezelRadius * size && point_length > m . Converters * size) {
 			var command = prompt ();
 			if (command !== null) {
@@ -151,6 +151,13 @@ var MouseDown = function (e) {
 			}
 		}
 		point = null;
+	}
+	if (point_length > m . BezelRadius * size && point_length < size * 0.53) {
+		var angle = 1 / 6;
+		if (Math . abs (point_angle - angle) < 0.012)
+			console . log ('button 1');
+		if (Math . abs (point_angle - angle - angle) < 0.012)
+			console . log ('button 2');
 	}
 };
 
@@ -245,7 +252,31 @@ var repaint = function () {
 	ctx . textAlign = 'center';
 	ctx . font = `${NumberSize1}px arial`;
 	ctx . translate (canvas . width * 0.5, canvas . height * 0.5);
-	//======================
+	//==== BUTTONS ======================
+	ctx . save ();
+	ctx . rotate (pi2 / 12);
+	//==============================
+		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
+		var rw1 = size * 0.5; var rw2 = size * 0.475; var rw3 = size * 0.52; var rw4 = size * 0.53;
+		ctx . beginPath ();
+		ctx . moveTo (BezelRim, - bw1); ctx . lineTo (rw1, - bw1); ctx . lineTo (rw1, bw1); ctx . lineTo (BezelRim, bw1);
+		ctx . lineWidth = 2;
+		ctx . fillStyle = 'silver'; ctx . fill (); ctx . stroke ();
+		ctx . beginPath ();
+		ctx . moveTo (rw2, - bw2); ctx . lineTo (rw3, - bw3); ctx . bezierCurveTo (rw4, -bw4, rw4, bw4, rw3, bw3); ctx . lineTo (rw2, bw2); ctx . closePath ();
+		ctx . fillStyle = 'navy'; ctx . fill (); ctx . stroke ();
+	ctx . rotate (pi2 / -6);
+	//==============================
+		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
+		var rw1 = size * 0.5; var rw2 = size * 0.475; var rw3 = size * 0.52; var rw4 = size * 0.53;
+		ctx . beginPath ();
+		ctx . moveTo (BezelRim, - bw1); ctx . lineTo (rw1, - bw1); ctx . lineTo (rw1, bw1); ctx . lineTo (BezelRim, bw1);
+		ctx . lineWidth = 2;
+		ctx . fillStyle = 'silver'; ctx . fill (); ctx . stroke ();
+		ctx . beginPath ();
+		ctx . moveTo (rw2, - bw2); ctx . lineTo (rw3, - bw3); ctx . bezierCurveTo (rw4, -bw4, rw4, bw4, rw3, bw3); ctx . lineTo (rw2, bw2); ctx . closePath ();
+		ctx . fillStyle = 'navy'; ctx . fill (); ctx . stroke ();
+	ctx . restore ();
 	//======================
 	ctx . save ();
 	ctx . rotate (degree * pi2);
@@ -508,30 +539,6 @@ var repaint = function () {
 	ctx . moveTo (0, t1); ctx . lineTo (s6, t2); ctx . lineTo (- s6, t2); ctx . closePath ();
 	ctx . fill ();
 	ctx . restore ();
-	//==== HOUR HANDLE ======================
-	ctx . save ();
-	ctx . rotate ((date . getHours () + date . getMinutes () / 60 + date . getSeconds () / 3600) * Math . PI / 12 - Math . PI * 0.5);
-	ctx . beginPath ();
-	ctx . arc (0, 0, size * 0.02, 0.25, Math . PI * 2 - 0.25);
-	ctx . lineTo (size * 0.034, size * -0.01);
-	ctx . lineTo (size * 0.15, size * -0.01);
-	ctx . lineTo (size * 0.17, 0);
-	ctx . lineTo (size * 0.15, size * 0.01);
-	ctx . lineTo (size * 0.034, size * 0.01);
-	ctx . closePath ();
-	ctx . fillStyle = 'silver';
-	ctx . fill ();
-	ctx . strokeStyle = 'black';
-	ctx . stroke ();
-	ctx . beginPath ();
-	ctx . fillStyle = 'lime';
-	ctx . moveTo (size * 0.04, size * -0.004);
-	ctx . lineTo (size * 0.14, size * -0.004);
-	ctx . lineTo (size * 0.15, 0);
-	ctx . lineTo (size * 0.14, size * 0.004);
-	ctx . lineTo (size * 0.04, size * 0.004);
-	ctx . fill ();
-	ctx . restore ();
 	//==== DATE DISPLAY =======================
 	ctx . save ();
 	ctx . rotate (0.125 * pi2);
@@ -547,19 +554,34 @@ var repaint = function () {
 	ctx . beginPath (); ctx . moveTo (rct . x - rct . w1, - rct . h1);
 	ctx . lineTo (rct . x + rct . w1, - rct . h1); ctx . lineTo (rct . x + rct . w1, rct . h1); ctx . lineTo (rct . x - rct . w1, rct . h1); ctx . closePath ();
 	ctx . fillStyle = 'navy'; ctx . fill (); ctx . stroke ();
-	/*ctx . moveTo (rct . x - rct . w1, - rct . h1);
-	ctx . lineTo (rct . x + rct . w1, - rct . h1);
-	ctx . lineTo (rct . x + rct . w1, rct . h1);
-	ctx . lineTo (rct . x - rct . w1, rct . h1);
-	ctx . lineTo (rct . x - rct . w1, - rct . h1);
-	//ctx . closePath ();
-	ctx . fillStyle = 'white'; ctx . fill ();
-	ctx . lineTo (rct . x - rct . w2, - rct . h2); ctx . lineTo (rct . x + rct . w2, - rct . h2); ctx . lineTo (rct . x + rct . w2, rct . h2);
-	ctx . strokeStyle = 'white'; ctx . stroke ();*/
 	ctx . font = `${HoursSize}px serif`;
 	ctx . fillStyle = 'white'; ctx . textBaseline = 'middle'; ctx . textAlign = 'center'; ctx . fillText (Day, rct . x, rct . y);
 	ctx . restore ();
-	//=========================================
+	//==== HOUR HANDLE ======================
+	ctx . save ();
+	var ss6 = size * 0.006;
+	ctx . rotate ((date . getHours () + date . getMinutes () / 60 + date . getSeconds () / 3600) * Math . PI / 12 - Math . PI * 0.5);
+	ctx . beginPath ();
+	ctx . arc (0, 0, size * 0.02, 0.25, Math . PI * 2 - 0.25);
+	ctx . lineTo (size * 0.034, size * -0.01);
+	ctx . lineTo (size * 0.15, size * -0.01);
+	ctx . lineTo (size * 0.17, 0);
+	ctx . lineTo (size * 0.15, size * 0.01);
+	ctx . lineTo (size * 0.034, size * 0.01);
+	ctx . closePath ();
+	ctx . fillStyle = 'silver';
+	ctx . fill ();
+	ctx . strokeStyle = 'black';
+	ctx . stroke ();
+	ctx . beginPath ();
+	ctx . fillStyle = 'lime';
+	ctx . moveTo (size * 0.04, - ss6);
+	ctx . lineTo (size * 0.14, - ss6);
+	ctx . lineTo (size * 0.15, 0);
+	ctx . lineTo (size * 0.14, ss6);
+	ctx . lineTo (size * 0.04, ss6);
+	ctx . fill ();
+	ctx . restore ();
 	//==== MINUTE HANDLE ======================
 	ctx . save ();
 	ctx . rotate ((date . getMinutes () + date . getSeconds () / 60 + date . getMilliseconds () / 60000) * Math . PI / 30 - Math . PI * 0.5);
@@ -573,18 +595,35 @@ var repaint = function () {
 	ctx . lineTo (r1, size * 0.01);
 	ctx . lineTo (size * 0.034, size * 0.01);
 	ctx . closePath ();
-	ctx . fillStyle = 'silver';
-	ctx . fill ();
-	ctx . strokeStyle = 'black';
-	ctx . stroke ();
+	ctx . fillStyle = 'silver'; ctx . fill (); ctx . strokeStyle = 'black'; ctx . stroke ();
 	ctx . beginPath ();
 	ctx . fillStyle = 'lime';
-	ctx . moveTo (size * 0.04, size * -0.004);
-	ctx . lineTo (r3, size * -0.004);
+	ctx . moveTo (size * 0.04, - ss6);
+	ctx . lineTo (r3, - ss6);
 	ctx . lineTo (r4, 0);
-	ctx . lineTo (r3, size * 0.004);
-	ctx . lineTo (size * 0.04, size * 0.004);
+	ctx . lineTo (r3, ss6);
+	ctx . lineTo (size * 0.04, ss6);
 	ctx . fill ();
+	ctx . restore ();
+	//==== CHRONOGRAPH HANDLE ================
+	ctx . save ();
+	var ss4 = size * 0.004;
+	//r1 = Converters * -0.98; r2 = Converters * -0.95; r3 = Converters * -0.92; r4 = Converters * -0.88;
+	r1 = Converters * -0.76; r2 = Converters * -0.78; r3 = Converters * -0.93; r4 = size * 0.02;
+	ctx . beginPath ();
+	ctx . moveTo (0, - ss4); ctx . lineTo (r2, - ss4); ctx . lineTo (r1, - r4);
+	//ctx . lineTo (r3, 0);
+	ctx . bezierCurveTo (Converters * -0.8, size * -0.012, Converters * -0.89, 0, r3, 0);
+	//ctx . lineTo (r1, r4);
+	ctx . bezierCurveTo (Converters * -0.89, 0, Converters * -0.8, size * 0.012, r1, r4);
+	ctx . lineTo (r2, ss4);
+	ctx . lineTo (0, ss4);
+	ctx . closePath ();
+	ctx . fillStyle = 'red'; ctx . fill (); ctx . strokeStyle = 'red'; ctx . stroke ();
+	ctx . beginPath ();
+	ctx . arc (0, 0, size * 0.012, 0.25, Math . PI * 2 - 0.25);
+	ctx . closePath ();
+	ctx . fill (); ctx . stroke ();
 	ctx . restore ();
 	//==== CURSOR ======================
 	if (CursorVisible) {
