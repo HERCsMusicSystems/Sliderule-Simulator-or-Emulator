@@ -63,6 +63,10 @@ var Status = {
 	Adjustment: 0,
 };
 
+var Chronograph = {
+	From: null
+};
+
 Date . prototype . isDST = function () {
 	var jan = new Date (this . getFullYear (), 0, 1);
 	var jul = new Date (this . getFullYear (), 6, 1);
@@ -116,6 +120,9 @@ var point_cursor_proximity = 0;
 var atan = null;
 var size = 0;
 
+var PushpieceA = false;
+var PushpieceB = false;
+
 var MousePoint = function (e) {
 	var rect = canvas . getBoundingClientRect ();
 	return {x: e . clientX - rect . left - canvas . width / 2, y: e . clientY - rect . top - canvas . height / 2};
@@ -154,15 +161,24 @@ var MouseDown = function (e) {
 	}
 	if (point_length > m . BezelRadius * size && point_length < size * 0.53) {
 		var angle = 1 / 6;
-		if (Math . abs (point_angle - angle) < 0.012)
-			console . log ('button 1');
-		if (Math . abs (point_angle - angle - angle) < 0.012)
-			console . log ('button 2');
+		if (Math . abs (point_angle - angle) < 0.012) {
+			PushpieceA = true;
+			Chronograph . From = Date . now ();
+			repaint ();
+		}
+		if (Math . abs (point_angle - angle - angle) < 0.012) {
+			PushpieceB = true;
+			repaint ();
+		}
 	}
 };
 
 var MouseUp = function (e) {
 	point = null; point_length = 0;
+	if (PushpieceA || PushpieceB) {
+		PushpieceA = PushpieceB = false;
+		repaint ();
+	}
 };
 
 var MouseMove = function (e) {
@@ -252,12 +268,13 @@ var repaint = function () {
 	ctx . textAlign = 'center';
 	ctx . font = `${NumberSize1}px arial`;
 	ctx . translate (canvas . width * 0.5, canvas . height * 0.5);
-	//==== BUTTONS ======================
+	//==== PUSHPIECES ======================
 	ctx . save ();
 	ctx . rotate (pi2 / 12);
 	//==============================
 		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
 		var rw1 = size * 0.5; var rw2 = size * 0.475; var rw3 = size * 0.52; var rw4 = size * 0.53;
+		if (PushpieceB) {var pub = size * 0.005; rw2 -= pub; rw3 -= pub; rw4 -= pub;}
 		ctx . beginPath ();
 		ctx . moveTo (BezelRim, - bw1); ctx . lineTo (rw1, - bw1); ctx . lineTo (rw1, bw1); ctx . lineTo (BezelRim, bw1);
 		ctx . lineWidth = 2;
@@ -269,6 +286,7 @@ var repaint = function () {
 	//==============================
 		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
 		var rw1 = size * 0.5; var rw2 = size * 0.475; var rw3 = size * 0.52; var rw4 = size * 0.53;
+		if (PushpieceA) {var pub = size * 0.005; rw2 -= pub; rw3 -= pub; rw4 -= pub;}
 		ctx . beginPath ();
 		ctx . moveTo (BezelRim, - bw1); ctx . lineTo (rw1, - bw1); ctx . lineTo (rw1, bw1); ctx . lineTo (BezelRim, bw1);
 		ctx . lineWidth = 2;
@@ -608,22 +626,21 @@ var repaint = function () {
 	//==== CHRONOGRAPH HANDLE ================
 	ctx . save ();
 	var ss4 = size * 0.004;
-	//r1 = Converters * -0.98; r2 = Converters * -0.95; r3 = Converters * -0.92; r4 = Converters * -0.88;
+	if (Chronograph . From === null) ctx . rotate (Math . PI * -0.5);
+	else ctx . rotate (Math . PI * (-0.5 - (((Chronograph . From - DateNumber) % 60000) / 30000)));
 	r1 = Converters * -0.76; r2 = Converters * -0.78; r3 = Converters * -0.93; r4 = size * 0.02;
 	ctx . beginPath ();
 	ctx . moveTo (0, - ss4); ctx . lineTo (r2, - ss4); ctx . lineTo (r1, - r4);
-	//ctx . lineTo (r3, 0);
 	ctx . bezierCurveTo (Converters * -0.8, size * -0.012, Converters * -0.89, 0, r3, 0);
-	//ctx . lineTo (r1, r4);
 	ctx . bezierCurveTo (Converters * -0.89, 0, Converters * -0.8, size * 0.012, r1, r4);
 	ctx . lineTo (r2, ss4);
 	ctx . lineTo (0, ss4);
 	ctx . closePath ();
 	ctx . fillStyle = 'red'; ctx . fill (); ctx . strokeStyle = 'red'; ctx . stroke ();
 	ctx . beginPath ();
-	ctx . arc (0, 0, size * 0.012, 0.25, Math . PI * 2 - 0.25);
-	ctx . closePath ();
-	ctx . fill (); ctx . stroke ();
+	r1 = size * 0.012; r2 = Math . atan2 (ss4, r1);
+	ctx . arc (0, 0, r1, r2, Math . PI * 2 - r2);
+	ctx . fillStyle = 'silver'; ctx . fill (); ctx . strokeStyle = 'black'; ctx . stroke ();
 	ctx . restore ();
 	//==== CURSOR ======================
 	if (CursorVisible) {
