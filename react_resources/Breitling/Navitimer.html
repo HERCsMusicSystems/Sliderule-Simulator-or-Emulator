@@ -64,7 +64,8 @@ var Status = {
 };
 
 var Chronograph = {
-	From: null
+	From: null,
+	To: null
 };
 
 Date . prototype . isDST = function () {
@@ -74,13 +75,12 @@ Date . prototype . isDST = function () {
 	return this . getTimezoneOffset () < delta;
 }
 
-var Adjust = function () {
+var AutoAdjust = function () {
 	var DateNumber = Date . now ();
 	var date = new Date (DateNumber);
 	if (date . isDST ()) date = new Date (DateNumber - 3600000);
 	var Day = (Math . floor (DateNumber / 86400000) % 31) + 1;
 	Status . Adjustment = 86400000 * (date . getDate () - Day);
-	console . log (Day, date, date . getDate ());
 };
 
 var BreitlingLogo = new Image (); BreitlingLogo . src = 'BreitlingWhiteScaled.png';
@@ -123,6 +123,22 @@ var size = 0;
 var PushpieceA = false;
 var PushpieceB = false;
 
+var PushA = function () {
+	PushpieceA = true;
+	if (Chronograph . From === null) {Chronograph . From = Date . now (); repaint (); return;}
+	if (Chronograph . To === null) Chronograph . To = Date . now ();
+	else {var now = Date . now (); var delta = now - Chronograph . To; Chronograph . From += delta; Chronograph . To = null;}
+	repaint ();
+};
+
+var PushB = function () {
+	PushpieceB = Date . now ();
+	if (Chronograph . From !== null && Chronograph . To === null) Chronograph . From = Date . now ();
+	else Chronograph . From = Chronograph . To = null;
+	repaint ();
+};
+
+
 var MousePoint = function (e) {
 	var rect = canvas . getBoundingClientRect ();
 	return {x: e . clientX - rect . left - canvas . width / 2, y: e . clientY - rect . top - canvas . height / 2};
@@ -137,7 +153,7 @@ var MouseDown = function (e) {
 	point_cursor_proximity = Math . abs (point_angle - Cursor);
 	var m = Makers [Maker];
 	if (e . button != 0) {
-		if (point_length < m . BezelRadius * size && point_length > m . Converters * size) {
+		if (point_length < m . BezelRim * size && point_length > m . StatorBottom * size) {
 			var command = prompt ();
 			if (command !== null) {
 				command = command . toLowerCase ();
@@ -161,20 +177,17 @@ var MouseDown = function (e) {
 	}
 	if (point_length > m . BezelRadius * size && point_length < size * 0.53) {
 		var angle = 1 / 6;
-		if (Math . abs (point_angle - angle) < 0.012) {
-			PushpieceA = true;
-			Chronograph . From = Date . now ();
-			repaint ();
-		}
-		if (Math . abs (point_angle - angle - angle) < 0.012) {
-			PushpieceB = true;
-			repaint ();
-		}
+		if (Math . abs (point_angle - angle) < 0.012) PushA ();
+		if (Math . abs (point_angle - angle - angle) < 0.012) PushB ();
 	}
 };
 
 var MouseUp = function (e) {
 	point = null; point_length = 0;
+	if (PushpieceB) {
+		var delay = Math . floor ((Date . now () - PushpieceB) / 1000);
+		if (delay >= 4) AutoAdjust ();
+	}
 	if (PushpieceA || PushpieceB) {
 		PushpieceA = PushpieceB = false;
 		repaint ();
@@ -185,10 +198,11 @@ var MouseMove = function (e) {
 	var p = MousePoint (e);
 	var length = Math . sqrt (p . x * p . x + p . y * p . y);
 	var m = Makers [Maker];
-	CursorVisible = point || (length < m . BezelRadius * size && length > m . Converters * size);
+	CursorVisible = (point && point_length < m . BezelRim * size && point_length > m . StatorBottom * size)
+		|| (length < m . BezelRim * size && length > m . StatorBottom * size);
 	if (! point) return;
 	var a = Math . atan2 (p . y, p . x);
-	if (point_length < m . BezelRadius * size && point_length > m . Converters * size) {
+	if (point_length < m . BezelRim * size && point_length > m . StatorBottom * size) {
 		if (point_length > m . StatorTop * size && point_cursor_proximity > 0.02 && point_cursor_proximity < 0.98) degree += (a - atan) / pi2;
 		else if (point_cursor_proximity < 0.02 || point_cursor_proximity > 0.98) Cursor += (a - atan) / pi2;
 		while (degree < 0) degree += 1; while (degree > 1) degree -= 1; BezelTarget = degree;
@@ -295,7 +309,7 @@ var repaint = function () {
 		ctx . moveTo (rw2, - bw2); ctx . lineTo (rw3, - bw3); ctx . bezierCurveTo (rw4, -bw4, rw4, bw4, rw3, bw3); ctx . lineTo (rw2, bw2); ctx . closePath ();
 		ctx . fillStyle = 'navy'; ctx . fill (); ctx . stroke ();
 	ctx . restore ();
-	//======================
+	//==== BEZEL RIM ======================
 	ctx . save ();
 	ctx . rotate (degree * pi2);
 	ctx . beginPath ();
@@ -627,7 +641,10 @@ var repaint = function () {
 	ctx . save ();
 	var ss4 = size * 0.004;
 	if (Chronograph . From === null) ctx . rotate (Math . PI * -0.5);
-	else ctx . rotate (Math . PI * (-0.5 - (((Chronograph . From - DateNumber) % 60000) / 30000)));
+	else {
+		if (Chronograph . To === null) ctx . rotate (Math . PI * (-0.5 + (((DateNumber - Chronograph . From) % 60000) / 30000)));
+		else ctx . rotate (Math . PI * (-0.5 + (((Chronograph . To - Chronograph . From) % 60000) / 30000)));
+	}
 	r1 = Converters * -0.76; r2 = Converters * -0.78; r3 = Converters * -0.93; r4 = size * 0.02;
 	ctx . beginPath ();
 	ctx . moveTo (0, - ss4); ctx . lineTo (r2, - ss4); ctx . lineTo (r1, - r4);
