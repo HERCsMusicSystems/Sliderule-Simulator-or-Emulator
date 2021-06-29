@@ -153,6 +153,9 @@ var PushB = function () {
 	repaint ();
 };
 
+var PushC = function (angle) {
+	console . log (angle);
+};
 
 var MousePoint = function (e) {
 	var rect = canvas . getBoundingClientRect ();
@@ -194,6 +197,7 @@ var MouseDown = function (e) {
 		var angle = 1 / 6;
 		if (Math . abs (point_angle - angle) < 0.012) PushA ();
 		if (Math . abs (point_angle - angle - angle) < 0.012) PushB ();
+		if (Math . abs (point_angle - 0.25) < 0.025) PushC (point_angle);
 	}
 };
 
@@ -308,6 +312,26 @@ var repaint = function () {
 	ctx . translate (canvas . width * 0.5, canvas . height * 0.5);
 	//==== PUSHPIECES ======================
 	ctx . save ();
+		var bw1 = size * 0.07; var bw2 = size * 0.075; var bw3 = size * 0.075; var bw4 = size * 0.04;
+		var rw1 = size * 0.5; var rw2 = size * 0.45; var rw3 = size * 0.5; var rw4 = size * 0.51;
+		ctx . beginPath ();
+		ctx . moveTo (BezelRim, - bw1); ctx . lineTo (rw1, - bw1); ctx . lineTo (rw1, bw1); ctx . lineTo (BezelRim, bw1);
+		ctx . lineWidth = 2;
+		ctx . fillStyle = 'silver'; ctx . fill (); ctx . stroke ();
+		ctx . beginPath ();
+		ctx . moveTo (rw2, - bw2); ctx . lineTo (rw3, - bw3); ctx . bezierCurveTo (rw4, -bw4, rw4, bw4, rw3, bw3); ctx . lineTo (rw2, bw2); ctx . closePath ();
+		ctx . fillStyle = 'silver'; ctx . fill ();
+		ctx . moveTo (rw3, - bw2); ctx . lineTo (rw3, bw2);
+		ctx . moveTo (rw3, 0); ctx . lineTo (rw2, 0);
+		ctx . moveTo (rw3, size * 0.02); ctx . lineTo (rw2, size * 0.02);
+		ctx . moveTo (rw3, size * -0.02); ctx . lineTo (rw2, size * -0.02);
+		ctx . moveTo (rw3, size * 0.038); ctx . lineTo (rw2, size * 0.038);
+		ctx . moveTo (rw3, size * -0.038); ctx . lineTo (rw2, size * -0.038);
+		ctx . moveTo (rw3, size * 0.054); ctx . lineTo (rw2, size * 0.054);
+		ctx . moveTo (rw3, size * -0.054); ctx . lineTo (rw2, size * -0.054);
+		ctx . moveTo (rw3, size * 0.068); ctx . lineTo (rw2, size * 0.068);
+		ctx . moveTo (rw3, size * -0.068); ctx . lineTo (rw2, size * -0.068);
+		ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
 	ctx . rotate (pi2 / 12);
 	//==============================
 		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
@@ -561,6 +585,7 @@ var repaint = function () {
 	//==== WATCH MODEL ======================
 	ctx . save ();
 	ctx . fillStyle = 'white'; ctx . font = `${NumberSize2}px arial`; ctx . fillText ('COSMONAUTE', 0, size * -0.06); ctx . fillText ('1962', 0, size * -0.035);
+	ctx . fillText ('NAVITIMER', 0, size * 0.06);
 	ctx . restore ();
 	//==== HOUR NUMBERS ======================
 	ctx . save ();
