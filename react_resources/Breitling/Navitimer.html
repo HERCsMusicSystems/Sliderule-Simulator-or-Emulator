@@ -53,8 +53,21 @@ var Makers = {
 		NumberSize2: 0.026,
 		HoursSize: 0.06,
 		HoursRadius: 0.21,
-		TotalizerRadius: 0.25,
-		TotalizerLocation: 0.5
+		TotalizerRadius: 0.172,
+		TotalizerBezel: 0.09,
+		TotalizerStator: 0.075,
+		TotalizerR1: 0.086,
+		TotalizerR2: 0.079,
+		TotalizerR3: 0.075,
+		TotalizerArrow1: 0.006,
+		TotalizerArrow2: 0.004,
+		TotalizerArrow3: 0.006,
+		TotalizerArrow4: 0.01,
+		TotalizerArrow5: 0.02,
+		TotalizerArrow6: 0.035,
+		TotalizerArrow7: 0.06,
+		TotalizerNumbers: 0.05,
+		TotalizerNumbersH: 0.056
 	}
 };
 
@@ -250,24 +263,23 @@ var repaint = function () {
 	canvas . width = window . innerWidth;
 	canvas . height = window . innerHeight;
 	size = canvas . height;
-	var BezelRadius = - Makers [Maker] . BezelRadius * size;
+	var maker = Makers [Maker];
+	var BezelRadius = - maker . BezelRadius * size;
 	var BezelDent = BezelRadius / -20;
-	var BezelRim = Makers [Maker] . BezelRim * size;
-	var StatorTop = Makers [Maker] . StatorTop * size;
-	var StatorBottom = - Makers [Maker] . StatorBottom * size;
+	var BezelRim = maker . BezelRim * size;
+	var StatorTop = maker . StatorTop * size;
+	var StatorBottom = - maker . StatorBottom * size;
 	var r1 = StatorTop + 1; var r2 = StatorTop * 1.04; var r3 = StatorTop * 1.05; var r4 = StatorTop * 1.06;
 	var rm1 = StatorTop; var rm2 = StatorTop * 0.96; var rm3 = StatorTop * 0.95; var rm4 = StatorTop * 0.94;
-	var MinuteConversionLine = Makers [Maker] . MinuteConversionLine * size;
-	var Converters = - Makers [Maker] . Converters * size;
-	var NumberSize1 = Makers [Maker] . NumberSize1 * size;
-	var NumberSize2 = Makers [Maker] . NumberSize2 * size;
-	var BezelNumber = - Makers [Maker] . BezelNumbers * size;
+	var MinuteConversionLine = maker . MinuteConversionLine * size;
+	var Converters = - maker . Converters * size;
+	var NumberSize1 = maker . NumberSize1 * size;
+	var NumberSize2 = maker . NumberSize2 * size;
+	var BezelNumber = - maker . BezelNumbers * size;
 	var BezelLeft = Math . PI / 2 - 1;
 	var BezelRight = Math . PI / 2 + 1;
-	var HoursSize = Makers [Maker] . HoursSize * size;
-	var HoursRadius = Makers [Maker] . HoursRadius * size;
-	var TotalizerRadius = Makers [Maker] . TotalizerRadius * size;
-	var TotalizerLocation = Makers [Maker] . TotalizerLocation * size;
+	var HoursSize = maker . HoursSize * size;
+	var HoursRadius = maker . HoursRadius * size;
 	//==== STATUS ===========
 	if (Status . Monitor) {
 		ctx . fillText (`Date: ${date . toString ()}`, 10, 10);
@@ -576,9 +588,146 @@ var repaint = function () {
 	ctx . fill ();
 	ctx . restore ();
 	//==== MINUTE TOTALIZER ================
+	var TotalizerRadius = maker . TotalizerRadius * size;
+	var TotalizerBezel = maker . TotalizerBezel * size;
+	var TotalizerStator = maker . TotalizerStator * size;
+	var r1 = maker . TotalizerR1 * size; var r2 = maker . TotalizerR2 * size; var r3 = maker . TotalizerR3 * size;
 	ctx . save ();
+	ctx . translate (TotalizerRadius, 0);
 	ctx . beginPath ();
-	ctx . fill (); ctx . stroke ();
+	ctx . arc (0, 0, TotalizerBezel, 0, pi2);
+	ctx . fillStyle = 'white'; ctx . fill (); ctx . strokeStyle = 'red'; ctx . stroke ();
+	ctx . beginPath ();
+	ctx . arc (0, 0, TotalizerStator, 0, pi2);
+	ctx . fillStyle = 'silver'; ctx . fill (); ctx . strokeStyle = 'black'; ctx . stroke ();
+	ctx . beginPath ();
+	for (var ind = 0; ind < 30; ind += 5)
+		for (var sub = 1; sub < 5; sub ++)
+			lmark ((ind + sub) / 30, r1, r2);
+	ctx . stroke ();
+	var lw = ctx . lineWidth; ctx . beginPath (); for (var ind = 0; ind < 6; ind ++) lmark (ind / 6, r1, r3); ctx . lineWidth = 2; ctx . stroke ();
+	ctx . beginPath ();
+	r1 = maker . TotalizerNumbers * size; r2 = r1 * Math . cos (Math . PI * 2 / 3); r3 = r1 * Math . sin (Math . PI * 2 / 3);
+	ctx . fillStyle = 'black'; ctx . textBaseline = 'middle';
+	ctx . fillText (30, 0, - r1);
+	ctx . fillText (10, r3, - r2);
+	ctx . fillText (20, -r3, - r2);
+	var ar1 = maker . TotalizerArrow1 * size;
+	var ar2 = maker . TotalizerArrow2 * size;
+	var ar3 = maker . TotalizerArrow3 * size;
+	var ar4 = maker . TotalizerArrow4 * size;
+	var ar5 = maker . TotalizerArrow5 * size;
+	var ar6 = maker . TotalizerArrow6 * size;
+	var ar7 = maker . TotalizerArrow7 * size;
+	r1 = Math . atan2 (ar2, ar4);
+	if (Chronograph . From === null) ctx . rotate (Math . PI * -0.5);
+	else {
+		if (Chronograph . To === null) ctx . rotate (Math . PI * (-0.5 + (((DateNumber - Chronograph . From) % 1800000) / 900000)));
+		else ctx . rotate (Math . PI * (-0.5 + (((Chronograph . To - Chronograph . From) % 1800000) / 900000)));
+	}
+	ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
+	ctx . lineTo (ar5, - ar3); ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0);
+	ctx . lineTo (ar7, ar3); ctx . lineTo (ar5, ar3); ctx . closePath ();
+	ctx . fillStyle = 'red'; ctx . fill (); ctx . stroke ();
+	ctx . beginPath ();
+	ctx . arc (0, 0, ar4, r1, Math . PI - r1);
+	ctx . lineTo (- ar6, ar2); ctx . lineTo (- ar6, - ar2);
+	ctx . arc (0, 0, ar4, Math . PI + r1, pi2 - r1);
+	ctx . fillStyle = 'white'; ctx . fill (); ctx . stroke ();
+	ctx . beginPath (); ctx . arc (0, 0, ar1, 0, pi2); ctx . fillStyle = 'navy'; ctx . fill ();
+	ctx . restore ();
+	//==== HOUR TOTALIZER ================
+	var TotalizerRadius = maker . TotalizerRadius * size;
+	var TotalizerBezel = maker . TotalizerBezel * size;
+	var TotalizerStator = maker . TotalizerStator * size;
+	var r1 = maker . TotalizerR1 * size; var r2 = maker . TotalizerR2 * size; var r3 = maker . TotalizerR3 * size;
+	ctx . save ();
+	ctx . translate (0, TotalizerRadius);
+	ctx . beginPath ();
+	ctx . arc (0, 0, TotalizerBezel, 0, pi2);
+	ctx . fillStyle = 'white'; ctx . fill (); ctx . strokeStyle = 'red'; ctx . stroke ();
+	ctx . beginPath ();
+	ctx . arc (0, 0, TotalizerStator, 0, pi2);
+	ctx . fillStyle = 'silver'; ctx . fill (); ctx . strokeStyle = 'black'; ctx . stroke ();
+	ctx . beginPath ();
+	for (var ind = 1; ind < 24; ind += 2) lmark (ind / 24, r1, r2);
+	ctx . stroke ();
+	var lw = ctx . lineWidth; ctx . beginPath (); for (var ind = 0; ind < 12; ind ++) lmark (ind / 12, r1, r3); ctx . lineWidth = 2; ctx . stroke ();
+	ctx . beginPath ();
+	r1 = maker . TotalizerNumbersH * size;
+	ctx . fillStyle = 'black'; ctx . textBaseline = 'middle';
+	ctx . fillText (12, 0, - r1);
+	ctx . fillText (3, r1, 0);
+	ctx . fillText (6, 0, r1);
+	ctx . fillText (9, - r1, 0);
+	var ar1 = maker . TotalizerArrow1 * size;
+	var ar2 = maker . TotalizerArrow2 * size;
+	var ar3 = maker . TotalizerArrow3 * size;
+	var ar4 = maker . TotalizerArrow4 * size;
+	var ar5 = maker . TotalizerArrow5 * size;
+	var ar6 = maker . TotalizerArrow6 * size;
+	var ar7 = maker . TotalizerArrow7 * size;
+	r1 = Math . atan2 (ar2, ar4);
+	if (Chronograph . From === null) ctx . rotate (Math . PI * -0.5);
+	else {
+		if (Chronograph . To === null) ctx . rotate (Math . PI * (-0.5 + (((DateNumber - Chronograph . From) % 43200000) / 21600000)));
+		else ctx . rotate (Math . PI * (-0.5 + (((Chronograph . To - Chronograph . From) % 43200000) / 21600000)));
+	}
+	ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
+	ctx . lineTo (ar5, - ar3); ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0);
+	ctx . lineTo (ar7, ar3); ctx . lineTo (ar5, ar3); ctx . closePath ();
+	ctx . fillStyle = 'red'; ctx . fill (); ctx . stroke ();
+	ctx . beginPath ();
+	ctx . arc (0, 0, ar4, r1, Math . PI - r1);
+	ctx . lineTo (- ar6, ar2); ctx . lineTo (- ar6, - ar2);
+	ctx . arc (0, 0, ar4, Math . PI + r1, pi2 - r1);
+	ctx . fillStyle = 'white'; ctx . fill (); ctx . stroke ();
+	ctx . beginPath (); ctx . arc (0, 0, ar1, 0, pi2); ctx . fillStyle = 'navy'; ctx . fill ();
+	ctx . restore ();
+	//==== SECONDS HAND ================
+	var TotalizerRadius = maker . TotalizerRadius * size;
+	var TotalizerBezel = maker . TotalizerBezel * size;
+	var TotalizerStator = maker . TotalizerStator * size;
+	var r1 = maker . TotalizerR1 * size; var r2 = maker . TotalizerR2 * size; var r3 = maker . TotalizerR3 * size;
+	ctx . save ();
+	ctx . translate (- TotalizerRadius, 0);
+	ctx . beginPath ();
+	ctx . arc (0, 0, TotalizerBezel, 0, pi2);
+	ctx . fillStyle = 'white'; ctx . fill (); ctx . strokeStyle = 'red'; ctx . stroke ();
+	ctx . beginPath ();
+	ctx . arc (0, 0, TotalizerStator, 0, pi2);
+	ctx . fillStyle = 'silver'; ctx . fill (); ctx . strokeStyle = 'black'; ctx . stroke ();
+	ctx . beginPath ();
+	for (var ind = 0; ind < 12; ind += 4)
+		for (var sub = 1; sub < 4; sub ++)
+			lmark ((ind + sub) / 12, r1, r2);
+	ctx . stroke ();
+	var lw = ctx . lineWidth; ctx . beginPath (); for (var ind = 0; ind < 3; ind ++) lmark (ind / 3, r1, r3); ctx . lineWidth = 2; ctx . stroke ();
+	ctx . beginPath ();
+	r1 = maker . TotalizerNumbers * size; r2 = r1 * Math . cos (Math . PI * 2 / 3); r3 = r1 * Math . sin (Math . PI * 2 / 3);
+	ctx . fillStyle = 'black'; ctx . textBaseline = 'middle';
+	ctx . fillText (60, 0, - r1);
+	ctx . fillText (20, r3, - r2);
+	ctx . fillText (40, -r3, - r2);
+	var ar1 = maker . TotalizerArrow1 * size;
+	var ar2 = maker . TotalizerArrow2 * size;
+	var ar3 = maker . TotalizerArrow3 * size;
+	var ar4 = maker . TotalizerArrow4 * size;
+	var ar5 = maker . TotalizerArrow5 * size;
+	var ar6 = maker . TotalizerArrow6 * size;
+	var ar7 = maker . TotalizerArrow7 * size;
+	r1 = Math . atan2 (ar2, ar4);
+	ctx . rotate ((date . getSeconds () + date . getMilliseconds () / 1000) * Math . PI / 30 - Math . PI * 0.5);
+	ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
+	ctx . lineTo (ar5, - ar3); ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0);
+	ctx . lineTo (ar7, ar3); ctx . lineTo (ar5, ar3); ctx . closePath ();
+	ctx . fillStyle = 'red'; ctx . fill (); ctx . stroke ();
+	ctx . beginPath ();
+	ctx . arc (0, 0, ar4, r1, Math . PI - r1);
+	ctx . lineTo (- ar6, ar2); ctx . lineTo (- ar6, - ar2);
+	ctx . arc (0, 0, ar4, Math . PI + r1, pi2 - r1);
+	ctx . fillStyle = 'white'; ctx . fill (); ctx . stroke ();
+	ctx . beginPath (); ctx . arc (0, 0, ar1, 0, pi2); ctx . fillStyle = 'navy'; ctx . fill ();
 	ctx . restore ();
 	//==== DATE DISPLAY =======================
 	ctx . save ();
@@ -598,7 +747,7 @@ var repaint = function () {
 	ctx . font = `${HoursSize}px serif`;
 	ctx . fillStyle = 'white'; ctx . textBaseline = 'middle'; ctx . textAlign = 'center'; ctx . fillText (Day, rct . x, rct . y);
 	ctx . restore ();
-	//==== HOUR HANDLE ======================
+	//==== HOUR HAND ======================
 	ctx . save ();
 	var ss6 = size * 0.006;
 	ctx . rotate ((date . getHours () + date . getMinutes () / 60 + date . getSeconds () / 3600) * Math . PI / 12 - Math . PI * 0.5);
@@ -623,7 +772,7 @@ var repaint = function () {
 	ctx . lineTo (size * 0.04, ss6);
 	ctx . fill ();
 	ctx . restore ();
-	//==== MINUTE HANDLE ======================
+	//==== MINUTE HAND ======================
 	ctx . save ();
 	ctx . rotate ((date . getMinutes () + date . getSeconds () / 60 + date . getMilliseconds () / 60000) * Math . PI / 30 - Math . PI * 0.5);
 	ctx . beginPath ();
@@ -646,7 +795,7 @@ var repaint = function () {
 	ctx . lineTo (size * 0.04, ss6);
 	ctx . fill ();
 	ctx . restore ();
-	//==== CHRONOGRAPH SECONDS HAND ================
+	//==== CHRONOGRAPH SECONDS TOTALIZER ================
 	ctx . save ();
 	var ss4 = size * 0.004;
 	if (Chronograph . From === null) ctx . rotate (Math . PI * -0.5);
