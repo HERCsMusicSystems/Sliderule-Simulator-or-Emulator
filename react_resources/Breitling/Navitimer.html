@@ -76,7 +76,8 @@ var Maker = 'Breitling';
 var Status = {
 	Monitor: true,
 	Adjustment: 0,
-	Chronometer: 0
+	Chronometer: 0,
+	Spring: 100
 };
 
 var Chronograph = {
@@ -139,6 +140,8 @@ var size = 0;
 var PushpieceA = false;
 var PushpieceB = false;
 var PushpieceCRotation = 0;
+var PushpieceCMode = 'wind'; // calendar time
+var PushpieceCDelta = 0;
 
 var PushA = function () {
 	PushpieceA = true;
@@ -155,8 +158,20 @@ var PushB = function () {
 	repaint ();
 };
 
-var PushC = function (angle) {
-	console . log (angle);
+var PushC = function (e) {
+	if (e . button == 0) {
+		switch (PushpieceCMode) {
+		case 'time': PushpieceCMode = 'calendar'; break;
+		case 'calendar': PushpieceCMode = 'wind'; break;
+		default: break;
+		}
+	} else {
+		switch (PushpieceCMode) {
+		case 'wind': PushpieceCMode = 'calendar'; break;
+		case 'calendar': PushpieceCMode = 'time'; break;
+		default: break;
+		}
+	}
 };
 
 var MousePoint = function (e) {
@@ -199,7 +214,7 @@ var MouseDown = function (e) {
 		var angle = 1 / 6;
 		if (Math . abs (point_angle - angle) < 0.012) PushA ();
 		if (Math . abs (point_angle - angle - angle) < 0.012) PushB ();
-		if (Math . abs (point_angle - 0.25) < 0.025) PushC (point_angle);
+		if (Math . abs (point_angle - 0.25) < 0.025) PushC (e);
 	}
 };
 
@@ -234,11 +249,17 @@ var MouseMove = function (e) {
 };
 
 var Wheel = function (event) {
-	if (event . deltaY > 0) PushpieceCRotation -= 1;
-	if (event . deltaY < 0) PushpieceCRotation += 1;
+	var delta = 0;
+	if (event . deltaY > 0) delta = -1;
+	if (event . deltaY < 0) delta = 1;
+	PushpieceCRotation += delta;
+	switch (PushpieceCMode) {
+	case 'calendar': PushpieceCDelta = 86400000 * delta; break;
+	case 'time': PushpieceCDelta = 60000 * delta; break;
+	default: break;
+	}
 	while (PushpieceCRotation > 2) PushpieceCRotation -= 3; while (PushpieceCRotation < 0) PushpieceCRotation += 3;
 	repaint ();
-	console . log (PushpieceCRotation, event);
 };
 
 var mark = function (position, r1, r2) {
@@ -258,25 +279,34 @@ var PreviousDateNumber = 0;
 
 var repaint = function () {
 	//==== SIMULATION ====
+	//if (PushpieceCDelta) {Status . Adjustment += PushpieceCDelta; PushpieceCDelta = 0;}
 	var CurrentDateNumber = Date . now ();
 	var DateNumber = CurrentDateNumber + Status . Adjustment;
+	//==== STOP ================
+	if (PreviousDateNumber && PushpieceCMode !== 'wind') {
+		Status . Adjustment -= DateNumber - PreviousDateNumber - PushpieceCDelta;
+		PushpieceCDelta = 0;
+		DateNumber = CurrentDateNumber + Status . Adjustment;
+	}
 	var AllDays = Math . floor (DateNumber / 86400000);
 	var Day = (AllDays % 31) + 1;
 	var date = new Date (DateNumber);
 	if (date . isDST ()) date = new Date (DateNumber - 3600000);
 	var ChronographFraction;
+	//==== CHRONOGRAPH ADJUSTMENT ================
 	if (PreviousDateNumber) {
 		ChronographFraction = Status . Chronometer * (DateNumber - PreviousDateNumber) / 86400000;
 		Status . Adjustment += ChronographFraction;
 	}
+	//================
 	PreviousDateNumber = DateNumber;
-	if (BezelTarget != degree) {
+	if (BezelTarget !== degree) {
 		if (Math . abs (BezelTarget - degree) < 0.003125) {
 			while (BezelTarget < 0) BezelTarget += 1; while (BezelTarget > 1) BezelTarget -= 1;
 			degree = BezelTarget; clearInterval (Interval); Interval = setInterval (repaint, 250);
 		} else {if (degree < BezelTarget) degree += 0.003125; else degree -= 0.003125;}
 	}
-	if (CursorTarget != Cursor) {
+	if (CursorTarget !== Cursor) {
 		if (Math . abs (CursorTarget - Cursor) < 0.003125) {
 			while (CursorTarget < 0) CursorTarget += 1; while (CursorTarget > 1) CursorTarget -= 1;
 			Cursor = CursorTarget; clearInterval (Interval); Interval = setInterval (repaint, 250);
@@ -303,7 +333,7 @@ var repaint = function () {
 	var BezelRight = Math . PI / 2 + 1;
 	var HoursSize = maker . HoursSize * size;
 	var HoursRadius = maker . HoursRadius * size;
-	//==== STATUS ===========
+	//==== STATUS ================
 	var now = Date . now ();
 	if (Status . Monitor) {
 		ctx . fillText (`Current Date: ${new Date (now)}`, 10, 10);
@@ -333,6 +363,14 @@ var repaint = function () {
 	ctx . save ();
 		var bw1 = size * 0.07; var bw2 = size * 0.075; var bw3 = size * 0.075; var bw4 = size * 0.04;
 		var rw1 = size * 0.5; var rw2 = size * 0.45; var rw3 = size * 0.5; var rw4 = size * 0.51;
+		var pub = 0;
+		switch (PushpieceCMode) {
+		case 'wind': pub = 0; break;
+		case 'calendar': pub = size * 0.02; break;
+		case 'time': pub = size * 0.04; break;
+		default: break;
+		}
+		rw1 += pub; rw2 += pub; rw3 += pub; rw4 += pub;
 		ctx . beginPath ();
 		ctx . moveTo (BezelRim, - bw1); ctx . lineTo (rw1, - bw1); ctx . lineTo (rw1, bw1); ctx . lineTo (BezelRim, bw1);
 		ctx . lineWidth = 2;
@@ -386,8 +424,9 @@ var repaint = function () {
 			ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
 			break;
 		}
-	ctx . rotate (pi2 / 12);
+		ctx . fillText ('100%', size * 0.5, size * -0.1);
 	//==============================
+	ctx . rotate (pi2 / 12);
 		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
 		var rw1 = size * 0.5; var rw2 = size * 0.475; var rw3 = size * 0.52; var rw4 = size * 0.53;
 		if (PushpieceB) {var pub = size * 0.005; rw2 -= pub; rw3 -= pub; rw4 -= pub;}
@@ -398,8 +437,8 @@ var repaint = function () {
 		ctx . beginPath ();
 		ctx . moveTo (rw2, - bw2); ctx . lineTo (rw3, - bw3); ctx . bezierCurveTo (rw4, -bw4, rw4, bw4, rw3, bw3); ctx . lineTo (rw2, bw2); ctx . closePath ();
 		ctx . fillStyle = 'navy'; ctx . fill (); ctx . stroke ();
-	ctx . rotate (pi2 / -6);
 	//==============================
+	ctx . rotate (pi2 / -6);
 		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
 		var rw1 = size * 0.5; var rw2 = size * 0.475; var rw3 = size * 0.52; var rw4 = size * 0.53;
 		if (PushpieceA) {var pub = size * 0.005; rw2 -= pub; rw3 -= pub; rw4 -= pub;}
