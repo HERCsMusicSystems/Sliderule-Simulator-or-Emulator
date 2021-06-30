@@ -35,7 +35,7 @@
 <canvas id="Navitimer" width="1200" height="600"
 	onmousedown="javascript: MouseDown (event);" onmouseup="javascript: MouseUp (event);"
 	onmousemove="javascript: MouseMove (event);" onmouseleave="javascript: MouseUp (event);"
-	oncontextmenu="javascript: event . preventDefault ();"
+	onwheel="javascript: Wheel (event);" oncontextmenu="javascript: event . preventDefault ();"
 />
 
 <script type="text/javascript">
@@ -138,6 +138,7 @@ var size = 0;
 
 var PushpieceA = false;
 var PushpieceB = false;
+var PushpieceCRotation = 0;
 
 var PushA = function () {
 	PushpieceA = true;
@@ -230,6 +231,14 @@ var MouseMove = function (e) {
 	}
 	point = p; atan = a;
 	repaint ();
+};
+
+var Wheel = function (event) {
+	if (event . deltaY > 0) PushpieceCRotation -= 1;
+	if (event . deltaY < 0) PushpieceCRotation += 1;
+	while (PushpieceCRotation > 2) PushpieceCRotation -= 3; while (PushpieceCRotation < 0) PushpieceCRotation += 3;
+	repaint ();
+	console . log (PushpieceCRotation, event);
 };
 
 var mark = function (position, r1, r2) {
@@ -332,16 +341,51 @@ var repaint = function () {
 		ctx . moveTo (rw2, - bw2); ctx . lineTo (rw3, - bw3); ctx . bezierCurveTo (rw4, -bw4, rw4, bw4, rw3, bw3); ctx . lineTo (rw2, bw2); ctx . closePath ();
 		ctx . fillStyle = 'silver'; ctx . fill ();
 		ctx . moveTo (rw3, - bw2); ctx . lineTo (rw3, bw2);
-		ctx . moveTo (rw3, 0); ctx . lineTo (rw2, 0);
-		ctx . moveTo (rw3, size * 0.02); ctx . lineTo (rw2, size * 0.02);
-		ctx . moveTo (rw3, size * -0.02); ctx . lineTo (rw2, size * -0.02);
-		ctx . moveTo (rw3, size * 0.038); ctx . lineTo (rw2, size * 0.038);
-		ctx . moveTo (rw3, size * -0.038); ctx . lineTo (rw2, size * -0.038);
-		ctx . moveTo (rw3, size * 0.054); ctx . lineTo (rw2, size * 0.054);
-		ctx . moveTo (rw3, size * -0.054); ctx . lineTo (rw2, size * -0.054);
-		ctx . moveTo (rw3, size * 0.068); ctx . lineTo (rw2, size * 0.068);
-		ctx . moveTo (rw3, size * -0.068); ctx . lineTo (rw2, size * -0.068);
-		ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
+		ctx . strokeStyle = 'black'; ctx . stroke ();
+
+		switch (PushpieceCRotation) {
+		case (1):
+			ctx . beginPath ();
+			ctx . moveTo (rw3, size * -0.0066); ctx . lineTo (rw2, size * -0.0066);
+			ctx . moveTo (rw3, size * 0.0133); ctx . lineTo (rw2, size * 0.0133);
+			ctx . moveTo (rw3, size * -0.026); ctx . lineTo (rw2, size * -0.026);
+			ctx . moveTo (rw3, size * 0.032); ctx . lineTo (rw2, size * 0.032);
+			ctx . moveTo (rw3, size * -0.0433); ctx . lineTo (rw2, size * -0.0433);
+			ctx . moveTo (rw3, size * 0.0487); ctx . lineTo (rw2, size * 0.0487);
+			ctx . moveTo (rw3, size * -0.0587); ctx . lineTo (rw2, size * -0.0587);
+			ctx . moveTo (rw3, size * 0.0633); ctx . lineTo (rw2, size * 0.0633);
+			ctx . moveTo (rw3, size * -0.07); ctx . lineTo (rw2, size * -0.07);
+			ctx . moveTo (rw3, size * 0.0723); ctx . lineTo (rw2, size * 0.0723);
+			ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
+			break;
+		case (2):
+			ctx . beginPath ();
+			ctx . moveTo (rw3, size * 0.0066); ctx . lineTo (rw2, size * 0.0066);
+			ctx . moveTo (rw3, size * -0.0133); ctx . lineTo (rw2, size * -0.0133);
+			ctx . moveTo (rw3, size * 0.026); ctx . lineTo (rw2, size * 0.026);
+			ctx . moveTo (rw3, size * -0.032); ctx . lineTo (rw2, size * -0.032);
+			ctx . moveTo (rw3, size * 0.0433); ctx . lineTo (rw2, size * 0.0433);
+			ctx . moveTo (rw3, size * -0.0487); ctx . lineTo (rw2, size * -0.0487);
+			ctx . moveTo (rw3, size * 0.0587); ctx . lineTo (rw2, size * 0.0587);
+			ctx . moveTo (rw3, size * -0.0633); ctx . lineTo (rw2, size * -0.0633);
+			ctx . moveTo (rw3, size * 0.07); ctx . lineTo (rw2, size * 0.07);
+			ctx . moveTo (rw3, size * -0.0723); ctx . lineTo (rw2, size * -0.0723);
+			ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
+			break;
+		default:
+			ctx . beginPath ();
+			ctx . moveTo (rw3, 0); ctx . lineTo (rw2, 0);
+			ctx . moveTo (rw3, size * 0.02); ctx . lineTo (rw2, size * 0.02);
+			ctx . moveTo (rw3, size * -0.02); ctx . lineTo (rw2, size * -0.02);
+			ctx . moveTo (rw3, size * 0.038); ctx . lineTo (rw2, size * 0.038);
+			ctx . moveTo (rw3, size * -0.038); ctx . lineTo (rw2, size * -0.038);
+			ctx . moveTo (rw3, size * 0.054); ctx . lineTo (rw2, size * 0.054);
+			ctx . moveTo (rw3, size * -0.054); ctx . lineTo (rw2, size * -0.054);
+			ctx . moveTo (rw3, size * 0.068); ctx . lineTo (rw2, size * 0.068);
+			ctx . moveTo (rw3, size * -0.068); ctx . lineTo (rw2, size * -0.068);
+			ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
+			break;
+		}
 	ctx . rotate (pi2 / 12);
 	//==============================
 		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
