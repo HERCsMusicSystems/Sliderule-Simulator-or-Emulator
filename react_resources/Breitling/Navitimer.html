@@ -98,7 +98,7 @@ var AutoAdjust = function () {
 	Status . Adjustment = 86400000 * (date . getDate () - Day);
 };
 
-var BreitlingLogo = new Image (); BreitlingLogo . src = 'BreitlingWhiteScaled.png';
+var BreitlingLogo = new Image (); BreitlingLogo . src = 'BreitlingLogoOnly.png';
 
 var canvas = document . getElementById ('Navitimer');
 var ctx = canvas . getContext ('2d');
@@ -577,9 +577,9 @@ var repaint = function () {
 	ctx . restore ();
 	//==== BREITLING LOGO ======================
 	ctx . save ();
-	var LogoScaling = size / 1200;
+	var LogoScaling = size / 560;
 	ctx . scale (LogoScaling, LogoScaling);
-	ctx . translate (BreitlingLogo . width * -0.5, size * -0.15 / LogoScaling);
+	ctx . translate (BreitlingLogo . width * -0.5, size * -0.19 / LogoScaling);
 	ctx . drawImage (BreitlingLogo, 0, 0);
 	ctx . restore ();
 	//==== WATCH MODEL ======================
