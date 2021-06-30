@@ -76,6 +76,7 @@ var Maker = 'Breitling';
 var Status = {
 	Monitor: true,
 	Adjustment: 0,
+	Chronometer: 0
 };
 
 var Chronograph = {
@@ -244,6 +245,7 @@ var lmark = function (position, r1, r2) {
 };
 
 AutoAdjust ();
+var PreviousDateNumber = 0;
 
 var repaint = function () {
 	//==== SIMULATION ====
@@ -253,6 +255,12 @@ var repaint = function () {
 	var Day = (AllDays % 31) + 1;
 	var date = new Date (DateNumber);
 	if (date . isDST ()) date = new Date (DateNumber - 3600000);
+	var ChronographFraction;
+	if (PreviousDateNumber) {
+		ChronographFraction = Status . Chronometer * (DateNumber - PreviousDateNumber) / 86400000;
+		Status . Adjustment += ChronographFraction;
+	}
+	PreviousDateNumber = DateNumber;
 	if (BezelTarget != degree) {
 		if (Math . abs (BezelTarget - degree) < 0.003125) {
 			while (BezelTarget < 0) BezelTarget += 1; while (BezelTarget > 1) BezelTarget -= 1;
@@ -295,11 +303,13 @@ var repaint = function () {
 		ctx . fillText (`Watch Milliseconds:   ${DateNumber}`, 10, 40);
 		ctx . fillText (`Total Days: ${AllDays}`, 10, 50);
 		ctx . fillText (`Days mod 31: ${Day}`, 10, 60);
+		ctx . fillText (`Adjustment [${Status . Adjustment}] => ${Math . floor (Status . Adjustment / 86400000)} days ${Math . floor (Status . Adjustment / 3600000) % 24} hours ${Math . floor (Status . Adjustment / 60000) % 60} minutes ${((Status . Adjustment / 1000) % 60) .toFixed (3)} seconds`, 10, 70);
 		ctx . fillText (`Chronograph: ${Chronograph . From === null ? '' :
-			Chronograph . To === null ? Math . floor ((now - Chronograph . From) / 3600000) + ':' + Math . floor (((now - Chronograph . From) / 60000) % 60) + ':' + (((now - Chronograph . From) / 1000) % 60) . toFixed (2)
-			: Math . floor ((Chronograph . To - Chronograph . From) / 3600000) + ':' + Math . floor (((Chronograph . To - Chronograph . From) / 60000) % 60)+ ':' + (((Chronograph . To - Chronograph . From) / 1000) % 60) . toFixed (2)}`,
+			Chronograph . To === null ? Math . floor ((now - Chronograph . From) / 3600000) + ':' + Math . floor (((now - Chronograph . From) / 60000) % 60) + ':' + (((now - Chronograph . From) / 1000) % 60) . toFixed (3)
+			: Math . floor ((Chronograph . To - Chronograph . From) / 3600000) + ':' + Math . floor (((Chronograph . To - Chronograph . From) / 60000) % 60) + ':' + (((Chronograph . To - Chronograph . From) / 1000) % 60) . toFixed (3)}`,
 			10, 80);
-		ctx . fillText (`Adjustment [${Status . Adjustment}] => ${Math . floor (Status . Adjustment / 86400000)} days ${Math . floor (Status . Adjustment / 3600000) % 24} hours ${Math . floor (Status . Adjustment / 60000) % 60} minutes ${(Status . Adjustment % 1000) .toFixed (3)} seconds`, 10, 70);
+		ctx . fillText (`Chronometer: [${Status . Chronometer}] => ${Math . floor (Status . Chronometer / 86400000)} days ${Math . floor ((Status . Chronometer / 3600000) % 24)} hours ${Math . floor ((Status . Chronometer / 60000) % 60)} minutes ${((Status . Chronometer / 1000) % 60) . toFixed (3)} seconds per day`, 10, 90);
+		ctx . fillText (`Fraction: ${ChronographFraction}`, 10, 100);
 		//ctx . fillText (`Point angle: ${point_angle}`, 10, 60);
 		//ctx . fillText (`Cursor angle: ${Cursor}`, 10, 70);
 		//ctx . fillText (`Cursor proximity: ${point_cursor_proximity}`, 10, 80);
