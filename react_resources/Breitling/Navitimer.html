@@ -53,8 +53,8 @@ var Makers = {
 		NumberSize2: 0.026,
 		HoursSize: 0.06,
 		HoursRadius: 0.215,
-		Spring: 240000,
-		SpringStep: 60000,
+		Spring: 120000,
+		SpringStep: 1000,
 		TotalizerRadius: 0.172,
 		TotalizerBezel: 0.09,
 		TotalizerStator: 0.075,
@@ -108,6 +108,7 @@ var BezelTarget = 0;
 var Cursor = 0;
 var CursorTarget = 0;
 var CursorVisible = false;
+var SpringVisible = false;
 
 var SetBezelTarget = function (target) {
 	while (target < 0) target += 1; while (target > 1) target -= 1;
@@ -238,8 +239,9 @@ var MouseMove = function (e) {
 	var m = Makers [Status . Maker];
 	CursorVisible = (point && point_length < m . BezelRim * size && point_length > m . StatorBottom * size)
 		|| (length < m . BezelRim * size && length > m . StatorBottom * size);
-	if (! point) return;
 	var a = Math . atan2 (p . y, p . x);
+	SpringVisible = length > m . BezelRadius * size && length < size * 0.53 && Math . abs (a) < 0.15;
+	if (! point) return;
 	if (point_length < m . BezelRim * size && point_length > m . StatorBottom * size) {
 		if (point_length > m . StatorTop * size && point_cursor_proximity > 0.02 && point_cursor_proximity < 0.98) degree += (a - atan) / pi2;
 		else if (point_cursor_proximity < 0.02 || point_cursor_proximity > 0.98) Cursor += (a - atan) / pi2;
@@ -250,16 +252,20 @@ var MouseMove = function (e) {
 	repaint ();
 };
 
+var SpringDelta = 0;
+
 var Wheel = function (event) {
+	if (! SpringVisible) return;
 	var delta = 0;
 	if (event . deltaY > 0) delta = -1;
 	if (event . deltaY < 0) delta = 1;
-	PushpieceCRotation += delta;
 	switch (PushpieceCMode) {
+	case 'wind': if (delta > 0) SpringDelta = Makers [Status . Maker] . SpringStep * delta; break;
 	case 'calendar': PushpieceCDelta = 86400000 * delta; break;
 	case 'time': PushpieceCDelta = 60000 * delta; break;
 	default: break;
 	}
+	PushpieceCRotation += delta;
 	while (PushpieceCRotation > 2) PushpieceCRotation -= 3; while (PushpieceCRotation < 0) PushpieceCRotation += 3;
 	repaint ();
 };
@@ -283,7 +289,6 @@ var repaint = function () {
 	var maker = Makers [Status . Maker];
 	var Chronograph = Status . Chronograph;
 	//==== SIMULATION ====
-	//if (PushpieceCDelta) {Status . Adjustment += PushpieceCDelta; PushpieceCDelta = 0;}
 	var CurrentDateNumber = Date . now ();
 	var DateNumber = CurrentDateNumber + Status . Adjustment;
 	//==== SPRING ================
@@ -295,12 +300,21 @@ var repaint = function () {
 			DateNumber = CurrentDateNumber + Status . Adjustment;
 		}
 	}
+	if (SpringDelta) {
+		if (Status . Spring < DateNumber) Status . Spring = DateNumber;
+		Status . Spring += SpringDelta;
+		if (Status . Spring > DateNumber + maker . Spring) Status . Spring = DateNumber + maker . Spring;
+		SpringDelta = 0;
+	}
 	if (SetChronographFrom) {Chronograph . From = DateNumber; SetChronographFrom = false;}
 	if (SetChronographTo) {Chronograph . To = DateNumber; SetChronographTo = false;}
 	if (SetChronographFromTo) {Chronograph . From += DateNumber - Chronograph . To; Chronograph . To = null; SetChronographFromTo = false;}
 	//==== STOP ================
 	if (PreviousDateNumber && PushpieceCMode !== 'wind') {
 		Status . Adjustment -= DateNumber - PreviousDateNumber - PushpieceCDelta;
+		Status . Spring += PushpieceCDelta;
+		if (Chronograph . From) Chronograph . From += PushpieceCDelta;
+		if (Chronograph . To) Chronograph . To += PushpieceCDelta;
 		PushpieceCDelta = 0;
 		DateNumber = CurrentDateNumber + Status . Adjustment;
 	}
@@ -363,10 +377,12 @@ var repaint = function () {
 			10, 80);
 		ctx . fillText (`Chronometer: [${Status . Chronometer}] => ${Math . floor (Status . Chronometer / 86400000)} days ${Math . floor ((Status . Chronometer / 3600000) % 24)} hours ${Math . floor ((Status . Chronometer / 60000) % 60)} minutes ${((Status . Chronometer / 1000) % 60) . toFixed (3)} seconds per day`, 10, 90);
 		ctx . fillText (`Fraction: ${ChronometerFraction}`, 10, 100);
-		ctx . fillText (`Spring: ${new Date (Status . Spring)}`, 10, 110);
-		//ctx . fillText (`Point angle: ${point_angle}`, 10, 60);
-		//ctx . fillText (`Cursor angle: ${Cursor}`, 10, 70);
-		//ctx . fillText (`Cursor proximity: ${point_cursor_proximity}`, 10, 80);
+		ctx . fillText (`Spring: ${Math . round (100 * (Status . Spring - DateNumber) / maker . Spring)}% [${Status . Spring - DateNumber}]`, 10, 110);
+		ctx . fillText (`Spring Timeout: ${new Date (Status . Spring)}`, 10, 120);
+		// ctx . fillText (`Point: ${point_length}`, 10, 140);
+		// ctx . fillText (`Point angle: ${point_angle}`, 10, 160);
+		// ctx . fillText (`Cursor angle: ${Cursor}`, 10, 170);
+		// ctx . fillText (`Cursor proximity: ${point_cursor_proximity}`, 10, 180);
 	}
 	//=======================
 	ctx . save ();
@@ -439,7 +455,7 @@ var repaint = function () {
 			ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
 			break;
 		}
-		ctx . textAlign = 'left'; ctx . fillText (`${Math . round (100 * (Status . Spring - DateNumber) / maker . Spring)}% [${Status . Spring - DateNumber}]`, size * 0.5, size * -0.1);
+		if (SpringVisible) ctx . fillText (`${Math . round (100 * (Status . Spring - DateNumber) / maker . Spring)}%`, size * 0.5, size * -0.1);
 	//==============================
 	ctx . rotate (pi2 / 12);
 		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
