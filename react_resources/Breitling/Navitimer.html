@@ -53,6 +53,8 @@ var Makers = {
 		NumberSize2: 0.026,
 		HoursSize: 0.06,
 		HoursRadius: 0.215,
+		Spring: 240000,
+		SpringStep: 60000,
 		TotalizerRadius: 0.172,
 		TotalizerBezel: 0.09,
 		TotalizerStator: 0.075,
@@ -71,18 +73,13 @@ var Makers = {
 	}
 };
 
-var Maker = 'Breitling';
-
 var Status = {
+	Maker: 'Breitling',
 	Monitor: true,
 	Adjustment: 0,
+	Chronograph: {From: null, To: null},
 	Chronometer: 0,
-	Spring: 100
-};
-
-var Chronograph = {
-	From: null,
-	To: null
+	Spring: 0
 };
 
 Date . prototype . isDST = function () {
@@ -145,6 +142,7 @@ var PushpieceCDelta = 0;
 
 var PushA = function () {
 	PushpieceA = true;
+	var Chronograph = Status . Chronograph;
 	if (Chronograph . From === null) {Chronograph . From = Date . now (); repaint (); return;}
 	if (Chronograph . To === null) Chronograph . To = Date . now ();
 	else {var now = Date . now (); var delta = now - Chronograph . To; Chronograph . From += delta; Chronograph . To = null;}
@@ -153,6 +151,7 @@ var PushA = function () {
 
 var PushB = function () {
 	PushpieceB = Date . now ();
+	var Chronograph = Status . Chronograph;
 	if (Chronograph . From !== null && Chronograph . To === null) Chronograph . From = Date . now ();
 	else Chronograph . From = Chronograph . To = null;
 	repaint ();
@@ -186,7 +185,7 @@ var MouseDown = function (e) {
 	point_angle = atan / pi2 + 0.25;
 	while (point_angle < 0) point_angle += 1; while (point_angle > 1) point_angle -= 1;
 	point_cursor_proximity = Math . abs (point_angle - Cursor);
-	var m = Makers [Maker];
+	var m = Makers [Status . Maker];
 	if (e . button != 0) {
 		if (point_length < m . BezelRim * size && point_length > m . StatorBottom * size) {
 			var command = prompt ();
@@ -233,7 +232,7 @@ var MouseUp = function (e) {
 var MouseMove = function (e) {
 	var p = MousePoint (e);
 	var length = Math . sqrt (p . x * p . x + p . y * p . y);
-	var m = Makers [Maker];
+	var m = Makers [Status . Maker];
 	CursorVisible = (point && point_length < m . BezelRim * size && point_length > m . StatorBottom * size)
 		|| (length < m . BezelRim * size && length > m . StatorBottom * size);
 	if (! point) return;
@@ -278,10 +277,14 @@ AutoAdjust ();
 var PreviousDateNumber = 0;
 
 var repaint = function () {
+	var maker = Makers [Status . Maker];
+	var Chronograph = Status . Chronograph;
 	//==== SIMULATION ====
 	//if (PushpieceCDelta) {Status . Adjustment += PushpieceCDelta; PushpieceCDelta = 0;}
 	var CurrentDateNumber = Date . now ();
 	var DateNumber = CurrentDateNumber + Status . Adjustment;
+	//==== SPRING ================
+	if (! Status . Spring) {Status . Spring = DateNumber + maker . Spring;}
 	//==== STOP ================
 	if (PreviousDateNumber && PushpieceCMode !== 'wind') {
 		Status . Adjustment -= DateNumber - PreviousDateNumber - PushpieceCDelta;
@@ -292,11 +295,11 @@ var repaint = function () {
 	var Day = (AllDays % 31) + 1;
 	var date = new Date (DateNumber);
 	if (date . isDST ()) date = new Date (DateNumber - 3600000);
-	var ChronographFraction;
-	//==== CHRONOGRAPH ADJUSTMENT ================
+	var ChronometerFraction;
+	//==== CHRONOMETER ADJUSTMENT ================
 	if (PreviousDateNumber) {
-		ChronographFraction = Status . Chronometer * (DateNumber - PreviousDateNumber) / 86400000;
-		Status . Adjustment += ChronographFraction;
+		ChronometerFraction = Status . Chronometer * (DateNumber - PreviousDateNumber) / 86400000;
+		Status . Adjustment += ChronometerFraction;
 	}
 	//================
 	PreviousDateNumber = DateNumber;
@@ -316,7 +319,6 @@ var repaint = function () {
 	canvas . width = window . innerWidth;
 	canvas . height = window . innerHeight;
 	size = canvas . height;
-	var maker = Makers [Maker];
 	var BezelRadius = - maker . BezelRadius * size;
 	var BezelDent = BezelRadius / -20;
 	var BezelRim = maker . BezelRim * size;
@@ -348,7 +350,8 @@ var repaint = function () {
 			: Math . floor ((Chronograph . To - Chronograph . From) / 3600000) + ':' + Math . floor (((Chronograph . To - Chronograph . From) / 60000) % 60) + ':' + (((Chronograph . To - Chronograph . From) / 1000) % 60) . toFixed (3)}`,
 			10, 80);
 		ctx . fillText (`Chronometer: [${Status . Chronometer}] => ${Math . floor (Status . Chronometer / 86400000)} days ${Math . floor ((Status . Chronometer / 3600000) % 24)} hours ${Math . floor ((Status . Chronometer / 60000) % 60)} minutes ${((Status . Chronometer / 1000) % 60) . toFixed (3)} seconds per day`, 10, 90);
-		ctx . fillText (`Fraction: ${ChronographFraction}`, 10, 100);
+		ctx . fillText (`Fraction: ${ChronometerFraction}`, 10, 100);
+		ctx . fillText (`Spring: ${new Date (Status . Spring)}`, 10, 110);
 		//ctx . fillText (`Point angle: ${point_angle}`, 10, 60);
 		//ctx . fillText (`Cursor angle: ${Cursor}`, 10, 70);
 		//ctx . fillText (`Cursor proximity: ${point_cursor_proximity}`, 10, 80);
@@ -424,7 +427,7 @@ var repaint = function () {
 			ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
 			break;
 		}
-		ctx . fillText ('100%', size * 0.5, size * -0.1);
+		ctx . textAlign = 'left'; ctx . fillText (Math . round (100 * (Status . Spring - DateNumber) / maker . Spring) + '%', size * 0.5, size * -0.1);
 	//==============================
 	ctx . rotate (pi2 / 12);
 		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
