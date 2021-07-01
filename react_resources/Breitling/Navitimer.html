@@ -140,19 +140,22 @@ var PushpieceCRotation = 0;
 var PushpieceCMode = 'wind'; // calendar time
 var PushpieceCDelta = 0;
 
+var SetChronographFrom = false;
+var SetChronographTo = false;
+var SetChronographFromTo = false;
 var PushA = function () {
 	PushpieceA = true;
 	var Chronograph = Status . Chronograph;
-	if (Chronograph . From === null) {Chronograph . From = Date . now (); repaint (); return;}
-	if (Chronograph . To === null) Chronograph . To = Date . now ();
-	else {var now = Date . now (); var delta = now - Chronograph . To; Chronograph . From += delta; Chronograph . To = null;}
+	if (Chronograph . From === null) {SetChronographFrom = true; repaint (); return;}
+	if (Chronograph . To === null) SetChronographTo = true;
+	else SetChronographFromTo = true;
 	repaint ();
 };
 
 var PushB = function () {
 	PushpieceB = Date . now ();
 	var Chronograph = Status . Chronograph;
-	if (Chronograph . From !== null && Chronograph . To === null) Chronograph . From = Date . now ();
+	if (Chronograph . From !== null && Chronograph . To === null) SetChronographFrom = true;
 	else Chronograph . From = Chronograph . To = null;
 	repaint ();
 };
@@ -285,6 +288,16 @@ var repaint = function () {
 	var DateNumber = CurrentDateNumber + Status . Adjustment;
 	//==== SPRING ================
 	if (! Status . Spring) {Status . Spring = DateNumber + maker . Spring;}
+	else {
+		if (Status . Spring <= DateNumber) {
+			var delta = DateNumber - PreviousDateNumber;
+			Status . Adjustment -= delta;
+			DateNumber = CurrentDateNumber + Status . Adjustment;
+		}
+	}
+	if (SetChronographFrom) {Chronograph . From = DateNumber; SetChronographFrom = false;}
+	if (SetChronographTo) {Chronograph . To = DateNumber; SetChronographTo = false;}
+	if (SetChronographFromTo) {Chronograph . From += DateNumber - Chronograph . To; Chronograph . To = null; SetChronographFromTo = false;}
 	//==== STOP ================
 	if (PreviousDateNumber && PushpieceCMode !== 'wind') {
 		Status . Adjustment -= DateNumber - PreviousDateNumber - PushpieceCDelta;
@@ -336,17 +349,16 @@ var repaint = function () {
 	var HoursSize = maker . HoursSize * size;
 	var HoursRadius = maker . HoursRadius * size;
 	//==== STATUS ================
-	var now = Date . now ();
 	if (Status . Monitor) {
-		ctx . fillText (`Current Date: ${new Date (now)}`, 10, 10);
+		ctx . fillText (`Current Date: ${new Date (CurrentDateNumber)}`, 10, 10);
 		ctx . fillText (`Watch Date:   ${date . toString ()}`, 10, 20);
-		ctx . fillText (`Current Milliseconds: ${now}`, 10, 30);
+		ctx . fillText (`Current Milliseconds: ${CurrentDateNumber}`, 10, 30);
 		ctx . fillText (`Watch Milliseconds:   ${DateNumber}`, 10, 40);
 		ctx . fillText (`Total Days: ${AllDays}`, 10, 50);
 		ctx . fillText (`Days mod 31: ${Day}`, 10, 60);
 		ctx . fillText (`Adjustment [${Status . Adjustment}] => ${Math . floor (Status . Adjustment / 86400000)} days ${Math . floor (Status . Adjustment / 3600000) % 24} hours ${Math . floor (Status . Adjustment / 60000) % 60} minutes ${((Status . Adjustment / 1000) % 60) .toFixed (3)} seconds`, 10, 70);
-		ctx . fillText (`Chronograph: ${Chronograph . From === null ? '' :
-			Chronograph . To === null ? Math . floor ((now - Chronograph . From) / 3600000) + ':' + Math . floor (((now - Chronograph . From) / 60000) % 60) + ':' + (((now - Chronograph . From) / 1000) % 60) . toFixed (3)
+		ctx . fillText (`Chronograph: [${Chronograph . From} <=> ${Chronograph . To}] ${Chronograph . From === null ? '' :
+			Chronograph . To === null ? Math . floor ((DateNumber - Chronograph . From) / 3600000) + ':' + Math . floor (((DateNumber - Chronograph . From) / 60000) % 60) + ':' + (((DateNumber - Chronograph . From) / 1000) % 60) . toFixed (3)
 			: Math . floor ((Chronograph . To - Chronograph . From) / 3600000) + ':' + Math . floor (((Chronograph . To - Chronograph . From) / 60000) % 60) + ':' + (((Chronograph . To - Chronograph . From) / 1000) % 60) . toFixed (3)}`,
 			10, 80);
 		ctx . fillText (`Chronometer: [${Status . Chronometer}] => ${Math . floor (Status . Chronometer / 86400000)} days ${Math . floor ((Status . Chronometer / 3600000) % 24)} hours ${Math . floor ((Status . Chronometer / 60000) % 60)} minutes ${((Status . Chronometer / 1000) % 60) . toFixed (3)} seconds per day`, 10, 90);
@@ -427,7 +439,7 @@ var repaint = function () {
 			ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
 			break;
 		}
-		ctx . textAlign = 'left'; ctx . fillText (Math . round (100 * (Status . Spring - DateNumber) / maker . Spring) + '%', size * 0.5, size * -0.1);
+		ctx . textAlign = 'left'; ctx . fillText (`${Math . round (100 * (Status . Spring - DateNumber) / maker . Spring)}% [${Status . Spring - DateNumber}]`, size * 0.5, size * -0.1);
 	//==============================
 	ctx . rotate (pi2 / 12);
 		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
