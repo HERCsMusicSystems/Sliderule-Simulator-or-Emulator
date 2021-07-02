@@ -73,27 +73,13 @@ var Makers = {
 	}
 };
 
-var SoftReset = function () {
-
-};
-var HardReset = function () {
-	return {
-		Maker: 'Breitling',
-		Monitor: false,
-		Adjustment: 0,
-		Chronograph: {From: null, To: null},
-		Chronometer: 0,
-		Spring: 0
-	}
-};
-
 var Status = localStorage . getItem ('Navitimer');
 if (Status === null) Status = {
 	Maker: 'Breitling',
 	Monitor: true,
 	Adjustment: 0,
 	Chronograph: {From: null, To: null},
-	Chronometer: 0,
+	Chronometer: Math . floor (Math . random () * 10000 - 4000),
 	Spring: 0
 }; else Status = JSON . parse (Status);
 
