@@ -31,7 +31,7 @@
 <header>
 </header>
 
-<body style="margin: 0px;">
+<body style="margin: 0px;" onbeforeunload="javascript: localStorage . setItem ('Navitimer', JSON . stringify (Status));">
 <canvas id="Navitimer" width="1200" height="600"
 	onmousedown="javascript: MouseDown (event);" onmouseup="javascript: MouseUp (event);"
 	onmousemove="javascript: MouseMove (event);" onmouseleave="javascript: MouseUp (event);"
@@ -53,8 +53,8 @@ var Makers = {
 		NumberSize2: 0.026,
 		HoursSize: 0.06,
 		HoursRadius: 0.215,
-		Spring: 120000,
-		SpringStep: 1000,
+		Spring: 129600000,
+		SpringStep: 30000,
 		TotalizerRadius: 0.172,
 		TotalizerBezel: 0.09,
 		TotalizerStator: 0.075,
@@ -73,14 +73,29 @@ var Makers = {
 	}
 };
 
-var Status = {
+var SoftReset = function () {
+
+};
+var HardReset = function () {
+	return {
+		Maker: 'Breitling',
+		Monitor: false,
+		Adjustment: 0,
+		Chronograph: {From: null, To: null},
+		Chronometer: 0,
+		Spring: 0
+	}
+};
+
+var Status = localStorage . getItem ('Navitimer');
+if (Status === null) Status = {
 	Maker: 'Breitling',
 	Monitor: true,
 	Adjustment: 0,
 	Chronograph: {From: null, To: null},
 	Chronometer: 0,
 	Spring: 0
-};
+}; else Status = JSON . parse (Status);
 
 Date . prototype . isDST = function () {
 	var jan = new Date (this . getFullYear (), 0, 1);
@@ -89,13 +104,21 @@ Date . prototype . isDST = function () {
 	return this . getTimezoneOffset () < delta;
 }
 
-var AutoAdjust = function () {
+/*
+1. SOFT ADJUST => Adjust time and spring.
+2. HARD ADJUST => Adjust time and Chronometer = 0.
+3. RESET       => Adjust time and Chronometer = RND.
+*/
+var SoftAdjust = function () {
 	var DateNumber = Date . now ();
 	var date = new Date (DateNumber);
 	if (date . isDST ()) date = new Date (DateNumber - 3600000);
 	var Day = (Math . floor (DateNumber / 86400000) % 31) + 1;
 	Status . Adjustment = 86400000 * (date . getDate () - Day);
+	Status . Spring = 0;
 };
+var HardAdjust = function () {SoftAdjust (); Status . Chronometer = 0;};
+var ResetAdjust = function () {SoftAdjust (); Status . Chronometer = Math . floor (Math . random () * 10000 - 4000);};
 
 var BreitlingLogo = new Image (); BreitlingLogo . src = 'BreitlingLogoOnly.png';
 
@@ -184,6 +207,8 @@ var MousePoint = function (e) {
 
 var MouseDown = function (e) {
 	point = MousePoint (e);
+	if (point . x + canvas . width / 2 < 50 && point . y + canvas . height / 2 < 50) Status . Monitor = ! Status . Monitor;
+	if (Math . abs (point . x) < 5 && Math . abs (point . y) < 5) HardAdjust ();
 	point_length = Math . sqrt (point . x * point . x + point . y * point . y);
 	atan = Math . atan2 (point . y, point . x);
 	point_angle = atan / pi2 + 0.25;
@@ -225,7 +250,8 @@ var MouseUp = function (e) {
 	point = null; point_length = 0;
 	if (PushpieceB) {
 		var delay = Math . floor ((Date . now () - PushpieceB) / 1000);
-		if (delay >= 4) AutoAdjust ();
+		if (delay >= 8) ResetAdjust ();
+		else if (delay >= 4) SoftAdjust ();
 	}
 	if (PushpieceA || PushpieceB) {
 		PushpieceA = PushpieceB = false;
@@ -282,7 +308,6 @@ var lmark = function (position, r1, r2) {
 	ctx . moveTo (r1 * sin, r1 * cos); ctx . lineTo (r2 * sin, r2 * cos);
 };
 
-AutoAdjust ();
 var PreviousDateNumber = 0;
 
 var repaint = function () {
@@ -375,7 +400,8 @@ var repaint = function () {
 			Chronograph . To === null ? Math . floor ((DateNumber - Chronograph . From) / 3600000) + ':' + Math . floor (((DateNumber - Chronograph . From) / 60000) % 60) + ':' + (((DateNumber - Chronograph . From) / 1000) % 60) . toFixed (3)
 			: Math . floor ((Chronograph . To - Chronograph . From) / 3600000) + ':' + Math . floor (((Chronograph . To - Chronograph . From) / 60000) % 60) + ':' + (((Chronograph . To - Chronograph . From) / 1000) % 60) . toFixed (3)}`,
 			10, 80);
-		ctx . fillText (`Chronometer: [${Status . Chronometer}] => ${Math . floor (Status . Chronometer / 86400000)} days ${Math . floor ((Status . Chronometer / 3600000) % 24)} hours ${Math . floor ((Status . Chronometer / 60000) % 60)} minutes ${((Status . Chronometer / 1000) % 60) . toFixed (3)} seconds per day`, 10, 90);
+		if (Status . Chronometer >= 0) ctx . fillText (`Chronometer: [${Status . Chronometer}] => ${Math . floor (Status . Chronometer / 86400000)} days ${Math . floor ((Status . Chronometer / 3600000) % 24)} hours ${Math . floor ((Status . Chronometer / 60000) % 60)} minutes ${((Status . Chronometer / 1000) % 60) . toFixed (3)} seconds per day`, 10, 90);
+		else ctx . fillText (`Chronometer: [${Status . Chronometer}] => ${Math . ceil (Status . Chronometer / 86400000)} days ${Math . ceil ((Status . Chronometer / 3600000) % 24)} hours ${Math . ceil ((Status . Chronometer / 60000) % 60)} minutes ${((Status . Chronometer / 1000) % 60) . toFixed (3)} seconds per day`, 10, 90);
 		ctx . fillText (`Fraction: ${ChronometerFraction}`, 10, 100);
 		ctx . fillText (`Spring: ${Math . round (100 * (Status . Spring - DateNumber) / maker . Spring)}% [${Status . Spring - DateNumber}]`, 10, 110);
 		ctx . fillText (`Spring Timeout: ${new Date (Status . Spring)}`, 10, 120);
