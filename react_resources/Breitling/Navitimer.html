@@ -80,7 +80,8 @@ if (Status === null) Status = {
 	Adjustment: 0,
 	Chronograph: {From: null, To: null},
 	Chronometer: Math . floor (Math . random () * 10000 - 4000),
-	Spring: 0
+	Spring: 0,
+	PreviousDateNumber: 0
 }; else Status = JSON . parse (Status);
 
 Date . prototype . isDST = function () {
@@ -294,8 +295,6 @@ var lmark = function (position, r1, r2) {
 	ctx . moveTo (r1 * sin, r1 * cos); ctx . lineTo (r2 * sin, r2 * cos);
 };
 
-var PreviousDateNumber = 0;
-
 var repaint = function () {
 	var maker = Makers [Status . Maker];
 	var Chronograph = Status . Chronograph;
@@ -306,7 +305,7 @@ var repaint = function () {
 	if (! Status . Spring) {Status . Spring = DateNumber + maker . Spring;}
 	else {
 		if (Status . Spring <= DateNumber) {
-			var delta = DateNumber - PreviousDateNumber;
+			var delta = DateNumber - Status . PreviousDateNumber;
 			Status . Adjustment -= delta;
 			DateNumber = CurrentDateNumber + Status . Adjustment;
 		}
@@ -321,8 +320,8 @@ var repaint = function () {
 	if (SetChronographTo) {Chronograph . To = DateNumber; SetChronographTo = false;}
 	if (SetChronographFromTo) {Chronograph . From += DateNumber - Chronograph . To; Chronograph . To = null; SetChronographFromTo = false;}
 	//==== STOP ================
-	if (PreviousDateNumber && PushpieceCMode !== 'wind') {
-		Status . Adjustment -= DateNumber - PreviousDateNumber - PushpieceCDelta;
+	if (Status . PreviousDateNumber && PushpieceCMode !== 'wind') {
+		Status . Adjustment -= DateNumber - Status . PreviousDateNumber - PushpieceCDelta;
 		Status . Spring += PushpieceCDelta;
 		if (Chronograph . From) Chronograph . From += PushpieceCDelta;
 		if (Chronograph . To) Chronograph . To += PushpieceCDelta;
@@ -335,12 +334,12 @@ var repaint = function () {
 	if (date . isDST ()) date = new Date (DateNumber - 3600000);
 	var ChronometerFraction;
 	//==== CHRONOMETER ADJUSTMENT ================
-	if (PreviousDateNumber) {
-		ChronometerFraction = Status . Chronometer * (DateNumber - PreviousDateNumber) / 86400000;
+	if (Status . PreviousDateNumber) {
+		ChronometerFraction = Status . Chronometer * (DateNumber - Status . PreviousDateNumber) / 86400000;
 		Status . Adjustment += ChronometerFraction;
 	}
 	//================
-	PreviousDateNumber = DateNumber;
+	Status . PreviousDateNumber = DateNumber;
 	if (BezelTarget !== degree) {
 		if (Math . abs (BezelTarget - degree) < 0.003125) {
 			while (BezelTarget < 0) BezelTarget += 1; while (BezelTarget > 1) BezelTarget -= 1;
