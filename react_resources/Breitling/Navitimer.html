@@ -77,7 +77,7 @@ var Status = localStorage . getItem ('Navitimer');
 if (Status === null) Status = {
 	Maker: 'Breitling',
 	Monitor: true,
-	Adjustment: 0,
+	Adjustment: Math . round (Math . random () * 86400000 - 43200000),
 	Chronograph: {From: null, To: null},
 	Chronometer: Math . floor (Math . random () * 10000 - 4000),
 	Spring: 0,
