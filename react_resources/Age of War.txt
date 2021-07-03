@@ -1,0 +1,72 @@
+A Game if Conquest in Feudal Japan for 2 - 6 Players
+by Reiner Knizia
+
+Dice:
+	1 => 1 Infantry
+	2 => 2 Infantry
+	6 => 3 Infantry
+	4 => Archery
+	3 => Cavalry
+	5 => Daimyo
+
+Clan: Shimazu (green)
+	Castle 3 3: Kumamoto
+		Daimyo Daimyo
+		Archery
+		Cavalry
+		4 Infantry
+Clan: Chosokabe (black)
+	Castle 4 1: Marugame
+		Daimyo Daimyo
+		Cavalry
+	Castle 2: Matsuyama
+		Daimyo
+		4 Infantry
+		4 Infantry
+Clan: Mori (red)
+	Castle 5 2: Takahashi
+		Cavalry Cavalry
+		5 Infantry
+		2 Infantry
+	Castle 2: Gassantoda
+		Daimyo
+		8 Infantry
+Clan: Uesugi (violet)
+	Castle 8 3: Kitanosho
+		Daimyo
+		Archery Cavalry
+		6 Infantry
+	Castle 4: Kasugayama
+		Acrhery Archery
+		Cavalry Cavalry
+Clan: Tokugawa (gray)
+	Castle 8 1: Inuyama
+		Daimyo
+		Archery Archery
+	Castle 2: Kiyosu
+		Daimyo
+		Archery
+		Cavalry
+		3 Infantry
+	Castle 3: Edo
+		Archery Cavalry
+		Archery Cavalry
+		3 Infantry
+Clan: Oda (yellow)
+	Castle 10 1: Gifu
+		Daimyo
+		Archery
+		Cavalry
+	Castle 1: Odani
+		10 Infantry
+	Castle 2: Matsumoto
+		Archery
+		Archery
+		7 Infantry
+	Castle 3: Azucho
+		Archery
+		Cavalry Cavalry
+		5 Infantry
+
+Win: points, castles, clans then tie.
+
