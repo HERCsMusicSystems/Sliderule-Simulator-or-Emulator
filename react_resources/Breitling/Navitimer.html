@@ -73,15 +73,16 @@ var Makers = {
 	}
 };
 
+var RandomAdjustment = Math . round (Math . random () * 86400000 - 43200000);
 var Status = localStorage . getItem ('Navitimer');
 if (Status === null) Status = {
 	Maker: 'Breitling',
-	Monitor: true,
-	Adjustment: Math . round (Math . random () * 86400000 - 43200000),
+	Monitor: false,
+	Adjustment: RandomAdjustment,
 	Chronograph: {From: null, To: null},
 	Chronometer: Math . floor (Math . random () * 10000 - 4000),
-	Spring: 0,
-	PreviousDateNumber: 0
+	Spring: Date . now () + RandomAdjustment,
+	PreviousDateNumber: Date . now () - 250 + RandomAdjustment
 }; else Status = JSON . parse (Status);
 
 Date . prototype . isDST = function () {
