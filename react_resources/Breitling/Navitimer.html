@@ -329,9 +329,10 @@ var repaint = function () {
 		PushpieceCDelta = 0;
 		DateNumber = CurrentDateNumber + Status . Adjustment;
 	}
-	var AllDays = Math . floor (DateNumber / 86400000);
-	var Day = (AllDays % 31) + 1;
 	var date = new Date (DateNumber);
+	var offset = date . getTimezoneOffset ();
+	var AllDays = Math . floor ((DateNumber - offset * 60000) / 86400000);
+	var Day = (AllDays % 31) + 1;
 	if (date . isDST ()) date = new Date (DateNumber - 3600000);
 	var ChronometerFraction;
 	//==== CHRONOMETER ADJUSTMENT ================
@@ -391,6 +392,7 @@ var repaint = function () {
 		ctx . fillText (`Fraction: ${ChronometerFraction}`, 10, 100);
 		ctx . fillText (`Spring: ${Math . round (100 * (Status . Spring - DateNumber) / maker . Spring)}% [${Status . Spring - DateNumber}]`, 10, 110);
 		ctx . fillText (`Spring Timeout: ${new Date (Status . Spring)}`, 10, 120);
+		ctx . fillText (`Timezone offset: ${offset / 60} hours`, 10, 130);
 		// ctx . fillText (`Point: ${point_length}`, 10, 140);
 		// ctx . fillText (`Point angle: ${point_angle}`, 10, 160);
 		// ctx . fillText (`Cursor angle: ${Cursor}`, 10, 170);
