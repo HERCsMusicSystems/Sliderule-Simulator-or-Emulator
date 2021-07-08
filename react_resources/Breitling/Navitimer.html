@@ -78,6 +78,7 @@ var Makers = {
 		TotalizerArrowColour: 'red',
 		TotalizerArrowEndColour: 'white',
 		TotalizerArrowBorderColour: 'black',
+		TotalizerArrowBorderWidth: 0.2,
 		PinColour: 'navy'
 	},
 	BreitlingBlackSteel: {
@@ -117,7 +118,8 @@ var Makers = {
 		TotalizerArrowColour: 'red',
 		TotalizerArrowEndColour: 'silver',
 		TotalizerArrowBorderColour: 'black',
-		PinColour: 'lime'
+		TotalizerArrowBorderWidth: 0.2,
+		PinColour: 'navy'
 	}
 };
 
@@ -847,6 +849,7 @@ var repaint = function () {
 		if (Chronograph . To === null) ctx . rotate (Math . PI * (-0.5 + (((DateNumber - Chronograph . From) % 1800000) / 900000)));
 		else ctx . rotate (Math . PI * (-0.5 + (((Chronograph . To - Chronograph . From) % 1800000) / 900000)));
 	}
+	ctx . lineWidth = maker . TotalizerArrowBorderWidth;
 	ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
 	ctx . lineTo (ar5, - ar3); ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0);
 	ctx . lineTo (ar7, ar3); ctx . lineTo (ar5, ar3); ctx . closePath ();
@@ -896,6 +899,7 @@ var repaint = function () {
 		if (Chronograph . To === null) ctx . rotate (Math . PI * (-0.5 + (((DateNumber - Chronograph . From) % 43200000) / 21600000)));
 		else ctx . rotate (Math . PI * (-0.5 + (((Chronograph . To - Chronograph . From) % 43200000) / 21600000)));
 	}
+	ctx . lineWidth = maker . TotalizerArrowBorderWidth;
 	ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
 	ctx . lineTo (ar5, - ar3); ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0);
 	ctx . lineTo (ar7, ar3); ctx . lineTo (ar5, ar3); ctx . closePath ();
@@ -942,6 +946,7 @@ var repaint = function () {
 	var ar7 = maker . TotalizerArrow7 * size;
 	r1 = Math . asin (ar2 / ar4);
 	ctx . rotate ((date . getSeconds () + date . getMilliseconds () / 1000) * Math . PI / 30 - Math . PI * 0.5);
+	ctx . lineWidth = maker . TotalizerArrowBorderWidth;
 	ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
 	ctx . lineTo (ar5, - ar3); ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0);
 	ctx . lineTo (ar7, ar3); ctx . lineTo (ar5, ar3); ctx . closePath ();
