@@ -135,6 +135,13 @@ if (Status === null) Status = {
 	PreviousDateNumber: Date . now () - 250 + RandomAdjustment
 }; else Status = JSON . parse (Status);
 
+var CirculateMaker = function () {
+	var names = Object . keys (Makers);
+	var ind = names . indexOf (Status . Maker) + 1;
+	if (ind >= names . length) ind = 0;
+	Status . Maker = names [ind];
+};
+
 Date . prototype . isDST = function () {
 	var jan = new Date (this . getFullYear (), 0, 1);
 	var jul = new Date (this . getFullYear (), 6, 1);
@@ -245,7 +252,8 @@ var MousePoint = function (e) {
 
 var MouseDown = function (e) {
 	point = MousePoint (e);
-	if (point . x + canvas . width / 2 < 50 && point . y + canvas . height / 2 < 50) Status . Monitor = ! Status . Monitor;
+	if (point . x + canvas . width / 2 < 50 && point . y + canvas . height / 2 < 50) {Status . Monitor = ! Status . Monitor; return;}
+	if (point . x > size * -0.1 && point . x < size * 0.1 & point . y > size * -0.2 && point . y < size * -0.1) {CirculateMaker (); return;}
 	if (Math . abs (point . x) < 5 && Math . abs (point . y) < 5) HardAdjust ();
 	point_length = Math . sqrt (point . x * point . x + point . y * point . y);
 	atan = Math . atan2 (point . y, point . x);
