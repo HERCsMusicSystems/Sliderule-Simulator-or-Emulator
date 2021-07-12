@@ -100,7 +100,8 @@ var Makers = {
 		BezelRim: 0.44,
 		BezelNumbers: 0.4,
 		BezelColour: 'black', BezelMarkings: 'white', BezelAlt: 'red',
-		BezelRimColour: 'black', BezelRimLineWidth: 4, BezelRimRingColour: 'gold',
+		BezelRimColour: 'black', BezelRimRingColour: 'gold',
+		BezelCorrugatedLineColour: 'silver',
 		StatorTop: 0.37,
 		StatorBottom: 0.32,
 		MinuteConversionLine: 0.31,
@@ -637,7 +638,7 @@ var repaint = function () {
 	//ctx . arc (0, 0, StatorTop, 0, Math . PI * 2);
 	//ctx . stroke (); ctx . fillStyle = maker . BezelColour; ctx . fill ();
 	ctx . strokeStyle = maker . BezelAlt;
-	ctx . lineWidth = maker . BezelRimLineWidth;
+	if (maker . BezelRimLineWidth) ctx . lineWidth = maker . BezelRimLineWidth;
 	ctx . beginPath (); ctx . arc (0, 0, BezelRim, 0, Math . PI * 2); ctx . fillStyle = maker . BezelColour; ctx . fill (); ctx . strokeStyle = maker . BezelRimRingColour; ctx . stroke ();
 	//ctx . beginPath (); ctx . arc (0, 0, BezelRim + 7, 0, Math . PI * 2); ctx . stroke ();
 	//ctx . beginPath (); ctx . arc (0, 0, StatorTop, 0, Math . PI * 2); ctx . stroke ();
