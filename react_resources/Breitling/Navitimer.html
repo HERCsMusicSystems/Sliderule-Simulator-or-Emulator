@@ -49,6 +49,7 @@ var Makers = {
 		// BackgroundColour: 'black',
 		MonitorColour: 'blue', Monitor: '14px georgia', MonitorStep: 18,
 		Logo: BreitlingLogo, LogoScaling: 1 / 560, LogoName: 'COSMONAUTE', LogoYear: 1962,
+		PushpieceColour: 'silver',
 		BezelRadius: 0.48,
 		BezelRim: 0.44,
 		BezelNumbers: 0.4,
@@ -63,8 +64,7 @@ var Makers = {
 		NumberSize2: 0.026,
 		HoursSize: 0.06,
 		HoursRadius: 0.215,
-		Spring: 129600000,
-		SpringStep: 1800000,
+		Spring: 129600000, SpringStep: 1800000, SpringMarker: 'blue',
 		TotalizerRadius: 0.172,
 		TotalizerBezel: 0.09,
 		TotalizerStator: 0.075,
@@ -96,6 +96,7 @@ var Makers = {
 		// BackgroundColour: 'skyblue',
 		MonitorColour: 'lime',
 		Logo: BreitlingLogo, LogoScaling: 1 / 560, LogoName: 'COSMONAUTE', LogoYear: 1962,
+		PushpieceColour: 'gray',
 		BezelRadius: 0.48,
 		BezelRim: 0.44,
 		BezelNumbers: 0.4,
@@ -143,6 +144,7 @@ var Makers = {
 		// BackgroundColour: 'black',
 		MonitorColour: 'lime',
 		Logo: AtariLogo, LogoScaling: 1 / 1450, LogoName: '', LogoYear: '',
+		PushpieceColour: 'gray',
 		BezelRadius: 0.48,
 		BezelRim: 0.44,
 		BezelNumbers: 0.4,
@@ -157,8 +159,7 @@ var Makers = {
 		NumberSize2: 0.026,
 		HoursSize: 0.06,
 		HoursRadius: 0.215,
-		Spring: 129600000,
-		SpringStep: 1800000,
+		Spring: 129600000, SpringStep: 1800000, SpringMarker: 'lime',
 		TotalizerRadius: 0.172,
 		TotalizerBezel: 0.09,
 		TotalizerStator: 0.075,
@@ -596,6 +597,7 @@ var repaint = function () {
 			ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
 			break;
 		}
+		if (maker . SpringMarker) ctx . fillStyle = maker . SpringMarker;
 		if (SpringVisible) ctx . fillText (`${Math . round (100 * (Status . Spring - DateNumber) / maker . Spring)}%`, size * 0.5, size * -0.1);
 	//==============================
 	ctx . rotate (pi2 / 12);
@@ -608,7 +610,7 @@ var repaint = function () {
 		ctx . fillStyle = 'silver'; ctx . fill (); ctx . stroke ();
 		ctx . beginPath ();
 		ctx . moveTo (rw2, - bw2); ctx . lineTo (rw3, - bw3); ctx . bezierCurveTo (rw4, -bw4, rw4, bw4, rw3, bw3); ctx . lineTo (rw2, bw2); ctx . closePath ();
-		ctx . fillStyle = 'navy'; ctx . fill (); ctx . stroke ();
+		ctx . fillStyle = maker . PushpieceColour || 'navy'; ctx . fill (); ctx . stroke ();
 	//==============================
 	ctx . rotate (pi2 / -6);
 		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
@@ -620,7 +622,7 @@ var repaint = function () {
 		ctx . fillStyle = 'silver'; ctx . fill (); ctx . stroke ();
 		ctx . beginPath ();
 		ctx . moveTo (rw2, - bw2); ctx . lineTo (rw3, - bw3); ctx . bezierCurveTo (rw4, -bw4, rw4, bw4, rw3, bw3); ctx . lineTo (rw2, bw2); ctx . closePath ();
-		ctx . fillStyle = 'navy'; ctx . fill (); ctx . stroke ();
+		ctx . fillStyle = maker . PushpieceColour || 'navy'; ctx . fill (); ctx . stroke ();
 	ctx . restore ();
 	//==== BEZEL RIM ======================
 	ctx . save ();
