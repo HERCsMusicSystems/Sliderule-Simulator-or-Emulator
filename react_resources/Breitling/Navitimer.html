@@ -31,7 +31,7 @@
 <header>
 </header>
 
-<body style="margin: 0px;" onbeforeunload="javascript: localStorage . setItem ('Navitimer', JSON . stringify (Status));">
+<body style="margin: 0px; background-size: cover;" onbeforeunload="javascript: localStorage . setItem ('Navitimer', JSON . stringify (Status));">
 <canvas id="Navitimer" width="1200" height="600"
 	onmousedown="javascript: MouseDown (event);" onmouseup="javascript: MouseUp (event);"
 	onmousemove="javascript: MouseMove (event);" onmouseleave="javascript: MouseUp (event);"
@@ -40,11 +40,21 @@
 
 <script type="text/javascript">
 
+var BreitlingLogo = new Image (); BreitlingLogo . src = 'BreitlingLogoOnly.png';
+var AtariLogo = new Image (); AtariLogo . src = 'Atari Logo.png';
+
 var Makers = {
 	Breitling: {
+		BackgroundImage: 'travel.jpg',
+		// BackgroundColour: 'black',
+		MonitorColour: 'blue', Monitor: '14px georgia', MonitorStep: 18,
+		Logo: BreitlingLogo, LogoScaling: 1 / 560, LogoName: 'COSMONAUTE', LogoYear: 1962,
 		BezelRadius: 0.48,
 		BezelRim: 0.44,
 		BezelNumbers: 0.4,
+		BezelColour: 'white', BezelMarkings: 'black', BezelAlt: 'red',
+		BezelRimColour: 'gold', BezelRimLineWidth: 4, BezelRimRingColour: 'silver',
+		BezelCorrugatedLineColour: 'silver',
 		StatorTop: 0.37,
 		StatorBottom: 0.32,
 		MinuteConversionLine: 0.31,
@@ -82,9 +92,62 @@ var Makers = {
 		PinColour: 'navy'
 	},
 	BreitlingBlackSteel: {
+		BackgroundImage: 'galaxy.jpg',
+		// BackgroundColour: 'skyblue',
+		MonitorColour: 'lime',
+		Logo: BreitlingLogo, LogoScaling: 1 / 560, LogoName: 'COSMONAUTE', LogoYear: 1962,
 		BezelRadius: 0.48,
 		BezelRim: 0.44,
 		BezelNumbers: 0.4,
+		BezelColour: 'black', BezelMarkings: 'white', BezelAlt: 'red',
+		BezelRimColour: 'black', BezelRimLineWidth: 4, BezelRimRingColour: 'gold',
+		StatorTop: 0.37,
+		StatorBottom: 0.32,
+		MinuteConversionLine: 0.31,
+		Converters: 0.28,
+		NumberSize1: 0.036,
+		NumberSize2: 0.026,
+		HoursSize: 0.06,
+		HoursRadius: 0.215,
+		Spring: 129600000,
+		SpringStep: 1800000,
+		TotalizerRadius: 0.172,
+		TotalizerBezel: 0.09,
+		TotalizerStator: 0.075,
+		TotalizerR1: 0.086,
+		TotalizerR2: 0.079,
+		TotalizerR3: 0.075,
+		TotalizerArrow1: 0.006,
+		TotalizerArrow2: 0.004,
+		TotalizerArrow3: 0.006,
+		TotalizerArrow4: 0.01,
+		TotalizerArrow5: 0.02,
+		TotalizerArrow6: 0.035,
+		TotalizerArrow7: 0.06,
+		TotalizerNumbers: 0.05,
+		TotalizerNumbersH: 0.056,
+		TotalizerBezelColour: 'black',
+		TotalizerRimColour: 'black',
+		TotalizerStatorColour: 'black',
+		TotalizerCyferblatColour: 'black',
+		TotalizerMarkingsColour: 'white',
+		TotalizerArrowColour: 'red',
+		TotalizerArrowEndColour: 'silver',
+		TotalizerArrowBorderColour: 'black',
+		TotalizerArrowBorderWidth: 0.2,
+		PinColour: 'navy'
+	},
+	Atari: {
+		BackgroundImage: 'Atari ST.png',
+		// BackgroundColour: 'black',
+		MonitorColour: 'lime',
+		Logo: AtariLogo, LogoScaling: 1 / 1450, LogoName: '', LogoYear: '',
+		BezelRadius: 0.48,
+		BezelRim: 0.44,
+		BezelNumbers: 0.4,
+		BezelColour: 'white', BezelMarkings: 'black', BezelAlt: 'red',
+		BezelRimColour: 'black', BezelRimLineWidth: 4, BezelRimRingColour: 'silver',
+		BezelCorrugatedLineColour: 'red',
 		StatorTop: 0.37,
 		StatorBottom: 0.32,
 		MinuteConversionLine: 0.31,
@@ -164,8 +227,6 @@ var SoftAdjust = function () {
 };
 var HardAdjust = function () {SoftAdjust (); Status . Chronometer = 0;};
 var ResetAdjust = function () {SoftAdjust (); Status . Chronometer = Math . floor (Math . random () * 10000 - 4000);};
-
-var BreitlingLogo = new Image (); BreitlingLogo . src = 'BreitlingLogoOnly.png';
 
 var canvas = document . getElementById ('Navitimer');
 var ctx = canvas . getContext ('2d');
@@ -269,6 +330,10 @@ var MouseDown = function (e) {
 				switch (command) {
 				case 'pi': command = Math . PI; break;
 				case 'e': command = Math . E; break;
+				case 'naut': command = 3.3; break;
+				case 'stat': command = 3.8; break;
+				case 'km': command = 6.1; break;
+				case 'mph': command = 6; break;
 				default: command = Number (command); break;
 				}
 				if (isFinite (command)) {
@@ -432,29 +497,32 @@ var repaint = function () {
 	var BezelRight = Math . PI / 2 + 1;
 	var HoursSize = maker . HoursSize * size;
 	var HoursRadius = maker . HoursRadius * size;
+	if (maker . BackgroundColour) {ctx . fillStyle = maker . BackgroundColour; ctx . fillRect (0, 0, canvas . width, canvas . height);}
+	if (maker . BackgroundImage) document . body . style . backgroundImage = `url('${maker . BackgroundImage}')`;
 	//==== STATUS ================
 	if (Status . Monitor) {
-		ctx . fillText (`Current Date: ${new Date (CurrentDateNumber)}`, 10, 10);
-		ctx . fillText (`Watch Date:   ${date . toString ()}`, 10, 20);
-		ctx . fillText (`Current Milliseconds: ${CurrentDateNumber}`, 10, 30);
-		ctx . fillText (`Watch Milliseconds:   ${DateNumber}`, 10, 40);
-		ctx . fillText (`Total Days: ${AllDays}`, 10, 50);
-		ctx . fillText (`Days mod 31: ${Day}`, 10, 60);
-		ctx . fillText (`Adjustment [${Status . Adjustment}] => ${Math . floor (Status . Adjustment / 86400000)} days ${Math . floor (Status . Adjustment / 3600000) % 24} hours ${Math . floor (Status . Adjustment / 60000) % 60} minutes ${((Status . Adjustment / 1000) % 60) .toFixed (3)} seconds`, 10, 70);
+		ctx . fillStyle = maker . MonitorColour;
+		if (maker . Monitor) ctx . font = maker . Monitor;
+		var Monitor = 10, MonitorStep = 10;
+		if (maker . MonitorStep) Monitor = MonitorStep = maker . MonitorStep;
+		ctx . fillText (`Current Date: ${new Date (CurrentDateNumber)}`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Watch Date:   ${date . toString ()}`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Current Milliseconds: ${CurrentDateNumber}`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Watch Milliseconds:   ${DateNumber}`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Total Days: ${AllDays}`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Days mod 31: ${Day}`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Adjustment [${Status . Adjustment}] => ${Math . floor (Status . Adjustment / 86400000)} days ${Math . floor (Status . Adjustment / 3600000) % 24} hours ${Math . floor (Status . Adjustment / 60000) % 60} minutes ${((Status . Adjustment / 1000) % 60) .toFixed (3)} seconds`, 10, Monitor); Monitor += MonitorStep;
 		ctx . fillText (`Chronograph: [${Chronograph . From} <=> ${Chronograph . To}] ${Chronograph . From === null ? '' :
 			Chronograph . To === null ? Math . floor ((DateNumber - Chronograph . From) / 3600000) + ':' + Math . floor (((DateNumber - Chronograph . From) / 60000) % 60) + ':' + (((DateNumber - Chronograph . From) / 1000) % 60) . toFixed (3)
 			: Math . floor ((Chronograph . To - Chronograph . From) / 3600000) + ':' + Math . floor (((Chronograph . To - Chronograph . From) / 60000) % 60) + ':' + (((Chronograph . To - Chronograph . From) / 1000) % 60) . toFixed (3)}`,
-			10, 80);
-		if (Status . Chronometer >= 0) ctx . fillText (`Chronometer: [${Status . Chronometer}] => ${Math . floor (Status . Chronometer / 86400000)} days ${Math . floor ((Status . Chronometer / 3600000) % 24)} hours ${Math . floor ((Status . Chronometer / 60000) % 60)} minutes ${((Status . Chronometer / 1000) % 60) . toFixed (3)} seconds per day`, 10, 90);
-		else ctx . fillText (`Chronometer: [${Status . Chronometer}] => ${Math . ceil (Status . Chronometer / 86400000)} days ${Math . ceil ((Status . Chronometer / 3600000) % 24)} hours ${Math . ceil ((Status . Chronometer / 60000) % 60)} minutes ${((Status . Chronometer / 1000) % 60) . toFixed (3)} seconds per day`, 10, 90);
-		ctx . fillText (`Fraction: ${ChronometerFraction}`, 10, 100);
-		ctx . fillText (`Spring: ${Math . round (100 * (Status . Spring - DateNumber) / maker . Spring)}% [${Status . Spring - DateNumber}]`, 10, 110);
-		ctx . fillText (`Spring Timeout: ${new Date (Status . Spring)}`, 10, 120);
-		ctx . fillText (`Timezone offset: ${offset / 60} hours`, 10, 130);
-		// ctx . fillText (`Point: ${point_length}`, 10, 140);
-		// ctx . fillText (`Point angle: ${point_angle}`, 10, 160);
-		// ctx . fillText (`Cursor angle: ${Cursor}`, 10, 170);
-		// ctx . fillText (`Cursor proximity: ${point_cursor_proximity}`, 10, 180);
+			10, Monitor); Monitor += MonitorStep;
+		if (Status . Chronometer >= 0) ctx . fillText (`Chronometer: [${Status . Chronometer}] => ${Math . floor (Status . Chronometer / 86400000)} days ${Math . floor ((Status . Chronometer / 3600000) % 24)} hours ${Math . floor ((Status . Chronometer / 60000) % 60)} minutes ${((Status . Chronometer / 1000) % 60) . toFixed (3)} seconds per day`, 10, Monitor);
+		else ctx . fillText (`Chronometer: [${Status . Chronometer}] => ${Math . ceil (Status . Chronometer / 86400000)} days ${Math . ceil ((Status . Chronometer / 3600000) % 24)} hours ${Math . ceil ((Status . Chronometer / 60000) % 60)} minutes ${((Status . Chronometer / 1000) % 60) . toFixed (3)} seconds per day`, 10, Monitor);
+		Monitor += MonitorStep;
+		ctx . fillText (`Fraction: ${ChronometerFraction}`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Spring: ${Math . round (100 * (Status . Spring - DateNumber) / maker . Spring)}% [${Status . Spring - DateNumber}]`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Spring Timeout: ${new Date (Status . Spring)}`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Timezone offset: ${offset / 60} hours`, 10, Monitor); Monitor += MonitorStep;
 	}
 	//=======================
 	ctx . save ();
@@ -562,12 +630,16 @@ var repaint = function () {
 		ctx . rotate (Math . PI / 30);
 	}
 	ctx . closePath ();
+	ctx . fillStyle = maker . BezelRimColour; ctx . fill ();
+	if (maker . BezelCorrugatedLineColour) {ctx . strokeStyle = maker . BezelCorrugatedLineColour; ctx . stroke ();}
 	ctx . moveTo (StatorTop, 0);
-	ctx . arc (0, 0, StatorTop, 0, Math . PI * 2, true);
-	ctx . stroke (); ctx . fillStyle = 'black'; ctx . fill ();
-	ctx . strokeStyle = 'red';
-	ctx . beginPath (); ctx . arc (0, 0, BezelRim, 0, Math . PI * 2); ctx . stroke ();
-	ctx . beginPath (); ctx . arc (0, 0, BezelRim + 2, 0, Math . PI * 2); ctx . stroke ();
+	//ctx . beginPath ();
+	//ctx . arc (0, 0, StatorTop, 0, Math . PI * 2);
+	//ctx . stroke (); ctx . fillStyle = maker . BezelColour; ctx . fill ();
+	ctx . strokeStyle = maker . BezelAlt;
+	ctx . lineWidth = maker . BezelRimLineWidth;
+	ctx . beginPath (); ctx . arc (0, 0, BezelRim, 0, Math . PI * 2); ctx . fillStyle = maker . BezelColour; ctx . fill (); ctx . strokeStyle = maker . BezelRimRingColour; ctx . stroke ();
+	//ctx . beginPath (); ctx . arc (0, 0, BezelRim + 7, 0, Math . PI * 2); ctx . stroke ();
 	//ctx . beginPath (); ctx . arc (0, 0, StatorTop, 0, Math . PI * 2); ctx . stroke ();
 	ctx . restore ();
 	//==== BEZEL ======================
@@ -599,13 +671,13 @@ var repaint = function () {
 		mark (ind + 0.3, r1, r3);
 		mark (ind + 0.4, r1, r3);
 	}
-	ctx . strokeStyle = 'white'; ctx . stroke ();
+	ctx . strokeStyle = maker . BezelMarkings; ctx . stroke ();
 	ctx . beginPath ();
 	for (var ind = 1.2; ind < 2.6; ind += 0.1) mark (ind, r1, r4);
 	for (var ind = 3; ind < 6; ind += 0.5) mark (ind, r1, r4);
 	for (var ind = 6.5; ind < 12; ind += 0.5) if (ind !== 10) mark (ind, r1, r4);
 	ctx . lineWidth = 3; ctx . stroke ();
-	ctx . fillStyle = 'red'; ctx . fillText ('10', 0, BezelNumber); ctx . fillStyle = 'white';
+	ctx . fillStyle = maker . BezelAlt; ctx . fillText ('10', 0, BezelNumber); ctx . fillStyle = maker . BezelMarkings;
 	var next = Math . log10 (1.1); ctx . rotate (pi2 * next); ctx . fillText ('11', 0, BezelNumber); position = next;
 	next = Math . log10 (1.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('12', 0, BezelNumber); position = next;
 	next = Math . log10 (1.3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('13', 0, BezelNumber); position = next;
@@ -627,8 +699,8 @@ var repaint = function () {
 	next = Math . log10 (4.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('45', 0, BezelNumber); position = next;
 	next = Math . log10 (5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('50', 0, BezelNumber); position = next;
 	next = Math . log10 (5.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('55', 0, BezelNumber); position = next;
-	next = Math . log10 (6); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'red'; ctx . fillText ('60', 0, BezelNumber); position = next;
-	next = Math . log10 (6.5); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'white'; ctx . fillText ('65', 0, BezelNumber); position = next;
+	next = Math . log10 (6); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = maker . BezelAlt; ctx . fillText ('60', 0, BezelNumber); position = next;
+	next = Math . log10 (6.5); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = maker . BezelMarkings; ctx . fillText ('65', 0, BezelNumber); position = next;
 	next = Math . log10 (7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('70', 0, BezelNumber); position = next;
 	next = Math . log10 (7.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('75', 0, BezelNumber); position = next;
 	next = Math . log10 (8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('80', 0, BezelNumber); position = next;
@@ -643,7 +715,7 @@ var repaint = function () {
 	ctx . rotate (degree * pi2);
 	ctx . beginPath ();
 	ctx . moveTo (0, - StatorTop - 1); ctx . lineTo (size * 0.006, BezelNumber * 0.99); ctx . lineTo (size * -0.006, BezelNumber * 0.99); ctx . closePath ();
-	ctx . fillStyle = 'red'; ctx . fill ();
+	ctx . fillStyle = maker . BezelAlt; ctx . fill ();
 	ctx . rotate (- pi2 * shift);
 	ctx . moveTo (0, - StatorTop - 1); ctx . lineTo (size * 0.006, BezelNumber * 0.99); ctx . lineTo (size * -0.006, BezelNumber * 0.99); ctx . closePath ();
 	ctx . fill ();
@@ -775,14 +847,15 @@ var repaint = function () {
 	ctx . restore ();
 	//==== BREITLING LOGO ======================
 	ctx . save ();
-	var LogoScaling = size / 560;
+	var LogoScaling = maker . LogoScaling * size;
+	var logo = maker . Logo;
 	ctx . scale (LogoScaling, LogoScaling);
-	ctx . translate (BreitlingLogo . width * -0.5, size * -0.19 / LogoScaling);
-	ctx . drawImage (BreitlingLogo, 0, 0);
+	ctx . translate (logo . width * -0.5, size * -0.19 / LogoScaling);
+	ctx . drawImage (logo, 0, 0);
 	ctx . restore ();
 	//==== WATCH MODEL ======================
 	ctx . save ();
-	ctx . fillStyle = 'white'; ctx . font = `${NumberSize2}px arial`; ctx . fillText ('COSMONAUTE', 0, size * -0.06); ctx . fillText ('1962', 0, size * -0.035);
+	ctx . fillStyle = 'white'; ctx . font = `${NumberSize2}px arial`; ctx . fillText (maker . LogoName, 0, size * -0.06); ctx . fillText (maker . LogoYear, 0, size * -0.035);
 	ctx . fillText ('NAVITIMER', 0, size * 0.06);
 	ctx . restore ();
 	//==== HOUR NUMBERS ======================
@@ -1054,6 +1127,7 @@ var repaint = function () {
 	r2 = Math . asin (ss4 / r1);
 	ctx . arc (0, 0, r1, r2, Math . PI * 2 - r2);
 	ctx . fillStyle = 'silver'; ctx . fill (); ctx . strokeStyle = 'black'; ctx . stroke ();
+	ctx . beginPath (); ctx . arc (0, 0, ar1, 0, pi2); ctx . fillStyle = maker . PinColour; ctx . fill ();
 	ctx . restore ();
 	//==== CURSOR ======================
 	if (CursorVisible) {
