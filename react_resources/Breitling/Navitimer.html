@@ -78,10 +78,12 @@ var Makers = {
 		BezelRim: 0.44,
 		BezelNumbers: 0.4,
 		BezelColour: 'white', BezelMarkings: 'black', BezelAlt: 'red',
-		BezelRimColour: 'gold', BezelRimLineWidth: 4, BezelRimRingColour: 'silver',
-		BezelCorrugatedLineColour: 'silver',
+		BezelRimColour: 'silver', BezelRimLineWidth: 4, BezelRimRingColour: 'gray',
+		BezelCorrugatedLineColour: 'gray',
 		StatorTop: 0.37,
 		StatorBottom: 0.32,
+		DateDisplayBackground: 'white',
+		DateDisplayColour: 'maroon',
 		MinuteConversionLine: 0.31,
 		Converters: 0.28,
 		NumberSize1: 0.036,
@@ -105,22 +107,22 @@ var Makers = {
 		TotalizerNumbers: 0.05,
 		TotalizerNumbersH: 0.056,
 		TotalizerBezelColour: 'white',
-		TotalizerRimColour: 'red',
+		TotalizerRimColour: 'black',
 		TotalizerStatorColour: 'black',
 		TotalizerCyferblatColour: 'silver',
 		TotalizerMarkingsColour: 'black',
-		TotalizerArrowColour: 'red',
+		TotalizerArrowColour: 'white',
 		TotalizerArrowEndColour: 'white',
 		TotalizerArrowBorderColour: 'black',
 		TotalizerArrowBorderWidth: 0.2,
-		PinColour: 'navy'
+		PinColour: 'gray'
 	},
 	BreitlingWhiteSteel: {
-		BackgroundImage: 'galaxy.jpg',
+		BackgroundImage: 'hubble.jpg',
 		//BackgroundColour: 'black',
 		Font: 'terminator', FontSize: 0.6,
 		MonitorColour: 'lime', Monitor: '14px georgia', MonitorStep: 18,
-		Logo: BreitlingLogo, LogoScaling: 1 / 560, LogoName: 'COSMONAUTE', LogoYear: 1962,
+		Logo: BreitlingLogo, LogoScaling: 1 / 560, LogoName: 'CHRONOMETRE', LogoYear: 'AUTOMATIC', ModelName: ' ',
 		PushpieceColour: 'silver',
 		BezelRadius: 0.48,
 		BezelRim: 0.44,
@@ -136,6 +138,70 @@ var Makers = {
 		Converters: 0.28,
 		ConvertersColour: 'black',
 		ConvertersBackgroundColour: 'white',
+		DateDisplayColour: 'black',
+		DateDisplayBackground: 'white',
+		DateDisplayBorderColour: 'silver',
+		CyferblatColour: 'black',
+		MinuteConversionLineWidth: 1,
+		NumberSize1: 0.036,
+		NumberSize2: 0.026,
+		StrokeNumbers: 'black',
+		FillNumbers: 'white',
+		HoursSize: 0.06,
+		HoursRadius: 0.215,
+		HandLining: 'white',
+		HandStroke: 'silver',
+		HandBackground: 'silver',
+		Spring: 129600000, SpringStep: 1800000, SpringMarker: 'blue',
+		TotalizerRadius: 0.172,
+		TotalizerBezel: 0.09,
+		TotalizerStator: 0.075,
+		TotalizerR1: 0.086,
+		TotalizerR2: 0.079,
+		TotalizerR3: 0.075,
+		TotalizerArrow1: 0.006,
+		TotalizerArrow2: 0.004,
+		TotalizerArrow3: 0.006,
+		TotalizerArrow4: 0.01,
+		TotalizerArrow5: 0.02,
+		TotalizerArrow6: 0.035,
+		TotalizerArrow7: 0.06,
+		TotalizerNumbers: 0.05,
+		TotalizerNumbersH: 0.056,
+		TotalizerBezelColour: 'black',
+		//TotalizerRimColour: 'red',
+		TotalizerStatorColour: 'black',
+		TotalizerCyferblatColour: 'black',
+		TotalizerMarkingsColour: 'white',
+		TotalizerArrowColour: 'silver',
+		TotalizerArrowEndColour: 'silver',
+		TotalizerArrowBorderColour: 'black',
+		TotalizerArrowBorderWidth: 0.2,
+		PinColour: 'navy'
+	},
+	BreitlingNavy: {
+		BackgroundImage: 'carrier.jpg',
+		//BackgroundColour: 'black',
+		MonitorColour: 'lime', Monitor: '14px georgia', MonitorStep: 18,
+		Logo: BreitlingLogo, LogoScaling: 1 / 560, LogoName: 'CHRONOMETRE', LogoYear: 'AUTOMATIC', ModelName: ' ',
+		PushpieceColour: 'silver',
+		BezelRadius: 0.48,
+		BezelRim: 0.44,
+		BezelNumbers: 0.4,
+		BezelColour: 'white', BezelMarkings: 'black', BezelAlt: 'red',
+		BezelRimColour: 'white', BezelRimLineWidth: 4, BezelRimRingColour: 'silver',
+		BezelCorrugatedLineColour: 'silver',
+		StatorTop: 0.37,
+		StatorBottom: 0.32,
+		StatorColour: 'black',
+		StatorBackgroundColour: 'white',
+		MinuteConversionLine: 0.31,
+		Converters: 0.28,
+		ConvertersColour: 'black',
+		ConvertersBackgroundColour: 'white',
+		DateDisplayColour: 'black',
+		DateDisplayBackground: 'white',
+		DateDisplayBorderColour: 'silver',
 		CyferblatColour: 'black',
 		MinuteConversionLineWidth: 1,
 		NumberSize1: 0.036,
@@ -1203,7 +1269,7 @@ var repaint = function () {
 	ctx . beginPath ();
 	var rct = {x: HoursRadius, y: 0, w1: HoursSize * 0.6, h1: HoursSize * 0.5, w2: HoursSize * 0.7, h2: HoursSize * 0.6};
 	ctx . moveTo (rct . x - rct . w2, - rct . h2); ctx . lineTo (rct . x + rct . w2, - rct . h2); ctx . lineTo (rct . x + rct . w2, rct . h2); ctx . lineTo (rct . x - rct . w2, rct . h2);
-	ctx . lineTo (rct . x - rct . w2, - rct . h2); ctx . fillStyle = 'black'; ctx . fill ();
+	ctx . lineTo (rct . x - rct . w2, - rct . h2); ctx . fillStyle = maker . DateDisplayBorderColour || 'black'; ctx . fill ();
 	ctx . lineTo (rct . x - rct . w1, - rct . h1);
 	ctx . moveTo (rct . x + rct . w2, - rct . h2); ctx . lineTo (rct . x + rct . w1, - rct . h1);
 	ctx . moveTo (rct . x + rct . w2, rct . h2); ctx . lineTo (rct . x + rct . w1, rct . h1);
@@ -1211,9 +1277,9 @@ var repaint = function () {
 	ctx . strokeStyle = 'white'; ctx . stroke ();
 	ctx . beginPath (); ctx . moveTo (rct . x - rct . w1, - rct . h1);
 	ctx . lineTo (rct . x + rct . w1, - rct . h1); ctx . lineTo (rct . x + rct . w1, rct . h1); ctx . lineTo (rct . x - rct . w1, rct . h1); ctx . closePath ();
-	ctx . fillStyle = 'navy'; ctx . fill (); ctx . stroke ();
+	ctx . fillStyle = maker . DateDisplayBackground || 'navy'; ctx . fill (); ctx . stroke ();
 	ctx . font = `${HoursSize * (maker . FontSize || 1)}px ${maker . Font || 'serif'}`;
-	ctx . fillStyle = 'white'; ctx . textBaseline = 'middle'; ctx . textAlign = 'center'; ctx . fillText (Day, rct . x, rct . y);
+	ctx . fillStyle = maker . DateDisplayColour || 'white'; ctx . textBaseline = 'middle'; ctx . textAlign = 'center'; ctx . fillText (Day, rct . x, rct . y);
 	ctx . restore ();
 	//==== HOUR HAND ======================
 	ctx . save ();
