@@ -34,6 +34,28 @@
 </head>
 
 <body style="margin: 0px; background-size: cover;" onbeforeunload="javascript: localStorage . setItem ('Navitimer', JSON . stringify (Status));">
+
+<style>
+@font-face
+{
+font-family: terminator;
+}
+</style>
+
+<!--
+WEB SAFE FONTS:
+Arial (sans-serif)
+Verdana (sans-serif)
+Helvetica (sans-serif)
+Tahoma (sans-serif)
+Trebuchet MS (sans-serif)
+Times New Roman (serif)
+Georgia (serif)
+Garamond (serif)
+Courier New (monospace)
+Brush Script MT (cursive)
+-->
+
 <canvas id="Navitimer" width="1200" height="600"
 	onmousedown="javascript: MouseDown (event);" onmouseup="javascript: MouseUp (event);"
 	onmousemove="javascript: MouseMove (event);" onmouseleave="javascript: MouseUp (event);"
@@ -145,7 +167,8 @@ var Makers = {
 		BackgroundImage: 'Atari ST.png',
 		// BackgroundColour: 'black',
 		MonitorColour: 'lime',
-		Logo: AtariLogo, LogoScaling: 1 / 1450, LogoName: '', LogoYear: '',
+		Font: 'terminator', FontSize: 0.7,
+		Logo: AtariLogo, LogoScaling: 1 / 1450, LogoName: '', LogoYear: '', ModelName: 'NAVITIMER',
 		PushpieceColour: 'gray',
 		BezelRadius: 0.48,
 		BezelRim: 0.44,
@@ -329,7 +352,7 @@ var MouseDown = function (e) {
 	point = MousePoint (e);
 	if (point . x + canvas . width / 2 < 50 && point . y + canvas . height / 2 < 50) {Status . Monitor = ! Status . Monitor; return;}
 	if (point . x > size * -0.1 && point . x < size * 0.1 & point . y > size * -0.2 && point . y < size * -0.1) {CirculateMaker (); return;}
-	if (Math . abs (point . x) < 5 && Math . abs (point . y) < 5) HardAdjust ();
+	if (Math . abs (point . x) < 5 && Math . abs (point . y) < 5) {HardAdjust (); return;}
 	point_length = Math . sqrt (point . x * point . x + point . y * point . y);
 	atan = Math . atan2 (point . y, point . x);
 	point_angle = atan / pi2 + 0.25;
@@ -384,6 +407,8 @@ var MouseUp = function (e) {
 	}
 };
 
+var ScreenOffset = {x: 0, y: 0};
+
 var MouseMove = function (e) {
 	var p = MousePoint (e);
 	var length = Math . sqrt (p . x * p . x + p . y * p . y);
@@ -398,7 +423,7 @@ var MouseMove = function (e) {
 		else if (point_cursor_proximity < 0.02 || point_cursor_proximity > 0.98) Cursor += (a - atan) / pi2;
 		while (degree < 0) degree += 1; while (degree > 1) degree -= 1; BezelTarget = degree;
 		while (Cursor < 0) Cursor += 1; while (Cursor > 1) Cursor -= 1; CursorTarget = Cursor;
-	}
+	} else {ScreenOffset . x += e . movementX; ScreenOffset . y += e . movementY;}
 	point = p; atan = a;
 	repaint ();
 };
@@ -542,8 +567,8 @@ var repaint = function () {
 	ctx . save ();
 	ctx . textBaseline = 'alphabetic';
 	ctx . textAlign = 'center';
-	ctx . font = `${NumberSize1}px arial`;
-	ctx . translate (canvas . width * 0.5, canvas . height * 0.5);
+	ctx . font = `${NumberSize1 * (maker . FontSize || 1)}px ${maker . Font || 'arial'}`;
+	ctx . translate (canvas . width * 0.5 + ScreenOffset . x, canvas . height * 0.5 + ScreenOffset . y);
 	//==== PUSHPIECES ======================
 	ctx . save ();
 		var bw1 = size * 0.07; var bw2 = size * 0.075; var bw3 = size * 0.075; var bw4 = size * 0.04;
@@ -794,7 +819,7 @@ var repaint = function () {
 	if (maker . ConvertersBackground) {ctx . fillStyle = maker . ConvertersBackground; ctx . fill ();}
 	ctx . lineWidth = maker . MinuteConversionLineWidth || 3; ctx . stroke ();
 	if (maker . CyferblatBackground) {ctx . beginPath (); ctx . arc (0, 0, Converters * -0.98, 0, Math . PI * 2); ctx . fillStyle = maker . CyferblatBackground; ctx . fill ();}
-	ctx . font = `${NumberSize2}px arial`;
+	ctx . font = `${NumberSize2 * (maker . FontSize || 1)}px ${maker . Font || 'arial'}`;
 	ctx . fillStyle = 'red'; ctx . fillText ('10', 0, StatorBottom);
 		ctx . fillStyle = maker . ConvertersColour || 'white';ctx . fillText ('1:40', 0, Converters); ctx . fillStyle = maker . StatorColour || 'white';
 	next = Math . log10 (1.1); ctx . rotate (pi2 * next); ctx . fillText ('11', 0, StatorBottom);
@@ -904,17 +929,19 @@ var repaint = function () {
 	ctx . restore ();
 	//==== WATCH MODEL ======================
 	ctx . save ();
-	ctx . fillStyle = maker . CyferblatColour || 'white'; ctx . font = `${NumberSize2}px arial`; ctx . fillText (maker . LogoName, 0, size * -0.06); ctx . fillText (maker . LogoYear, 0, size * -0.035);
-	ctx . fillText ('NAVITIMER', 0, size * 0.06);
+	ctx . fillStyle = maker . CyferblatColour || 'white';
+	ctx . font = `${NumberSize2 * (maker . FontSize || 1)}px ${maker . Font || 'arial'}`;
+	ctx . fillText (maker . LogoName, 0, size * -0.06); ctx . fillText (maker . LogoYear, 0, size * -0.035);
+	ctx . fillText (maker . ModelName || 'NAVITIMER', 0, size * 0.06);
 	ctx . restore ();
 	//==== HOUR NUMBERS ======================
 	ctx . save ();
-	ctx . font = `bold ${HoursSize}px arial`; ctx . textBaseline = 'middle'; ctx . textAlign = 'center'; ctx . fillStyle = 'lime';
+	ctx . font = `bold ${HoursSize * (maker . FontSize || 1)}px ${maker . Font || 'arial'}`; ctx . textBaseline = 'middle'; ctx . textAlign = 'center'; ctx . fillStyle = 'lime';
 	ctx . strokeStyle = maker . StrokeNumbers || 'white';
 	ctx . lineWidth = 2;
 	for (var ind = 2; ind <= 24; ind += 2) {
 		var tx = HoursRadius * Math . sin (Math . PI * ind / 12);
-		var ty = HoursRadius * Math . cos (Math . PI * ind / 12);
+		var ty = HoursRadius * - Math . cos (Math . PI * ind / 12);
 		ctx . fillText (ind, tx, ty);
 		if (maker . StrokeNumbers) ctx . strokeText (ind, tx, ty);
 	};
@@ -1126,7 +1153,7 @@ var repaint = function () {
 	ctx . beginPath (); ctx . moveTo (rct . x - rct . w1, - rct . h1);
 	ctx . lineTo (rct . x + rct . w1, - rct . h1); ctx . lineTo (rct . x + rct . w1, rct . h1); ctx . lineTo (rct . x - rct . w1, rct . h1); ctx . closePath ();
 	ctx . fillStyle = 'navy'; ctx . fill (); ctx . stroke ();
-	ctx . font = `${HoursSize}px serif`;
+	ctx . font = `${HoursSize * (maker . FontSize || 1)}px ${maker . Font || 'serif'}`;
 	ctx . fillStyle = 'white'; ctx . textBaseline = 'middle'; ctx . textAlign = 'center'; ctx . fillText (Day, rct . x, rct . y);
 	ctx . restore ();
 	//==== HOUR HAND ======================
