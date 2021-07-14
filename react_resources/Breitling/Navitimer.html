@@ -98,7 +98,7 @@ var Makers = {
 		// BackgroundColour: 'skyblue',
 		MonitorColour: 'lime',
 		Logo: BreitlingLogo, LogoScaling: 1 / 560, LogoName: 'COSMONAUTE', LogoYear: 1962,
-		PushpieceColour: 'gray',
+		PushpieceColour: '#333333',
 		BezelRadius: 0.48,
 		BezelRim: 0.44,
 		BezelNumbers: 0.4,
@@ -155,10 +155,17 @@ var Makers = {
 		BezelCorrugatedLineColour: 'red',
 		StatorTop: 0.37,
 		StatorBottom: 0.32,
+		StatorBackgroundColour: 'silver',
+		StatorColour: 'black',
 		MinuteConversionLine: 0.31,
+		MinuteConversionLineWidth: 1,
 		Converters: 0.28,
+		ConvertersBackground: 'gray', //'#fffdd0',
+		CyferblatBackground: 'silver',
+		AccurateConversions: true,
 		NumberSize1: 0.036,
 		NumberSize2: 0.026,
+		StrokeNumbers: 'red',
 		HoursSize: 0.06,
 		HoursRadius: 0.215,
 		Spring: 129600000, SpringStep: 1800000, SpringMarker: 'lime',
@@ -186,6 +193,7 @@ var Makers = {
 		TotalizerArrowEndColour: 'silver',
 		TotalizerArrowBorderColour: 'black',
 		TotalizerArrowBorderWidth: 0.2,
+		TotalizerArrowNoButt: true,
 		PinColour: 'navy'
 	}
 };
@@ -335,8 +343,8 @@ var MouseDown = function (e) {
 				case 'pi': command = Math . PI; break;
 				case 'e': command = Math . E; break;
 				case 'naut': command = 3.3; break;
-				case 'stat': command = 3.8; break;
-				case 'km': command = 6.1; break;
+				case 'stat': command = m . AccurateConversions ? 3.3 * 1.15078 : 3.8; break;
+				case 'km': command = m . AccurateConversions ? 3.3 * 1.852 : 6.1; break;
 				case 'mph': command = 6; break;
 				default: command = Number (command); break;
 				}
@@ -552,7 +560,14 @@ var repaint = function () {
 		ctx . fillStyle = 'silver'; ctx . fill (); ctx . stroke ();
 		ctx . beginPath ();
 		ctx . moveTo (rw2, - bw2); ctx . lineTo (rw3, - bw3); ctx . bezierCurveTo (rw4, -bw4, rw4, bw4, rw3, bw3); ctx . lineTo (rw2, bw2); ctx . closePath ();
-		ctx . fillStyle = 'silver'; ctx . fill ();
+		ctx . fillStyle = 'silver';
+		var colour = maker . PushpieceColour || 'navy';
+		var gradient = ctx . createLinearGradient (0, -bw2 / 2, 0, bw2);
+		gradient . addColorStop (0, colour);
+		gradient . addColorStop (0.5, 'white');
+		gradient . addColorStop (1, colour);
+		ctx . fillStyle = gradient;
+		ctx . fill ();
 		ctx . moveTo (rw3, - bw2); ctx . lineTo (rw3, bw2);
 		ctx . strokeStyle = 'black'; ctx . stroke ();
 
@@ -569,7 +584,8 @@ var repaint = function () {
 			ctx . moveTo (rw3, size * 0.0633); ctx . lineTo (rw2, size * 0.0633);
 			ctx . moveTo (rw3, size * -0.07); ctx . lineTo (rw2, size * -0.07);
 			ctx . moveTo (rw3, size * 0.0723); ctx . lineTo (rw2, size * 0.0723);
-			ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
+			ctx . lineWidth = 3;
+			ctx . strokeStyle = 'black'; ctx . stroke ();
 			break;
 		case (2):
 			ctx . beginPath ();
@@ -583,7 +599,8 @@ var repaint = function () {
 			ctx . moveTo (rw3, size * -0.0633); ctx . lineTo (rw2, size * -0.0633);
 			ctx . moveTo (rw3, size * 0.07); ctx . lineTo (rw2, size * 0.07);
 			ctx . moveTo (rw3, size * -0.0723); ctx . lineTo (rw2, size * -0.0723);
-			ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
+			ctx . lineWidth = 3;
+			ctx . strokeStyle = 'black'; ctx . stroke ();
 			break;
 		default:
 			ctx . beginPath ();
@@ -596,7 +613,8 @@ var repaint = function () {
 			ctx . moveTo (rw3, size * -0.054); ctx . lineTo (rw2, size * -0.054);
 			ctx . moveTo (rw3, size * 0.068); ctx . lineTo (rw2, size * 0.068);
 			ctx . moveTo (rw3, size * -0.068); ctx . lineTo (rw2, size * -0.068);
-			ctx . lineWidth = 3; ctx . strokeStyle = 'black'; ctx . stroke ();
+			ctx . lineWidth = 3;
+			ctx . strokeStyle = 'black'; ctx . stroke ();
 			break;
 		}
 		if (maker . SpringMarker) ctx . fillStyle = maker . SpringMarker;
@@ -609,10 +627,16 @@ var repaint = function () {
 		ctx . beginPath ();
 		ctx . moveTo (BezelRim, - bw1); ctx . lineTo (rw1, - bw1); ctx . lineTo (rw1, bw1); ctx . lineTo (BezelRim, bw1);
 		ctx . lineWidth = 2;
-		ctx . fillStyle = 'silver'; ctx . fill (); ctx . stroke ();
+		var colour = maker . PushpieceColour || 'navy';
+		var gradient = ctx . createLinearGradient (0, -bw2 / 2, 0, bw2);
+		gradient . addColorStop (0, colour);
+		gradient . addColorStop (0.5, 'white');
+		gradient . addColorStop (1, colour);
+		ctx . fillStyle = gradient;
+		ctx . fill (); ctx . stroke ();
 		ctx . beginPath ();
 		ctx . moveTo (rw2, - bw2); ctx . lineTo (rw3, - bw3); ctx . bezierCurveTo (rw4, -bw4, rw4, bw4, rw3, bw3); ctx . lineTo (rw2, bw2); ctx . closePath ();
-		ctx . fillStyle = maker . PushpieceColour || 'navy'; ctx . fill (); ctx . stroke ();
+		ctx . fill (); ctx . stroke ();
 	//==============================
 	ctx . rotate (pi2 / -6);
 		var bw1 = size * 0.03; var bw2 = size * 0.035; var bw3 = size * 0.037; var bw4 = size * 0.02;
@@ -621,10 +645,11 @@ var repaint = function () {
 		ctx . beginPath ();
 		ctx . moveTo (BezelRim, - bw1); ctx . lineTo (rw1, - bw1); ctx . lineTo (rw1, bw1); ctx . lineTo (BezelRim, bw1);
 		ctx . lineWidth = 2;
-		ctx . fillStyle = 'silver'; ctx . fill (); ctx . stroke ();
+		ctx . fillStyle = gradient;
+		ctx . fill (); ctx . stroke ();
 		ctx . beginPath ();
 		ctx . moveTo (rw2, - bw2); ctx . lineTo (rw3, - bw3); ctx . bezierCurveTo (rw4, -bw4, rw4, bw4, rw3, bw3); ctx . lineTo (rw2, bw2); ctx . closePath ();
-		ctx . fillStyle = maker . PushpieceColour || 'navy'; ctx . fill (); ctx . stroke ();
+		ctx . fill (); ctx . stroke ();
 	ctx . restore ();
 	//==== BEZEL RIM ======================
 	ctx . save ();
@@ -730,7 +755,7 @@ var repaint = function () {
 	ctx . restore ();
 	//==== STATOR ======================
 	ctx . save ();
-	ctx . beginPath (); ctx . arc (0, 0, StatorTop, 0, Math . PI * 2); ctx . fillStyle = 'black'; ctx . fill ();
+	ctx . beginPath (); ctx . arc (0, 0, StatorTop, 0, Math . PI * 2); ctx . fillStyle = maker . StatorBackgroundColour || 'black'; ctx . fill ();
 	ctx . rotate (- pi2 * shift);
 	ctx . beginPath ();
 	for (var ind = 1.2; ind < 2.5; ind += 0.1) {
@@ -757,13 +782,16 @@ var repaint = function () {
 		mark (ind + 0.4, rm1, rm3);
 	}
 	mark (6, rm1, rm3);
-	ctx . strokeStyle = 'white'; ctx . stroke ();
+	ctx . strokeStyle = maker . StatorColour || 'white'; ctx . stroke ();
 	ctx . beginPath ();
 	for (var ind = 1.2; ind < 2.6; ind += 0.1) mark (ind, rm1, rm4);
 	for (var ind = 3; ind < 6; ind += 0.5) mark (ind, rm1, rm4);
 	for (var ind = 6.5; ind < 12; ind += 0.5) if (ind !== 10) mark (ind, rm1, rm4);
-	// mark (1.05, r1, r4);
 	ctx . lineWidth = 3; ctx . stroke ();
+	ctx . beginPath (); ctx . arc (0, 0, MinuteConversionLine, 0, pi2);
+	if (maker . ConvertersBackground) {ctx . fillStyle = maker . ConvertersBackground; ctx . fill ();}
+	ctx . lineWidth = maker . MinuteConversionLineWidth || 3; ctx . stroke ();
+	if (maker . CyferblatBackground) {ctx . beginPath (); ctx . arc (0, 0, Converters * -0.98, 0, Math . PI * 2); ctx . fillStyle = maker . CyferblatBackground; ctx . fill ();}
 	ctx . font = `${NumberSize2}px arial`;
 	ctx . fillStyle = 'red'; ctx . fillText ('10', 0, StatorBottom); ctx . fillStyle = 'white'; ctx . fillText ('1:40', 0, Converters);
 	next = Math . log10 (1.1); ctx . rotate (pi2 * next); ctx . fillText ('11', 0, StatorBottom); ctx . fillText ('1:50', 0, Converters); position = next;
@@ -819,8 +847,6 @@ var repaint = function () {
 	ctx . strokeStyle = 'white'; ctx . lineWidth = 3; ctx . stroke ();
 	ctx . rotate (pi2 * - shift);
 	ctx . strokeStyle = 'white';
-	ctx . lineWidth = 1;
-	ctx . beginPath (); ctx . arc (0, 0, MinuteConversionLine, 0, pi2); ctx . stroke ();
 	ctx . beginPath ();
 	r1 = MinuteConversionLine; r2 = MinuteConversionLine * 0.98; r3 = MinuteConversionLine * 0.96;
 	for (var ind = 6; ind < 12; ind += 0.5) mark (ind, r1, r2);
@@ -866,8 +892,13 @@ var repaint = function () {
 	//==== HOUR NUMBERS ======================
 	ctx . save ();
 	ctx . font = `bold ${HoursSize}px arial`; ctx . textBaseline = 'middle'; ctx . textAlign = 'center'; ctx . fillStyle = 'lime';
+	ctx . strokeStyle = maker . StrokeNumbers || 'white';
+	ctx . lineWidth = 2;
 	for (var ind = 2; ind <= 24; ind += 2) {
-		ctx . fillText (ind, HoursRadius * Math . sin (Math . PI * ind / 12), HoursRadius * - Math . cos (Math . PI * ind / 12));
+		var tx = HoursRadius * Math . sin (Math . PI * ind / 12);
+		var ty = HoursRadius * Math . cos (Math . PI * ind / 12);
+		ctx . fillText (ind, tx, ty);
+		if (maker . StrokeNumbers) ctx . strokeText (ind, tx, ty);
 	};
 	ctx . restore ();
 	//==== STATOR RED ARROWS ======================
@@ -885,13 +916,13 @@ var repaint = function () {
 	ctx . beginPath ();
 	ctx . moveTo (0, t1); ctx . lineTo (s6, t2); ctx . lineTo (- s6, t2); ctx . closePath ();
 	ctx . fill ();
-	//ctx . rotate (pi2 * Math . log10 (1.15078));
-	ctx . rotate (pi2 * (Math . log10 (3.8) - Math . log10 (3.3)));
+	if (maker . AccurateConversions) ctx . rotate (pi2 * Math . log10 (1.15078));
+	else ctx . rotate (pi2 * (Math . log10 (3.8) - Math . log10 (3.3)));
 	ctx . beginPath ();
 	ctx . moveTo (0, t1); ctx . lineTo (s6, t2); ctx . lineTo (- s6, t2); ctx . closePath ();
 	ctx . fill ();
-	//ctx . rotate (pi2 * (Math . log10 (1.852) - Math . log10 (1.15078)));
-	ctx . rotate (pi2 * (Math . log10 (6.1) - Math . log10 (3.8)));
+	if (maker . AccurateConversions) ctx . rotate (pi2 * (Math . log10 (1.852) - Math . log10 (1.15078)));
+	else ctx . rotate (pi2 * (Math . log10 (6.1) - Math . log10 (3.8)));
 	ctx . beginPath ();
 	ctx . moveTo (0, t1); ctx . lineTo (s6, t2); ctx . lineTo (- s6, t2); ctx . closePath ();
 	ctx . fill ();
@@ -936,15 +967,21 @@ var repaint = function () {
 		else ctx . rotate (Math . PI * (-0.5 + (((Chronograph . To - Chronograph . From) % 1800000) / 900000)));
 	}
 	ctx . lineWidth = maker . TotalizerArrowBorderWidth;
-	ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
-	ctx . lineTo (ar5, - ar3); ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0);
-	ctx . lineTo (ar7, ar3); ctx . lineTo (ar5, ar3); ctx . closePath ();
-	ctx . fillStyle = maker . TotalizerArrowColour; ctx . fill (); ctx . strokeStyle = maker . TotalizerArrowBorderColour; ctx . stroke ();
-	ctx . beginPath ();
-	ctx . arc (0, 0, ar4, r1, Math . PI - r1);
-	ctx . lineTo (- ar6, ar2); ctx . lineTo (- ar6, - ar2);
-	ctx . arc (0, 0, ar4, Math . PI + r1, pi2 - r1);
-	ctx . fillStyle = maker . TotalizerArrowEndColour; ctx . fill (); ctx . stroke ();
+	if (maker . TotalizerArrowNoButt) {
+		ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
+		ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0); ctx . lineTo (ar7, ar3); ctx . closePath ();
+		ctx . fillStyle = maker . TotalizerArrowColour; ctx . fill (); ctx . strokeStyle = maker . totalizerArrowBorderColour; ctx . stroke ();
+	} else {
+		ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
+		ctx . lineTo (ar5, - ar3); ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0);
+		ctx . lineTo (ar7, ar3); ctx . lineTo (ar5, ar3); ctx . closePath ();
+		ctx . fillStyle = maker . TotalizerArrowColour; ctx . fill (); ctx . strokeStyle = maker . TotalizerArrowBorderColour; ctx . stroke ();
+		ctx . beginPath ();
+		ctx . arc (0, 0, ar4, r1, Math . PI - r1);
+		ctx . lineTo (- ar6, ar2); ctx . lineTo (- ar6, - ar2);
+		ctx . arc (0, 0, ar4, Math . PI + r1, pi2 - r1);
+		ctx . fillStyle = maker . TotalizerArrowEndColour; ctx . fill (); ctx . stroke ();
+	}
 	ctx . beginPath (); ctx . arc (0, 0, ar1, 0, pi2); ctx . fillStyle = maker . PinColour; ctx . fill ();
 	ctx . restore ();
 	//==== HOUR TOTALIZER ================
@@ -986,15 +1023,21 @@ var repaint = function () {
 		else ctx . rotate (Math . PI * (-0.5 + (((Chronograph . To - Chronograph . From) % 43200000) / 21600000)));
 	}
 	ctx . lineWidth = maker . TotalizerArrowBorderWidth;
-	ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
-	ctx . lineTo (ar5, - ar3); ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0);
-	ctx . lineTo (ar7, ar3); ctx . lineTo (ar5, ar3); ctx . closePath ();
-	ctx . fillStyle = maker . TotalizerArrowColour; ctx . fill (); ctx . strokeStyle = maker . TotalizerArrowBorderColour; ctx . stroke ();
-	ctx . beginPath ();
-	ctx . arc (0, 0, ar4, r1, Math . PI - r1);
-	ctx . lineTo (- ar6, ar2); ctx . lineTo (- ar6, - ar2);
-	ctx . arc (0, 0, ar4, Math . PI + r1, pi2 - r1);
-	ctx . fillStyle = maker . TotalizerArrowEndColour; ctx . fill (); ctx . stroke ();
+	if (maker . TotalizerArrowNoButt) {
+		ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
+		ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0); ctx . lineTo (ar7, ar3); ctx . closePath ();
+		ctx . fillStyle = maker . TotalizerArrowColour; ctx . fill (); ctx . strokeStyle = maker . totalizerArrowBorderColour; ctx . stroke ();
+	} else {
+		ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
+		ctx . lineTo (ar5, - ar3); ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0);
+		ctx . lineTo (ar7, ar3); ctx . lineTo (ar5, ar3); ctx . closePath ();
+		ctx . fillStyle = maker . TotalizerArrowColour; ctx . fill (); ctx . strokeStyle = maker . TotalizerArrowBorderColour; ctx . stroke ();
+		ctx . beginPath ();
+		ctx . arc (0, 0, ar4, r1, Math . PI - r1);
+		ctx . lineTo (- ar6, ar2); ctx . lineTo (- ar6, - ar2);
+		ctx . arc (0, 0, ar4, Math . PI + r1, pi2 - r1);
+		ctx . fillStyle = maker . TotalizerArrowEndColour; ctx . fill (); ctx . stroke ();
+	}
 	ctx . beginPath (); ctx . arc (0, 0, ar1, 0, pi2); ctx . fillStyle = maker . PinColour; ctx . fill ();
 	ctx . restore ();
 	//==== SECONDS HAND ================
@@ -1033,15 +1076,21 @@ var repaint = function () {
 	r1 = Math . asin (ar2 / ar4);
 	ctx . rotate ((date . getSeconds () + date . getMilliseconds () / 1000) * Math . PI / 30 - Math . PI * 0.5);
 	ctx . lineWidth = maker . TotalizerArrowBorderWidth;
-	ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
-	ctx . lineTo (ar5, - ar3); ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0);
-	ctx . lineTo (ar7, ar3); ctx . lineTo (ar5, ar3); ctx . closePath ();
-	ctx . fillStyle = maker . TotalizerArrowColour; ctx . fill (); ctx . strokeStyle = maker . TotalizerArrowBorderColour; ctx . stroke ();
-	ctx . beginPath ();
-	ctx . arc (0, 0, ar4, r1, Math . PI - r1);
-	ctx . lineTo (- ar6, ar2); ctx . lineTo (- ar6, - ar2);
-	ctx . arc (0, 0, ar4, Math . PI + r1, pi2 - r1);
-	ctx . fillStyle = maker . TotalizerArrowEndColour; ctx . fill (); ctx . stroke ();
+	if (maker . TotalizerArrowNoButt) {
+		ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
+		ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0); ctx . lineTo (ar7, ar3); ctx . closePath ();
+		ctx . fillStyle = maker . TotalizerArrowColour; ctx . fill (); ctx . strokeStyle = maker . totalizerArrowBorderColour; ctx . stroke ();
+	} else {
+		ctx . beginPath (); ctx . arc (0, 0, ar4, r1, pi2 - r1);
+		ctx . lineTo (ar5, - ar3); ctx . lineTo (ar7, - ar3); ctx . lineTo (TotalizerStator, 0);
+		ctx . lineTo (ar7, ar3); ctx . lineTo (ar5, ar3); ctx . closePath ();
+		ctx . fillStyle = maker . TotalizerArrowColour; ctx . fill (); ctx . strokeStyle = maker . TotalizerArrowBorderColour; ctx . stroke ();
+		ctx . beginPath ();
+		ctx . arc (0, 0, ar4, r1, Math . PI - r1);
+		ctx . lineTo (- ar6, ar2); ctx . lineTo (- ar6, - ar2);
+		ctx . arc (0, 0, ar4, Math . PI + r1, pi2 - r1);
+		ctx . fillStyle = maker . TotalizerArrowEndColour; ctx . fill (); ctx . stroke ();
+	}
 	ctx . beginPath (); ctx . arc (0, 0, ar1, 0, pi2); ctx . fillStyle = maker . PinColour; ctx . fill ();
 	ctx . restore ();
 	//==== DATE DISPLAY =======================
