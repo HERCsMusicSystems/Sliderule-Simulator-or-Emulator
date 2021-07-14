@@ -155,12 +155,14 @@ var Makers = {
 		BezelCorrugatedLineColour: 'red',
 		StatorTop: 0.37,
 		StatorBottom: 0.32,
-		StatorBackgroundColour: 'silver',
-		StatorColour: 'black',
+		StatorBackgroundColour: 'black',
+		StatorColour: 'white',
 		MinuteConversionLine: 0.31,
 		MinuteConversionLineWidth: 1,
 		Converters: 0.28,
-		ConvertersBackground: 'gray', //'#fffdd0',
+		ConvertersColour: 'black',
+		ConvertersBackground: '#fffdd0',
+		CyferblatColour: 'black',
 		CyferblatBackground: 'silver',
 		AccurateConversions: true,
 		NumberSize1: 0.036,
@@ -793,45 +795,60 @@ var repaint = function () {
 	ctx . lineWidth = maker . MinuteConversionLineWidth || 3; ctx . stroke ();
 	if (maker . CyferblatBackground) {ctx . beginPath (); ctx . arc (0, 0, Converters * -0.98, 0, Math . PI * 2); ctx . fillStyle = maker . CyferblatBackground; ctx . fill ();}
 	ctx . font = `${NumberSize2}px arial`;
-	ctx . fillStyle = 'red'; ctx . fillText ('10', 0, StatorBottom); ctx . fillStyle = 'white'; ctx . fillText ('1:40', 0, Converters);
-	next = Math . log10 (1.1); ctx . rotate (pi2 * next); ctx . fillText ('11', 0, StatorBottom); ctx . fillText ('1:50', 0, Converters); position = next;
-	next = Math . log10 (1.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('12', 0, StatorBottom); ctx . fillText ('2:00', 0, Converters); position = next;
+	ctx . fillStyle = 'red'; ctx . fillText ('10', 0, StatorBottom);
+		ctx . fillStyle = maker . ConvertersColour || 'white';ctx . fillText ('1:40', 0, Converters); ctx . fillStyle = maker . StatorColour || 'white';
+	next = Math . log10 (1.1); ctx . rotate (pi2 * next); ctx . fillText ('11', 0, StatorBottom);
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('1:50', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
+	next = Math . log10 (1.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('12', 0, StatorBottom);
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('2:00', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
 	next = Math . log10 (1.3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('13', 0, StatorBottom); position = next;
 	next = Math . log10 (1.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('14', 0, StatorBottom); position = next;
-	next = Math . log10 (1.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('15', 0, StatorBottom); ctx . fillText ('2:30', 0, Converters); position = next;
+	next = Math . log10 (1.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('15', 0, StatorBottom);
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('2:30', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
 	next = Math . log10 (1.6); ctx . rotate (pi2 * (next - position)); ctx . fillText ('16', 0, StatorBottom); position = next;
 	next = Math . log10 (1.7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('17', 0, StatorBottom); position = next;
-	next = Math . log10 (1.8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('18', 0, StatorBottom); ctx . fillText ('3:00', 0, Converters); position = next;
+	next = Math . log10 (1.8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('18', 0, StatorBottom);
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('3:00', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
 	next = Math . log10 (1.9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('19', 0, StatorBottom); position = next;
 	next = Math . log10 (2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('20', 0, StatorBottom); position = next;
-	next = Math . log10 (2.1); ctx . rotate (pi2 * (next - position)); ctx . fillText ('21', 0, StatorBottom); ctx . fillText ('3:30', 0, Converters); position = next;
+	next = Math . log10 (2.1); ctx . rotate (pi2 * (next - position)); ctx . fillText ('21', 0, StatorBottom);
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('3:30', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
 	next = Math . log10 (2.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('22', 0, StatorBottom); position = next;
 	next = Math . log10 (2.3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('23', 0, StatorBottom); position = next;
-	next = Math . log10 (2.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('24', 0, StatorBottom); ctx . fillText ('4:00', 0, Converters); position = next;
+	next = Math . log10 (2.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('24', 0, StatorBottom);
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('4:00', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
 	next = Math . log10 (2.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('25', 0, StatorBottom); position = next;
 	next = Math . log10 (2.7); ctx . rotate (pi2 * (next - position)); ctx . fillText ('4:30', 0, Converters); position = next;
-	next = Math . log10 (3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('30', 0, StatorBottom); ctx . fillText ('5:00', 0, Converters); position = next;
+	next = Math . log10 (3); ctx . rotate (pi2 * (next - position)); ctx . fillText ('30', 0, StatorBottom);
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('5:00', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
 	next = Math . log10 (3.275); ctx . rotate (pi2 * (next - position)); ctx . fillText ('NAUT.', 0, StatorBottom); position = next;
 	next = Math . log10 (3.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('35', 0, StatorBottom); position = next;
-	next = Math . log10 (3.6); ctx . rotate (pi2 * (next - position)); ctx . fillText ('6:00', 0, Converters); position = next;
+	next = Math . log10 (3.6); ctx . rotate (pi2 * (next - position));
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('6:00', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
 	next = Math . log10 (3.75); ctx . rotate (pi2 * (next - position)); ctx . fillText ('STAT.', 0, StatorBottom); position = next;
 	next = Math . log10 (4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('40', 0, StatorBottom); position = next;
-	next = Math . log10 (4.2); ctx . rotate (pi2 * (next - position)); ctx . fillText ('7:00', 0, Converters); position = next;
+	next = Math . log10 (4.2); ctx . rotate (pi2 * (next - position));
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('7:00', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
 	next = Math . log10 (4.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('45', 0, StatorBottom); position = next;
-	next = Math . log10 (4.8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('8:00', 0, Converters); position = next;
+	next = Math . log10 (4.8); ctx . rotate (pi2 * (next - position));
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('8:00', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
 	next = Math . log10 (5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('50', 0, StatorBottom); position = next;
-	next = Math . log10 (5.4); ctx . rotate (pi2 * (next - position)); ctx . fillText ('9:00', 0, Converters); position = next;
+	next = Math . log10 (5.4); ctx . rotate (pi2 * (next - position));
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('9:00', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
 	next = Math . log10 (5.5); ctx . rotate (pi2 * (next - position)); ctx . fillText ('55', 0, StatorBottom); position = next;
 	//next = Math . log10 (6); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'red'; ctx . fillText ('60', 0, StatorBottom); position = next;
 	//next = Math . log10 (6.5); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'white'; ctx . fillText ('65', 0, StatorBottom); position = next;
 	next = Math . log10 (6.2); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'red'; ctx . fillText ('KM', 0, StatorBottom); position = next;
-	next = Math . log10 (7); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = 'white'; ctx . fillText ('7', 0, StatorBottom); ctx . fillText ('1:10', 0, Converters); position = next;
-	next = Math . log10 (8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('8', 0, StatorBottom); ctx . fillText ('1:20', 0, Converters); position = next;
-	next = Math . log10 (9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('9', 0, StatorBottom); ctx . fillText ('1:30', 0, Converters); position = next;
+	next = Math . log10 (7); ctx . rotate (pi2 * (next - position)); ctx . fillStyle = maker . StatorColour || 'white'; ctx . fillText ('7', 0, StatorBottom);
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('1:10', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
+	next = Math . log10 (8); ctx . rotate (pi2 * (next - position)); ctx . fillText ('8', 0, StatorBottom);
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('1:20', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
+	next = Math . log10 (9); ctx . rotate (pi2 * (next - position)); ctx . fillText ('9', 0, StatorBottom);
+		ctx . fillStyle = maker . ConvertersColour || 'white'; ctx . fillText ('1:30', 0, Converters); position = next; ctx . fillStyle = maker . StatorColour || 'white';
 	ctx . restore ();
 	//==== CONVERTERS ======================
 	ctx . save ();
-	ctx . fillStyle = 'white';
+	ctx . fillStyle = maker . ConvertersColour || 'white';
 	ctx . beginPath ();
 	ctx . moveTo (0, - StatorTop);
 	r1 = size * 0.025; r2 = Converters * 0.88;
@@ -839,14 +856,15 @@ var repaint = function () {
 	ctx . lineTo (- r1, Converters);
 	ctx . bezierCurveTo (r1 * -0.5, Converters, 0, Converters * 0.5 - StatorTop * 0.5, 0, - StatorTop);
 	ctx . fill ();
+	if (maker . StatorColour) {ctx . strokeStyle = maker . StatorColour; ctx . stroke ();}
 	ctx . fillText ('MPH', 0, Converters * 0.895);
 	ctx . beginPath ();
 	r1 = size * 0.042;
 	ctx . moveTo (- r1, Converters);
 	ctx . lineTo (- r1, r2); ctx . lineTo (r1, r2); ctx . lineTo (r1, Converters);
-	ctx . strokeStyle = 'white'; ctx . lineWidth = 3; ctx . stroke ();
+	ctx . strokeStyle = maker . ConvertersColour || 'white'; ctx . lineWidth = 3; ctx . stroke ();
 	ctx . rotate (pi2 * - shift);
-	ctx . strokeStyle = 'white';
+	ctx . strokeStyle = maker . ConvertersColour || 'white';
 	ctx . beginPath ();
 	r1 = MinuteConversionLine; r2 = MinuteConversionLine * 0.98; r3 = MinuteConversionLine * 0.96;
 	for (var ind = 6; ind < 12; ind += 0.5) mark (ind, r1, r2);
@@ -868,7 +886,7 @@ var repaint = function () {
 			for (var esc = 0.05; esc < 0.2; esc += 0.05) {var tick = ind + sub + esc; if (tick >= 0.35 && tick <= 11.65) lmark (tick / 12, r1, r2);}
 		}
 	}
-	ctx . strokeStyle = 'white'; ctx . stroke ();
+	ctx . strokeStyle = maker . CyferblatColour || 'white'; ctx . stroke ();
 	ctx . beginPath ();
 	for (var ind = 1; ind < 24; ind += 2) lmark (ind / 24, r2 - 1, r4);
 	ctx . strokeStyle = 'lime'; ctx . lineWidth = size * 0.01; ctx . stroke ();
@@ -886,7 +904,7 @@ var repaint = function () {
 	ctx . restore ();
 	//==== WATCH MODEL ======================
 	ctx . save ();
-	ctx . fillStyle = 'white'; ctx . font = `${NumberSize2}px arial`; ctx . fillText (maker . LogoName, 0, size * -0.06); ctx . fillText (maker . LogoYear, 0, size * -0.035);
+	ctx . fillStyle = maker . CyferblatColour || 'white'; ctx . font = `${NumberSize2}px arial`; ctx . fillText (maker . LogoName, 0, size * -0.06); ctx . fillText (maker . LogoYear, 0, size * -0.035);
 	ctx . fillText ('NAVITIMER', 0, size * 0.06);
 	ctx . restore ();
 	//==== HOUR NUMBERS ======================
