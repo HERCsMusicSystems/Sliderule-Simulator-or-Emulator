@@ -144,6 +144,9 @@ var Makers = {
 		FillNumbers: 'white',
 		HoursSize: 0.06,
 		HoursRadius: 0.215,
+		HandLining: 'white',
+		HandStroke: 'silver',
+		HandBackground: 'silver',
 		Spring: 129600000, SpringStep: 1800000, SpringMarker: 'blue',
 		TotalizerRadius: 0.172,
 		TotalizerBezel: 0.09,
@@ -1224,12 +1227,12 @@ var repaint = function () {
 	ctx . lineTo (size * 0.15, size * 0.01);
 	ctx . lineTo (size * 0.034, size * 0.01);
 	ctx . closePath ();
-	ctx . fillStyle = 'silver';
+	ctx . fillStyle = maker . HandBackground || 'silver';
 	ctx . fill ();
-	ctx . strokeStyle = 'black';
+	ctx . strokeStyle = maker . HandStroke || 'black';
 	ctx . stroke ();
 	ctx . beginPath ();
-	ctx . fillStyle = 'lime';
+	ctx . fillStyle = maker . HandLining || 'lime';
 	ctx . moveTo (size * 0.04, - ss6);
 	ctx . lineTo (size * 0.14, - ss6);
 	ctx . lineTo (size * 0.15, 0);
@@ -1250,9 +1253,9 @@ var repaint = function () {
 	ctx . lineTo (r1, size * 0.01);
 	ctx . lineTo (size * 0.034, size * 0.01);
 	ctx . closePath ();
-	ctx . fillStyle = 'silver'; ctx . fill (); ctx . strokeStyle = 'black'; ctx . stroke ();
+	ctx . fillStyle = maker . HandBackground || 'silver'; ctx . fill (); ctx . strokeStyle = maker . HandStroke || 'black'; ctx . stroke ();
 	ctx . beginPath ();
-	ctx . fillStyle = 'lime';
+	ctx . fillStyle = maker . HandLining || 'lime';
 	ctx . moveTo (size * 0.04, - ss6);
 	ctx . lineTo (r3, - ss6);
 	ctx . lineTo (r4, 0);
