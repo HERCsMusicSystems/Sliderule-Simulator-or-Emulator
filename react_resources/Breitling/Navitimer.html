@@ -38,7 +38,8 @@
 <style>
 @font-face
 {
-font-family: terminator;
+font-family: tx;
+src: url('TERMINAT.TTF') format('truetype');
 }
 </style>
 
@@ -120,7 +121,7 @@ var Makers = {
 	BreitlingWhiteSteel: {
 		BackgroundImage: 'hubble.jpg',
 		//BackgroundColour: 'black',
-		Font: 'terminator', FontSize: 0.6,
+		Font: 'tx', FontSize: 0.6,
 		MonitorColour: 'lime', Monitor: '14px georgia', MonitorStep: 18,
 		Logo: BreitlingLogo, LogoScaling: 1 / 560, LogoName: 'CHRONOMETRE', LogoYear: 'AUTOMATIC', ModelName: ' ',
 		PushpieceColour: 'silver',
@@ -257,6 +258,7 @@ var Makers = {
 		StatorBottom: 0.32,
 		MinuteConversionLine: 0.31,
 		Converters: 0.28,
+		AccurateConversions: true,
 		NumberSize1: 0.036,
 		NumberSize2: 0.026,
 		HoursSize: 0.06,
@@ -293,7 +295,7 @@ var Makers = {
 		BackgroundImage: 'Atari ST.png',
 		// BackgroundColour: 'black',
 		MonitorColour: 'lime',
-		Font: 'terminator', FontSize: 0.6,
+		Font: 'tx', FontSize: 0.6,
 		Logo: AtariLogo, LogoScaling: 1 / 1450, LogoName: '', LogoYear: '', ModelName: 'COSMONAUTE',
 		PushpieceColour: 'gray',
 		BezelRadius: 0.48,
@@ -361,10 +363,10 @@ if (Status === null) Status = {
 	PreviousDateNumber: Date . now () - 250 + RandomAdjustment
 }; else Status = JSON . parse (Status);
 
-var CirculateMaker = function () {
+var CirculateMaker = function (delta) {
 	var names = Object . keys (Makers);
-	var ind = names . indexOf (Status . Maker) + 1;
-	if (ind >= names . length) ind = 0;
+	var ind = names . indexOf (Status . Maker) + delta;
+	if (ind >= names . length) ind = 0; if (ind < 0) ind = names . length - 1;
 	Status . Maker = names [ind];
 };
 
@@ -426,7 +428,7 @@ var point_angle = 0;
 var point_cursor_proximity = 0;
 var atan = null;
 var size = 0;
-var ScreenOffset = {x: 0, y: 0};
+var ScreenOffset = {x: 0, y: 0, scaling: 1};
 
 
 var PushpieceA = false;
@@ -473,13 +475,15 @@ var PushC = function (e) {
 
 var MousePoint = function (e) {
 	var rect = canvas . getBoundingClientRect ();
-	return {x: e . clientX - ScreenOffset . x - rect . left - canvas . width / 2, y: e . clientY - ScreenOffset . y - rect . top - canvas . height / 2};
+	return {
+		x: (e . clientX - ScreenOffset . x - rect . left - canvas . width / 2) / ScreenOffset . scaling,
+		y: (e . clientY - ScreenOffset . y - rect . top - canvas . height / 2) / ScreenOffset . scaling};
 };
 
 var MouseDown = function (e) {
 	point = MousePoint (e);
 	if (point . x + canvas . width / 2 < 50 && point . y + canvas . height / 2 < 50) {Status . Monitor = ! Status . Monitor; return;}
-	if (point . x > size * -0.1 && point . x < size * 0.1 & point . y > size * -0.2 && point . y < size * -0.1) {CirculateMaker (); return;}
+	if (point . x > size * -0.1 && point . x < size * 0.1 & point . y > size * -0.2 && point . y < size * -0.1) {CirculateMaker (e . button === 0 ? 1 : -1); return;}
 	if (Math . abs (point . x) < 5 && Math . abs (point . y) < 5) {HardAdjust (); return;}
 	point_length = Math . sqrt (point . x * point . x + point . y * point . y);
 	atan = Math . atan2 (point . y, point . x);
@@ -487,7 +491,7 @@ var MouseDown = function (e) {
 	while (point_angle < 0) point_angle += 1; while (point_angle > 1) point_angle -= 1;
 	point_cursor_proximity = Math . abs (point_angle - Cursor);
 	var m = Makers [Status . Maker];
-	if (e . button != 0) {
+	if (e . button !== 0) {
 		if (point_length < m . BezelRim * size && point_length > m . StatorBottom * size) {
 			var command = prompt ();
 			if (command !== null) {
@@ -557,10 +561,10 @@ var MouseMove = function (e) {
 var SpringDelta = 0;
 
 var Wheel = function (event) {
-	if (! SpringVisible) return;
 	var delta = 0;
 	if (event . deltaY > 0) delta = -1;
 	if (event . deltaY < 0) delta = 1;
+	if (! SpringVisible) {if (delta > 0) ScreenOffset . scaling *= 1.0625; else ScreenOffset . scaling /= 1.0625; return;}
 	switch (PushpieceCMode) {
 	case 'wind': if (delta > 0) SpringDelta = Makers [Status . Maker] . SpringStep * delta; break;
 	case 'calendar': PushpieceCDelta = 86400000 * delta; break;
@@ -695,6 +699,7 @@ var repaint = function () {
 	ctx . textAlign = 'center';
 	ctx . font = `${NumberSize1 * (maker . FontSize || 1)}px ${maker . Font || 'arial'}`;
 	ctx . translate (canvas . width * 0.5 + ScreenOffset . x, canvas . height * 0.5 + ScreenOffset . y);
+	ctx . scale (ScreenOffset . scaling, ScreenOffset . scaling);
 	//==== PUSHPIECES ======================
 	ctx . save ();
 		var bw1 = size * 0.07; var bw2 = size * 0.075; var bw3 = size * 0.075; var bw4 = size * 0.04;
