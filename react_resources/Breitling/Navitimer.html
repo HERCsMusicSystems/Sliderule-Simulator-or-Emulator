@@ -598,8 +598,7 @@ var repaint = function () {
 	if (! Status . Spring) {Status . Spring = DateNumber + maker . Spring;}
 	else {
 		if (Status . Spring <= DateNumber) {
-			var delta = DateNumber - Status . PreviousDateNumber;
-			Status . Adjustment -= delta;
+			Status . Adjustment = Status . Spring - CurrentDateNumber;
 			DateNumber = CurrentDateNumber + Status . Adjustment;
 		}
 	}
