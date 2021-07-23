@@ -154,7 +154,7 @@ var Makers = {
 		HandStroke: 'silver',
 		HandBackground: 'silver',
 		Spring: 129600000, SpringStep: 1800000, SpringMarker: 'lime',
-		TotalizerRadius: 0.172,
+		TotalizerRadius: -0.172,
 		TotalizerBezel: 0.09,
 		TotalizerStator: 0.075,
 		TotalizerR1: 0.086,
@@ -1165,7 +1165,7 @@ var repaint = function () {
 	var TotalizerStator = maker . TotalizerStator * size;
 	var r1 = maker . TotalizerR1 * size; var r2 = maker . TotalizerR2 * size; var r3 = maker . TotalizerR3 * size;
 	ctx . save ();
-	ctx . translate (0, TotalizerRadius);
+	ctx . translate (0, Math . abs (TotalizerRadius));
 	ctx . beginPath ();
 	ctx . arc (0, 0, TotalizerBezel, 0, pi2);
 	ctx . fillStyle = maker . TotalizerBezelColour; ctx . fill (); ctx . strokeStyle = maker . TotalizerRimColour; ctx . stroke ();
