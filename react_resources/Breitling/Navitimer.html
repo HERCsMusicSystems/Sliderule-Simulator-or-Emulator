@@ -546,7 +546,7 @@ var MouseMove = function (e) {
 	CursorVisible = (point && point_length < m . BezelRim * size && point_length > m . StatorBottom * size)
 		|| (length < m . BezelRim * size && length > m . StatorBottom * size);
 	var a = Math . atan2 (p . y, p . x);
-	SpringVisible = length > m . BezelRadius * size && length < size * 0.53 && Math . abs (a) < 0.15;
+	SpringVisible = length > m . BezelRim * size && length < size * 0.53 && Math . abs (a) < 0.15;
 	if (! point) return;
 	if (point_length < m . BezelRim * size && point_length > m . StatorBottom * size) {
 		if (point_length > m . StatorTop * size && point_cursor_proximity > 0.02 && point_cursor_proximity < 0.98) degree += (a - atan) / pi2;
