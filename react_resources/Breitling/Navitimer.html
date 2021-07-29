@@ -1385,7 +1385,9 @@ var repaint = function () {
 		while (StatorText >= 100) StatorText /= 10; while (StatorText < 10) StatorText *= 10;
 		var ConverterText = StatorText; if (ConverterText < 60) ConverterText *= 10;
 		ConverterText /= 60;
-		ConverterText = `( ${Math . floor (ConverterText)}:${Math . round ((ConverterText % 1) * 60)} )`;
+		ConverterMinutes = Math . round ((ConverterText % 1) * 60) . toString ();
+		if (ConverterMinutes . length < 2) ConverterMinutes = 0 + ConverterMinutes;
+		ConverterText = `( ${Math . floor (ConverterText)}:${ConverterMinutes} )`;
 		ctx . textBaseline = 'bottom'; ctx . fillText (StatorText . toFixed (2), HoursRadius * sin, - HoursRadius * cos);
 		ctx . textBaseline = 'top'; ctx . fillText (ConverterText, HoursRadius * sin, - HoursRadius * cos);
 		ctx . restore ();
