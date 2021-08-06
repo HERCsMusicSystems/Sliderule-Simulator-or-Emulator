@@ -382,11 +382,11 @@ Date . prototype . isDST = function () {
 2. HARD ADJUST => Adjust time and Chronometer = 0.
 3. RESET       => Adjust time and Chronometer = RND.
 */
-var SoftAdjust = function () {
-	var DateNumber = Date . now ();
+var SoftAdjust = function (milliseconds) {
+	var DateNumber = milliseconds || Date . now ();
 	var date = new Date (DateNumber);
-	if (date . isDST ()) date = new Date (DateNumber - 3600000);
-	var Day = (Math . floor (DateNumber / 86400000) % 31) + 1;
+	//if (date . isDST ()) date = new Date (DateNumber - 3600000);
+	var Day = (Math . floor ((DateNumber - date . getTimezoneOffset () * 60000) / 86400000) % 31) + 1;
 	Status . Adjustment = 86400000 * (date . getDate () - Day);
 	Status . Spring = 0;
 };
