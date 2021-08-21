@@ -1,0 +1,124 @@
+<meta charset="UTF-8"/>
+<!--
+  Pickett N-500-ES coded by David Terhune
+-->
+  <head>
+    <title>Pickett N-500-ES</title>
+  </head>
+
+<body>
+
+<div align="right">
+	<font color="black">
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings
+    <input type = radio name = other_side id=visible_front onclick="javascript: changeSide ('front');" checked=true/>Front
+    <input type = radio name = other_side id=visible_back onclick="javascript: changeSide ('back');"/>Back
+    <input type = radio name = other_side id=visible_both onclick="javascript: changeSide ('both');"/>Both sides
+  </font>
+</div>
+
+<div id="root"></div>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+
+<script>
+
+var corrugated = new Image (); corrugated . src = 'corrugated12.png'; corrugated . onload = function () {sliderules . requireRedraw = true;};
+
+var sliderules = new Sliderules ();
+
+var s = new Sliderule (1200, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.054, cursor_right_extension: 0.054, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
+s . braces . push (new BraceSupport (0.016, 1, 50, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (0.016, 199, 250, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.184, 1, 50, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.184, 199, 250, 70, 8, 'silver', 'black'));
+s . braces . push (new BezierBraces (44, 0.08, 2, corrugated, 'black', 2, 0.018, 20, 40, -0.035));
+s . braces . push (new Screw (0.016, 24, 16, Math . random () * Math . PI, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.004, 226, 12, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.03, 226, 12, '#eeeeee', '#666666'));
+s . braces . push (new Screw (1.184, 24, 16, Math . random () * Math . PI, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.172, 226, 12, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.198, 226, 12, '#eeeeee', '#666666'));
+s . cursorGlassBraces . push (new CursorBrace (0.06, 0.06, 26, 0, 16, '#deb887'));
+s . cursorBraces . push (new Screw (0, -13, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (-0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
+
+var r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+<!-- Engravings -->
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL1 (24, {left_extension: 0.005}));
+r . scales . push (new scale_LL01 (24, {marking_colour: 'red'}));
+r . scales . push (new scale_A (24, {draw_e: false}));
+
+r = new Rule ({stator: 1, left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow', rounding: 2}); s . rules . push (r);
+<!-- Engravings -->
+r . scales . push (new scale_B (24, {draw_e: false}));
+r . scales . push (new scale_TCTdec (18));
+r . scales . push (new scale_STdec (18));
+r . scales . push (new scale_SCdec (18));
+r . scales . push (new scale_C (24, {draw_r: true, draw_e: false, draw_c: false}));
+
+r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+<!-- Engravings -->
+r . scales . push (new scale_D (24, {draw_r: true, draw_e: false, draw_c: false}));
+r . scales . push (new scale_DI (24, {draw_r: true, draw_e: false, draw_c: false, marking_colour: 'red'}));
+r . scales . push (new scale_J (24, {draw_e: false, draw_pi: false}));
+r . scales . push (new spacer (2));
+
+////////////////
+// OTHER SIDE //
+////////////////
+
+s = new Sliderule (1200, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.054, cursor_right_extension: 0.054, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
+s . braces . push (new BraceSupport (0.016, 1, 50, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (0.016, 199, 250, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.184, 1, 50, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.184, 199, 250, 70, 8, 'silver', 'black'));
+s . braces . push (new BezierBraces (44, 0.08, 2, corrugated, 'black', 2, 0.018, 20, 40, -0.035));
+s . braces . push (new Screw (0.016, 24, 16, Math . random () * Math . PI, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.004, 226, 12, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.03, 226, 12, '#eeeeee', '#666666'));
+s . braces . push (new Screw (1.184, 24, 16, Math . random () * Math . PI, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.172, 226, 12, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.198, 226, 12, '#eeeeee', '#666666'));
+s . cursorGlassBraces . push (new CursorBrace (0.06, 0.06, 26, 0, 16, '#deb887'));
+s . cursorBraces . push (new Screw (0, -13, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (-0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
+
+r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+<!-- Engravings -->
+r . scales . push (new spacer (2));
+r . scales . push (new scale_LL2 (24, {left_extension: 0.005}));
+r . scales . push (new scale_LL02 (24, {marking_colour: 'red'}));
+r . scales . push (new scale_CF (24, {draw_c: false, draw_e: false}));
+
+r = new Rule ({stator: 1, left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow', rounding: 2}); s . rules . push (r);
+<!-- Engravings -->
+r . scales . push (new scale_DF (24, {draw_c: false, draw_e: false}));
+r . scales . push (new scale_CIF (18, {left_extension: 0.005, right_extension: 0.005, draw_c: false, draw_e: false, marking_colour: 'red'}));
+r . scales . push (new scale_L (18));
+r . scales . push (new scale_CI (18, {draw_r: true, draw_e: false, draw_c: false, marking_colour: 'red'}));
+r . scales . push (new scale_C (24, {draw_r: true, draw_e: false, draw_c: false}));
+
+r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+<!-- Engravings -->
+r . scales . push (new scale_D (24, {draw_r: true, draw_e: false, draw_c: false}));
+r . scales . push (new scale_LL3_down (24));
+r . scales . push (new scale_LL03_down (24, {marking_colour: 'red'}));
+r . scales . push (new spacer (2));
+
+</script>
+
+<script src="sliderule_application.js"></script>
+
+<script>
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeSide (document . getElementById ('visible_front') . checked ? 'front': document . getElementById ('visible_back') . checked ? 'back' : 'both');
+changeVersion ('german');
+</script>
+
+</body>
+</html>
