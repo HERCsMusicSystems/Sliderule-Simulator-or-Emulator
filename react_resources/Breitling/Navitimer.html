@@ -524,6 +524,7 @@ var MouseDown = function (e) {
 		if (Math . abs (point_angle - angle - angle) < 0.012) PushB ();
 		if (Math . abs (point_angle - 0.25) < 0.025) PushC (e);
 	}
+	if (Math . abs (point_length - Math . abs (m . TotalizerRadius * size)) < (m . TotalizerBezel * size) && Math . abs (point_angle - 0.75) < 0.06) HiRes ();
 };
 
 var MouseUp = function (e) {
@@ -1395,6 +1396,8 @@ var repaint = function () {
 	//======================
 	ctx . restore ();
 };
+
+var HiRes = function () {clearInterval (Interval); Interval = setInterval (repaint, 20);};
 
 Interval = setInterval (repaint, 250);
 
