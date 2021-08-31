@@ -525,6 +525,7 @@ var MouseDown = function (e) {
 		if (Math . abs (point_angle - 0.25) < 0.025) PushC (e);
 	}
 	if (Math . abs (point_length - Math . abs (m . TotalizerRadius * size)) < (m . TotalizerBezel * size) && Math . abs (point_angle - 0.75) < 0.06) HiRes ();
+	if (Math . abs (point_length - Math . abs (m . TotalizerRadius * size)) < (m . TotalizerBezel * size) && Math . abs (point_angle - 0.25) < 0.06) LoRes ();
 };
 
 var MouseUp = function (e) {
@@ -1398,6 +1399,7 @@ var repaint = function () {
 };
 
 var HiRes = function () {clearInterval (Interval); Interval = setInterval (repaint, 20);};
+var LoRes = function () {clearInterval (Interval); Interval = setInterval (repaint, 250);};
 
 Interval = setInterval (repaint, 250);
 
