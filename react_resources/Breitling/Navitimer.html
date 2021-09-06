@@ -98,6 +98,7 @@ var Makers = {
 		TotalizerR1: 0.086,
 		TotalizerR2: 0.079,
 		TotalizerR3: 0.075,
+		TotalizerR4: 0.084,
 		TotalizerArrow1: 0.006,
 		TotalizerArrow2: 0.004,
 		TotalizerArrow3: 0.006,
@@ -160,6 +161,7 @@ var Makers = {
 		TotalizerR1: 0.086,
 		TotalizerR2: 0.079,
 		TotalizerR3: 0.075,
+		TotalizerR4: 0.084,
 		TotalizerArrow1: 0.006,
 		TotalizerArrow2: 0.004,
 		TotalizerArrow3: 0.006,
@@ -221,6 +223,7 @@ var Makers = {
 		TotalizerR1: 0.086,
 		TotalizerR2: 0.079,
 		TotalizerR3: 0.075,
+		TotalizerR4: 0.084,
 		TotalizerArrow1: 0.006,
 		TotalizerArrow2: 0.004,
 		TotalizerArrow3: 0.006,
@@ -271,6 +274,7 @@ var Makers = {
 		TotalizerR1: 0.086,
 		TotalizerR2: 0.079,
 		TotalizerR3: 0.075,
+		TotalizerR4: 0.084,
 		TotalizerArrow1: 0.006,
 		TotalizerArrow2: 0.004,
 		TotalizerArrow3: 0.006,
@@ -328,6 +332,7 @@ var Makers = {
 		TotalizerR1: 0.086,
 		TotalizerR2: 0.079,
 		TotalizerR3: 0.075,
+		TotalizerR4: 0.084,
 		TotalizerArrow1: 0.006,
 		TotalizerArrow2: 0.004,
 		TotalizerArrow3: 0.006,
@@ -1221,7 +1226,7 @@ var repaint = function () {
 	var TotalizerRadius = maker . TotalizerRadius * size;
 	var TotalizerBezel = maker . TotalizerBezel * size;
 	var TotalizerStator = maker . TotalizerStator * size;
-	var r1 = maker . TotalizerR1 * size; var r2 = maker . TotalizerR2 * size; var r3 = maker . TotalizerR3 * size;
+	var r1 = maker . TotalizerR1 * size; var r2 = maker . TotalizerR2 * size; var r3 = maker . TotalizerR3 * size; var r4 = maker . TotalizerR4 * size;
 	ctx . save ();
 	ctx . translate (- TotalizerRadius, 0);
 	ctx . beginPath ();
@@ -1235,6 +1240,9 @@ var repaint = function () {
 	for (var ind = 0; ind < 12; ind += 4)
 		for (var sub = 1; sub < 4; sub ++)
 			lmark ((ind + sub) / 12, r1, r2);
+	for (var ind = 0; ind < 60; ind += 5)
+		for (var sub = 1; sub < 5; sub ++)
+			lmark ((ind + sub) / 60, r1, r4);
 	ctx . stroke ();
 	var lw = ctx . lineWidth; ctx . beginPath (); for (var ind = 0; ind < 3; ind ++) lmark (ind / 3, r1, r3); ctx . lineWidth = 2; ctx . stroke ();
 	ctx . beginPath ();
