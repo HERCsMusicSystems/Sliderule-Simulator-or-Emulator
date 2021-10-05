@@ -388,7 +388,7 @@ var SoftAdjust = function (milliseconds) {
 	var date = new Date (DateNumber);
 	//if (date . isDST ()) date = new Date (DateNumber - 3600000);
 	var Day = (Math . floor ((DateNumber - date . getTimezoneOffset () * 60000) / 86400000) % 31) + 1;
-	Status . Adjustment = 86400000 * (date . getDate () - Day);
+	Status . Adjustment = 86400000 * (date . getDate () - Day) + (date . isDST () ? 3600000 : 0);
 	Status . Spring = 0;
 };
 var HardAdjust = function () {SoftAdjust (); Status . Chronometer = 0;};
@@ -627,7 +627,7 @@ var repaint = function () {
 	var offset = date . getTimezoneOffset ();
 	var AllDays = Math . floor ((DateNumber - offset * 60000) / 86400000);
 	var Day = (AllDays % 31) + 1;
-	if (date . isDST ()) date = new Date (DateNumber - 3600000);
+	//if (date . isDST ()) date = new Date (DateNumber - 3600000);
 	var ChronometerFraction;
 	//==== CHRONOMETER ADJUSTMENT ================
 	if (Status . PreviousDateNumber) {
