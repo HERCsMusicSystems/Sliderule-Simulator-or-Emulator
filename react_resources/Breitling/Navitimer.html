@@ -328,6 +328,7 @@ var Makers = {
 		TotalizerR1: 0.086,
 		TotalizerR2: 0.079,
 		TotalizerR3: 0.075,
+		TotalizerR4: 0.084,
 		TotalizerArrow1: 0.006,
 		TotalizerArrow2: 0.004,
 		TotalizerArrow3: 0.006,
@@ -387,7 +388,7 @@ var SoftAdjust = function (milliseconds) {
 	var date = new Date (DateNumber);
 	//if (date . isDST ()) date = new Date (DateNumber - 3600000);
 	var Day = (Math . floor ((DateNumber - date . getTimezoneOffset () * 60000) / 86400000) % 31) + 1;
-	Status . Adjustment = 86400000 * (date . getDate () - Day);
+	Status . Adjustment = 86400000 * (date . getDate () - Day) + (date . isDST () ? 3600000 : 0);
 	Status . Spring = 0;
 };
 var HardAdjust = function () {SoftAdjust (); Status . Chronometer = 0;};
@@ -524,6 +525,8 @@ var MouseDown = function (e) {
 		if (Math . abs (point_angle - angle - angle) < 0.012) PushB ();
 		if (Math . abs (point_angle - 0.25) < 0.025) PushC (e);
 	}
+	if (Math . abs (point_length - Math . abs (m . TotalizerRadius * size)) < (m . TotalizerBezel * size) && Math . abs (point_angle - 0.75) < 0.06) HiRes ();
+	if (Math . abs (point_length - Math . abs (m . TotalizerRadius * size)) < (m . TotalizerBezel * size) && Math . abs (point_angle - 0.25) < 0.06) LoRes ();
 };
 
 var MouseUp = function (e) {
@@ -624,7 +627,7 @@ var repaint = function () {
 	var offset = date . getTimezoneOffset ();
 	var AllDays = Math . floor ((DateNumber - offset * 60000) / 86400000);
 	var Day = (AllDays % 31) + 1;
-	if (date . isDST ()) date = new Date (DateNumber - 3600000);
+	//if (date . isDST ()) date = new Date (DateNumber - 3600000);
 	var ChronometerFraction;
 	//==== CHRONOMETER ADJUSTMENT ================
 	if (Status . PreviousDateNumber) {
@@ -1233,6 +1236,12 @@ var repaint = function () {
 	for (var ind = 0; ind < 12; ind += 4)
 		for (var sub = 1; sub < 4; sub ++)
 			lmark ((ind + sub) / 12, r1, r2);
+	if (maker . TotalizerR4) {
+		var r4 = maker . TotalizerR4 * size;
+		for (var ind = 0; ind < 60; ind += 5)
+			for (var sub = 1; sub < 5; sub ++)
+				lmark ((ind + sub) / 60, r1, r4);
+	}
 	ctx . stroke ();
 	var lw = ctx . lineWidth; ctx . beginPath (); for (var ind = 0; ind < 3; ind ++) lmark (ind / 3, r1, r3); ctx . lineWidth = 2; ctx . stroke ();
 	ctx . beginPath ();
@@ -1395,6 +1404,9 @@ var repaint = function () {
 	//======================
 	ctx . restore ();
 };
+
+var HiRes = function () {clearInterval (Interval); Interval = setInterval (repaint, 20);};
+var LoRes = function () {clearInterval (Interval); Interval = setInterval (repaint, 250);};
 
 Interval = setInterval (repaint, 250);
 
