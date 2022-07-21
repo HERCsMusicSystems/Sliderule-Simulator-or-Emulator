@@ -2239,6 +2239,7 @@ var Sliderule = function (length, options) {
   this . cursorGlassBraces = [];
   this . precision = 5;
   this . static_markings = false;
+  this . staticMarkingsOnBrace = false
   this . cursor_markings = false;
   this . extra_cursor_markings = false;
   this . hairlines_inactive = true;
@@ -2353,6 +2354,7 @@ var Sliderule = function (length, options) {
           measure = ctx . measureText (description);
           ctx . textAlign = align;
           rs = shift + (rule_shift ? this . length * this . rules [ind] . shift : 0);
+          if (this . staticMarkingsOnBrace) rs = shift;
           if (align === 'left') {
             ctx . fillRect (rs, y + hh - 2 - this . markings_size * 0.5, measure . width + 8, this . markings_size + 2);
             ctx . fillStyle = this . markings_colour;
