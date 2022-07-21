@@ -30,6 +30,7 @@
   </head>
 <body>
 <div>
+	<input type = checkbox id = on_static_markings onchange = "javascript: changeStaticMarkings (this . checked);" />Static Markings on Brace/Rule.
 	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
 	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
@@ -86,6 +87,7 @@ var sliderules = new Sliderules ({background: outback, background_translation: {
 <script src="sliderule_application.js"></script>
 
 <script>
+changeStaticMarkings (document . getElementById ('on_static_markings') . checked);
 changeMarkings ('stator', document . getElementById ('on_side') . checked);
 changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
 changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);

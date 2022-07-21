@@ -32,6 +32,10 @@ var changeMarkings = function (type, value) {
 	sliderules . requireRedraw = true;
 };
 
+var changeStaticMarkings = function (value) {
+	for (var ind in sliderules . sliderules) sliderules . sliderules [ind] . staticMarkingsOnBrace = value; sliderules . requireRedraw = true;
+};
+
 var changeAndActivateMarkings = function (type, value) {
 	for (var ind in sliderules . sliderules) {
 		switch (type) {
