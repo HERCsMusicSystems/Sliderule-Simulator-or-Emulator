@@ -76,9 +76,9 @@ front_german_cursors . push (new Cursor (GRHairlineRight, 76, 120, 'red', {marki
 front_german_cursors . push (new Cursor (GRHairlineRight, 122, 170, 'red', {marking_shift: 'right', marking_shift: 0.005}));
 front_german_cursors . push (new Cursor (GRHairlineRight, 172, 218, 'red', {marking_shift: 'right', marking_shift: 0.005}));
 front_german_cursors . push (new Cursor (GRHairlineRight, 220, 284, 'red', {marking_shift: 'right', marking_shift: 0.005}));
-front_us_cursors . push (new Cursor (HairlineHPUS, 74, 122, 'red', {marking_shift: 0.005}));
-front_us_cursors . push (new Cursor (HairlineS, 74, 122, 'red', {marking_align: 'right', marking_shift: -0.005}));
-front_us_cursors . push (new Cursor (HairlineD, 172, 220, 'red', {marking_shift: 0.005}));
+front_us_cursors . push (new Cursor (HairlineHPUS, 74, 122, 'red', {marking_align: 'right', marking_shift: -0.005}));
+front_us_cursors . push (new Cursor (HairlineS, 74, 122, 'red', {marking_shift: 0.005}));
+front_us_cursors . push (new Cursor (HairlineD, 172, 220, 'red', {marking_align: 'right', marking_shift: -0.005}));
 front_us_cursors . push (new Cursor (USHairlineLeft, 26, 74, 'red', {marking_align: 'right', marking_shift: -0.005}));
 front_us_cursors . push (new Cursor (USHairlineLeft, 76, 120, 'red', {marking_align: 'right', marking_shift: -0.005}));
 front_us_cursors . push (new Cursor (USHairlineLeft, 122, 170, 'red', {marking_align: 'right', marking_shift: -0.005}));
@@ -112,7 +112,7 @@ r . scales . push (new scale_LL00_down (24, {left: "LL00", marking_colour: 'red'
 r . scales . push (new spacer (2));
 
 
-var s = new Sliderule (1200, {left_margin: 0.18, right_margin: 0.18, cursor_top_margin: 13, cursor_bottom_margin: 13, hairline_top: -10, hairline_bottom: -10, cursor_limit_left: 0.022, cursor_limit_right: 0.022, markings_background: 'yellow', cursor_left_extension: 0.09, cursor_right_extension: 0.09, cursor_markings_shift: 0.005}); sliderules . sliderules . push (s);
+var s = new Sliderule (1200, {left_margin: 0.18, right_margin: 0.18, cursor_top_margin: 13, cursor_bottom_margin: 13, hairline_top: -10, hairline_bottom: -10, cursor_limit_left: 0.022, cursor_limit_right: 0.022, cursor_markings_align: 'right', markings_background: 'yellow', cursor_left_extension: 0.09, cursor_right_extension: 0.09, cursor_markings_shift: -0.005}); sliderules . sliderules . push (s);
 s . braces . push (new LeftBrace (2, 0.066, 8, 'gold', 'black', 74, 1));
 s . braces . push (new LeftBrace (4, 0.06, 8, 'tan', 'black', 76, 1));
 s . braces . push (new LeftBraceBar (0.052, 20, 20, 4, 'red', 'black'));
