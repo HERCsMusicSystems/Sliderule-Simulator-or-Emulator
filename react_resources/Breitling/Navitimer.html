@@ -693,7 +693,27 @@ var repaint = function () {
 		ctx . fillText (`Fraction: ${ChronometerFraction}`, 10, Monitor); Monitor += MonitorStep;
 		ctx . fillText (`Spring: ${Math . round (100 * (Status . Spring - DateNumber) / maker . Spring)}% [${Status . Spring - DateNumber}]`, 10, Monitor); Monitor += MonitorStep;
 		ctx . fillText (`Spring Timeout: ${new Date (Status . Spring)}`, 10, Monitor); Monitor += MonitorStep;
-		ctx . fillText (`Timezone offset: ${offset / 60} hours`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Timezone offset: ${offset / 60} hours`, 10, Monitor); Monitor += MonitorStep + MonitorStep;
+		ctx . fillText (`Instructions:`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Use Push Pieces A and B and the Crown as described in the user manual.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Use mouse left/right click to push the Crown in/out.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Use mouse wheel to rotate the Crown.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`If the mouse cursor is not over the Crown then you can resize the watch with the wheel.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Press and hold the Push Piece A for 4 seconds to readjust the watch. The Chronometer inaccuracy will remain unchanged.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Press and hold the Push Piece A for 8 seconds to readjust the watch and randomise the Chronometer.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Just click on the centre of the watch to readjust the watch and to make the Chronometer fully accurate.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Left-or-Right-click on the Logo to circulate through different versions.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Click on the left sub-dial to smooth the motion.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Click on the right sub-dial to digitalise the motion.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`You can click-and-drag the watch over the screen.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`To make calculations an artificial cursor is provided.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`This artifical cursor can be seen if you hover your mouse over any of the logarithmic scales.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`You can drag the cursor and rotate the outside logarithmic scale with you mouse.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`You can automate cursor by right clicking it and entering alpha-numeric value.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`You can automate rotation of the outside logarithmig scale by right clicking your mouse and entering alpha-numeric value.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`For automation you can entery any numeric value (with either . or , indicating floating point value).`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`But you can also enter constants. They are: pi, e, naut, stat, km and mph. You can use lower or upper case.`, 10, Monitor); Monitor += MonitorStep;
+		ctx . fillText (`Finally click in the top-left corner of the screen to bring in or hide these instructions and status information.`, 10, Monitor); Monitor += MonitorStep;
 	}
 	//=======================
 	ctx . save ();
