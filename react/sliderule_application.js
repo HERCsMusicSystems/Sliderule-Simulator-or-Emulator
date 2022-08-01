@@ -96,6 +96,19 @@ var changeMovementSpeed = function (speed) {
     }
 };
 
+var ProcessKey = function (e) {
+	switch (e . key . toUpperCase ()) {
+	case 'B': var d = document . getElementById ('on_static_markings'); d . checked = ! d . checked; changeStaticMarkings (d . checked); break;
+	case 'S': var d = document . getElementById ('on_side'); d . checked = ! d . checked; changeMarkings ('stator', d . checked); break;
+	case 'H': var d = document . getElementById ('on_hairline'); d . checked = ! d . checked; changeMarkings ('hairline', d . checked); break;
+	case 'A': var d = document . getElementById ('on_extras'); d . checked = ! d . checked; changeAndActivateMarkings ('hairlines', d . checked); break;
+	case 'O': var d = document . getElementById ('other_side'); d . checked = ! d . checked; changeSide (d . checked ? 'back' : 'front'); break;
+	case 'V': var d = document . getElementById ('version'); d . checked = ! d . checked; changeVersion (d . checked ? 'us' : 'german'); break;
+	case 'L': var d = document . getElementById ('short_long'); d . checked = ! d . checked; changeSize (d . checked ? 800 : 1200); break;
+	default: break;
+	}
+};
+
 var copyright = `Emulator / Simulator Copyright \u00a9 2017 - ${new Date () . getFullYear ()} Dr Robert Wolf @ http://www.sliderules.org Email: robert.wolf@hercsmusicsystems.com.au`;
 var copyright_colours = ['blue', 'gray', 'yellow', 'lavender', 'green', 'olive', 'silver', 'tan', 'wheat', 'khaki'];
 var copyright_colour = copyright_colours [Math . floor (Math . random () * copyright_colours . length)];
