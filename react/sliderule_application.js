@@ -102,7 +102,16 @@ var ProcessKey = function (e) {
 	case 'S': var d = document . getElementById ('on_side'); d . checked = ! d . checked; changeMarkings ('stator', d . checked); break;
 	case 'H': var d = document . getElementById ('on_hairline'); d . checked = ! d . checked; changeMarkings ('hairline', d . checked); break;
 	case 'A': var d = document . getElementById ('on_extras'); d . checked = ! d . checked; changeAndActivateMarkings ('hairlines', d . checked); break;
-	case 'O': var d = document . getElementById ('other_side'); d . checked = ! d . checked; changeSide (d . checked ? 'back' : 'front'); break;
+	case 'O':
+		var d = document . getElementById ('other_side');
+		if (d) {d . checked = ! d . checked; changeSide (d . checked ? 'back' : 'front'); break;}
+		d = document . getElementById ('visible_front');
+		if (d && d . checked) {d . checked = false; document . getElementById ('visible_back') . checked = true; changeSide ('back'); break;}
+		d = document . getElementById ('visible_back');
+		if (d && d . checked) {d . checked = false; document . getElementById ('visible_both') . checked = true; changeSide ('both'); break;}
+		d = document . getElementById ('visible_both');
+		if (d && d . checked) {d . checked = false; document . getElementById ('visible_front') . checked = true; changeSide ('front'); break;}
+		break;
 	case 'V': var d = document . getElementById ('version'); d . checked = ! d . checked; changeVersion (d . checked ? 'us' : 'german'); break;
 	case 'L': var d = document . getElementById ('short_long'); d . checked = ! d . checked; changeSize (d . checked ? 800 : 1200); break;
 	default: break;
