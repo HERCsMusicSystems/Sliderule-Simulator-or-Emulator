@@ -26,10 +26,10 @@
 <html>
   <head>
     <title>Flying Fish 1003</title>
-		<link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
+    <link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
   </head>
 
-<body background="fishing.jpg" style="background-size: cover;">
+<body background="fishing.jpg" style="background-size: cover;" onkeydown = "javascript: ProcessKey (event);">
 <div>
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings.
     <input type = radio name = other_side id=visible_front onclick="javascript: changeSide ('front');" checked=true/>Front

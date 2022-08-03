@@ -28,11 +28,10 @@
     <title>Michael O'Leary</title>
   </head>
 
-<body>
+<body onkeydown = "javascript: ProcessKey (event);">
 
 <div>
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
-	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
 	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
 </div>
 

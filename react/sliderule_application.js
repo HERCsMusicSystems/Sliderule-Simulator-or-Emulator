@@ -115,6 +115,7 @@ var ProcessKey = function (e) {
 	case 'V': var d = document . getElementById ('version'); if (d) {d . checked = ! d . checked; changeVersion (d . checked ? 'us' : 'german');} break;
 	case 'L': var d = document . getElementById ('short_long'); if (d) {d . checked = ! d . checked; changeSize (d . checked ? 800 : 1200);} break;
 	case 'M': var d = document . getElementById ('on_music'); if (d) {d . checked = ! d . checked; if (d . checked) music . play (); else music . pause ();} break;
+	case 'W': var d = document . getElementById ('on_swap'); if (d) {d . checked = ! d . checked; scale_swap (d . checked);} break;
 	default: break;
 	}
 };
