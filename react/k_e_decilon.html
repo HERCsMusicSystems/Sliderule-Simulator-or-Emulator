@@ -26,8 +26,9 @@
 <html>
   <head>
     <title>Keuffel & Esser 68-1100 Deci-Lon</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
   </head>
-<body>
+<body onkeydown = "javascript: if (event . key . toUpperCase () === 'D') {var d = document . getElementById ('dimm_scales'); if (d) {d . checked = ! d . checked; if (d . checked) dcl_dimm (); else dcl_undimm ();}} else ProcessKey (event);">
 
 <div>
 	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
