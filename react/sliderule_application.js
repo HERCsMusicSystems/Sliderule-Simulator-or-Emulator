@@ -98,10 +98,10 @@ var changeMovementSpeed = function (speed) {
 
 var ProcessKey = function (e) {
 	switch (e . key . toUpperCase ()) {
-	case 'B': var d = document . getElementById ('on_static_markings'); d . checked = ! d . checked; changeStaticMarkings (d . checked); break;
-	case 'S': var d = document . getElementById ('on_side'); d . checked = ! d . checked; changeMarkings ('stator', d . checked); break;
-	case 'H': var d = document . getElementById ('on_hairline'); d . checked = ! d . checked; changeMarkings ('hairline', d . checked); break;
-	case 'A': var d = document . getElementById ('on_extras'); d . checked = ! d . checked; changeAndActivateMarkings ('hairlines', d . checked); break;
+	case 'B': var d = document . getElementById ('on_static_markings'); if (d) {d . checked = ! d . checked; changeStaticMarkings (d . checked); break;}
+	case 'S': var d = document . getElementById ('on_side'); if (d) {d . checked = ! d . checked; changeMarkings ('stator', d . checked); break;}
+	case 'H': var d = document . getElementById ('on_hairline'); if (d) {d . checked = ! d . checked; changeMarkings ('hairline', d . checked); break;}
+	case 'A': var d = document . getElementById ('on_extras'); if (d) {d . checked = ! d . checked; changeAndActivateMarkings ('hairlines', d . checked); break;}
 	case 'O':
 		var d = document . getElementById ('other_side');
 		if (d) {d . checked = ! d . checked; changeSide (d . checked ? 'back' : 'front'); break;}
@@ -112,8 +112,9 @@ var ProcessKey = function (e) {
 		d = document . getElementById ('visible_both');
 		if (d && d . checked) {d . checked = false; document . getElementById ('visible_front') . checked = true; changeSide ('front'); break;}
 		break;
-	case 'V': var d = document . getElementById ('version'); d . checked = ! d . checked; changeVersion (d . checked ? 'us' : 'german'); break;
-	case 'L': var d = document . getElementById ('short_long'); d . checked = ! d . checked; changeSize (d . checked ? 800 : 1200); break;
+	case 'V': var d = document . getElementById ('version'); if (d) {d . checked = ! d . checked; changeVersion (d . checked ? 'us' : 'german'); break;}
+	case 'L': var d = document . getElementById ('short_long'); if (d) {d . checked = ! d . checked; changeSize (d . checked ? 800 : 1200); break;}
+	case 'M': var d = document . getElementById ('on_music'); if (d) {d . checked = ! d . checked; if (d . checked) music . play (); else music . pause (); break;}
 	default: break;
 	}
 };
