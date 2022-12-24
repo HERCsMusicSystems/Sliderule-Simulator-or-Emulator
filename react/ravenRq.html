@@ -1,0 +1,99 @@
+<meta charset="UTF-8"/>
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2017 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Raven Rq</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
+  </head>
+<body onkeydown="javascript: ProcessKey (event);">
+<div>
+	<input type = checkbox id = on_static_markings onchange = "javascript: changeStaticMarkings (this . checked);" />Static Markings on Brace/Rule.
+	<input type = checkbox id = on_side onchange = "javascript: changeMarkings ('stator', this . checked);" />Markings on side.
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings on centre hairline.
+	<input type = checkbox id = on_extras onchange = "javascript: changeAndActivateMarkings ('hairlines', this . checked);" />Markings on additional hairlines.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
+	<input type = checkbox id = version onchange = "javascript: changeVersion (this . checked ? 'us' : 'german');" />Version US/German.
+	<input type = checkbox id = short_long onchange = "javascript: changeSize (this . checked ? 900 : 1200);" />Short/Long
+  <br/>
+  <select id = lessons><option value = "Choose Lesson ====" >Choose Lesson ====</option></select>
+  <input type = button value = "Play lesson" onclick = "javascript: playLesson ('lessons');" />&nbsp;&nbsp;&nbsp;
+  <select id = tests><option value = "Choose Test of Merit ====" >Choose Test of Merit ====</option></select>
+  <input type = button value = "Attempt test" onclick = "javascript: playLesson ('tests');" />&nbsp;&nbsp;&nbsp;
+  <input type = button id = clear_instructions onclick = "javascript: document . getElementById ('info') . innerHTML = '';" value = "Clear instructions." />
+  <div style = "display: block; position: fixed; background-color: white; border-color: black; border-style: solid; border-width: 1px;">
+    <font color = red ><span id = info /></font>
+  </div>
+</div>
+<div id="root"></div>
+
+<script src="sliderule_construction_kit.js"></script>
+<script src="scales.js"></script>
+<script src="folded_scales.js"></script>
+<script src="sliderule_ctrl.js"></script>
+
+<script src="manual/sliderule_tutorial_manual.js"></script>
+<script src="manual/sliderule_tutorial_multiplications.js"></script>
+<script src="manual/sliderule_tutorial_multiplications_folded.js"></script>
+<script src="manual/sliderule_tutorial_reciprocal.js"></script>
+<script src="manual/sliderule_tutorial_trigonometry_slide.js"></script>
+<script src="manual/sliderule_tutorial_tabling.js"></script>
+<script src="manual/sliderule_tutorial_astro.js"></script>
+<script src="manual/sliderule_test_manual.js"></script>
+<script src="manual/sliderule_test_multiplications.js"></script>
+<script src="manual/sliderule_test_reciprocal.js"></script>
+<script src="manual/sliderule_test_multiplications_folded.js"></script>
+<script src="manual/sliderule_test_trigonometry_slide.js"></script>
+<script src="manual/sliderule_test_tabling.js"></script>
+<script src="manual/sliderule_test_astro.js"></script>
+
+
+<script>
+
+readSlideruleLessons ('lessons', [userManual, multiplicationLessons, foldedMultiplicationLessons, reciprocalLessons, trigonometrySlideLessons, tablingLessons, astroLessons]);
+readSlideruleLessons ('tests', [userTrial, multiplicationTests, foldedMultiplicationTests, reciprocalTests, trigonometrySlideTests, tablingTests, astroTests]);
+
+
+var outback = new Image (); outback . src = 'outback.jpg'; outback . onload = function () {sliderules . requireRedraw = true;};
+
+var sliderules = new Sliderules ({background: outback, background_translation: {x: 0, y: -360}, background_colour: 'black', name: 'RAVEN', manufacturer: 'HERCs', made_in: "Made in Australia"});
+
+</script>
+
+<script src="ravenRq.js"></script>
+
+<script src="sliderule_application.js"></script>
+
+<script>
+changeStaticMarkings (document . getElementById ('on_static_markings') . checked);
+changeMarkings ('stator', document . getElementById ('on_side') . checked);
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeAndActivateMarkings ('hairlines', document . getElementById ('on_extras') . checked);
+changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front');
+changeVersion (document . getElementById ('version') . checked ? 'us' : 'german');
+changeSize (document . getElementById ('short_long') . checked ? 800 : 1200);
+</script>
+
+</body></html>
